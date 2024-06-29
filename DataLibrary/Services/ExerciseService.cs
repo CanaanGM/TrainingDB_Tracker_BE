@@ -5,7 +5,6 @@ using DataLibrary.Context;
 using DataLibrary.Core;
 using DataLibrary.Dtos;
 using DataLibrary.Helpers;
-using DataLibrary.Helpers.Extensions;
 using DataLibrary.Models;
 
 using Microsoft.EntityFrameworkCore;
@@ -129,9 +128,9 @@ internal class ExerciseService : IExerciseService
 
     // this is performance nightmare, make sure the db is indexed properly.
     // i already did add indexes on the tables, but double check after testing.
-    public async Task<Result<List<ExerciseReadDto>>> GetAsync(
-        ExerciseQueryOptions options
-        , CancellationToken cancellationToken)
+    public async Task<Result<PaginatedList<ExerciseReadDto>>> GetAsync(
+        ExerciseQueryOptions options,
+        CancellationToken cancellationToken)
     {
         try
         {
@@ -139,54 +138,42 @@ internal class ExerciseService : IExerciseService
                 .AsNoTracking()
                 .ProjectTo<ExerciseReadDto>(_mapper.ConfigurationProvider);
 
-            query = ApplyFiltering(options, query);
+            int totalItemsCount = await query.CountAsync(cancellationToken);  // Total number of items for the query
 
+            query = ApplyFiltering(options, query);
             query = ApplySorting(options, query);
 
-            List<ExerciseReadDto> exercises = await query
-                .Paginate(options.PageNumber, options.PageSize)
+            int pageSize = options.PageSize;
+            int currentPage = options.PageNumber;
+            List<ExerciseReadDto> items = await query
+                .Skip((currentPage - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync(cancellationToken);
 
-            return Result<List<ExerciseReadDto>>.Success(value: exercises);
+            int totalPages = (int)Math.Ceiling(totalItemsCount / (double)pageSize);
+
+            PaginatedList<ExerciseReadDto> result = new PaginatedList<ExerciseReadDto>
+            {
+                Items = items,
+                Metadata = new PaginationMetadata
+                {
+                    TotalCount = totalItemsCount,
+                    TotalPages = totalPages,
+                    CurrentPage = currentPage,
+                    PageSize = pageSize
+                }
+            };
+
+            return Result<PaginatedList<ExerciseReadDto>>.Success(result);
         }
         catch (Exception ex)
         {
-            return Result<List<ExerciseReadDto>>.Failure("Failed to retrieve exercises: " + ex.Message, ex);
+            return Result<PaginatedList<ExerciseReadDto>>.Failure("Failed to retrieve exercises: " + ex.Message, ex);
         }
     }
 
-    private static IQueryable<ExerciseReadDto> ApplyFiltering(ExerciseQueryOptions options, IQueryable<ExerciseReadDto> query)
-    {
-        if (!string.IsNullOrEmpty(options.TrainingTypeName))
-            query = query.Where(e => e.TrainingTypes.Any(tt => tt.Name == options.TrainingTypeName));
 
-        if (!string.IsNullOrEmpty(options.MuscleName))
-            query = query.Where(e => e.ExerciseMuscles.Any(em => em.Name == options.MuscleName));
 
-        if (!string.IsNullOrEmpty(options.MuscleGroupName))
-            query = query.Where(e => e.ExerciseMuscles.Any(em => em.MuscleGroup == options.MuscleGroupName));
-
-        if (options.MinimumDifficulty.HasValue)
-            query = query.Where(e => e.Difficulty >= options.MinimumDifficulty.Value);
-        return query;
-    }
-
-    private static IQueryable<ExerciseReadDto> ApplySorting(ExerciseQueryOptions options, IQueryable<ExerciseReadDto> query)
-    {
-        query = options.SortBy switch
-        {
-            SortBy.NAME => options.Ascending ? query.OrderBy(e => e.Name) : query.OrderByDescending(e => e.Name),
-            SortBy.DIFFICULTY => options.Ascending ? query.OrderBy(e => e.Difficulty) : query.OrderByDescending(e => e.Difficulty),
-            SortBy.MUSCLE_GROUP => options.Ascending
-                ? query.OrderBy(e => e.ExerciseMuscles.First().MuscleGroup)
-                : query.OrderByDescending(e => e.ExerciseMuscles.First().MuscleGroup),
-            SortBy.TRAINING_TYPE => options.Ascending
-                ? query.OrderBy(e => e.TrainingTypes.First().Name)
-                : query.OrderByDescending(e => e.TrainingTypes.First().Name),
-            _ => query.OrderBy(e => e.Id)
-        };
-        return query;
-    }
 
     public async Task<Result<bool>> CreateAsync(ExerciseWriteDto newExerciseDto, CancellationToken cancellationToken)
     {
@@ -323,13 +310,11 @@ internal class ExerciseService : IExerciseService
             if (exercise == null)
                 return Result<bool>.Failure("Exercise not found.");
 
-            // Update scalar properties
             exercise.Name = Utils.NormalizeString(exerciseDto.Name);
-            exercise.Description = Utils.NormalizeString(exerciseDto.Description);
-            exercise.HowTo = Utils.NormalizeString(exerciseDto.HowTo);
+            exercise.Description = Utils.NormalizeString(exerciseDto.Description!);
+            exercise.HowTo = Utils.NormalizeString(exerciseDto.HowTo!);
             exercise.Difficulty = exerciseDto.Difficulty.GetValueOrDefault();
 
-            // Replace ExerciseHowTos
             _context.ExerciseHowTos.RemoveRange(exercise.ExerciseHowTos);
             exercise.ExerciseHowTos = exerciseDto.HowTos.Select(howTo => new ExerciseHowTo
             {
@@ -338,7 +323,6 @@ internal class ExerciseService : IExerciseService
                 Url = howTo.Url
             }).ToList();
 
-            // Replace ExerciseMuscles
             _context.ExerciseMuscles.RemoveRange(exercise.ExerciseMuscles);
 
             List<Muscle> muscles = await _context.Muscles
@@ -350,7 +334,6 @@ internal class ExerciseService : IExerciseService
                 IsPrimary = em.IsPrimary
             }).ToList();
 
-            // Replace TrainingTypes
             exercise.TrainingTypes.Clear();
             List<TrainingType> trainingTypes = await _context.TrainingTypes
                 .Where(tt => exerciseDto.TrainingTypes.Contains(tt.Name))
@@ -386,14 +369,11 @@ internal class ExerciseService : IExerciseService
             if (exercise == null)
                 return Result<bool>.Failure("Exercise not found.");
 
-            // Remove related entities if not automatically handled by cascade delete
             _context.ExerciseHowTos.RemoveRange(exercise.ExerciseHowTos);
             _context.ExerciseMuscles.RemoveRange(exercise.ExerciseMuscles);
 
-            // Remove the exercise
             _context.Exercises.Remove(exercise);
 
-            // Commit the transaction
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
 
@@ -407,4 +387,37 @@ internal class ExerciseService : IExerciseService
     }
 
     // DELTE and UPDATE BULK LATOR 
+
+    private static IQueryable<ExerciseReadDto> ApplyFiltering(ExerciseQueryOptions options, IQueryable<ExerciseReadDto> query)
+    {
+        if (!string.IsNullOrEmpty(options.TrainingTypeName))
+            query = query.Where(e => e.TrainingTypes.Any(tt => tt.Name == options.TrainingTypeName));
+
+        if (!string.IsNullOrEmpty(options.MuscleName))
+            query = query.Where(e => e.ExerciseMuscles.Any(em => em.Name == options.MuscleName));
+
+        if (!string.IsNullOrEmpty(options.MuscleGroupName))
+            query = query.Where(e => e.ExerciseMuscles.Any(em => em.MuscleGroup == options.MuscleGroupName));
+
+        if (options.MinimumDifficulty.HasValue)
+            query = query.Where(e => e.Difficulty >= options.MinimumDifficulty.Value);
+        return query;
+    }
+
+    private static IQueryable<ExerciseReadDto> ApplySorting(ExerciseQueryOptions options, IQueryable<ExerciseReadDto> query)
+    {
+        query = options.SortBy switch
+        {
+            SortBy.NAME => options.Ascending ? query.OrderBy(e => e.Name) : query.OrderByDescending(e => e.Name),
+            SortBy.DIFFICULTY => options.Ascending ? query.OrderBy(e => e.Difficulty) : query.OrderByDescending(e => e.Difficulty),
+            SortBy.MUSCLE_GROUP => options.Ascending
+                ? query.OrderBy(e => e.ExerciseMuscles.First().MuscleGroup)
+                : query.OrderByDescending(e => e.ExerciseMuscles.First().MuscleGroup),
+            SortBy.TRAINING_TYPE => options.Ascending
+                ? query.OrderBy(e => e.TrainingTypes.First().Name)
+                : query.OrderByDescending(e => e.TrainingTypes.First().Name),
+            _ => query.OrderBy(e => e.Id)
+        };
+        return query;
+    }
 }

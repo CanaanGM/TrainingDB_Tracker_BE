@@ -66,31 +66,48 @@ public class WeatherForecastController : ControllerBase
         return Ok(await _trainingTypesService.CreateBulkAsync(newTypes, cancellationToken));
     }
 
-
+    /// <summary>
+    /// Gets a paginated list of all exercises in the database with their related muscles.
+    /// </summary>
+    /// <param name="asc">Ascending or decending option</param>
+    /// <param name="d">Difficulty, from 1 ~ 10</param>
+    /// <param name="g">Muscle Group to filter the results by</param>
+    /// <param name="m">Muscle to filter the results by</param>
+    /// <param name="pageNumber">PageNumber</param>
+    /// <param name="pageSize">Page Size</param>
+    /// <param name="sort">SortBy: NAME, DIFFICULTY, MUSCLE_GROUP, TRAINING_TYPE</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>a paginated list of all exercises in the database with their related muscles with applied sorting and filtering.</returns>
     [HttpGet("/exercise")]
     public async Task<IActionResult> GetExercisesAsync(
-        [FromQuery] bool s = true
-        , [FromQuery] int d = 1
-        , [FromQuery] string g = ""
-        , [FromQuery] string m = ""
-        , [FromQuery] int pageNumber=1
-        , [FromQuery] int pageSize=2
-        , [FromQuery] string sort = ""
-        , CancellationToken cancellationToken= default)
+       [FromQuery] bool asc = true,
+       [FromQuery] int d = 1,
+       [FromQuery] string g = "",
+       [FromQuery] string m = "",
+       [FromQuery] int pageNumber = 1,
+       [FromQuery] int pageSize = 10,
+       [FromQuery] string sort = "NAME",
+       CancellationToken cancellationToken = default)
     {
-        var options = new ExerciseQueryOptions
+        ExerciseQueryOptions options = new ExerciseQueryOptions
         {
-            Ascending = true,
-            MinimumDifficulty = 1,
-            MuscleGroupName = "",
-            MuscleName = "",
-            PageNumber = 1,
-            PageSize = 10,
-            SortBy = "",
-            TrainingTypeName = ""
+            Ascending = asc,
+            MinimumDifficulty = d,
+            MuscleGroupName = g,
+            MuscleName = m,
+            PageNumber = pageNumber,
+            PageSize = pageSize,
+            SortBy = Enum.TryParse(sort, true, out SortBy sortByResult) ? sortByResult : SortBy.NAME,
+            TrainingTypeName = "" // Add a query parameter if needed to handle this
         };
-        return Ok(await _exerciseService.GetAsync(options, cancellationToken));
+
+        Result<PaginatedList<ExerciseReadDto>> result = await _exerciseService.GetAsync(options, cancellationToken);
+        if (result.IsSuccess)
+            return Ok(result.Value);
+        return BadRequest(result.ErrorMessage);
     }
+
+
     [HttpGet("/exercise/{name}")]
     public async Task<IActionResult> GetExerciseByNameAsync(string name, CancellationToken cancellationToken)
     {
@@ -99,7 +116,7 @@ public class WeatherForecastController : ControllerBase
     [HttpPost("/exercise")]
     public async Task<IActionResult> CreateExerciseAsync([FromBody] ExerciseWriteDto newExercise, CancellationToken cancellationToken)
     {
-        return Ok( await _exerciseService.CreateAsync(newExercise, cancellationToken));
+        return Ok(await _exerciseService.CreateAsync(newExercise, cancellationToken));
     }
 
 
