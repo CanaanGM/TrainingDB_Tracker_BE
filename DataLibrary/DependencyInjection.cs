@@ -17,7 +17,7 @@ public static class DependencyInjection
         services.AddScoped<ITrainingTypesService, TrainingTypesService>();
         services.AddScoped<IExerciseService, ExerciseService>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+        services.AddScoped<ITrainingSessionService, TrainingSessionService>();
         return services;
     }
 }

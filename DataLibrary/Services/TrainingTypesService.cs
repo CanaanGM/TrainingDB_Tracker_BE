@@ -100,8 +100,9 @@ internal class TrainingTypesService : ITrainingTypesService
             TrainingType? oldType = await _context.TrainingTypes.SingleOrDefaultAsync(ot => ot.Id == typeId, cancellationToken);
             if (oldType is null)
                 throw new Exception("TODO: Change to appropriate exception type.. .err.. i mean\nTHE TRAINING TYPE IS NOT THERE!!");
-
+            //TODO: remove the KEY in the database, the NAME is a contraint, cause i done goofed
             _mapper.Map(updatedType, oldType);
+            _context.Entry(oldType).State = EntityState.Modified;
             await _context.SaveChangesAsync(cancellationToken);
         }
         catch (Exception ex)

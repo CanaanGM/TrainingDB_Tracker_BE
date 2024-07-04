@@ -8,17 +8,20 @@ using DataLibrary.Helpers;
 using DataLibrary.Models;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace DataLibrary.Services;
 internal class ExerciseService : IExerciseService
 {
     private readonly SqliteContext _context;
     private readonly IMapper _mapper;
+    private readonly ILogger<ExerciseService> _logger;
 
-    public ExerciseService(SqliteContext context, IMapper mapper)
+    public ExerciseService(SqliteContext context, IMapper mapper, ILogger<ExerciseService> logger)
     {
         _context = context;
         _mapper = mapper;
+        _logger = logger;
     }
     //GET
     public async Task<Result<ExerciseReadDto>> GetByNameAsync(string exerciseName, CancellationToken cancellationToken)
@@ -181,7 +184,9 @@ internal class ExerciseService : IExerciseService
         try
         {
             // Normalize and prepare lists for querying
-            List<string> muscleNames = newExerciseDto.ExerciseMuscles.Select(em => Utils.NormalizeString(em.MuscleName)).ToList();
+            List<string> muscleNames = newExerciseDto.ExerciseMuscles.Select(em => Utils.NormalizeString(em.MuscleName))
+                .Distinct()
+                .ToList();
             Dictionary<string, Muscle> muscles = await _context.Muscles
                 .Where(m => muscleNames.Contains(m.Name))
                 .ToDictionaryAsync(m => m.Name, m => m, cancellationToken);  // Using a dictionary for quick lookup
@@ -190,7 +195,9 @@ internal class ExerciseService : IExerciseService
             if (muscles.Count != newExerciseDto.ExerciseMuscles.Count)
                 throw new Exception("One or more specified muscles could not be found.");
 
-            List<string> trainingTypeNames = newExerciseDto.TrainingTypes.Select(Utils.NormalizeString).ToList();
+            List<string> trainingTypeNames = newExerciseDto.TrainingTypes.Select(Utils.NormalizeString)
+                .Distinct()
+                .ToList();
             List<TrainingType> trainingTypes = await _context.TrainingTypes
                 .Where(tt => trainingTypeNames.Contains(tt.Name))
                 .ToListAsync(cancellationToken);
@@ -265,11 +272,13 @@ internal class ExerciseService : IExerciseService
                     Description = Utils.NormalizeString(dto.Description!),
                     HowTo = Utils.NormalizeString(dto.HowTo!),
                     Difficulty = dto.Difficulty.GetValueOrDefault(),
-                    ExerciseHowTos = dto.HowTos.Select(howTo => new ExerciseHowTo
+                    ExerciseHowTos = dto.HowTos.Count > 0 ? dto.HowTos.Select(howTo => new ExerciseHowTo
                     {
                         Name = Utils.NormalizeString(howTo.Name),
                         Url = howTo.Url
-                    }).ToList(),
+                    }).ToList()
+                    : []
+                    ,
                     ExerciseMuscles = dto.ExerciseMuscles.Select(em => new ExerciseMuscle
                     {
                         Muscle = muscles[Utils.NormalizeString(em.MuscleName)],
@@ -277,7 +286,7 @@ internal class ExerciseService : IExerciseService
                     }).ToList(),
                     TrainingTypes = dto.TrainingTypes.Select(tt => trainingTypes[Utils.NormalizeString(tt)]).ToList()
                 };
-
+                _logger.LogCritical($"Now Adding: {newExercise.Name}");
                 exercises.Add(newExercise);
             }
 

@@ -30,7 +30,7 @@ public class ExerciseWriteDto
 public class ExerciseMuscleWriteDto
 {
     public required string MuscleName { get; init; }
-    public required bool IsPrimary { get; init; }
+    public bool? IsPrimary { get; init; } = false;
 }
 
 

@@ -6,26 +6,28 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 [ApiController]
-[Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+public class GenericController : ControllerBase
 {
 
-    private readonly ILogger<WeatherForecastController> _logger;
+    private readonly ILogger<GenericController> _logger;
     private readonly IMuscleService _muscleService;
     private readonly ITrainingTypesService _trainingTypesService;
     private readonly IExerciseService _exerciseService;
+    private readonly ITrainingSessionService _trainingSessionService;
 
-    public WeatherForecastController(
-        ILogger<WeatherForecastController> logger
+    public GenericController(
+        ILogger<GenericController> logger
         , IMuscleService muscleService
         , ITrainingTypesService trainingTypesService
         , IExerciseService exerciseService
+        , ITrainingSessionService trainingSessionService
         )
     {
         _logger = logger;
         _muscleService = muscleService;
         _trainingTypesService = trainingTypesService;
         _exerciseService = exerciseService;
+        _trainingSessionService = trainingSessionService;
     }
 
     [HttpGet("/muscles")]
@@ -136,11 +138,29 @@ public class WeatherForecastController : ControllerBase
         return Ok(await _exerciseService.DeleteExerciseAsync(id, cancellationToken));
     }
 
+    [HttpGet("/training")]
+    public async Task<IActionResult> GetTrainingSessionsAsync(CancellationToken cancellationToken, string? startDate, string? endDate)
+    {
+        return Ok(await _trainingSessionService.GetTrainingSessionsAsync(startDate, endDate, cancellationToken));
+    }
 
+    [HttpPost("/training")]
+    public async Task<IActionResult> CreateTrainingSessionAsync([FromBody] TrainingSessionWriteDto newTrainingSessionDto, CancellationToken cancellationToken)
+    {
+        return Ok(await _trainingSessionService.CreateSessionAsync(newTrainingSessionDto, cancellationToken));
+    }
 
+    [HttpPut("/training/{sessionId}")]
+    public async Task<IActionResult> UpdateTrainingSessionAsync(int sessionId, TrainingSessionWriteDto updatedSessionDto, CancellationToken cancellationToken)
+    {
+        return Ok(await _trainingSessionService.UpdateSessionAsync(sessionId, updatedSessionDto, cancellationToken));
+    }
 
-
-
+    [HttpDelete("/training/{sessionId}")]
+    public async Task<IActionResult> DeleteTrainingSessionAsyn(int sessionId, CancellationToken cancellationToken)
+    {
+        return Ok(await _trainingSessionService.DeleteSessionAsync(sessionId, cancellationToken));
+    }
 
 
 }

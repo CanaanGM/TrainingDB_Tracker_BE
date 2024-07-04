@@ -44,7 +44,10 @@ public class SqliteContext : DbContext
     public virtual DbSet<TrainingWeek> TrainingWeeks { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite("Data Source=E:/development/databases/training_log_v2.db");
+    {
+        optionsBuilder.EnableSensitiveDataLogging();
+        optionsBuilder.UseSqlite("Data Source=E:/development/databases/training_log_v2.db");
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
