@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 
 using DataLibrary.Context;
 using DataLibrary.Core;
@@ -25,58 +24,67 @@ internal class TrainingSessionService : ITrainingSessionService
     // no pagination, this needs to be all at once 
     // export to something else ? ?
     public async Task<Result<List<TrainingSessionReadDto>>> GetTrainingSessionsAsync(
-        string? startDate
-        , string? endDate
-        , CancellationToken cancellationToken)
+        string? startDate,
+        string? endDate,
+        CancellationToken cancellationToken)
     {
         try
         {
+            DateTime? start = Utils.ParseDate(startDate);
+            DateTime? end = Utils.ParseDate(endDate);
 
-            IQueryable<TrainingSessionReadDto> query = _context.TrainingSessions
+            IQueryable<TrainingSession> query = _context.TrainingSessions
                 .AsNoTracking()
-                .ProjectTo<TrainingSessionReadDto>(_mapper.ConfigurationProvider);
+                    .Include(x => x.TrainingSessionExerciseRecords)
+                        .ThenInclude(w => w.ExerciseRecord)
+                        .ThenInclude(w => w.Exercise)
+                    .Include(r => r.TrainingTypes);
 
-            if (!string.IsNullOrEmpty(startDate) && !string.IsNullOrEmpty(endDate))
-                query = query
-                .Where(x => x.CreatedAt >= Utils.ParseDate(startDate) && x.CreatedAt <= Utils.ParseDate(endDate));
+            if (start.HasValue && end.HasValue)
+            {
+                query = query.Where(x => x.CreatedAt >= start.Value && x.CreatedAt <= end.Value);
+            }
 
-            List<TrainingSessionReadDto> sessions = await query
-                .ToListAsync(cancellationToken);
-            return Result<List<TrainingSessionReadDto>>.Success(sessions);
+            List<TrainingSession> sessions = await query.ToListAsync(cancellationToken);
+            return Result<List<TrainingSessionReadDto>>.Success(_mapper.Map<List<TrainingSessionReadDto>>(sessions));
         }
         catch (Exception ex)
         {
-            return Result<List<TrainingSessionReadDto>>.Failure(ex.Message, ex);
+            return Result<List<TrainingSessionReadDto>>.Failure($"Error retrieving training sessions: {ex.Message}", ex);
         }
     }
 
+
     public async Task<Result<bool>> CreateSessionAsync(TrainingSessionWriteDto newSession, CancellationToken cancellationToken)
     {
+        // get the exercise, 
+        // create the record,
+        // populate the last used weight inside the join table
+        // get the types from each exercise
+        // create the session
         Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
             List<string> normalizedExerciseNames = newSession.ExerciseRecords
-                .Select(x => Utils.NormalizeString(x.ExcerciseName))
+                .Select(x => Utils.NormalizeString(x.ExerciseName))
                 .Distinct()
                 .ToList();
 
-            Dictionary<string, Models.Exercise> relatedExercises = await _context.Exercises
+            List<Exercise> relatedExercises = await _context.Exercises
+                .Include(x => x.TrainingTypes)
                 .Where(x => normalizedExerciseNames.Contains(x.Name))
-                .ToDictionaryAsync(e => e.Name, e => e, cancellationToken);
+                .ToListAsync(cancellationToken);
 
             if (normalizedExerciseNames.Count != relatedExercises.Count)
                 throw new Exception("one or more exercises could not be found");
 
-            List<string> normailzedTrainingTypeNames = newSession.TrainingTypes
-                .Select(x => Utils.NormalizeString(x))
+            List<TrainingType> relatedTrainingTypes = relatedExercises
+                .SelectMany(x =>
+                {
+                    return x.TrainingTypes;
+                })
                 .Distinct()
                 .ToList();
-            Dictionary<string, TrainingType> relatedTypes = await _context.TrainingTypes
-                .Where(x => normailzedTrainingTypeNames.Contains(x.Name))
-                .ToDictionaryAsync(x => x.Name, x => x, cancellationToken);
-
-            if (normailzedTrainingTypeNames.Count != relatedTypes.Count)
-                throw new Exception("one or more training types could not be found");
 
             TrainingSession newTrainingSession = new TrainingSession()
             {
@@ -85,7 +93,7 @@ internal class TrainingSessionService : ITrainingSessionService
                 Notes = newSession.Notes,
                 Mood = newSession.Mood,
                 CreatedAt = Utils.ParseDate(newSession.CreatedAt) ?? DateTime.UtcNow,
-                TrainingTypes = relatedTypes.Values.ToList(),
+                TrainingTypes = relatedTrainingTypes.ToList(),
                 TrainingSessionExerciseRecords = newSession.ExerciseRecords.Select(x => new TrainingSessionExerciseRecord
                 {
                     ExerciseRecord = new ExerciseRecord
@@ -95,7 +103,7 @@ internal class TrainingSessionService : ITrainingSessionService
                         DistanceInMeters = x.DistanceInMeters,
                         WeightUsedKg = x.WeightUsedKg,
                         Notes = x.Notes,
-                        Exercise = relatedExercises[x.ExcerciseName]
+                        Exercise = relatedExercises.FirstOrDefault(e => Utils.NormalizeString(e.Name) == Utils.NormalizeString(x.ExerciseName))
                     },
                     LastWeightUsedKg = x.WeightUsedKg,
                     CreatedAt = DateTime.UtcNow
@@ -114,6 +122,7 @@ internal class TrainingSessionService : ITrainingSessionService
         }
     }
 
+    // think a bit more about this
     public async Task<Result<bool>> UpdateSessionAsync(int sessionId, TrainingSessionWriteDto updateDto, CancellationToken cancellationToken)
     {
         Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = _context.Database.BeginTransaction();
@@ -133,11 +142,13 @@ internal class TrainingSessionService : ITrainingSessionService
             trainingSession.Notes = updateDto.Notes;
             trainingSession.Mood = updateDto.Mood;
 
+            List<TrainingType> newTypes = new();
+
             // Update exercise records
             foreach (ExerciseRecordWriteDto exerciseDto in updateDto.ExerciseRecords)
             {
                 TrainingSessionExerciseRecord? exerciseRecord = trainingSession.TrainingSessionExerciseRecords
-                    .FirstOrDefault(er => er.ExerciseRecord.Exercise.Name == exerciseDto.ExcerciseName);
+                    .FirstOrDefault(er => er.ExerciseRecord.Exercise.Name == exerciseDto.ExerciseName);
 
                 if (exerciseRecord != null)
                 {
@@ -146,25 +157,19 @@ internal class TrainingSessionService : ITrainingSessionService
                     exerciseRecord.ExerciseRecord.DistanceInMeters = exerciseDto.DistanceInMeters;
                     exerciseRecord.ExerciseRecord.WeightUsedKg = exerciseDto.WeightUsedKg;
                     exerciseRecord.ExerciseRecord.Notes = exerciseDto.Notes;
+                    newTypes = exerciseRecord.ExerciseRecord.Exercise.TrainingTypes.ToList();
+
                 }
             }
 
-            // Update training types
-            // Assumes TrainingTypes are managed by names; may require adjustment based on actual relationship handling
-            List<string> currentTypeNames = trainingSession.TrainingTypes.Select(tt => tt.Name).ToList();
-            List<string> updatedTypeNames = updateDto.TrainingTypes;
-
-            IQueryable<TrainingType> typesToAdd = _context.TrainingTypes.Where(tt => updatedTypeNames.Contains(tt.Name) && !currentTypeNames.Contains(tt.Name));
-            List<TrainingType> typesToRemove = trainingSession.TrainingTypes.Where(tt => !updatedTypeNames.Contains(tt.Name)).ToList();
-
-            foreach (TrainingType? type in typesToAdd)
-            {
-                trainingSession.TrainingTypes.Add(type);
-            }
-
-            foreach (TrainingType? type in typesToRemove)
+            foreach (TrainingType? type in trainingSession.TrainingTypes)
             {
                 trainingSession.TrainingTypes.Remove(type);
+            }
+
+            foreach (TrainingType? type in newTypes)
+            {
+                trainingSession.TrainingTypes.Add(type);
             }
 
             await _context.SaveChangesAsync(cancellationToken);

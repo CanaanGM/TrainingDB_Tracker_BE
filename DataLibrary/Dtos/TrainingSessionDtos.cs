@@ -18,7 +18,6 @@ public class TrainingSessionWriteDto
     public string? Notes { get; set; }
     public int? Mood { get; set; }
     public List<ExerciseRecordWriteDto> ExerciseRecords { get; set; }
-    public List<string> TrainingTypes { get; set; }
     public string? CreatedAt { get; set; }
 
 }
@@ -32,7 +31,7 @@ public class ExerciseRecordReadDto
     public double? WeightUsedKg { get; set; }
     public string? Notes { get; set; }
     public DateTime? CreatedAt { get; set; }
-    public string ExcerciseName { get; set; }
+    public string ExerciseName { get; set; }
     public string MuscleGroup { get; set; }
 }
 public class ExerciseRecordWriteDto
@@ -42,5 +41,5 @@ public class ExerciseRecordWriteDto
     public int? DistanceInMeters { get; set; }
     public double? WeightUsedKg { get; set; }
     public string? Notes { get; set; }
-    public string ExcerciseName { get; set; }
+    public string ExerciseName { get; set; }
 }

@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using DataLibrary.Models;
+﻿using DataLibrary.ModelsV2;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DataLibrary.Context;
@@ -45,9 +44,10 @@ public partial class TrainingLogV2Context : DbContext
     public virtual DbSet<TrainingWeek> TrainingWeeks { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlite("Data Source=E:/development/databases/training_log_v2.db");
-
+    {
+        optionsBuilder.EnableSensitiveDataLogging();
+        optionsBuilder.UseSqlite("Data Source=E:/development/databases/training_log_v2.db");
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Block>(entity =>
@@ -125,12 +125,6 @@ public partial class TrainingLogV2Context : DbContext
 
             entity.HasIndex(e => e.Name, "IX_exercise_name").IsUnique();
 
-            entity.HasIndex(e => e.Difficulty, "idx_exercise_difficulty");
-
-            entity.HasIndex(e => e.Id, "idx_exercise_id");
-
-            entity.HasIndex(e => e.Name, "idx_exercise_name");
-
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description).HasColumnName("description");
             entity.Property(e => e.Difficulty)
@@ -150,8 +144,6 @@ public partial class TrainingLogV2Context : DbContext
                     {
                         j.HasKey("ExerciseId", "TrainingTypeId");
                         j.ToTable("exercise_type");
-                        j.HasIndex(new[] { "ExerciseId" }, "idx_exercise_type_exercise_id");
-                        j.HasIndex(new[] { "TrainingTypeId" }, "idx_exercise_type_training_id");
                         j.IndexerProperty<int>("ExerciseId").HasColumnName("exercise_id");
                         j.IndexerProperty<int>("TrainingTypeId").HasColumnName("training_type_id");
                     });
@@ -227,12 +219,6 @@ public partial class TrainingLogV2Context : DbContext
             entity.ToTable("muscle");
 
             entity.HasIndex(e => e.Name, "IX_muscle_name").IsUnique();
-
-            entity.HasIndex(e => e.MuscleGroup, "idx_muscle_group");
-
-            entity.HasIndex(e => e.Id, "idx_muscle_id");
-
-            entity.HasIndex(e => e.Name, "idx_muscle_name");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Function).HasColumnName("function");
@@ -401,9 +387,7 @@ public partial class TrainingLogV2Context : DbContext
         {
             entity.ToTable("training_type");
 
-            entity.HasIndex(e => e.Id, "idx_training_type_id");
-
-            entity.HasIndex(e => e.Name, "idx_training_type_name");
+            entity.HasIndex(e => e.Name, "IX_training_type_name").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Name)
@@ -433,8 +417,6 @@ public partial class TrainingLogV2Context : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        OnModelCreatingPartial(modelBuilder);
-    }
 
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    }
 }

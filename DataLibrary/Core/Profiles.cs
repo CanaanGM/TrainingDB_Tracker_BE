@@ -35,16 +35,21 @@ internal class Profiles : Profile
 
 
         CreateMap<TrainingSession, TrainingSessionReadDto>()
-            //.ForMember(dt => dt.TrainingTypes, src => src.MapFrom(o => o.))
+            .ForMember(dt => dt.TrainingTypes
+            , src => src.MapFrom(o => o.TrainingTypes))
+            .ForMember(dt => dt.ExerciseRecords, src => src.MapFrom(r => r.TrainingSessionExerciseRecords.Select(r => r.ExerciseRecord)))
             ;
         CreateMap<ExerciseRecord, ExerciseRecordReadDto>()
-            .ForMember(dt => dt.ExcerciseName
+            .ForMember(dt => dt.ExerciseName
                 , src => src
                     .MapFrom(o => o.Exercise.Name))
             .ForMember(dt => dt.MuscleGroup
                 , src => src
                     .MapFrom(o => o.Exercise.ExerciseMuscles
-                        .Select(x => x.Muscle.Name)));
+                    .Select(x => x.Muscle.MuscleGroup)
+                    )
+                    //.Select(x => x.Muscle.Name))
+                    );
 
 
 
