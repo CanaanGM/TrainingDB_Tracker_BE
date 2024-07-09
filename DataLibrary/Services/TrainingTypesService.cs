@@ -7,17 +7,20 @@ using DataLibrary.Helpers;
 using DataLibrary.Models;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace DataLibrary.Services;
-internal class TrainingTypesService : ITrainingTypesService
+public class TrainingTypesService : ITrainingTypesService
 {
     private readonly SqliteContext _context;
     private readonly IMapper _mapper;
+    private readonly ILogger<TrainingTypesService> _logger;
 
-    public TrainingTypesService(SqliteContext context, IMapper mapper)
+    public TrainingTypesService(SqliteContext context, IMapper mapper, ILogger<TrainingTypesService> logger)
     {
         _context = context;
         _mapper = mapper;
+        _logger = logger;
     }
 
     public async Task<Result<List<TrainingTypeReadDto>>> GetAllAsync(CancellationToken cancellationToken)
@@ -34,21 +37,20 @@ internal class TrainingTypesService : ITrainingTypesService
         }
         catch (Exception ex)
         {
+            _logger.LogError($"[ERROR]: an exception was thrown while calling {nameof(GetAllAsync)}/n{ex} ");
             return Result<List<TrainingTypeReadDto>>.Failure(ex.Message, ex);
         }
     }
 
-    public async Task<Result<bool>> CreateAsync(TrainingTypeWriteDto newTrainingType, CancellationToken cancellationToken)
+    public async Task<Result<int>> CreateAsync(TrainingTypeWriteDto newTrainingType, CancellationToken cancellationToken)
     {
         try
         {
-            if (
-                await _context.TrainingTypes
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Name == newTrainingType.Name, cancellationToken)
-                is not null
-                )
-                return Result<bool>.Success(false);//TODO: later change to meaningful codes or something
+            var oldType = await _context.TrainingTypes
+                    .AsNoTracking()
+                    .SingleOrDefaultAsync(x => x.Name == newTrainingType.Name, cancellationToken);
+            if (oldType is not null)
+                return Result<int>.Success(oldType.Id);
 
             TrainingType newType = _mapper.Map<TrainingType>(newTrainingType);
             newType.Name = Utils.NormalizeString(newType.Name);
@@ -56,16 +58,17 @@ internal class TrainingTypesService : ITrainingTypesService
             await _context.TrainingTypes.AddAsync(newType, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Result<bool>.Success(true);
+            return Result<int>.Success(newType.Id);
         }
         catch (Exception ex)
         {
+            _logger.LogError($"[ERROR]: an exception was thrown while calling {nameof(CreateAsync)}/n{ex} ");
 
-            return Result<bool>.Failure(ex.Message, ex);
+            return Result<int>.Failure(ex.Message, ex);
         }
     }
 
-    public async Task<Result<bool>> CreateBulkAsync(HashSet<TrainingTypeWriteDto> newTypes, CancellationToken cancellationToken)
+    public async Task<Result<bool>> CreateBulkAsync(ICollection<TrainingTypeWriteDto> newTypes, CancellationToken cancellationToken)
     {
         using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = await _context
             .Database
@@ -87,6 +90,7 @@ internal class TrainingTypesService : ITrainingTypesService
         }
         catch (Exception ex)
         {
+            _logger.LogError($"[ERROR]: an exception was thrown while calling {nameof(CreateBulkAsync)}/n{ex} ");
             await transaction.RollbackAsync(cancellationToken);
             return Result<bool>.Failure(ex.Message, ex);
         }
@@ -107,10 +111,29 @@ internal class TrainingTypesService : ITrainingTypesService
         }
         catch (Exception ex)
         {
-
+            _logger.LogError($"[ERROR]: an exception was thrown while calling {nameof(Update)} with an id of {typeId}./n{ex} ");
             return Result<bool>.Failure(ex.Message, ex);
         }
         return Result<bool>.Success(true);
+    }
+
+    public async Task<Result<bool>> DeleteAsync(int typeId, CancellationToken cancellationToken)
+    {
+        var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+        try
+        {
+            _context.TrainingTypes.Remove(new TrainingType { Id = typeId });
+            await _context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+            return Result<bool>.Success(true);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"[ERROR]: an exception was thrown while calling {nameof(DeleteAsync)} with an id of {typeId}./n{ex} ");
+            await transaction.RollbackAsync(cancellationToken);
+            return Result<bool>.Failure($" failed to remove TrainingType of the id: {ex.Message}.\n", ex);
+
+        }
     }
 
 }

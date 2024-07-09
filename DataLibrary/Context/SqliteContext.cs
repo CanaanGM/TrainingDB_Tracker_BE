@@ -6,6 +6,7 @@ namespace DataLibrary.Context;
 
 public class SqliteContext : DbContext
 {
+    public string DatabaseConnectionString { get; set; } = "Data Source=E:/development/databases/training_log_v2.db";
     public SqliteContext()
     {
     }
@@ -14,7 +15,16 @@ public class SqliteContext : DbContext
         : base(options)
     {
     }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.EnableSensitiveDataLogging();
 
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlite(DatabaseConnectionString);
+        }
+
+    }
     public virtual DbSet<Block> Blocks { get; set; }
 
     public virtual DbSet<BlockExercise> BlockExercises { get; set; }
@@ -43,11 +53,8 @@ public class SqliteContext : DbContext
 
     public virtual DbSet<TrainingWeek> TrainingWeeks { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.EnableSensitiveDataLogging();
-        optionsBuilder.UseSqlite("Data Source=E:/development/databases/training_log_v2.db");
-    }
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Block>(entity =>

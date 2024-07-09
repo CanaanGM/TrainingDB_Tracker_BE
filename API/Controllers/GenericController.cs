@@ -141,7 +141,8 @@ public class GenericController : ControllerBase
     [HttpGet("/training")]
     public async Task<IActionResult> GetTrainingSessionsAsync(CancellationToken cancellationToken, string? startDate, string? endDate)
     {
-        return Ok(await _trainingSessionService.GetTrainingSessionsAsync(startDate, endDate, cancellationToken));
+        Result<List<TrainingSessionReadDto>> sessions = await _trainingSessionService.GetTrainingSessionsAsync(startDate, endDate, cancellationToken);
+        return Ok(sessions.Value);
     }
 
     [HttpPost("/training")]

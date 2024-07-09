@@ -1,5 +1,4 @@
-﻿using DataLibrary.ModelsV2;
-
+﻿using DataLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataLibrary.Context;

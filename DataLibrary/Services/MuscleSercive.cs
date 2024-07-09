@@ -7,79 +7,119 @@ using DataLibrary.Helpers;
 using DataLibrary.Models;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace DataLibrary.Services;
-internal class MuscleSercive : IMuscleService
+public class MuscleSercive : IMuscleService
 {
     private readonly SqliteContext _context;
     private readonly IMapper _mapper;
+    private readonly ILogger<MuscleSercive> _logger;
 
-    public MuscleSercive(SqliteContext context, IMapper mapper)
+    public MuscleSercive(SqliteContext context, IMapper mapper, ILogger<MuscleSercive> logger)
     {
         _context = context;
         _mapper = mapper;
+        _logger = logger;
     }
 
     public async Task<Result<List<MuscleReadDto>>> GetAllAsync(CancellationToken cancellationToken)
     {
-        return Result<List<MuscleReadDto>>.Success(
-            _mapper.Map<List<MuscleReadDto>>(
-                await _context.Muscles
-                    .AsNoTracking()
-                    .ToListAsync(cancellationToken)
-                )
-            );
+        try
+        {
+            return Result<List<MuscleReadDto>>.Success(
+                _mapper.Map<List<MuscleReadDto>>(
+                    await _context.Muscles
+                        .AsNoTracking()
+                        .ToListAsync(cancellationToken)
+                    )
+                );
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"[ERROR]: {ex.Message} {nameof(GetAllAsync)}.\n", ex);
+            return Result<List<MuscleReadDto>>.Failure($"something went wrong getting the muscles: {ex.Message}", ex);
+        }
     }
 
     public async Task<Result<MuscleReadDto>> GetByNameAsync(string muscleName, CancellationToken cancellationToken)
     {
-        return Result<MuscleReadDto>.Success(
-        _mapper.Map<MuscleReadDto>(
-            await _context.Muscles
-                .AsNoTracking()
-                .SingleOrDefaultAsync(muscle => muscle.Name == muscleName, cancellationToken)
-            )
-        );
+        try
+        {
+            if (string.IsNullOrEmpty(muscleName))
+                throw new ArgumentNullException("muscleName cannot be null");
+
+            var muscle = await _context.Muscles
+                        .AsNoTracking()
+                        .SingleOrDefaultAsync(muscle => muscle.Name == Utils.NormalizeString(muscleName), cancellationToken);
+
+            if (muscle is null)
+                throw new Exception("Muscle was not found");
+
+
+            return Result<MuscleReadDto>.Success(_mapper.Map<MuscleReadDto>(muscle));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"[ERROR]: {ex.Message} {nameof(GetByNameAsync)}.\n", ex);
+            return Result<MuscleReadDto>.Failure($"something went wrong getting the muscle: {ex.Message}", ex);
+        }
+
     }
 
     public async Task<Result<List<MuscleReadDto>>> GetAllByGroupAsync(string muscleGroupName, CancellationToken cancellationToken)
     {
-        return Result<List<MuscleReadDto>>.Success(
-                _mapper.Map<List<MuscleReadDto>>(
-                    await _context.Muscles
-                        .AsNoTracking()
-                        .Where(muscle => muscle.MuscleGroup == muscleGroupName)
-                        .ToListAsync(cancellationToken)
-        )
-    );
-    }
-
-    public async Task<Result<bool>> CreateMuscleAsync(MuscleWriteDto newMuscle, CancellationToken cancellationToken)
-    {
-        // normalize the name, group name
-        Muscle newMusce = _mapper.Map<Muscle>(newMuscle);
-        newMusce.Name = Utils.NormalizeString(newMusce.Name!);
-        newMusce.MuscleGroup = Utils.NormalizeString(newMusce.MuscleGroup!);
-        newMusce.Function = Utils.NormalizeString(newMusce.Function!);
-
         try
         {
-            await _context.Muscles.AddAsync(newMusce, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
+            if (string.IsNullOrEmpty(muscleGroupName))
+                throw new ArgumentNullException("muscleGroupName cannot be null");
+            var groupedMuscles = await _context.Muscles
+                        .AsNoTracking()
+                        .Where(muscle => muscle.MuscleGroup == Utils.NormalizeString(muscleGroupName))
+                        .ToListAsync(cancellationToken);
+
+
+            return Result<List<MuscleReadDto>>.Success(_mapper.Map<List<MuscleReadDto>>(groupedMuscles));
         }
         catch (Exception ex)
         {
-            // log meeeee!
-            return Result<bool>.Failure(ex.Message, ex);
+            _logger.LogError($"[ERROR]: {ex.Message} {nameof(GetAllByGroupAsync)}.\n", ex);
+            return Result<List<MuscleReadDto>>.Failure("something went wrong getting the muscle: { ex.Message}", ex);
         }
-
-        return Result<bool>.Success(true);
 
     }
 
-    public async Task<Result<bool>> CreateBulkAsync(HashSet<MuscleWriteDto> newMuscles, CancellationToken cancellationToken)
+    public async Task<Result<int>> CreateMuscleAsync(MuscleWriteDto newMuscle, CancellationToken cancellationToken)
     {
+        var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+        try
+        {
+            Muscle newMusce = _mapper.Map<Muscle>(newMuscle);
+            newMusce.Name = Utils.NormalizeString(newMusce.Name);
+            newMusce.MuscleGroup = Utils.NormalizeString(newMusce.MuscleGroup);
+            newMusce.Function = Utils.NormalizeString(newMusce.Function);
+            // no need to check the above, cause normalize would throw a fit in case of null or empty.
+            if (string.IsNullOrEmpty(newMuscle.WikiPageUrl)) throw new ArgumentException("WikiPage is important yo!");
 
+            await _context.Muscles.AddAsync(newMusce, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+            return Result<int>.Success(newMusce.Id);
+
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            _logger.LogError($"[ERROR]: {ex.Message} {nameof(CreateMuscleAsync)}.\n", ex);
+            return Result<int>.Failure(ex.Message, ex);
+        }
+
+
+    }
+
+    public async Task<Result<bool>> CreateBulkAsync(ICollection<MuscleWriteDto> newMuscles, CancellationToken cancellationToken)
+    {
         using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
@@ -102,35 +142,38 @@ internal class MuscleSercive : IMuscleService
         catch (Exception ex)
         {
             await transaction.RollbackAsync(cancellationToken);
-
-            // Log MEEEEEEEEEEE!
+            _logger.LogError($"[ERROR]: {ex.Message} {nameof(CreateBulkAsync)}.\n", ex);
             return Result<bool>.Failure(ex.Message, ex);
         }
-
         return Result<bool>.Success(true);
     }
 
 
-    public async Task<Result<bool>> UpdateAsync(int muscleId, MuscleWriteDto updatedMuscle, CancellationToken cancellationToken)
+    public async Task<Result<bool>> UpdateAsync(int muscleId, MuscleUpdateDto updatedMuscle, CancellationToken cancellationToken)
     {
+        var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
             Muscle? oldMuscle = await _context.Muscles.SingleOrDefaultAsync(x => x.Id == muscleId, cancellationToken);
             if (oldMuscle is null)
                 throw new Exception("Muscle not Found, double check the name!");
 
-            _mapper.Map<Muscle>(updatedMuscle);
+            _mapper.Map(updatedMuscle, oldMuscle);
+            await _context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
             return Result<bool>.Success(true);
-
         }
         catch (Exception ex)
         {
+            await transaction.RollbackAsync(cancellationToken);
+            _logger.LogError($"[ERROR]: {ex.Message} {nameof(UpdateAsync)}.\n", ex);
             return Result<bool>.Failure(ex.Message, ex);
         }
     }
 
     public async Task<Result<bool>> DeleteAsync(int muscleId, CancellationToken cancellationToken)
     {
+        var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
             Muscle? muscleToTear = await _context.Muscles.SingleOrDefaultAsync(m => m.Id == muscleId, cancellationToken);
@@ -139,10 +182,12 @@ internal class MuscleSercive : IMuscleService
 
             _context.Muscles.Remove(muscleToTear);
             await _context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
         }
         catch (Exception ex)
         {
-
+            await transaction.RollbackAsync(cancellationToken);
+            _logger.LogError($"[ERROR]: {ex.Message} {nameof(DeleteAsync)}.\n", ex);
             return Result<bool>.Failure(ex.Message, ex);
         }
         return Result<bool>.Success(true);

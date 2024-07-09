@@ -39,3 +39,14 @@ dotnet ef dbcontext scaffold "Data Source=E:/development/databases/training_log_
  ModelsV2 -p .\DataLibrary\  --context-dir Context
 ```
 
+- migrations
+
+```bash
+dotnet ef migrations add initial -s .\DataLibrary\ --context SqliteContext
+```
+
+- Run
+
+```bash
+dotnet watch -p ./API
+```
