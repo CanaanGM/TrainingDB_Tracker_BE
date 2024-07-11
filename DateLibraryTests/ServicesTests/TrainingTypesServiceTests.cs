@@ -35,7 +35,7 @@ public class TrainingTypesServiceTests
     [InlineData("Cardio")]
     public async Task Creating_Returns_Success(string @string)
     {
-        using SqliteContext? context = new SqliteContext(options);
+        using SqliteContext? context = new SqliteContext(options!);
         context.Database.EnsureCreated();
         var newTypeDto = new TrainingTypeWriteDto
         {
@@ -43,7 +43,7 @@ public class TrainingTypesServiceTests
         };
 
 
-        var service = new TrainingTypesService(context, mapper, logger.Object);
+        var service = new TrainingTypesService(context, mapper!, logger.Object);
         var creationResult = await service.CreateAsync(newTypeDto, new CancellationToken());
 
         Assert.True(creationResult.Value >= 1); // a new ID has been assigned
@@ -56,10 +56,10 @@ public class TrainingTypesServiceTests
     [Fact]
     public async Task GettingAll_no_types_returns_Success()
     {
-        using SqliteContext? context = new SqliteContext(options);
+        using SqliteContext? context = new SqliteContext(options!);
         context.Database.EnsureCreated();
 
-        var service = new TrainingTypesService(context, mapper, logger.Object);
+        var service = new TrainingTypesService(context, mapper!, logger.Object);
         var result = await service.GetAllAsync(new CancellationToken());
 
         Assert.True(result.IsSuccess);
@@ -71,14 +71,14 @@ public class TrainingTypesServiceTests
     [Fact]
     public async Task GetAll_returns_success()
     {
-        using SqliteContext? context = new SqliteContext(options);
+        using SqliteContext? context = new SqliteContext(options!);
         context.Database.EnsureCreated();
 
         context.TrainingTypes.Add(new DataLibrary.Models.TrainingType { Name = "cardio" });
         context.TrainingTypes.Add(new DataLibrary.Models.TrainingType { Name = "strength" });
         context.SaveChanges();
 
-        var service = new TrainingTypesService(context, mapper, logger.Object);
+        var service = new TrainingTypesService(context, mapper!, logger.Object);
         var result = await service.GetAllAsync(new CancellationToken());
 
         Assert.True(result.IsSuccess);
@@ -92,13 +92,13 @@ public class TrainingTypesServiceTests
     [Fact]
     public async Task Update_record_returns_success()
     {
-        using SqliteContext? context = new SqliteContext(options);
+        using SqliteContext? context = new SqliteContext(options!);
         context.Database.EnsureCreated();
 
         context.TrainingTypes.Add(new DataLibrary.Models.TrainingType { Name = "cardio" });
         context.SaveChanges();
 
-        var service = new TrainingTypesService(context, mapper, logger.Object);
+        var service = new TrainingTypesService(context, mapper!, logger.Object);
         var result = await service.Update(1, new TrainingTypeWriteDto { Name = "strength" }, new CancellationToken());
         Assert.True(result.IsSuccess);
         var updatedType = context.TrainingTypes.FirstOrDefault(x => x.Name == "strength");
@@ -108,13 +108,13 @@ public class TrainingTypesServiceTests
     [Fact]
     public async Task Delete_type_returns_success()
     {
-        using SqliteContext? context = new SqliteContext(options);
+        using SqliteContext? context = new SqliteContext(options!);
         context.Database.EnsureCreated();
 
         context.TrainingTypes.Add(new DataLibrary.Models.TrainingType { Name = "cardio" });
         context.SaveChanges();
         context.ChangeTracker.Clear();
-        var service = new TrainingTypesService(context, mapper, logger.Object);
+        var service = new TrainingTypesService(context, mapper!, logger.Object);
         var result = await service.DeleteAsync(1, new CancellationToken());
 
         Assert.True(result.IsSuccess);
@@ -125,7 +125,7 @@ public class TrainingTypesServiceTests
     [Fact]
     public async Task CreateBulk_returns_Success()
     {
-        using SqliteContext? context = new SqliteContext(options);
+        using SqliteContext? context = new SqliteContext(options!);
         context.Database.EnsureCreated();
 
 
@@ -138,7 +138,7 @@ public class TrainingTypesServiceTests
             new TrainingTypeWriteDto{Name = "Yoga"},
         };
 
-        var service = new TrainingTypesService(context, mapper, logger.Object);
+        var service = new TrainingTypesService(context, mapper!, logger.Object);
         var result = await service.CreateBulkAsync(listOfTypes, new CancellationToken());
 
 

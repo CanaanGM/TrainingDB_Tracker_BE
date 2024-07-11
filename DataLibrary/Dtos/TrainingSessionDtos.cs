@@ -17,7 +17,7 @@ public class TrainingSessionWriteDto
     public int? Calories { get; set; }
     public string? Notes { get; set; }
     public int? Mood { get; set; }
-    public List<ExerciseRecordWriteDto> ExerciseRecords { get; set; }
+    public List<ExerciseRecordWriteDto>? ExerciseRecords { get; set; }
     public string? CreatedAt { get; set; }
 
 }

@@ -7,21 +7,24 @@ using DataLibrary.Helpers;
 using DataLibrary.Models;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace DataLibrary.Services;
 public class TrainingSessionService : ITrainingSessionService
 {
     private readonly SqliteContext _context;
     private readonly IMapper _mapper;
+    private readonly ILogger<TrainingSessionService> _logger;
 
-    public TrainingSessionService(SqliteContext context, IMapper mapper)
+    public TrainingSessionService(SqliteContext context, IMapper mapper, ILogger<TrainingSessionService> logger)
     {
         _context = context;
         _mapper = mapper;
+        _logger = logger;
     }
 
     // this sould be by a date range ; get me the sessions from 4-7-2024 to 5-2-2024.
-    // no pagination, this needs to be all at once 
+    // no pagination, this needs to be all at once
     // export to something else ? ?
     public async Task<Result<List<TrainingSessionReadDto>>> GetTrainingSessionsAsync(
         string? startDate,
@@ -32,6 +35,7 @@ public class TrainingSessionService : ITrainingSessionService
         {
             DateTime? start = Utils.ParseDate(startDate);
             DateTime? end = Utils.ParseDate(endDate);
+            _logger.LogInformation($"Parsed dates - Start: {start}, End: {end}");
 
             IQueryable<TrainingSession> query = _context.TrainingSessions
                 .AsNoTracking()
@@ -42,10 +46,20 @@ public class TrainingSessionService : ITrainingSessionService
                             .ThenInclude(em => em.Muscle)
                     .Include(r => r.TrainingTypes);
 
-            if (start.HasValue && end.HasValue)
+
+            if (start.HasValue)
             {
-                query = query.Where(x => x.CreatedAt >= start.Value && x.CreatedAt <= end.Value);
+                _logger.LogInformation($"Applying start date filter: {start.Value}");
+                query = query.Where(x => x.CreatedAt >= start.Value);
             }
+
+            if (end.HasValue)
+            {
+                _logger.LogInformation($"Applying end date filter: {end.Value}");
+                query = query.Where(x => x.CreatedAt <= end.Value);
+            }
+
+
 
             List<TrainingSession> sessions = await query.ToListAsync(cancellationToken);
             return Result<List<TrainingSessionReadDto>>.Success(_mapper.Map<List<TrainingSessionReadDto>>(sessions));
@@ -57,12 +71,12 @@ public class TrainingSessionService : ITrainingSessionService
     }
 
 
-    public async Task<Result<bool>> CreateSessionAsync(TrainingSessionWriteDto newSession, CancellationToken cancellationToken)
+    public async Task<Result<int>> CreateSessionAsync(TrainingSessionWriteDto newSession, CancellationToken cancellationToken)
     {
         Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
-            List<string> normalizedExerciseNames = Utils.NormalizeStringList(newSession.ExerciseRecords.Select(x => x.ExerciseName).ToList());
+            List<string> normalizedExerciseNames = Utils.NormalizeStringList(newSession.ExerciseRecords.Select(x => x.ExerciseName).Distinct().ToList());
             List<Exercise> relatedExercises = await GetRelatedExercises(normalizedExerciseNames, cancellationToken);
 
             List<TrainingType> relatedTrainingTypes = relatedExercises
@@ -105,12 +119,12 @@ public class TrainingSessionService : ITrainingSessionService
             await _context.TrainingSessions.AddAsync(newTrainingSession, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
-            return Result<bool>.Success(true);
+            return Result<int>.Success(newTrainingSession.Id);
         }
         catch (Exception ex)
         {
             await transaction.RollbackAsync(cancellationToken);
-            return Result<bool>.Failure($"Error Creating Session: {ex.Message}", ex);
+            return Result<int>.Failure($"Error Creating Session: {ex.Message}", ex);
         }
     }
 
@@ -122,7 +136,7 @@ public class TrainingSessionService : ITrainingSessionService
     /// <returns>a List of Exercise </returns>
     /// <exception cref="Exception">if one or more related exercises not found in the database, it will throw an exception</exception>
     // TODO: Proper exception handling.
-    private async Task<List<Exercise>> GetRelatedExercises(List<string> normalizedExerciseNames, CancellationToken cancellationToken)
+    public async Task<List<Exercise>> GetRelatedExercises(List<string> normalizedExerciseNames, CancellationToken cancellationToken)
     {
         List<Exercise> relatedExercises = await _context.Exercises
             .Include(x => x.TrainingTypes)
@@ -142,60 +156,11 @@ public class TrainingSessionService : ITrainingSessionService
         Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = _context.Database.BeginTransaction();
         try
         {
-            TrainingSession? trainingSession = await _context.TrainingSessions
-                .Include(ts => ts.TrainingSessionExerciseRecords)
-                    .ThenInclude(e => e.ExerciseRecord)
-                .Include(ts => ts.TrainingTypes)
-                .FirstOrDefaultAsync(ts => ts.Id == sessionId, cancellationToken);
 
-            if (trainingSession == null)
-                return Result<bool>.Failure("Training session not found.");
-
-            List<string> normalizedExerciseNames = Utils.NormalizeStringList(
-                trainingSession.TrainingSessionExerciseRecords
-                    .Select(s => s.ExerciseRecord!.Exercise!.Name).ToList()
-                    );
-
-            List<Exercise> relatedExercises = await GetRelatedExercises(normalizedExerciseNames, cancellationToken);
-
-            List<TrainingType> relatedTypes = relatedExercises
-                .SelectMany(x => x.TrainingTypes)
-                .Distinct()
-                .ToList();
-
-            // clean old records
-            foreach (TrainingSessionExerciseRecord x in trainingSession.TrainingSessionExerciseRecords)
-                _context.Remove(x.ExerciseRecord);
-
-            foreach (TrainingType? type in trainingSession.TrainingTypes)
-            {
-                trainingSession.TrainingTypes.Remove(type);
-            }
-
-
-            // create the date
-            DateTime? updatedCreatedAt = Utils.ParseDate(updateDto.CreatedAt);
-
-
-            _mapper.Map(updateDto, trainingSession);
-            trainingSession.TrainingTypes = relatedTypes;
-            trainingSession.TrainingSessionExerciseRecords = updateDto.ExerciseRecords
-                .Select(x => new TrainingSessionExerciseRecord
-                {
-                    ExerciseRecord = new ExerciseRecord
-                    {
-                        CreatedAt = updatedCreatedAt,
-                        DistanceInMeters = x.DistanceInMeters, // do it from utils
-                        Exercise = relatedExercises
-                            .FirstOrDefault(relatedExercise => Utils.NormalizeString(relatedExercise.Name) == Utils.NormalizeString(x.ExerciseName)),
-                        Notes = x.Notes,
-                        Repetitions = x.Repetitions,
-                        TimerInSeconds = Utils.DurationSecondsFromMinutes(x.TimerInSeconds),
-                        WeightUsedKg = x.WeightUsedKg
-                    }
-                })
-                .ToList();
-
+            if (updateDto.ExerciseRecords is not null)
+                await FullSessionUpdateAsync(sessionId, updateDto, cancellationToken);
+            else
+                await PartialUpdateAsync(sessionId, updateDto, cancellationToken);
 
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
@@ -208,6 +173,84 @@ public class TrainingSessionService : ITrainingSessionService
             return Result<bool>.Failure($"Error updating session: {ex.Message}", ex);
         }
     }
+
+    private async Task PartialUpdateAsync(int sessionId, TrainingSessionWriteDto updateDto, CancellationToken cancellationToken)
+    {
+
+        var trainingSession = await _context.TrainingSessions
+            .FirstOrDefaultAsync(ts => ts.Id == sessionId, cancellationToken);
+
+        if (trainingSession is null)
+            throw new Exception("Training session not found.");
+        _mapper.Map(updateDto, trainingSession);
+
+    }
+
+    private async Task FullSessionUpdateAsync(int sessionId, TrainingSessionWriteDto updateDto, CancellationToken cancellationToken)
+    {
+        if (updateDto.DurationInMinutes <= 0)
+            throw new ArgumentException("duration should be more than zero, if it took 0 mins, you did not train!");
+
+        var trainingSession = await _context.TrainingSessions
+       .Include(ts => ts.TrainingSessionExerciseRecords)
+           .ThenInclude(e => e.ExerciseRecord)
+               .ThenInclude(x => x.Exercise)
+       .Include(ts => ts.TrainingTypes)
+       .FirstOrDefaultAsync(ts => ts.Id == sessionId, cancellationToken);
+
+        if (trainingSession is null)
+            throw new Exception("Training session not found.");
+
+        List<string> normalizedExerciseNames = Utils.NormalizeStringList(
+            updateDto.ExerciseRecords
+                .Select(s => s.ExerciseName).ToList()
+                );
+
+        List<Exercise> relatedExercises = await GetRelatedExercises(normalizedExerciseNames, cancellationToken);
+
+        List<TrainingType> relatedTypes = relatedExercises
+            .SelectMany(x => x.TrainingTypes)
+            .Distinct()
+            .ToList();
+
+        // clean old records
+        foreach (TrainingSessionExerciseRecord x in trainingSession.TrainingSessionExerciseRecords)
+            _context.Remove(x.ExerciseRecord);
+
+        trainingSession.TrainingTypes.Clear();
+
+
+        // create the date
+        DateTime? updatedCreatedAt = Utils.ParseDate(updateDto.CreatedAt) ?? trainingSession.CreatedAt;
+
+
+        _mapper.Map(updateDto, trainingSession);
+
+        trainingSession.TrainingTypes = relatedTypes;
+        trainingSession.TrainingSessionExerciseRecords = updateDto.ExerciseRecords
+            .Select(x => new TrainingSessionExerciseRecord
+            {
+                ExerciseRecord = new ExerciseRecord
+                {
+                    CreatedAt = updatedCreatedAt,
+                    DistanceInMeters = x.DistanceInMeters, // do it from utils
+                    Exercise = relatedExercises
+                        .FirstOrDefault(relatedExercise => Utils.NormalizeString(relatedExercise.Name) == Utils.NormalizeString(x.ExerciseName)),
+                    Notes = x.Notes,
+                    Repetitions = x.Repetitions,
+                    TimerInSeconds = x.TimerInSeconds,
+                    WeightUsedKg = x.WeightUsedKg
+                },
+                LastWeightUsedKg = x.WeightUsedKg
+                ,
+                CreatedAt = updatedCreatedAt
+
+            })
+            .ToList();
+
+    }
+
+
 
 
     // this simple for now.

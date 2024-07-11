@@ -10,13 +10,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace DataLibrary.Services;
-public class MuscleSercive : IMuscleService
+public class MuscleService : IMuscleService
 {
     private readonly SqliteContext _context;
     private readonly IMapper _mapper;
-    private readonly ILogger<MuscleSercive> _logger;
+    private readonly ILogger<MuscleService> _logger;
 
-    public MuscleSercive(SqliteContext context, IMapper mapper, ILogger<MuscleSercive> logger)
+    public MuscleService(SqliteContext context, IMapper mapper, ILogger<MuscleService> logger)
     {
         _context = context;
         _mapper = mapper;

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 
 using DataLibrary.Dtos;
+using DataLibrary.Helpers;
 using DataLibrary.Models;
 
 namespace DataLibrary.Core;
@@ -44,6 +45,10 @@ public class Profiles : Profile
             .ForMember(dt => dt.ExerciseRecords, src => src.MapFrom(r => r.TrainingSessionExerciseRecords.Select(r => r.ExerciseRecord)))
             ;
 
+        CreateMap<TrainingSessionWriteDto, TrainingSession>()
+            .ForMember(dt => dt.DurationInSeconds, src => src.MapFrom(r => Utils.DurationSecondsFromMinutes(r.DurationInMinutes)))
+            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
         CreateMap<ExerciseRecord, ExerciseRecordReadDto>()
             .ForMember(dt => dt.ExerciseName
                 , src => src
@@ -56,12 +61,8 @@ public class Profiles : Profile
                         )
                     //.Select(x => x.Muscle.Name))
                     );
-
-
-        // CreateMap<TrainingSessionWriteDto, TrainingSession>()
-        //     .ForMember(ts => ts.DurationInSeconds, src =>
-        //         src.MapFrom(x => Utils.DurationSecondsFromMinutes(x.DurationInMinutes)))
-        //     .ForMember(ts => ts.TrainingSessionExerciseRecords.Select(x => x.ExerciseRecord), src => src.MapFrom(w => w.ExerciseRecords.Select(x => x)));
+        CreateMap<ExerciseRecordWriteDto, Exercise>()
+            .ForMember(dt => dt.Name, src => src.MapFrom(x => x.ExerciseName));
 
 
 

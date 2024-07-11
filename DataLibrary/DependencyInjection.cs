@@ -13,7 +13,7 @@ public static class DependencyInjection
                 "Data Source=E:/development/databases/training_log_v2.db"
             ));
 
-        services.AddScoped<IMuscleService, MuscleSercive>();
+        services.AddScoped<IMuscleService, MuscleService>();
         services.AddScoped<ITrainingTypesService, TrainingTypesService>();
         services.AddScoped<IExerciseService, ExerciseService>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
