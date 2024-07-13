@@ -1,0 +1,900 @@
+﻿using AutoMapper;
+
+using DataLibrary.Context;
+using DataLibrary.Core;
+using DataLibrary.Dtos;
+using DataLibrary.Helpers;
+using DataLibrary.Models;
+using DataLibrary.Services;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+
+using Moq;
+
+using TestSupport.EfHelpers;
+
+namespace DateLibraryTests.ServicesTests;
+public class TrainingSessionServiceTests
+{
+    DbContextOptionsDisposable<SqliteContext> options;
+    Profiles myProfile;
+    MapperConfiguration? configuration;
+    Mapper mapper;
+    private Mock<ILogger<TrainingSessionService>> logger;
+    private TrainingSessionService service;
+    SqliteContext context;
+
+
+    public TrainingSessionServiceTests()
+    {
+        options = SqliteInMemory.CreateOptions<SqliteContext>();
+        context = new SqliteContext(options);
+        context.Database.EnsureCreated();
+        myProfile = new Profiles();
+        configuration = new MapperConfiguration(cfg => cfg.AddProfile(myProfile));
+        mapper = new Mapper(configuration);
+        logger = new Mock<ILogger<TrainingSessionService>>();
+        service = new TrainingSessionService(context, mapper, logger.Object);
+
+
+    }
+
+    ~TrainingSessionServiceTests()
+    {
+        System.Console.WriteLine("Death!");
+    }
+
+    [Fact]
+    public async Task GetTrainingSessionsAsync_NoDateRange_Empty_Should_Return_Success()
+    {
+        var result = await service.GetTrainingSessionsAsync(null, null, new CancellationToken());
+
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Value);
+        Assert.Empty(result.Value);
+    }
+
+    [Fact]
+    public async Task GetTrainingSessionsAsync_WithDateRange_Empty_Should_Return_Success()
+    {
+        var result = await service.GetTrainingSessionsAsync("5-13-2024", "6-1-2024", new CancellationToken());
+
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Value);
+        Assert.Empty(result.Value);
+    }
+
+    [Fact]
+    public async Task GetTrainingSessionsAsync_NoDateRange_Should_ReturnAll_Success()
+    {
+        SeedTypesExercisesAndMuscles();
+        var trainingSessions = new List<TrainingSession>
+            {
+                new TrainingSession
+                {
+                    Calories = 666,
+                    CreatedAt = DateTime.UtcNow,
+                    DurationInSeconds  = 7200,
+                    Mood = 9,
+                    Notes = "Test record for testing"
+                }
+            };
+
+
+        context.TrainingSessions.AddRange(trainingSessions);
+        context.SaveChanges();
+        trainingSessions.ForEach(x => SeedWorkOutRecords(x.Id));
+
+        var result = await service.GetTrainingSessionsAsync(
+            null, null, new CancellationToken()
+            );
+
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Value);
+        Assert.NotEmpty(result.Value);
+        Assert.Equal(4, result.Value[0].TrainingTypes.Count());
+        Assert.Equal(3, result.Value[0].ExerciseRecords.Count());
+    }
+
+
+
+    [Theory]
+    [InlineData("5-1-2024", "5-30-2024")]
+    [InlineData("5-1-2024 00:00:00", "6-1-2024 00:00:00")] // 1 month of records
+    [InlineData("5-1-2024 00:00:00", "6-1-2024")]
+    [InlineData("5-1-2024", "6-1-2024 16:44:21")]
+    [InlineData("7-1-2024", "7-30-2024")]
+    [InlineData("7-1-2024 00:00:00", "7-30-2024 16:44:21")]
+    [InlineData("7-1-2024", "7-30-2024 16:44:21")]
+    [InlineData("7-1-2024 00:00:00", "7-30-2024")]
+
+
+    public async Task GetTrainingSessionsAsync_DateRange_Should_ReturnAll_WithinDate_Success(string firstDate, string secondDate)
+    {
+        var date = new DateTime(2024, 5, 1);
+        SeedTypesExercisesAndMuscles();
+
+        var trainingSessions = new List<TrainingSession>
+            {
+                new TrainingSession
+                {
+                    Calories = 666,
+                    CreatedAt = date, // may
+                    DurationInSeconds  = 7200,
+                    Mood = 9,
+                    Notes = "Test record for testing 1"
+                },
+                new TrainingSession
+                {
+                    Calories = 666,
+                    CreatedAt = date.AddDays(5), // may
+                    DurationInSeconds  = 7200,
+                    Mood = 9,
+                    Notes = "Test record for testing 2"
+                },
+                new TrainingSession
+                {
+                    Calories = 666,
+                    CreatedAt = date.AddMonths(2), // july
+                    DurationInSeconds  = 7200,
+                    Mood = 9,
+                    Notes = "Test record for testing 3"
+                },
+                new TrainingSession
+                {
+                    Calories = 666,
+                    CreatedAt = date.AddMonths(2).AddDays(2), // july
+                    DurationInSeconds  = 7200,
+                    Mood = 9,
+                    Notes = "Test record for testing 4"
+                }
+            };
+
+        context.TrainingSessions.AddRange(trainingSessions);
+        context.SaveChanges();
+
+        trainingSessions.ForEach(x => SeedWorkOutRecords(x.Id));
+
+        var result = await service.GetTrainingSessionsAsync(firstDate, secondDate, new CancellationToken());
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Value);
+        Assert.Equal(2, result.Value.Count());
+        Assert.Equal(4, result.Value[0].TrainingTypes.Count());
+        Assert.Equal(3, result.Value[0].ExerciseRecords.Count());
+
+    }
+
+    [Fact]
+    public async Task CreateSessionAsync_creating_return_success()
+    {
+        SeedTypesExercisesAndMuscles();
+
+        var newSessionDto = new TrainingSessionWriteDto
+        {
+            Calories = 666,
+            CreatedAt = "5-1-2024",
+            DurationInMinutes = 35,
+            Mood = 9,
+            Notes = "Test record for testing",
+            ExerciseRecords = new List<ExerciseRecordWriteDto>
+            {
+                new ExerciseRecordWriteDto
+                {
+                    ExerciseName = "Dragon Flag",
+                    Repetitions = 20
+                },
+                new ExerciseRecordWriteDto
+                {
+                    ExerciseName = "Rope Jumping",
+                    TimerInSeconds = 1800
+                },
+                new ExerciseRecordWriteDto
+                {
+                    ExerciseName = "barbell curl",
+                    WeightUsedKg = 20,
+                    Repetitions = 20
+                }
+            }
+        };
+
+        var result = await service.CreateSessionAsync(newSessionDto, new CancellationToken());
+        Assert.True(result.IsSuccess);
+        Assert.True(result.Value >= 1);
+
+        var newSession = context.TrainingSessions
+            .Include(x => x.TrainingSessionExerciseRecords)
+            .ThenInclude(e => e.ExerciseRecord)
+            .Include(t => t.TrainingTypes)
+            .FirstOrDefault(w => w.Id == result.Value);
+
+        Assert.NotNull(newSession);
+        Assert.NotEmpty(newSession.TrainingSessionExerciseRecords);
+        Assert.NotEmpty(newSession.TrainingTypes);
+
+        Assert.True(newSession.TrainingTypes.Count() == 4);
+        Assert.True(newSession.TrainingSessionExerciseRecords.Count() == 3);
+
+        foreach (var sessionRecord in newSession.TrainingSessionExerciseRecords)
+        {
+            var exerciseRecord = sessionRecord!.ExerciseRecord!;
+
+            if (exerciseRecord.WeightUsedKg is not null) Assert.Equal(20, exerciseRecord.WeightUsedKg);
+            if (exerciseRecord.TimerInSeconds is not null) Assert.Equal(1800, exerciseRecord.TimerInSeconds);
+            if (exerciseRecord.Repetitions is not null) Assert.Equal(20, exerciseRecord.Repetitions);
+
+            Assert.Equal(DateTime.Parse("5-1-2024"), sessionRecord.CreatedAt);
+            Assert.Equal(DateTime.Parse("5-1-2024"), exerciseRecord.CreatedAt);
+
+        }
+        Assert.Equal(35 * 60, newSession.DurationInSeconds); // duration conversion
+        Assert.Equal(DateTime.Parse("5-1-2024"), newSession.CreatedAt);
+
+    }
+
+
+    [Fact]
+    public async Task UpdateSessionAsync_FullSessionUpdateWithExerciseRecords_Returns_Success()
+    {
+        SeedTypesExercisesAndMuscles();
+        var trainingSessionToBUpdated =
+                new TrainingSession
+                {
+                    Calories = 666,
+                    CreatedAt = DateTime.UtcNow,
+                    DurationInSeconds = 7200,
+                    Mood = 9,
+                    Notes = "Test record for testing"
+                };
+
+        context.TrainingSessions.Add(trainingSessionToBUpdated);
+        context.SaveChanges();
+        SeedWorkOutRecords(trainingSessionToBUpdated.Id);
+        context.ChangeTracker.Clear();
+
+        var updateDto = new TrainingSessionWriteDto
+        {
+            Calories = 777,
+            CreatedAt = "6-2-2024",
+            DurationInMinutes = 120,
+            Mood = 5,
+            Notes = "Full on update",
+            ExerciseRecords = new List<ExerciseRecordWriteDto>
+            {
+                new ExerciseRecordWriteDto
+                {
+                    ExerciseName = "dragon flag",
+                    Repetitions = 30
+                }
+            }
+        };
+
+        var result = await service.UpdateSessionAsync(trainingSessionToBUpdated.Id, updateDto, new CancellationToken());
+        Assert.True(result.IsSuccess);
+        Assert.True(result.Value);
+
+        var updatedSession = context.TrainingSessions
+            .Include(ts => ts.TrainingSessionExerciseRecords)
+                    .ThenInclude(e => e.ExerciseRecord)
+                        .ThenInclude(w => w.Exercise)
+            .Include(ts => ts.TrainingTypes)
+            .FirstOrDefault(x => x.Id == trainingSessionToBUpdated.Id);
+
+        Assert.NotNull(updatedSession);
+        Assert.NotEmpty(updatedSession.TrainingSessionExerciseRecords);
+        Assert.Equal(3, updatedSession.TrainingTypes.Count);
+        Assert.Equal(DateTime.Parse(updateDto.CreatedAt), updatedSession.CreatedAt);
+        Assert.Equal(updateDto.Notes, updatedSession.Notes);
+        Assert.Equal(updateDto.Calories, updatedSession.Calories);
+        Assert.Equal(updateDto.DurationInMinutes, updatedSession.DurationInSeconds / 60);
+        Assert.Equal(updateDto.DurationInMinutes * 60, updatedSession.DurationInSeconds);
+        Assert.Equal(updateDto.Mood, updatedSession.Mood);
+
+        Assert.Equal("dragon flag", updatedSession.TrainingSessionExerciseRecords.First().ExerciseRecord.Exercise.Name);
+        Assert.Equal(30, updatedSession.TrainingSessionExerciseRecords.First().ExerciseRecord.Repetitions);
+    }
+
+    /// <summary>
+    /// Partial update should leave related <em> exercise records</em> and <em> training type </em> <strong>intact</strong>.
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task UpdateSessionAsync_FullSessionUpdateWithNoExerciseRecordsUpdate_Returns_Success()
+    {
+        SeedTypesExercisesAndMuscles();
+        var trainingSessionToBUpdated =
+                new TrainingSession
+                {
+                    Calories = 666,
+                    CreatedAt = DateTime.UtcNow,
+                    DurationInSeconds = 7200,
+                    Mood = 9,
+                    Notes = "Test record for testing"
+                };
+
+        context.TrainingSessions.Add(trainingSessionToBUpdated);
+        context.SaveChanges();
+        SeedWorkOutRecords(trainingSessionToBUpdated.Id);
+        context.ChangeTracker.Clear();
+
+        var updateDto = new TrainingSessionWriteDto
+        {
+            Calories = 777,
+            CreatedAt = "6-2-2024",
+            DurationInMinutes = 120,
+            Mood = 5,
+            Notes = "Full on update"
+        };
+
+        var result = await service.UpdateSessionAsync(trainingSessionToBUpdated.Id, updateDto, new CancellationToken());
+        Assert.True(result.IsSuccess);
+        Assert.True(result.Value);
+
+        var updatedSession = context.TrainingSessions
+            .Include(ts => ts.TrainingSessionExerciseRecords)
+                    .ThenInclude(e => e.ExerciseRecord)
+                        .ThenInclude(w => w.Exercise)
+            .Include(ts => ts.TrainingTypes)
+            .FirstOrDefault(x => x.Id == trainingSessionToBUpdated.Id);
+
+        Assert.NotNull(updatedSession);
+        Assert.NotEmpty(updatedSession.TrainingSessionExerciseRecords);
+        Assert.Equal(4, updatedSession.TrainingTypes.Count);
+        Assert.Equal(DateTime.Parse(updateDto.CreatedAt), updatedSession.CreatedAt);
+        Assert.Equal(updateDto.Notes, updatedSession.Notes);
+        Assert.Equal(updateDto.Calories, updatedSession.Calories);
+        Assert.Equal(updateDto.DurationInMinutes, updatedSession.DurationInSeconds / 60);
+        Assert.Equal(updateDto.DurationInMinutes * 60, updatedSession.DurationInSeconds);
+        Assert.Equal(updateDto.Mood, updatedSession.Mood);
+
+        string[] relatedExerciseNames = { "dragon flag", "rope jumping", "barbell curl" };
+
+        foreach (var exerciseRecord in updatedSession.TrainingSessionExerciseRecords)
+        {
+            Assert.True(relatedExerciseNames.Contains(exerciseRecord.ExerciseRecord.Exercise.Name));
+        };
+    }
+
+
+    public static ICollection<object[]> TrainingSessionsToTestTheUpdate()
+    {
+        var sessionDate = new DateTime(2024, 5, 1, 17, 50, 21);
+        return new List<object[]>
+        {
+            new object[]
+            {
+                new Tuple<TrainingSession, TrainingSessionWriteDto>(
+                    new TrainingSession {
+                    Calories = 000,
+                    Notes = "what the fuck am i seeing ?!",
+                    DurationInSeconds =  1300,
+                    Mood = 5,
+                    CreatedAt = sessionDate,
+                }, new TrainingSessionWriteDto{
+                    Calories = 777
+                } ),
+            },
+           new object[]
+            {
+                new Tuple<TrainingSession, TrainingSessionWriteDto>(
+                    new TrainingSession {
+                    Calories = 001,
+                    Notes = "Food is calling ?",
+                    DurationInSeconds =  1700,
+                    Mood = 2,
+                    CreatedAt = sessionDate,
+                }, new TrainingSessionWriteDto{
+                    Notes = "IT IS !!",
+                   }),
+            },
+            new object[]
+            {
+                new Tuple<TrainingSession, TrainingSessionWriteDto>(
+                    new TrainingSession {
+                    Calories = 000,
+                    Notes = "wait, i did not cook yet!",
+                    DurationInSeconds =  2,
+                    Mood = 1,
+                    CreatedAt = sessionDate,
+                }, new TrainingSessionWriteDto{
+                    CreatedAt = sessionDate.AddDays(1).ToString()
+                } ),
+            },
+            new object[]
+            {
+                new Tuple<TrainingSession, TrainingSessionWriteDto>(
+                    new TrainingSession {
+                    Calories = 000,
+                    Notes = "what the fuck am i seeing ?!",
+                    DurationInSeconds =  1300,
+                    Mood = 5,
+                    CreatedAt = sessionDate,
+                }, new TrainingSessionWriteDto{
+                    Mood = 6
+                } ),
+            },
+            new object[]
+            {
+                new Tuple<TrainingSession, TrainingSessionWriteDto>(
+                    new TrainingSession {
+                    Calories = 000,
+                    Notes = "what the fuck am i seeing ?!",
+                    DurationInSeconds =  1300,
+                    Mood = 5,
+                    CreatedAt = sessionDate,
+                }, new TrainingSessionWriteDto{
+                    DurationInMinutes = 50
+                } ),
+            }
+        };
+    }
+
+
+    [Theory]
+    [MemberData(nameof(TrainingSessionsToTestTheUpdate))]
+    public async Task UpdateSessionAsync_PartialSessionUpdateWithoutExerciseRecords_Returns_Success(Tuple<TrainingSession, TrainingSessionWriteDto> sessionData)
+    {
+        SeedTypesExercisesAndMuscles();
+        var trainingSessionToBUpdated = sessionData.Item1;
+
+        context.TrainingSessions.Add(trainingSessionToBUpdated);
+        context.SaveChanges();
+        SeedWorkOutRecords(trainingSessionToBUpdated.Id);
+        context.ChangeTracker.Clear();
+
+        var updateDto = sessionData.Item2;
+
+        var result = await service.UpdateSessionAsync(trainingSessionToBUpdated.Id, updateDto, new CancellationToken());
+        Assert.True(result.IsSuccess);
+        Assert.True(result.Value);
+
+        var updatedSession = context.TrainingSessions
+            .Include(ts => ts.TrainingSessionExerciseRecords)
+                    .ThenInclude(e => e.ExerciseRecord)
+                        .ThenInclude(w => w.Exercise)
+            .Include(ts => ts.TrainingTypes)
+            .FirstOrDefault(x => x.Id == trainingSessionToBUpdated.Id);
+
+        Assert.NotNull(updatedSession);
+        Assert.Equal(3, updatedSession.TrainingSessionExerciseRecords.Count);
+        Assert.Equal(4, updatedSession.TrainingTypes.Count); // 3 exercises, 4 training types
+
+
+        if (updateDto.CreatedAt is not null) Assert.Equal(DateTime.Parse(updateDto.CreatedAt), updatedSession.CreatedAt);
+        if (updateDto.Notes is not null) Assert.Equal(updateDto.Notes, updatedSession.Notes);
+        if (updateDto.Calories is not null) Assert.Equal(updateDto.Calories, updatedSession.Calories);
+        if (updateDto.DurationInMinutes is not null) Assert.Equal(updateDto.DurationInMinutes, updatedSession.DurationInSeconds / 60);
+        if (updateDto.DurationInMinutes is not null) Assert.Equal(updateDto.DurationInMinutes * 60, updatedSession.DurationInSeconds);
+        if (updateDto.Mood is not null) Assert.Equal(updateDto.Mood, updatedSession.Mood);
+
+    }
+
+
+    public static ICollection<object[]> TrainingSessionsWithRecordsToTestTheUpdate()
+    {
+        var sessionDate = new DateTime(2024, 5, 1, 17, 50, 21);
+        return new List<object[]>
+        {
+            new object[]
+            {
+                new Tuple<TrainingSession, TrainingSessionWriteDto>(
+                    new TrainingSession {
+                    Calories = 000,
+                    Notes = "what the fuck am i seeing ?!",
+                    DurationInSeconds =  1300,
+                    Mood = 5,
+                    CreatedAt = sessionDate,
+                }, new TrainingSessionWriteDto{
+                    Calories = 777,
+                    ExerciseRecords = new List<ExerciseRecordWriteDto>
+                    {
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "rope jumping",
+                            TimerInSeconds = 1700
+                        }
+                    }
+                } ),
+            },
+           new object[]
+            {
+                new Tuple<TrainingSession, TrainingSessionWriteDto>(
+                    new TrainingSession {
+                    Calories = 001,
+                    Notes = "Food is calling ?",
+                    DurationInSeconds =  1700,
+                    Mood = 2,
+                    CreatedAt = sessionDate,
+                }, new TrainingSessionWriteDto{
+                    Notes = "IT IS !!",
+                    ExerciseRecords = new List<ExerciseRecordWriteDto>
+                    {
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "rope jumping",
+                            TimerInSeconds = 1700,
+                            DistanceInMeters = 12,
+                            Repetitions = 1500,
+                            WeightUsedKg = 1
+                        }
+                    }
+                   }),
+            },
+            new object[]
+            {
+                new Tuple<TrainingSession, TrainingSessionWriteDto>(
+                    new TrainingSession {
+                    Calories = 000,
+                    Notes = "wait, i did not cook yet!",
+                    DurationInSeconds =  2,
+                    Mood = 1,
+                    CreatedAt = sessionDate,
+                }, new TrainingSessionWriteDto{
+                    CreatedAt = sessionDate.AddDays(1).ToString(),
+                    ExerciseRecords = new List<ExerciseRecordWriteDto>
+                    {
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "rope jumping",
+                            TimerInSeconds = 1700,
+                            DistanceInMeters = 12,
+                            Repetitions = 1500,
+                            WeightUsedKg = 1
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "barbell curl",
+                            Notes = "there was an attempt",
+                            WeightUsedKg = 30,
+                            Repetitions = 20
+                        }
+                    }
+                } ),
+            },
+            new object[]
+            {
+                new Tuple<TrainingSession, TrainingSessionWriteDto>(
+                    new TrainingSession {
+                    Calories = 000,
+                    Notes = "what the fuck am i seeing ?!",
+                    DurationInSeconds =  1300,
+                    Mood = 5,
+                    CreatedAt = sessionDate,
+                }, new TrainingSessionWriteDto{
+                    Mood = 6,
+                    ExerciseRecords = new List<ExerciseRecordWriteDto>
+                    {
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "rope jumping",
+                            TimerInSeconds = 1700,
+                            DistanceInMeters = 12,
+                            Repetitions = 1500,
+                            WeightUsedKg = 1
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "barbell curl",
+                            Notes = "there was an attempt",
+                            WeightUsedKg = 30,
+                            Repetitions = 20
+                        }
+                    }
+                } ),
+            },
+            new object[]
+            {
+                new Tuple<TrainingSession, TrainingSessionWriteDto>(
+                    new TrainingSession {
+                    Calories = 000,
+                    Notes = "what the fuck am i seeing ?!",
+                    DurationInSeconds =  1300,
+                    Mood = 5,
+                    CreatedAt = sessionDate,
+                }, new TrainingSessionWriteDto{
+                    DurationInMinutes = 50,
+                    ExerciseRecords = new List<ExerciseRecordWriteDto>
+                    {
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "dragon flag",
+                            Repetitions = 20
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "rope jumping",
+                            TimerInSeconds = 1700,
+                            DistanceInMeters = 12,
+                            Repetitions = 1500,
+                            WeightUsedKg = 1
+                        },
+                        new ExerciseRecordWriteDto
+                        {
+                            ExerciseName = "barbell curl",
+                            Notes = "there was an attempt",
+                            WeightUsedKg = 30,
+                            Repetitions = 20
+                        }
+                    }
+                } ),
+            }
+        };
+    }
+
+
+    [Theory]
+    [MemberData(nameof(TrainingSessionsWithRecordsToTestTheUpdate))]
+    public async Task UpdateSessionAsync_PartialSessionWithExerciseRecordsUpdate_Returns_Success(Tuple<TrainingSession, TrainingSessionWriteDto> sessionData)
+    {
+        SeedTypesExercisesAndMuscles();
+        var trainingSessionToBUpdated = sessionData.Item1;
+
+        context.TrainingSessions.Add(trainingSessionToBUpdated);
+        context.SaveChanges();
+        SeedWorkOutRecords(trainingSessionToBUpdated.Id);
+        context.ChangeTracker.Clear();
+
+        var updateDto = sessionData.Item2;
+
+        var result = await service.UpdateSessionAsync(trainingSessionToBUpdated.Id, updateDto, new CancellationToken());
+        Assert.True(result.IsSuccess);
+        Assert.True(result.Value);
+
+        var updatedSession = context.TrainingSessions
+            .Include(ts => ts.TrainingSessionExerciseRecords)
+                    .ThenInclude(e => e.ExerciseRecord)
+                        .ThenInclude(w => w.Exercise)
+            .Include(ts => ts.TrainingTypes)
+            .FirstOrDefault(x => x.Id == trainingSessionToBUpdated.Id);
+
+        Assert.NotNull(updatedSession);
+
+        if (updateDto.CreatedAt is not null) Assert.Equal(DateTime.Parse(updateDto.CreatedAt), updatedSession.CreatedAt);
+        if (updateDto.Notes is not null) Assert.Equal(updateDto.Notes, updatedSession.Notes);
+        if (updateDto.Calories is not null) Assert.Equal(updateDto.Calories, updatedSession.Calories);
+        if (updateDto.DurationInMinutes is not null) Assert.Equal(updateDto.DurationInMinutes, updatedSession.DurationInSeconds / 60);
+        if (updateDto.DurationInMinutes is not null) Assert.Equal(updateDto.DurationInMinutes * 60, updatedSession.DurationInSeconds);
+        if (updateDto.Mood is not null) Assert.Equal(updateDto.Mood, updatedSession.Mood);
+
+        // test related entities
+
+        // get related exercise and from them the types
+        var relatedExercises = await service.GetRelatedExercises(
+            updatedSession.TrainingSessionExerciseRecords
+                .Select(x => Utils.NormalizeString(x.ExerciseRecord.Exercise.Name))
+                .Distinct()
+                .ToList()
+                , new CancellationToken()
+                );
+
+        List<TrainingType> relatedTypes = relatedExercises
+                .SelectMany(x => x.TrainingTypes)
+                .Distinct()
+                .ToList();
+
+        Assert.Equal(relatedTypes.Count, updatedSession.TrainingTypes.Count);
+
+        for (var i = 0; i < updatedSession.TrainingSessionExerciseRecords.Count(); i++)
+        {
+            Assert.NotNull(updatedSession.TrainingSessionExerciseRecords.ToList()[i]);
+            var trainingSessionExerciseRecord = updatedSession.TrainingSessionExerciseRecords.ToList()[i];
+            var exerciseRecord = trainingSessionExerciseRecord.ExerciseRecord!;
+
+            if (exerciseRecord.WeightUsedKg is not null)
+                Assert.Equal(exerciseRecord.WeightUsedKg, trainingSessionExerciseRecord.LastWeightUsedKg);
+
+            if (updateDto.ExerciseRecords[i].ExerciseName is not null)
+                Assert.Equal(updateDto.ExerciseRecords[i].ExerciseName, exerciseRecord.Exercise.Name);
+
+            if (updateDto.ExerciseRecords[i].Notes is not null)
+                Assert.Equal(updateDto.ExerciseRecords[i].Notes, exerciseRecord.Notes);
+
+            if (updateDto.ExerciseRecords[i].WeightUsedKg is not null)
+                Assert.Equal(updateDto.ExerciseRecords[i].WeightUsedKg, exerciseRecord.WeightUsedKg);
+
+            if (updateDto.ExerciseRecords[i].Repetitions is not null)
+                Assert.Equal(updateDto.ExerciseRecords[i].Repetitions, exerciseRecord.Repetitions);
+
+            if (updateDto.ExerciseRecords[i].DistanceInMeters is not null)
+                Assert.Equal(updateDto.ExerciseRecords[i].DistanceInMeters, exerciseRecord.DistanceInMeters);
+
+            if (updateDto.ExerciseRecords[i].TimerInSeconds is not null)
+                Assert.Equal(updateDto.ExerciseRecords[i].TimerInSeconds, exerciseRecord.TimerInSeconds);
+
+        }
+
+    }
+
+    // TODO: think of more failure states!
+
+    // delete
+
+    [Fact]
+    public async Task Delete_should_clean_all_related_records_and_returns_success()
+    {
+        SeedTypesExercisesAndMuscles();
+        var trainingSessionToBUpdated =
+                new TrainingSession
+                {
+                    Calories = 666,
+                    CreatedAt = DateTime.UtcNow,
+                    DurationInSeconds = 7200,
+                    Mood = 9,
+                    Notes = "Test record for testing"
+                };
+
+        context.TrainingSessions.Add(trainingSessionToBUpdated);
+        context.SaveChanges();
+        SeedWorkOutRecords(trainingSessionToBUpdated.Id);
+        context.ChangeTracker.Clear();
+
+        var result = await service.DeleteSessionAsync(trainingSessionToBUpdated.Id, new CancellationToken());
+        Assert.True(result.IsSuccess);
+        Assert.True(result.Value);
+
+        var recordInTheDataBase = context.TrainingSessions.FirstOrDefault(x => x.Id == trainingSessionToBUpdated.Id);
+
+        Assert.Null(recordInTheDataBase);
+        Assert.Empty(context.TrainingSessions);
+        Assert.Empty(context.TrainingSessionExerciseRecords);
+        Assert.Empty(context.ExerciseRecords);
+        // exercise types relation table should also be empoty!
+
+    }
+
+    /// <summary>
+    /// Seeds the database with <strong>3</strong> muscles, <strong>4</strong> training types, <strong>3</strong> exercises <i> with their relations</i> to the muscles and types.
+    /// <em>Making a session have <strong>4 training types</strong></em>.<br></br>
+    /// </summary>
+    private void SeedTypesExercisesAndMuscles()
+    {
+        string insertMuscles = @"
+            INSERT INTO muscle (name, muscle_group, ""function"", wiki_page_url) VALUES
+            ('deltoid anterior head','shoulders','flexes and medially rotates the arm.','https://en.wikipedia.org/wiki/Deltoid_muscle#Anterior_part'),
+            ('deltoid posterior head','shoulders','flexes and medially rotates the arm.','https://en.wikipedia.org/wiki/Deltoid_muscle#Anterior_part'),
+            ('deltoid middle head','shoulders','flexes and medially rotates the arm.','https://en.wikipedia.org/wiki/Deltoid_muscle#Anterior_part');
+            ";
+
+        string insertTrainingTypes = @"
+            INSERT INTO training_type (name) VALUES 
+            ('strength'), 
+            ('cardio'),
+            ('bodyBuilding'), 
+            ('martial arts');
+            ";
+
+        string insertExercises = @"
+            INSERT INTO exercise (name, description, how_to, difficulty) VALUES
+            ('dragon flag', 'a flag', 'lie and cry', 4),
+            ('rope jumping', 'jump', 'cant touch this!', 4),
+            ('barbell curl', 'curl a barbell . . . duah!', 'one more! GO!', 4);
+            ";
+
+        string insertExerciseMuscles = @"
+            INSERT INTO exercise_muscle (muscle_id, exercise_id) VALUES
+            (1, 1), (2, 2), (3, 3);
+            ";
+
+        string insertExerciseTypes = @"
+            INSERT INTO exercise_type (exercise_id, training_type_id) VALUES 
+            (1, 1), (2, 2), (1, 3), (1, 4), (3, 3);
+            ";
+
+        context.Database.ExecuteSqlRaw(insertMuscles);
+        context.Database.ExecuteSqlRaw(insertTrainingTypes);
+        context.Database.ExecuteSqlRaw(insertExercises);
+        context.Database.ExecuteSqlRaw(insertExerciseMuscles);
+        context.Database.ExecuteSqlRaw(insertExerciseTypes);
+
+    }
+
+    /// <summary>
+    /// Seeds the databse with <strong>3 Exercise recordss</strong> for the seeison's id given.<br></br>
+    /// <strong>a session will have 3 <em>distinct</em> trainingSessionExerciseRecords</strong>.<br></br>
+    /// this depends on <strong>SeedTypesExercisesAndMuscles</strong> to be called <strong>first!</strong>.
+    /// </summary>
+    /// <param name="sessionId">the session you want to create exercise record for.</param>
+    /// <seealso cref="SeedTypesExercisesAndMuscles"/>
+    private void SeedWorkOutRecords(int sessionId)
+    {
+        string insertExerciseRecords1 = @"
+                INSERT INTO exercise_record (exercise_id, repetitions, weight_used_kg) VALUES 
+                (1, 20, 0), 
+                (3, 20, 30);
+                ";
+
+        string insertExerciseRecords2 = @"
+                INSERT INTO exercise_record (exercise_id, timer_in_seconds) VALUES 
+                (2, 1800);
+                ";
+
+        string insertTrainingSessionExerciseRecords = @"
+                INSERT INTO training_session_exercise_record (training_session_id, exercise_record_id, last_weight_used_kg) VALUES
+                ({0}, 1, 0), 
+                ({0}, 3, 30), 
+                ({0}, 2, 0);
+                ";
+        string insertTrainingSessionTrainingTypes = @"
+                INSERT INTO training_session_type (training_session_id, training_type_id) VALUES
+                ({0}, 1), 
+                ({0}, 2),
+                ({0}, 3), 
+                ({0}, 4); 
+                ";
+        context.Database.ExecuteSqlRaw(insertExerciseRecords1);
+        context.Database.ExecuteSqlRaw(insertExerciseRecords2);
+        context.Database.ExecuteSqlRaw(insertTrainingSessionExerciseRecords, sessionId);
+        context.Database.ExecuteSqlRaw(insertTrainingSessionTrainingTypes, sessionId);
+
+    }
+}
