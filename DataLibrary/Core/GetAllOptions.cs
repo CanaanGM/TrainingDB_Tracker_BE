@@ -20,7 +20,7 @@ public class ExerciseQueryOptions
 public enum SortBy
 {
     NAME
-    ,DIFFICULTY
+    , DIFFICULTY
     , MUSCLE_GROUP
     , TRAINING_TYPE
 
