@@ -19,6 +19,7 @@ public class UtilsTests
         Assert.Equal(normalizedString, CultureInfo.CurrentCulture.TextInfo.ToLower(@string.Trim()));
     }
 
+    
     [Theory]
     [InlineData("")]
     [InlineData(null)]

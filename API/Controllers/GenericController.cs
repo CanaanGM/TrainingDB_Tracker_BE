@@ -69,46 +69,34 @@ public class GenericController : ControllerBase
     }
 
     /// <summary>
-    /// Gets a paginated list of all exercises in the database with their related muscles.
+    /// Retrieves a paginated list of exercises with optional filters and sorting.
     /// </summary>
-    /// <param name="asc">Ascending or decending option</param>
-    /// <param name="d">Difficulty, from 1 ~ 10</param>
-    /// <param name="g">Muscle Group to filter the results by</param>
-    /// <param name="m">Muscle to filter the results by</param>
-    /// <param name="pageNumber">PageNumber</param>
-    /// <param name="pageSize">Page Size</param>
-    /// <param name="sort">SortBy: NAME, DIFFICULTY, MUSCLE_GROUP, TRAINING_TYPE</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>a paginated list of all exercises in the database with their related muscles with applied sorting and filtering.</returns>
+    /// <param name="queryOptions">The options for filtering, sorting, and pagination.</param>
+    /// <param name="cancellationToken">Token to cancel the request.</param>
+    /// <returns>A paginated list of exercises.</returns>
     [HttpGet("/exercise")]
-    public async Task<IActionResult> GetExercisesAsync(
-       [FromQuery] bool asc = true,
-       [FromQuery] int d = 1,
-       [FromQuery] string g = "",
-       [FromQuery] string m = "",
-       [FromQuery] int pageNumber = 1,
-       [FromQuery] int pageSize = 10,
-       [FromQuery] string sort = "NAME",
-       CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetExercises([FromQuery] ExerciseQueryOptions queryOptions, CancellationToken cancellationToken)
     {
-        ExerciseQueryOptions options = new ExerciseQueryOptions
+        try
         {
-            Ascending = asc,
-            MinimumDifficulty = d,
-            MuscleGroupName = g,
-            MuscleName = m,
-            PageNumber = pageNumber,
-            PageSize = pageSize,
-            SortBy = Enum.TryParse(sort, true, out SortBy sortByResult) ? sortByResult : SortBy.NAME,
-            TrainingTypeName = "" // Add a query parameter if needed to handle this
-        };
+            _logger.LogInformation("Retrieving exercises with options: {@QueryOptions}", queryOptions);
+            var result = await _exerciseService.GetAllAsync(queryOptions, cancellationToken);
 
-        Result<PaginatedList<ExerciseReadDto>> result = await _exerciseService.GetAsync(options, cancellationToken);
-        if (result.IsSuccess)
+            if (!result.IsSuccess)
+            {
+                _logger.LogError("Failed to retrieve exercises: {ErrorMessage}", result.ErrorMessage);
+                return BadRequest(result.ErrorMessage);
+            }
+
+            _logger.LogInformation("Successfully retrieved exercises.");
             return Ok(result.Value);
-        return BadRequest(result.ErrorMessage);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while retrieving exercises.");
+            return StatusCode(500, "An error occurred while retrieving exercises.");
+        }
     }
-
 
     [HttpGet("/exercise/{name}")]
     public async Task<IActionResult> GetExerciseByNameAsync(string name, CancellationToken cancellationToken)
