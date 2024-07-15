@@ -126,6 +126,17 @@ public class GenericController : ControllerBase
         return Ok(await _exerciseService.DeleteExerciseAsync(id, cancellationToken));
     }
 
+    [HttpGet("/exercise/search/{exercise}")]
+    public async Task<IActionResult> SearchExercises(string exercise, CancellationToken cancellationToken)
+    {
+        var result = await _exerciseService.SearchExercisesAsync(exercise, cancellationToken);
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result.ErrorMessage);
+        }
+        return Ok(result.Value);
+    }
+    
     [HttpGet("/training")]
     public async Task<IActionResult> GetTrainingSessionsAsync(CancellationToken cancellationToken, string? startDate, string? endDate)
     {
@@ -150,6 +161,7 @@ public class GenericController : ControllerBase
     {
         return Ok(await _trainingSessionService.DeleteSessionAsync(sessionId, cancellationToken));
     }
+
 
 
 }

@@ -1098,4 +1098,54 @@ public class ExerciseServiceTests
         });
     }
     
+    [Theory]
+    [InlineData("dragon flag")]
+    [InlineData("rope jumping")]
+    [InlineData("barbell curl")]
+    public async Task SearchExercisesAsync_ShouldReturnMatchingExercises(string searchTerm)
+    {
+        // Arrange
+        DatabaseHelpers.SeedExtendedTypesExercisesAndMuscles(context);
+
+        // Act
+        var result = await service.SearchExercisesAsync(searchTerm, new CancellationToken());
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Value);
+        Assert.NotEmpty(result.Value);
+        Assert.All(result.Value, exercise => 
+            Assert.Contains(searchTerm.Split(' '), term => exercise.Name.Contains(term, StringComparison.OrdinalIgnoreCase))
+        );
+    }
+
+    [Fact]
+    public async Task SearchExercisesAsync_EmptySearchTerm_ShouldReturnFailure()
+    {
+        // Arrange
+        string searchTerm = "";
+
+        // Act
+        var result = await service.SearchExercisesAsync(searchTerm, new CancellationToken());
+
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Search term cannot be empty.", result.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task SearchExercisesAsync_NoMatchingExercises_ShouldReturnFailure()
+    {
+        // Arrange
+        DatabaseHelpers.SeedExtendedTypesExercisesAndMuscles(context);
+        string searchTerm = "nonexistent exercise";
+
+        // Act
+        var result = await service.SearchExercisesAsync(searchTerm, new CancellationToken());
+
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("No exercises found matching the search term.", result.ErrorMessage);
+    }
+    
 }

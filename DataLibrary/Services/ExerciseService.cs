@@ -62,7 +62,7 @@ public class ExerciseService : IExerciseService
                     return Result<PaginatedList<ExerciseReadDto>>.Failure("Page number and page size must be greater than zero.");
                 }
 
-                IQueryable<ExerciseReadDto> query = _context.Exercises
+                var query = _context.Exercises
                     .Include(e => e.TrainingTypes)
                     .Include(e => e.ExerciseMuscles)
                     .ThenInclude(em => em.Muscle)
@@ -369,6 +369,36 @@ public class ExerciseService : IExerciseService
         {
             await transaction.RollbackAsync(cancellationToken);
             return Result<bool>.Failure("Failed to delete exercise: " + ex.Message, ex);
+        }
+    }
+    public async Task<Result<List<ExerciseSearchResultDto>>> SearchExercisesAsync(string searchTerm, CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return Result<List<ExerciseSearchResultDto>>.Failure("Search term cannot be empty.");
+            }
+
+            searchTerm = Utils.NormalizeString(searchTerm);
+
+            var exercises = await _context.Exercises
+                .AsNoTracking()
+                .Where(e => EF.Functions.Like(e.Name, $"%{searchTerm}%"))
+                .ProjectTo<ExerciseSearchResultDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
+
+            if (exercises == null || exercises.Count == 0)
+            {
+                return Result<List<ExerciseSearchResultDto>>.Failure("No exercises found matching the search term.");
+            }
+
+            return Result<List<ExerciseSearchResultDto>>.Success(exercises);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"[ERROR]: something went wrong in {nameof(SearchExercisesAsync)}\n{ex.Message}\n{ex}");
+            return Result<List<ExerciseSearchResultDto>>.Failure(ex.Message, ex);
         }
     }
 

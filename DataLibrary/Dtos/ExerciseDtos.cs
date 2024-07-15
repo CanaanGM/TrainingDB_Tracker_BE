@@ -16,6 +16,11 @@ public class ExerciseReadDto
     public List<ExerciseHowToReadDto> HowTos { get; set; }
 }
 
+public class ExerciseSearchResultDto
+{
+    public string Name { get; set; } = null!;
+}
+
 public class ExerciseWriteDto
 {
     public string Name { get; set; } = null!;
