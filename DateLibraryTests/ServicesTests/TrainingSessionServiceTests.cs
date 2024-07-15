@@ -807,4 +807,207 @@ public class TrainingSessionServiceTests
         // exercise types relation table should also be empoty!
 
     }
+        [Fact]
+    public async Task CreateBulkSessionsAsync_ShouldInsertSessionsCorrectly()
+    {
+        // Arrange
+        DatabaseHelpers.SeedExtendedTypesExercisesAndMuscles(context);
+
+        var newSessions = new List<TrainingSessionWriteDto>
+        {
+            new TrainingSessionWriteDto
+            {
+                DurationInMinutes = 90,
+                Calories = 300,
+                Notes = "Morning session",
+                Mood = 8,
+                CreatedAt = "07-07-2024",
+                ExerciseRecords = new List<ExerciseRecordWriteDto>
+                {
+                    new ExerciseRecordWriteDto
+                    {
+                        ExerciseName = "dragon flag",
+                        Repetitions = 20,
+                        WeightUsedKg = 0
+                    },
+                    new ExerciseRecordWriteDto
+                    {
+                        ExerciseName = "rope jumping",
+                        TimerInSeconds = 60
+                    }
+                }
+            },
+            new TrainingSessionWriteDto
+            {
+                DurationInMinutes = 45,
+                Calories = 200,
+                Notes = "Evening session",
+                Mood = 7,
+                CreatedAt = "07-07-2024",
+                ExerciseRecords = new List<ExerciseRecordWriteDto>
+                {
+                    new ExerciseRecordWriteDto
+                    {
+                        ExerciseName = "barbell curl",
+                        Repetitions = 15,
+                        WeightUsedKg = 30
+                    }
+                }
+            }
+        };
+
+        // Act
+        var result = await service.CreateBulkSessionsAsync(newSessions, new CancellationToken());
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.True(result.Value);
+
+        var insertedSessions = context.TrainingSessions
+            .Include(ts => ts.TrainingSessionExerciseRecords)
+                .ThenInclude(ts => ts.ExerciseRecord)
+            .Include(ts => ts.TrainingTypes)
+            .ToList();
+
+        Assert.Equal(2, insertedSessions.Count);
+        Assert.All(insertedSessions, session =>
+        {
+            Assert.NotEmpty(session.TrainingSessionExerciseRecords);
+            Assert.NotEmpty(session.TrainingTypes);
+        });
+    }
+
+    [Fact]
+    public async Task CreateBulkSessionsAsync_ShouldHandleEmptyList()
+    {
+        // Arrange
+        var newSessions = new List<TrainingSessionWriteDto>();
+
+        // Act
+        var result = await service.CreateBulkSessionsAsync(newSessions, new CancellationToken());
+
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Error creating bulk sessions: The input list is empty.", result.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task CreateBulkSessionsAsync_ShouldHandleInvalidExercises()
+    {
+        // Arrange
+        DatabaseHelpers.SeedExtendedTypesExercisesAndMuscles(context);
+
+        var newSessions = new List<TrainingSessionWriteDto>
+        {
+            new TrainingSessionWriteDto
+            {
+                DurationInMinutes = 90,
+                Calories = 300,
+                Notes = "Morning session",
+                Mood = 8,
+                CreatedAt = "07-07-2024",
+                ExerciseRecords = new List<ExerciseRecordWriteDto>
+                {
+                    new ExerciseRecordWriteDto
+                    {
+                        ExerciseName = "invalid exercise",
+                        Repetitions = 20,
+                        WeightUsedKg = 0
+                    }
+                }
+            }
+        };
+
+        // Act
+        var result = await service.CreateBulkSessionsAsync(newSessions, new CancellationToken());
+
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Error creating bulk sessions: one or more exercises could not be found", result.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task CreateBulkSessionsAsync_ShouldHandleMixedValidInvalidExercises()
+    {
+        // Arrange
+        DatabaseHelpers.SeedExtendedTypesExercisesAndMuscles(context);
+
+        var newSessions = new List<TrainingSessionWriteDto>
+        {
+            new TrainingSessionWriteDto
+            {
+                DurationInMinutes = 90,
+                Calories = 300,
+                Notes = "Morning session",
+                Mood = 8,
+                CreatedAt = "07-07-2024",
+                ExerciseRecords = new List<ExerciseRecordWriteDto>
+                {
+                    new ExerciseRecordWriteDto
+                    {
+                        ExerciseName = "dragon flag",
+                        Repetitions = 20,
+                        WeightUsedKg = 0
+                    },
+                    new ExerciseRecordWriteDto
+                    {
+                        ExerciseName = "invalid exercise",
+                        Repetitions = 20,
+                        WeightUsedKg = 0
+                    }
+                }
+            },
+            new TrainingSessionWriteDto
+            {
+                DurationInMinutes = 45,
+                Calories = 200,
+                Notes = "Evening session",
+                Mood = 7,
+                CreatedAt = "07-07-2024",
+                ExerciseRecords = new List<ExerciseRecordWriteDto>
+                {
+                    new ExerciseRecordWriteDto
+                    {
+                        ExerciseName = "barbell curl",
+                        Repetitions = 15,
+                        WeightUsedKg = 30
+                    }
+                }
+            }
+        };
+
+        // Act
+        var result = await service.CreateBulkSessionsAsync(newSessions, new CancellationToken());
+
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Error creating bulk sessions: one or more exercises could not be found", result.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task CreateBulkSessionsAsync_ShouldHandleNoExerciseRecords()
+    {
+        // Arrange
+        DatabaseHelpers.SeedExtendedTypesExercisesAndMuscles(context);
+
+        var newSessions = new List<TrainingSessionWriteDto>
+        {
+            new TrainingSessionWriteDto
+            {
+                DurationInMinutes = 90,
+                Calories = 300,
+                Notes = "Morning session",
+                Mood = 8,
+                CreatedAt = "07-07-2024",
+                ExerciseRecords = new List<ExerciseRecordWriteDto>()
+            }
+        };
+
+        // Act
+        var result = await service.CreateBulkSessionsAsync(newSessions, new CancellationToken());
+
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Error creating bulk sessions: No exercise records found in one or more sessions.", result.ErrorMessage);
+    }
 }
