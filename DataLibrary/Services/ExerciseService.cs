@@ -121,6 +121,7 @@ public class ExerciseService : IExerciseService
                 .ToDictionaryAsync(m => m.Name, m => m, cancellationToken); // Using a dictionary for quick lookup
 
             // Ensure all muscles are found
+            //TODO: don't throw these
             if (muscles.Count != newExerciseDto.ExerciseMuscles.Count)
                 throw new Exception("One or more specified muscles could not be found.");
 

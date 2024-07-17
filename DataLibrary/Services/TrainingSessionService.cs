@@ -144,6 +144,23 @@ public class TrainingSessionService : ITrainingSessionService
         {
             return Result<bool>.Failure("Error creating bulk sessions: The input list is empty.");
         }
+        
+        // this is important, cause let's say you have 300 in the db, and u want to create 60 but 13 are duplicate,
+        // you would want to know which are duplicated without goin to the db, dammit! 
+        var exerciseNamesInTheDatabase = await _context.Exercises
+            .Select(x => x.Name)
+            .ToListAsync(cancellationToken);
+        
+        var exerciseNamesFromDto = newSessions.SelectMany(x => x.ExerciseRecords)
+            .Select(s => Utils.NormalizeString(s.ExerciseName))
+            .ToList();
+        
+        var nonExistingExercises = exerciseNamesFromDto .Where(x => !exerciseNamesInTheDatabase.Contains(x)).ToList();
+        if (nonExistingExercises.Any())
+        {
+            // maybe draw them for cool effect ? 
+            return Result<bool>.Failure($"these exercises are not in the database, create them ? {string.Join(", ", nonExistingExercises)}");
+        }
 
         var exerciseNames = newSessions
             .SelectMany(s => s.ExerciseRecords.Select(er => Utils.NormalizeString(er.ExerciseName)))
