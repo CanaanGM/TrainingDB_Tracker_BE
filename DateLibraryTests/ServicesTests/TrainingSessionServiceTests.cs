@@ -175,7 +175,7 @@ public class TrainingSessionServiceTests
 
         var newSessionDto = new TrainingSessionWriteDto
         {
-            Calories = 666,
+            TotalCaloriesBurned = 666,
             CreatedAt = creationDate,
             DurationInMinutes = 35,
             Mood = 9,
@@ -257,7 +257,7 @@ public class TrainingSessionServiceTests
 
         var updateDto = new TrainingSessionWriteDto
         {
-            Calories = 777,
+            TotalCaloriesBurned = 777,
             CreatedAt = "6-2-2024",
             DurationInMinutes = 120,
             Mood = 5,
@@ -288,7 +288,7 @@ public class TrainingSessionServiceTests
         Assert.Equal(3, updatedSession.TrainingTypes.Count);
         Assert.Equal(DateTime.Parse(updateDto.CreatedAt), updatedSession.CreatedAt);
         Assert.Equal(updateDto.Notes, updatedSession.Notes);
-        Assert.Equal(updateDto.Calories, updatedSession.TotalCaloriesBurned);
+        Assert.Equal(updateDto.TotalCaloriesBurned, updatedSession.TotalCaloriesBurned);
         Assert.Equal(updateDto.DurationInMinutes, updatedSession.DurationInSeconds / 60);
         Assert.Equal(updateDto.DurationInMinutes * 60, updatedSession.DurationInSeconds);
         Assert.Equal(updateDto.Mood, updatedSession.Mood);
@@ -322,7 +322,7 @@ public class TrainingSessionServiceTests
 
         var updateDto = new TrainingSessionWriteDto
         {
-            Calories = 777,
+            TotalCaloriesBurned = 777,
             CreatedAt = "6-2-2024",
             DurationInMinutes = 120,
             Mood = 5,
@@ -345,7 +345,7 @@ public class TrainingSessionServiceTests
         Assert.Equal(4, updatedSession.TrainingTypes.Count);
         Assert.Equal(DateTime.Parse(updateDto.CreatedAt), updatedSession.CreatedAt);
         Assert.Equal(updateDto.Notes, updatedSession.Notes);
-        Assert.Equal(updateDto.Calories, updatedSession.TotalCaloriesBurned);
+        Assert.Equal(updateDto.TotalCaloriesBurned, updatedSession.TotalCaloriesBurned);
         Assert.Equal(updateDto.DurationInMinutes, updatedSession.DurationInSeconds / 60);
         Assert.Equal(updateDto.DurationInMinutes * 60, updatedSession.DurationInSeconds);
         Assert.Equal(updateDto.Mood, updatedSession.Mood);
@@ -374,7 +374,7 @@ public class TrainingSessionServiceTests
                     Mood = 5,
                     CreatedAt = sessionDate,
                 }, new TrainingSessionWriteDto{
-                    Calories = 777
+                    TotalCaloriesBurned = 777
                 } ),
             },
            new object[]
@@ -465,7 +465,7 @@ public class TrainingSessionServiceTests
 
         if (updateDto.CreatedAt is not null) Assert.Equal(DateTime.Parse(updateDto.CreatedAt), updatedSession.CreatedAt);
         if (updateDto.Notes is not null) Assert.Equal(updateDto.Notes, updatedSession.Notes);
-        if (updateDto.Calories is not null) Assert.Equal(updateDto.Calories, updatedSession.TotalCaloriesBurned);
+        if (updateDto.TotalCaloriesBurned is not null) Assert.Equal(updateDto.TotalCaloriesBurned, updatedSession.TotalCaloriesBurned);
         if (updateDto.DurationInMinutes is not null) Assert.Equal(updateDto.DurationInMinutes, updatedSession.DurationInSeconds / 60);
         if (updateDto.DurationInMinutes is not null) Assert.Equal(updateDto.DurationInMinutes * 60, updatedSession.DurationInSeconds);
         if (updateDto.Mood is not null) Assert.Equal(updateDto.Mood, updatedSession.Mood);
@@ -488,7 +488,7 @@ public class TrainingSessionServiceTests
                     Mood = 5,
                     CreatedAt = sessionDate,
                 }, new TrainingSessionWriteDto{
-                    Calories = 777,
+                    TotalCaloriesBurned = 777,
                     ExerciseRecords = new List<ExerciseRecordWriteDto>
                     {
                         new ExerciseRecordWriteDto
@@ -724,7 +724,7 @@ public class TrainingSessionServiceTests
 
         if (updateDto.CreatedAt is not null) Assert.Equal(DateTime.Parse(updateDto.CreatedAt), updatedSession.CreatedAt);
         if (updateDto.Notes is not null) Assert.Equal(updateDto.Notes, updatedSession.Notes);
-        if (updateDto.Calories is not null) Assert.Equal(updateDto.Calories, updatedSession.TotalCaloriesBurned);
+        if (updateDto.TotalCaloriesBurned is not null) Assert.Equal(updateDto.TotalCaloriesBurned, updatedSession.TotalCaloriesBurned);
         if (updateDto.DurationInMinutes is not null) Assert.Equal(updateDto.DurationInMinutes, updatedSession.DurationInSeconds / 60);
         if (updateDto.DurationInMinutes is not null) Assert.Equal(updateDto.DurationInMinutes * 60, updatedSession.DurationInSeconds);
         if (updateDto.Mood is not null) Assert.Equal(updateDto.Mood, updatedSession.Mood);
@@ -821,7 +821,7 @@ public class TrainingSessionServiceTests
             new TrainingSessionWriteDto
             {
                 DurationInMinutes = 90,
-                Calories = 300,
+                TotalCaloriesBurned = 300,
                 Notes = "Morning session",
                 Mood = 8,
                 CreatedAt = "07-07-2024",
@@ -843,7 +843,7 @@ public class TrainingSessionServiceTests
             new TrainingSessionWriteDto
             {
                 DurationInMinutes = 45,
-                Calories = 200,
+                TotalCaloriesBurned = 200,
                 Notes = "Evening session",
                 Mood = 7,
                 CreatedAt = "07-07-2024",
@@ -905,7 +905,7 @@ public class TrainingSessionServiceTests
             new TrainingSessionWriteDto
             {
                 DurationInMinutes = 90,
-                Calories = 300,
+                TotalCaloriesBurned = 300,
                 Notes = "Morning session",
                 Mood = 8,
                 CreatedAt = "07-07-2024",
@@ -940,7 +940,7 @@ public class TrainingSessionServiceTests
             new TrainingSessionWriteDto
             {
                 DurationInMinutes = 90,
-                Calories = 300,
+                TotalCaloriesBurned = 300,
                 Notes = "Morning session",
                 Mood = 8,
                 CreatedAt = "07-07-2024",
@@ -963,7 +963,7 @@ public class TrainingSessionServiceTests
             new TrainingSessionWriteDto
             {
                 DurationInMinutes = 45,
-                Calories = 200,
+                TotalCaloriesBurned = 200,
                 Notes = "Evening session",
                 Mood = 7,
                 CreatedAt = "07-07-2024",
@@ -998,7 +998,7 @@ public class TrainingSessionServiceTests
             new TrainingSessionWriteDto
             {
                 DurationInMinutes = 90,
-                Calories = 300,
+                TotalCaloriesBurned = 300,
                 Notes = "Morning session",
                 Mood = 8,
                 CreatedAt = "07-07-2024",

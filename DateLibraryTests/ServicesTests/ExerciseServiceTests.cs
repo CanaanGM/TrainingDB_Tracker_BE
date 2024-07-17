@@ -42,8 +42,7 @@ public class ExerciseServiceTests
         var result = await service.GetByNameAsync(exerciseName, new CancellationToken());
         Assert.False(result.IsSuccess);
         Assert.NotNull(result.ErrorMessage);
-        Assert.NotNull(result.Exception);
-        Assert.Equal($"exercise : {exerciseName} does not exists.", result.Exception.Message);
+        Assert.Equal($"exercise : {exerciseName} does not exists.", result.ErrorMessage);
     }
 
     [Theory]

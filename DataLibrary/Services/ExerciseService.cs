@@ -287,6 +287,7 @@ public async Task<Result<bool>> CreateBulkAsync(List<ExerciseWriteDto> newExerci
                     IsPrimary = em.IsPrimary
                 }).ToList(),
                 TrainingTypes = dto.TrainingTypes.Select(tt => trainingTypes[Utils.NormalizeString(tt)]).ToList()
+                
             };
             _logger.LogCritical($"Now Adding: {newExercise.Name}");
 

@@ -91,7 +91,7 @@ public class TrainingSessionService : ITrainingSessionService
             TrainingSession newTrainingSession = new TrainingSession()
             {
                 DurationInSeconds = Utils.DurationSecondsFromMinutes(newSession.DurationInMinutes),
-                TotalCaloriesBurned = newSession.Calories,
+                TotalCaloriesBurned = newSession.TotalCaloriesBurned,
                 Notes = newSession.Notes,
                 Mood = newSession.Mood,
                 CreatedAt = sessionCreatedAt,
@@ -108,7 +108,14 @@ public class TrainingSessionService : ITrainingSessionService
                             Notes = x.Notes,
                             Exercise = relatedExercises
                                 .FirstOrDefault(e => Utils.NormalizeString(e.Name) == Utils.NormalizeString(x.ExerciseName)),
-                            CreatedAt = sessionCreatedAt
+                            CreatedAt = sessionCreatedAt,
+                            
+                            RateOfPerceivedExertion =x.RateOfPerceivedExertion,
+                            Incline =x.Incline,
+                            Speed =x.Speed,
+                            KcalBurned =x.KcalBurned,
+                            HeartRateAvg =x.HeartRateAvg,
+                            RestInSeconds =x.RestInSeconds
                         },
                         LastWeightUsedKg = x.WeightUsedKg,
                         CreatedAt = sessionCreatedAt
@@ -174,7 +181,7 @@ public class TrainingSessionService : ITrainingSessionService
             var newSession = new TrainingSession
             {
                 DurationInSeconds = Utils.DurationSecondsFromMinutes(sessionDto.DurationInMinutes),
-                TotalCaloriesBurned = sessionDto.Calories,
+                TotalCaloriesBurned = sessionDto.TotalCaloriesBurned,
                 Notes = sessionDto.Notes,
                 Mood = sessionDto.Mood,
                 CreatedAt = sessionCreatedAt,
@@ -185,12 +192,19 @@ public class TrainingSessionService : ITrainingSessionService
                         ExerciseRecord = new ExerciseRecord
                         {
                             Repetitions = er.Repetitions,
-                            TimerInSeconds = er.TimerInSeconds,
+                            TimerInSeconds = er.TimerInSeconds, 
                             DistanceInMeters = er.DistanceInMeters,
                             WeightUsedKg = er.WeightUsedKg,
                             Notes = er.Notes,
                             Exercise = relatedExercises.First(e => Utils.NormalizeString(e.Name) == Utils.NormalizeString(er.ExerciseName)),
-                            CreatedAt = sessionCreatedAt
+                            CreatedAt = sessionCreatedAt,
+                            RateOfPerceivedExertion = er.RateOfPerceivedExertion,
+                            Incline = er.Incline,
+                            Speed = er.Speed,
+                            KcalBurned = er.KcalBurned,
+                            HeartRateAvg = er.HeartRateAvg,
+                            RestInSeconds = er.RestInSeconds
+                            
                         },
                         LastWeightUsedKg = er.WeightUsedKg,
                         CreatedAt = sessionCreatedAt
@@ -325,7 +339,13 @@ public class TrainingSessionService : ITrainingSessionService
                     Notes = x.Notes,
                     Repetitions = x.Repetitions,
                     TimerInSeconds = x.TimerInSeconds,
-                    WeightUsedKg = x.WeightUsedKg
+                    WeightUsedKg = x.WeightUsedKg,
+                    RateOfPerceivedExertion =x.RateOfPerceivedExertion,
+                    Incline =x.Incline,
+                    Speed =x.Speed,
+                    KcalBurned =x.KcalBurned,
+                    HeartRateAvg =x.HeartRateAvg,
+                    RestInSeconds =x.RestInSeconds
                 },
                 LastWeightUsedKg = x.WeightUsedKg
                 ,

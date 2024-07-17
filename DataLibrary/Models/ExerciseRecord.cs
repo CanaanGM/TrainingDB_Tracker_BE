@@ -17,8 +17,9 @@ public partial class ExerciseRecord
     public int? Speed { get; set; }
     public int? HeartRateAvg { get; set; }
     public int? KcalBurned { get; set; }
+    public int? RateOfPerceivedExertion { get; set; } 
     public DateTime? CreatedAt { get; set; }
-    public virtual Exercise? Exercise { get; set; }
-    public virtual ICollection<TrainingSessionExerciseRecord> TrainingSessionExerciseRecords { get; set; } =
+    public  Exercise? Exercise { get; set; }
+    public  ICollection<TrainingSessionExerciseRecord> TrainingSessionExerciseRecords { get; set; } =
         new List<TrainingSessionExerciseRecord>();
 }

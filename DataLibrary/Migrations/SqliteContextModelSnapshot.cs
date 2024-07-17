@@ -268,6 +268,9 @@ namespace DataLibrary.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("notes");
 
+                    b.Property<int?>("RateOfPerceivedExertion")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("Repetitions")
                         .HasColumnType("INTEGER")
                         .HasColumnName("repetitions");
