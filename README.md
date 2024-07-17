@@ -13,7 +13,9 @@
 
 ## Architecure
 
-### no tests yet, cause i keep changing how i do this, tests will only slow me down, same reason i picked efcore, **speed** .
+## To throw or to not throw ?
+maybe imma use the result pattern ? will have to test performance, cause i kinda like throwing, what kinda training session wont have throwing in it ?! 
+
 > TODO: facilitate more
 
 ### dataBase

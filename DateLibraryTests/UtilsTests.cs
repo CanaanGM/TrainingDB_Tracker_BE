@@ -19,6 +19,7 @@ public class UtilsTests
         Assert.Equal(normalizedString, CultureInfo.CurrentCulture.TextInfo.ToLower(@string.Trim()));
     }
 
+    
     [Theory]
     [InlineData("")]
     [InlineData(null)]
@@ -30,6 +31,7 @@ public class UtilsTests
     [Theory] // how can i test incorrect input here?
     [InlineData("5-13-2024")]
     [InlineData("5-13-2024 17:34:45")]
+    [InlineData("2-12-2024 11:18:05")]
 
     public void ParseDate_returns_normalized_string_Success(string dateString)
     {

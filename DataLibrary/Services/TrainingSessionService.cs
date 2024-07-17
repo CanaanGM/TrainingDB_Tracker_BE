@@ -128,6 +128,92 @@ public class TrainingSessionService : ITrainingSessionService
         }
     }
 
+  public async Task<Result<bool>> CreateBulkSessionsAsync(List<TrainingSessionWriteDto> newSessions, CancellationToken cancellationToken)
+{
+    using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+    try
+    {
+        if (newSessions == null || !newSessions.Any())
+        {
+            return Result<bool>.Failure("Error creating bulk sessions: The input list is empty.");
+        }
+
+        var exerciseNames = newSessions
+            .SelectMany(s => s.ExerciseRecords.Select(er => Utils.NormalizeString(er.ExerciseName)))
+            .Distinct()
+            .ToList();
+
+        var exercises = await _context.Exercises
+            .Include(e => e.TrainingTypes)
+            .Where(e => exerciseNames.Contains(e.Name))
+            .ToListAsync(cancellationToken);
+
+        if (exerciseNames.Count != exercises.Count)
+        {
+            return Result<bool>.Failure("Error creating bulk sessions: one or more exercises could not be found");
+        }
+
+        var sessions = new List<TrainingSession>();
+
+        foreach (var sessionDto in newSessions)
+        {
+            if (sessionDto.ExerciseRecords == null || !sessionDto.ExerciseRecords.Any())
+            {
+                return Result<bool>.Failure("Error creating bulk sessions: No exercise records found in one or more sessions.");
+            }
+
+            var relatedExercises = exercises.Where(e =>
+                sessionDto.ExerciseRecords.Select(er => Utils.NormalizeString(er.ExerciseName)).Contains(e.Name)).ToList();
+
+            var relatedTrainingTypes = relatedExercises
+                .SelectMany(e => e.TrainingTypes)
+                .Distinct()
+                .ToList();
+
+            var sessionCreatedAt = Utils.ParseDate(sessionDto.CreatedAt) ?? DateTime.UtcNow;
+            var newSession = new TrainingSession
+            {
+                DurationInSeconds = Utils.DurationSecondsFromMinutes(sessionDto.DurationInMinutes),
+                Calories = sessionDto.Calories,
+                Notes = sessionDto.Notes,
+                Mood = sessionDto.Mood,
+                CreatedAt = sessionCreatedAt,
+                TrainingTypes = relatedTrainingTypes,
+                TrainingSessionExerciseRecords = sessionDto.ExerciseRecords
+                    .Select(er => new TrainingSessionExerciseRecord
+                    {
+                        ExerciseRecord = new ExerciseRecord
+                        {
+                            Repetitions = er.Repetitions,
+                            TimerInSeconds = er.TimerInSeconds,
+                            DistanceInMeters = er.DistanceInMeters,
+                            WeightUsedKg = er.WeightUsedKg,
+                            Notes = er.Notes,
+                            Exercise = relatedExercises.First(e => Utils.NormalizeString(e.Name) == Utils.NormalizeString(er.ExerciseName)),
+                            CreatedAt = sessionCreatedAt
+                        },
+                        LastWeightUsedKg = er.WeightUsedKg,
+                        CreatedAt = sessionCreatedAt
+                    })
+                    .ToList()
+            };
+
+            sessions.Add(newSession);
+        }
+
+        await _context.TrainingSessions.AddRangeAsync(sessions, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+
+        return Result<bool>.Success(true);
+    }
+    catch (Exception ex)
+    {
+        await transaction.RollbackAsync(cancellationToken);
+        return Result<bool>.Failure("Error creating bulk sessions: " + ex.Message, ex);
+    }
+}
+
     /// <summary>
     ///  Gets the related Exercises from the database based on the provided list of names.
     /// </summary>

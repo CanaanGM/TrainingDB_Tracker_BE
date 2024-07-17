@@ -6,7 +6,7 @@ using DataLibrary.Dtos;
 using DataLibrary.Helpers;
 using DataLibrary.Models;
 using DataLibrary.Services;
-
+using DateLibraryTests.helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -68,7 +68,7 @@ public class TrainingSessionServiceTests
     [Fact]
     public async Task GetTrainingSessionsAsync_NoDateRange_Should_ReturnAll_Success()
     {
-        SeedTypesExercisesAndMuscles();
+        DatabaseHelpers.SeedTypesExercisesAndMuscles(context);
         var trainingSessions = new List<TrainingSession>
             {
                 new TrainingSession
@@ -84,7 +84,7 @@ public class TrainingSessionServiceTests
 
         context.TrainingSessions.AddRange(trainingSessions);
         context.SaveChanges();
-        trainingSessions.ForEach(x => SeedWorkOutRecords(x.Id));
+        trainingSessions.ForEach(x => DatabaseHelpers.SeedWorkOutRecords(x.Id, context));
 
         var result = await service.GetTrainingSessionsAsync(
             null, null, new CancellationToken()
@@ -113,7 +113,7 @@ public class TrainingSessionServiceTests
     public async Task GetTrainingSessionsAsync_DateRange_Should_ReturnAll_WithinDate_Success(string firstDate, string secondDate)
     {
         var date = new DateTime(2024, 5, 1);
-        SeedTypesExercisesAndMuscles();
+        DatabaseHelpers.SeedTypesExercisesAndMuscles(context);
 
         var trainingSessions = new List<TrainingSession>
             {
@@ -154,7 +154,7 @@ public class TrainingSessionServiceTests
         context.TrainingSessions.AddRange(trainingSessions);
         context.SaveChanges();
 
-        trainingSessions.ForEach(x => SeedWorkOutRecords(x.Id));
+        trainingSessions.ForEach(x => DatabaseHelpers.SeedWorkOutRecords(x.Id, context));
 
         var result = await service.GetTrainingSessionsAsync(firstDate, secondDate, new CancellationToken());
         Assert.True(result.IsSuccess);
@@ -165,15 +165,18 @@ public class TrainingSessionServiceTests
 
     }
 
-    [Fact]
-    public async Task CreateSessionAsync_creating_return_success()
+    [Theory]
+    [InlineData("5-13-2024")]
+    [InlineData("5-13-2024 17:34:45")]
+    [InlineData("2-12-2024 11:18:05")]
+    public async Task CreateSessionAsync_creating_return_success(string creationDate)
     {
-        SeedTypesExercisesAndMuscles();
+        DatabaseHelpers.SeedTypesExercisesAndMuscles(context);
 
         var newSessionDto = new TrainingSessionWriteDto
         {
             Calories = 666,
-            CreatedAt = "5-1-2024",
+            CreatedAt = creationDate,
             DurationInMinutes = 35,
             Mood = 9,
             Notes = "Test record for testing",
@@ -223,12 +226,12 @@ public class TrainingSessionServiceTests
             if (exerciseRecord.TimerInSeconds is not null) Assert.Equal(1800, exerciseRecord.TimerInSeconds);
             if (exerciseRecord.Repetitions is not null) Assert.Equal(20, exerciseRecord.Repetitions);
 
-            Assert.Equal(DateTime.Parse("5-1-2024"), sessionRecord.CreatedAt);
-            Assert.Equal(DateTime.Parse("5-1-2024"), exerciseRecord.CreatedAt);
+            Assert.Equal(DateTime.Parse(creationDate), sessionRecord.CreatedAt);
+            Assert.Equal(DateTime.Parse(creationDate), exerciseRecord.CreatedAt);
 
         }
         Assert.Equal(35 * 60, newSession.DurationInSeconds); // duration conversion
-        Assert.Equal(DateTime.Parse("5-1-2024"), newSession.CreatedAt);
+        Assert.Equal(DateTime.Parse(creationDate), newSession.CreatedAt);
 
     }
 
@@ -236,7 +239,7 @@ public class TrainingSessionServiceTests
     [Fact]
     public async Task UpdateSessionAsync_FullSessionUpdateWithExerciseRecords_Returns_Success()
     {
-        SeedTypesExercisesAndMuscles();
+        DatabaseHelpers.SeedTypesExercisesAndMuscles(context);
         var trainingSessionToBUpdated =
                 new TrainingSession
                 {
@@ -249,7 +252,7 @@ public class TrainingSessionServiceTests
 
         context.TrainingSessions.Add(trainingSessionToBUpdated);
         context.SaveChanges();
-        SeedWorkOutRecords(trainingSessionToBUpdated.Id);
+        DatabaseHelpers.SeedWorkOutRecords(trainingSessionToBUpdated.Id, context);
         context.ChangeTracker.Clear();
 
         var updateDto = new TrainingSessionWriteDto
@@ -301,7 +304,7 @@ public class TrainingSessionServiceTests
     [Fact]
     public async Task UpdateSessionAsync_FullSessionUpdateWithNoExerciseRecordsUpdate_Returns_Success()
     {
-        SeedTypesExercisesAndMuscles();
+        DatabaseHelpers.SeedTypesExercisesAndMuscles(context);
         var trainingSessionToBUpdated =
                 new TrainingSession
                 {
@@ -314,7 +317,7 @@ public class TrainingSessionServiceTests
 
         context.TrainingSessions.Add(trainingSessionToBUpdated);
         context.SaveChanges();
-        SeedWorkOutRecords(trainingSessionToBUpdated.Id);
+        DatabaseHelpers.SeedWorkOutRecords(trainingSessionToBUpdated.Id, context);
         context.ChangeTracker.Clear();
 
         var updateDto = new TrainingSessionWriteDto
@@ -434,12 +437,12 @@ public class TrainingSessionServiceTests
     [MemberData(nameof(TrainingSessionsToTestTheUpdate))]
     public async Task UpdateSessionAsync_PartialSessionUpdateWithoutExerciseRecords_Returns_Success(Tuple<TrainingSession, TrainingSessionWriteDto> sessionData)
     {
-        SeedTypesExercisesAndMuscles();
+        DatabaseHelpers.SeedTypesExercisesAndMuscles(context);
         var trainingSessionToBUpdated = sessionData.Item1;
 
         context.TrainingSessions.Add(trainingSessionToBUpdated);
         context.SaveChanges();
-        SeedWorkOutRecords(trainingSessionToBUpdated.Id);
+        DatabaseHelpers.SeedWorkOutRecords(trainingSessionToBUpdated.Id, context);
         context.ChangeTracker.Clear();
 
         var updateDto = sessionData.Item2;
@@ -696,12 +699,12 @@ public class TrainingSessionServiceTests
     [MemberData(nameof(TrainingSessionsWithRecordsToTestTheUpdate))]
     public async Task UpdateSessionAsync_PartialSessionWithExerciseRecordsUpdate_Returns_Success(Tuple<TrainingSession, TrainingSessionWriteDto> sessionData)
     {
-        SeedTypesExercisesAndMuscles();
+        DatabaseHelpers.SeedTypesExercisesAndMuscles(context);
         var trainingSessionToBUpdated = sessionData.Item1;
 
         context.TrainingSessions.Add(trainingSessionToBUpdated);
         context.SaveChanges();
-        SeedWorkOutRecords(trainingSessionToBUpdated.Id);
+        DatabaseHelpers.SeedWorkOutRecords(trainingSessionToBUpdated.Id, context);
         context.ChangeTracker.Clear();
 
         var updateDto = sessionData.Item2;
@@ -775,14 +778,10 @@ public class TrainingSessionServiceTests
 
     }
 
-    // TODO: think of more failure states!
-
-    // delete
-
     [Fact]
     public async Task Delete_should_clean_all_related_records_and_returns_success()
     {
-        SeedTypesExercisesAndMuscles();
+        DatabaseHelpers.SeedTypesExercisesAndMuscles(context);
         var trainingSessionToBUpdated =
                 new TrainingSession
                 {
@@ -795,7 +794,7 @@ public class TrainingSessionServiceTests
 
         context.TrainingSessions.Add(trainingSessionToBUpdated);
         context.SaveChanges();
-        SeedWorkOutRecords(trainingSessionToBUpdated.Id);
+        DatabaseHelpers.SeedWorkOutRecords(trainingSessionToBUpdated.Id, context);
         context.ChangeTracker.Clear();
 
         var result = await service.DeleteSessionAsync(trainingSessionToBUpdated.Id, new CancellationToken());
@@ -811,90 +810,207 @@ public class TrainingSessionServiceTests
         // exercise types relation table should also be empoty!
 
     }
-
-    /// <summary>
-    /// Seeds the database with <strong>3</strong> muscles, <strong>4</strong> training types, <strong>3</strong> exercises <i> with their relations</i> to the muscles and types.
-    /// <em>Making a session have <strong>4 training types</strong></em>.<br></br>
-    /// </summary>
-    private void SeedTypesExercisesAndMuscles()
+        [Fact]
+    public async Task CreateBulkSessionsAsync_ShouldInsertSessionsCorrectly()
     {
-        string insertMuscles = @"
-            INSERT INTO muscle (name, muscle_group, ""function"", wiki_page_url) VALUES
-            ('deltoid anterior head','shoulders','flexes and medially rotates the arm.','https://en.wikipedia.org/wiki/Deltoid_muscle#Anterior_part'),
-            ('deltoid posterior head','shoulders','flexes and medially rotates the arm.','https://en.wikipedia.org/wiki/Deltoid_muscle#Anterior_part'),
-            ('deltoid middle head','shoulders','flexes and medially rotates the arm.','https://en.wikipedia.org/wiki/Deltoid_muscle#Anterior_part');
-            ";
+        // Arrange
+        DatabaseHelpers.SeedExtendedTypesExercisesAndMuscles(context);
 
-        string insertTrainingTypes = @"
-            INSERT INTO training_type (name) VALUES 
-            ('strength'), 
-            ('cardio'),
-            ('bodyBuilding'), 
-            ('martial arts');
-            ";
+        var newSessions = new List<TrainingSessionWriteDto>
+        {
+            new TrainingSessionWriteDto
+            {
+                DurationInMinutes = 90,
+                Calories = 300,
+                Notes = "Morning session",
+                Mood = 8,
+                CreatedAt = "07-07-2024",
+                ExerciseRecords = new List<ExerciseRecordWriteDto>
+                {
+                    new ExerciseRecordWriteDto
+                    {
+                        ExerciseName = "dragon flag",
+                        Repetitions = 20,
+                        WeightUsedKg = 0
+                    },
+                    new ExerciseRecordWriteDto
+                    {
+                        ExerciseName = "rope jumping",
+                        TimerInSeconds = 60
+                    }
+                }
+            },
+            new TrainingSessionWriteDto
+            {
+                DurationInMinutes = 45,
+                Calories = 200,
+                Notes = "Evening session",
+                Mood = 7,
+                CreatedAt = "07-07-2024",
+                ExerciseRecords = new List<ExerciseRecordWriteDto>
+                {
+                    new ExerciseRecordWriteDto
+                    {
+                        ExerciseName = "barbell curl",
+                        Repetitions = 15,
+                        WeightUsedKg = 30
+                    }
+                }
+            }
+        };
 
-        string insertExercises = @"
-            INSERT INTO exercise (name, description, how_to, difficulty) VALUES
-            ('dragon flag', 'a flag', 'lie and cry', 4),
-            ('rope jumping', 'jump', 'cant touch this!', 4),
-            ('barbell curl', 'curl a barbell . . . duah!', 'one more! GO!', 4);
-            ";
+        // Act
+        var result = await service.CreateBulkSessionsAsync(newSessions, new CancellationToken());
 
-        string insertExerciseMuscles = @"
-            INSERT INTO exercise_muscle (muscle_id, exercise_id) VALUES
-            (1, 1), (2, 2), (3, 3);
-            ";
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.True(result.Value);
 
-        string insertExerciseTypes = @"
-            INSERT INTO exercise_type (exercise_id, training_type_id) VALUES 
-            (1, 1), (2, 2), (1, 3), (1, 4), (3, 3);
-            ";
+        var insertedSessions = context.TrainingSessions
+            .Include(ts => ts.TrainingSessionExerciseRecords)
+                .ThenInclude(ts => ts.ExerciseRecord)
+            .Include(ts => ts.TrainingTypes)
+            .ToList();
 
-        context.Database.ExecuteSqlRaw(insertMuscles);
-        context.Database.ExecuteSqlRaw(insertTrainingTypes);
-        context.Database.ExecuteSqlRaw(insertExercises);
-        context.Database.ExecuteSqlRaw(insertExerciseMuscles);
-        context.Database.ExecuteSqlRaw(insertExerciseTypes);
-
+        Assert.Equal(2, insertedSessions.Count);
+        Assert.All(insertedSessions, session =>
+        {
+            Assert.NotEmpty(session.TrainingSessionExerciseRecords);
+            Assert.NotEmpty(session.TrainingTypes);
+        });
     }
 
-    /// <summary>
-    /// Seeds the databse with <strong>3 Exercise recordss</strong> for the seeison's id given.<br></br>
-    /// <strong>a session will have 3 <em>distinct</em> trainingSessionExerciseRecords</strong>.<br></br>
-    /// this depends on <strong>SeedTypesExercisesAndMuscles</strong> to be called <strong>first!</strong>.
-    /// </summary>
-    /// <param name="sessionId">the session you want to create exercise record for.</param>
-    /// <seealso cref="SeedTypesExercisesAndMuscles"/>
-    private void SeedWorkOutRecords(int sessionId)
+    [Fact]
+    public async Task CreateBulkSessionsAsync_ShouldHandleEmptyList()
     {
-        string insertExerciseRecords1 = @"
-                INSERT INTO exercise_record (exercise_id, repetitions, weight_used_kg) VALUES 
-                (1, 20, 0), 
-                (3, 20, 30);
-                ";
+        // Arrange
+        var newSessions = new List<TrainingSessionWriteDto>();
 
-        string insertExerciseRecords2 = @"
-                INSERT INTO exercise_record (exercise_id, timer_in_seconds) VALUES 
-                (2, 1800);
-                ";
+        // Act
+        var result = await service.CreateBulkSessionsAsync(newSessions, new CancellationToken());
 
-        string insertTrainingSessionExerciseRecords = @"
-                INSERT INTO training_session_exercise_record (training_session_id, exercise_record_id, last_weight_used_kg) VALUES
-                ({0}, 1, 0), 
-                ({0}, 3, 30), 
-                ({0}, 2, 0);
-                ";
-        string insertTrainingSessionTrainingTypes = @"
-                INSERT INTO training_session_type (training_session_id, training_type_id) VALUES
-                ({0}, 1), 
-                ({0}, 2),
-                ({0}, 3), 
-                ({0}, 4); 
-                ";
-        context.Database.ExecuteSqlRaw(insertExerciseRecords1);
-        context.Database.ExecuteSqlRaw(insertExerciseRecords2);
-        context.Database.ExecuteSqlRaw(insertTrainingSessionExerciseRecords, sessionId);
-        context.Database.ExecuteSqlRaw(insertTrainingSessionTrainingTypes, sessionId);
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Error creating bulk sessions: The input list is empty.", result.ErrorMessage);
+    }
 
+    [Fact]
+    public async Task CreateBulkSessionsAsync_ShouldHandleInvalidExercises()
+    {
+        // Arrange
+        DatabaseHelpers.SeedExtendedTypesExercisesAndMuscles(context);
+
+        var newSessions = new List<TrainingSessionWriteDto>
+        {
+            new TrainingSessionWriteDto
+            {
+                DurationInMinutes = 90,
+                Calories = 300,
+                Notes = "Morning session",
+                Mood = 8,
+                CreatedAt = "07-07-2024",
+                ExerciseRecords = new List<ExerciseRecordWriteDto>
+                {
+                    new ExerciseRecordWriteDto
+                    {
+                        ExerciseName = "invalid exercise",
+                        Repetitions = 20,
+                        WeightUsedKg = 0
+                    }
+                }
+            }
+        };
+
+        // Act
+        var result = await service.CreateBulkSessionsAsync(newSessions, new CancellationToken());
+
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Error creating bulk sessions: one or more exercises could not be found", result.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task CreateBulkSessionsAsync_ShouldHandleMixedValidInvalidExercises()
+    {
+        // Arrange
+        DatabaseHelpers.SeedExtendedTypesExercisesAndMuscles(context);
+
+        var newSessions = new List<TrainingSessionWriteDto>
+        {
+            new TrainingSessionWriteDto
+            {
+                DurationInMinutes = 90,
+                Calories = 300,
+                Notes = "Morning session",
+                Mood = 8,
+                CreatedAt = "07-07-2024",
+                ExerciseRecords = new List<ExerciseRecordWriteDto>
+                {
+                    new ExerciseRecordWriteDto
+                    {
+                        ExerciseName = "dragon flag",
+                        Repetitions = 20,
+                        WeightUsedKg = 0
+                    },
+                    new ExerciseRecordWriteDto
+                    {
+                        ExerciseName = "invalid exercise",
+                        Repetitions = 20,
+                        WeightUsedKg = 0
+                    }
+                }
+            },
+            new TrainingSessionWriteDto
+            {
+                DurationInMinutes = 45,
+                Calories = 200,
+                Notes = "Evening session",
+                Mood = 7,
+                CreatedAt = "07-07-2024",
+                ExerciseRecords = new List<ExerciseRecordWriteDto>
+                {
+                    new ExerciseRecordWriteDto
+                    {
+                        ExerciseName = "barbell curl",
+                        Repetitions = 15,
+                        WeightUsedKg = 30
+                    }
+                }
+            }
+        };
+
+        // Act
+        var result = await service.CreateBulkSessionsAsync(newSessions, new CancellationToken());
+
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Error creating bulk sessions: one or more exercises could not be found", result.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task CreateBulkSessionsAsync_ShouldHandleNoExerciseRecords()
+    {
+        // Arrange
+        DatabaseHelpers.SeedExtendedTypesExercisesAndMuscles(context);
+
+        var newSessions = new List<TrainingSessionWriteDto>
+        {
+            new TrainingSessionWriteDto
+            {
+                DurationInMinutes = 90,
+                Calories = 300,
+                Notes = "Morning session",
+                Mood = 8,
+                CreatedAt = "07-07-2024",
+                ExerciseRecords = new List<ExerciseRecordWriteDto>()
+            }
+        };
+
+        // Act
+        var result = await service.CreateBulkSessionsAsync(newSessions, new CancellationToken());
+
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Error creating bulk sessions: No exercise records found in one or more sessions.", result.ErrorMessage);
     }
 }

@@ -12,4 +12,7 @@ public interface IMuscleService
     Task<Result<List<MuscleReadDto>>> GetAllByGroupAsync(string muscleGroupName, CancellationToken cancellationToken);
     Task<Result<MuscleReadDto>> GetByNameAsync(string muscleName, CancellationToken cancellationToken);
     Task<Result<bool>> UpdateAsync(int muscleId, MuscleUpdateDto updatedMuscle, CancellationToken cancellationToken);
+
+    Task<Result<List<MuscleReadDto>>> SearchMuscleAsync(string searchTerm,
+        CancellationToken cancellationToken);
 }

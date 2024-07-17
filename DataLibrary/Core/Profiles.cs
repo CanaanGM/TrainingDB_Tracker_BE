@@ -34,6 +34,7 @@ public class Profiles : Profile
         CreateMap<Exercise, ExerciseReadDto>()
             .ForMember(s => s.HowTos, opt => opt.MapFrom(src => src.ExerciseHowTos));
         CreateMap<Exercise, ExerciseWriteDto>().ReverseMap();
+        CreateMap<Exercise, ExerciseSearchResultDto>();
 
         CreateMap<ExerciseHowTo, ExerciseHowToReadDto>();
         CreateMap<ExerciseHowTo, ExerciseHowToWriteDto>().ReverseMap();
