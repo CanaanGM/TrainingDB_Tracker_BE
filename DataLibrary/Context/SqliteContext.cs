@@ -337,7 +337,7 @@ public class SqliteContext : DbContext
             entity.HasIndex(e => e.Id, "idx_training_session_id");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Calories).HasColumnName("calories");
+            entity.Property(e => e.TotalCaloriesBurned).HasColumnName("calories");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("current_timestamp")
                 .HasColumnType("datetime")

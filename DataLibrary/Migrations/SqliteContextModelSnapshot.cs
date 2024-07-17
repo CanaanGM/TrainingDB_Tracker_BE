@@ -255,13 +255,31 @@ namespace DataLibrary.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("exercise_id");
 
+                    b.Property<int?>("HeartRateAvg")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Incline")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("KcalBurned")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Notes")
                         .HasColumnType("TEXT")
                         .HasColumnName("notes");
 
+                    b.Property<int?>("RateOfPerceivedExertion")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("Repetitions")
                         .HasColumnType("INTEGER")
                         .HasColumnName("repetitions");
+
+                    b.Property<int?>("RestInSeconds")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Speed")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("TimerInSeconds")
                         .HasColumnType("INTEGER")
@@ -401,10 +419,6 @@ namespace DataLibrary.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
-                    b.Property<int?>("Calories")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("calories");
-
                     b.Property<DateTime?>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
@@ -422,6 +436,10 @@ namespace DataLibrary.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("TEXT")
                         .HasColumnName("notes");
+
+                    b.Property<int?>("TotalCaloriesBurned")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("calories");
 
                     b.HasKey("Id");
 

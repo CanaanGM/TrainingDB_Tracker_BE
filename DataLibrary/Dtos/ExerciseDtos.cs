@@ -8,9 +8,7 @@ public class ExerciseReadDto
     public string? Description { get; set; }
 
     public string? HowTo { get; set; }
-
     public int? Difficulty { get; set; }
-
     public List<TrainingTypeReadDto> TrainingTypes { get; set; }
     public List<MuscleExerciseReadDto> ExerciseMuscles { get; set; }
     public List<ExerciseHowToReadDto> HowTos { get; set; }

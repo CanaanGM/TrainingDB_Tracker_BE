@@ -16,7 +16,9 @@
 ## To throw or to not throw ?
 maybe imma use the result pattern ? will have to test performance, cause i kinda like throwing, what kinda training session wont have throwing in it ?! 
 
-> TODO: facilitate more
+## TODO: 
+- [ ] facilitate more things to to
+- [ ] ORM records
 
 ### dataBase
 
