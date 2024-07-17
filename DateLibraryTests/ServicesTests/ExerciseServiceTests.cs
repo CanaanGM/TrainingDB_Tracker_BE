@@ -567,6 +567,34 @@ public class ExerciseServiceTests
 
         Assert.Equal(5, justCreatedExerciseCount);
     }
+    [Fact]
+    public async Task CreateBulkAsync_MissingTrainingTypes_ShouldReturnFailure()
+    {
+        DatabaseHelpers.SeedTypesExercisesAndMuscles(context);
+        // Arrange
+        var newExercises = new List<ExerciseWriteDto>
+        {
+            new ExerciseWriteDto
+            {
+                Name = "Deadlift",
+                TrainingTypes = new List<string> { "strength", "bodybuilding", "missingType" },
+                ExerciseMuscles = new List<ExerciseMuscleWriteDto>
+                {
+                    new ExerciseMuscleWriteDto { MuscleName = "deltoid anterior head", IsPrimary = true }
+                },
+                Description = "Lift heavy weights from the ground",
+                Difficulty = 5,
+                HowTo = "Keep your back straight, lift with your legs"
+            }
+        };
+
+        // Act
+        var result = await service.CreateBulkAsync(newExercises, new CancellationToken());
+
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("The following training types could not be found: missingtype", result.ErrorMessage);
+    }
 
     [Fact]
     public async Task UpdateAsync_ExerciseNotFound_ShouldReturnFailure()

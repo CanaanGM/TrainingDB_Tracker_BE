@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Context\" />
-    <Folder Include="Exceptions\" />
     <Folder Include="ModelsV2\" />
   </ItemGroup>
 

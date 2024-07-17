@@ -33,9 +33,16 @@ public class GenericController : ControllerBase
     [HttpGet("/muscles")]
     public async Task<IActionResult> GetMuscles(CancellationToken cancellationToken)
     {
-        return Ok(await _muscleService.GetAllAsync(cancellationToken));
-    }
 
+        var exercisesResult = await _muscleService.GetAllAsync(cancellationToken);
+        return Ok(exercisesResult.Value);
+    }
+    [HttpGet("/muscles/search/{searchTerm}")]
+    public async Task<IActionResult> GetMuscles(string searchTerm,  CancellationToken cancellationToken)
+    {
+        var exercisesResult = await _muscleService.SearchMuscleAsync(searchTerm, cancellationToken);
+        return Ok(exercisesResult.Value);
+    }
     [HttpGet("/muscles/{groupName}")]
     public async Task<IActionResult> GetMusclesByGroup(string groupName, CancellationToken cancellationToken)
     {
@@ -113,8 +120,20 @@ public class GenericController : ControllerBase
     [HttpPost("/exercise/bulk")]
     public async Task<IActionResult> CreateExercisesBulkAsync([FromBody] List<ExerciseWriteDto> newExercises, CancellationToken cancellationToken)
     {
-        return Ok(await _exerciseService.CreateBulkAsync(newExercises, cancellationToken));
+        var result = await _exerciseService.CreateBulkAsync(newExercises, cancellationToken);
+        if(result.IsSuccess)
+            return Ok();
+        return BadRequest(result.ErrorMessage);
     }
+    [HttpDelete("/exercise/bulk")]
+    public async Task<IActionResult> DeleteBulkAsync([FromBody] List<string> exercisesNamesToDelete, CancellationToken cancellationToken)
+    {
+        var result = await _exerciseService.DeleteBulkAsync(exercisesNamesToDelete, cancellationToken);
+        if(result.IsSuccess)
+            return Ok();
+        return BadRequest(result.ErrorMessage);
+    }
+    
     [HttpPut("/exercise/{id}")]
     public async Task<IActionResult> UpdateExerciseAsync(int id, [FromBody] ExerciseWriteDto updatedExercise, CancellationToken cancellationToken)
     {
@@ -150,6 +169,12 @@ public class GenericController : ControllerBase
         return Ok(await _trainingSessionService.CreateSessionAsync(newTrainingSessionDto, cancellationToken));
     }
 
+    [HttpPost("/training/bulk")]
+    public async Task<IActionResult> CreateTrainingSessionBulkAsync([FromBody] List<TrainingSessionWriteDto> newTrainingSessionDtos, CancellationToken cancellationToken)
+    {
+        return Ok(await _trainingSessionService.CreateBulkSessionsAsync(newTrainingSessionDtos, cancellationToken));
+    }
+    
     [HttpPut("/training/{sessionId}")]
     public async Task<IActionResult> UpdateTrainingSessionAsync(int sessionId, TrainingSessionWriteDto updatedSessionDto, CancellationToken cancellationToken)
     {

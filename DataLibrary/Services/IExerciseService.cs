@@ -14,4 +14,6 @@ public interface IExerciseService
     Task<Result<PaginatedList<ExerciseReadDto>>> GetAllAsync(
         ExerciseQueryOptions options,
         CancellationToken cancellationToken);
+
+    Task<Result<bool>> DeleteBulkAsync(List<string> exerciseNames, CancellationToken cancellationToken);
 }

@@ -36,7 +36,7 @@ public class ExerciseService : IExerciseService
             if (exercise is not null) return Result<ExerciseReadDto>.Success(value: exercise);
 
             _logger.LogError($"[ERROR]: exercise {exerciseName} was not found.\nin {nameof(GetByNameAsync)}");
-            throw new Exception($"exercise : {exerciseName} does not exists.");
+            return Result<ExerciseReadDto>.Failure($"exercise : {exerciseName} does not exists.");
         }
         catch (Exception ex)
         {
@@ -210,71 +210,106 @@ public class ExerciseService : IExerciseService
     }
 
     // Create Bulk
-    public async Task<Result<bool>> CreateBulkAsync(List<ExerciseWriteDto> newExerciseDtos,
-        CancellationToken cancellationToken)
+public async Task<Result<bool>> CreateBulkAsync(List<ExerciseWriteDto> newExerciseDtos,
+    CancellationToken cancellationToken)
+{
+    // maybe get the exercise names at the start of the thingy, check then go back to requester
+    using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction =
+        await _context.Database.BeginTransactionAsync(cancellationToken);
+    try
     {
-        using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction =
-            await _context.Database.BeginTransactionAsync(cancellationToken);
-        try
+        // this is important, cause let's say you have 300 in the db, and u want to create 60 but 13 are duplicate,
+        // you would want to know which are duplicated without goin to the db, dammit! 
+        var exerciseNamesInTheDatabase = await _context.Exercises
+            .Select(x => x.Name)
+            .ToListAsync(cancellationToken);
+        
+        var exerciseNamesFromDto = newExerciseDtos.Select(x => Utils.NormalizeString(x.Name)).ToList();
+        var duplicates = exerciseNamesFromDto.Intersect(exerciseNamesInTheDatabase).ToList();
+
+        if (duplicates.Any())
         {
-            List<string> muscleNames = newExerciseDtos
-                .SelectMany(dto => dto.ExerciseMuscles.Select(m => Utils.NormalizeString(m.MuscleName)))
-                .Distinct()
-                .ToList();
-            List<string> typeNames = newExerciseDtos
-                .SelectMany(dto => dto.TrainingTypes)
-                .Distinct()
-                .Select(Utils.NormalizeString)
-                .ToList();
+            // maybe draw them for cool effect ? 
+            return Result<bool>.Failure($"{string.Join(", ", duplicates)}");
+        }
 
-            // Fetch all relevant data once
-            Dictionary<string, Muscle> muscles = await _context.Muscles
-                .Where(m => muscleNames.Contains(m.Name))
-                .ToDictionaryAsync(m => m.Name, m => m, cancellationToken);
-            Dictionary<string, TrainingType> trainingTypes = await _context.TrainingTypes
-                .Where(tt => typeNames.Contains(tt.Name))
-                .ToDictionaryAsync(tt => tt.Name, tt => tt, cancellationToken);
 
-            List<Exercise> exercises = new List<Exercise>();
+        List<string> muscleNames = newExerciseDtos
+            .SelectMany(dto => dto.ExerciseMuscles.Select(m => Utils.NormalizeString(m.MuscleName)))
+            .Distinct()
+            .ToList();
+        List<string> typeNames = newExerciseDtos
+            .SelectMany(dto => dto.TrainingTypes)
+            .Distinct()
+            .Select(Utils.NormalizeString)
+            .ToList();
 
-            foreach (ExerciseWriteDto dto in newExerciseDtos)
+        
+        // Fetch all relevant data once
+        Dictionary<string, Muscle> muscles = await _context.Muscles
+            .Where(m => muscleNames.Contains(m.Name))
+            .ToDictionaryAsync(m => m.Name, m => m, cancellationToken);
+        Dictionary<string, TrainingType> trainingTypes = await _context.TrainingTypes
+            .Where(tt => typeNames.Contains(tt.Name))
+            .ToDictionaryAsync(tt => tt.Name, tt => tt, cancellationToken);
+
+        // Identify missing training types
+        var missingTrainingTypes = typeNames.Except(trainingTypes.Keys).ToList();
+        if (missingTrainingTypes.Any())
+        {
+            var missingTypesMessage =
+                $"The following training types could not be found: {string.Join(", ", missingTrainingTypes)}";
+            _logger.LogError(missingTypesMessage);
+            return Result<bool>.Failure(missingTypesMessage);
+        }
+        
+
+        List<Exercise> exercises = new List<Exercise>();
+
+        foreach (ExerciseWriteDto dto in newExerciseDtos)
+        {
+            Exercise newExercise = new Exercise
             {
-                Exercise newExercise = new Exercise
-                {
-                    Name = Utils.NormalizeString(dto.Name),
-                    Description = dto.Description,
-                    HowTo = dto.HowTo,
-                    Difficulty = dto.Difficulty.GetValueOrDefault(),
-                    ExerciseHowTos = dto.HowTos is not null
-                        ? dto.HowTos.Select(howTo => new ExerciseHowTo
-                        {
-                            Name = Utils.NormalizeString(howTo.Name),
-                            Url = howTo.Url
-                        }).ToList()
-                        : [],
-                    ExerciseMuscles = dto.ExerciseMuscles.Select(em => new ExerciseMuscle
+                Name = Utils.NormalizeString(dto.Name),
+                Description = dto.Description,
+                HowTo = dto.HowTo,
+                Difficulty = dto.Difficulty.GetValueOrDefault(),
+                ExerciseHowTos = dto.HowTos is not null
+                    ? dto.HowTos.Select(howTo => new ExerciseHowTo
                     {
-                        Muscle = muscles[Utils.NormalizeString(em.MuscleName)],
-                        IsPrimary = em.IsPrimary
-                    }).ToList(),
-                    TrainingTypes = dto.TrainingTypes.Select(tt => trainingTypes[Utils.NormalizeString(tt)]).ToList()
-                };
-                _logger.LogCritical($"Now Adding: {newExercise.Name}");
-                exercises.Add(newExercise);
-            }
+                        Name = Utils.NormalizeString(howTo.Name),
+                        Url = howTo.Url
+                    }).ToList()
+                    : [],
+                ExerciseMuscles = dto.ExerciseMuscles.Select(em => new ExerciseMuscle
+                {
+                    Muscle = muscles[Utils.NormalizeString(em.MuscleName)],
+                    IsPrimary = em.IsPrimary
+                }).ToList(),
+                TrainingTypes = dto.TrainingTypes.Select(tt => trainingTypes[Utils.NormalizeString(tt)]).ToList()
+            };
+            _logger.LogCritical($"Now Adding: {newExercise.Name}");
 
-            await _context.Exercises.AddRangeAsync(exercises, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
+            exercises.Add(newExercise);
+        }
 
-            return Result<bool>.Success(true);
-        }
-        catch (Exception ex)
-        {
-            await transaction.RollbackAsync(cancellationToken);
-            return Result<bool>.Failure("Failed to create exercises: " + ex.Message, ex);
-        }
+        await _context.Exercises.AddRangeAsync(exercises, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+
+        return Result<bool>.Success(true);
     }
+    catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+    {
+        await transaction.RollbackAsync(cancellationToken);
+        return Result<bool>.Failure("exercise already exists: " + ex.InnerException?.Message, ex);
+    }
+    catch (Exception ex)
+    {
+        await transaction.RollbackAsync(cancellationToken);
+        return Result<bool>.Failure("Failed to create exercises: " + ex.Message, ex);
+    }
+}
 
 
     // Update
@@ -399,6 +434,33 @@ public class ExerciseService : IExerciseService
         {
             _logger.LogError($"[ERROR]: something went wrong in {nameof(SearchExercisesAsync)}\n{ex.Message}\n{ex}");
             return Result<List<ExerciseSearchResultDto>>.Failure(ex.Message, ex);
+        }
+    }
+
+
+    public async Task<Result<bool>> DeleteBulkAsync(List<string> exerciseNames, CancellationToken cancellationToken)
+    {
+            var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+        try
+        {
+            var exercisesToDelete = await _context.Exercises
+                .Include(e => e.ExerciseHowTos)
+                .Include(e => e.ExerciseMuscles)
+                .Include(e => e.TrainingTypes)
+                .Where(x => Utils.NormalizeStringList(exerciseNames).Contains(x.Name))
+                .ToListAsync(cancellationToken);
+            
+            _context.RemoveRange(exercisesToDelete);
+            await _context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+            return Result<bool>.Success(true);
+
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            return Result<bool>.Failure(ex.Message, ex);
+            
         }
     }
 

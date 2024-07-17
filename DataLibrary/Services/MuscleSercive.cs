@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-
+using AutoMapper.QueryableExtensions;
 using DataLibrary.Context;
 using DataLibrary.Core;
 using DataLibrary.Dtos;
@@ -193,6 +193,36 @@ public class MuscleService : IMuscleService
         return Result<bool>.Success(true);
     }
 
+    public async Task<Result<List<MuscleReadDto>>> SearchMuscleAsync(string searchTerm,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return Result<List<MuscleReadDto>>.Failure("Search term cannot be empty.");
+            }
+            searchTerm = Utils.NormalizeString(searchTerm);
+
+            var muscles = await _context.Muscles
+                .AsNoTracking()
+                .Where(e => EF.Functions.Like(e.Name,$"%{searchTerm}%" ))
+                .ProjectTo<MuscleReadDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
+
+            if (muscles is null || muscles.Count() <= 0)
+            {
+                return Result<List<MuscleReadDto>>.Failure($"no muscles were found similar to {searchTerm}.");
+            }
+
+            return Result<List<MuscleReadDto>>.Success(muscles);
+
+        }
+        catch (Exception ex)
+        {
+            return Result<List<MuscleReadDto>>.Failure("Something went Wrong", ex);
+        }
+    }
 
 
 }

@@ -165,15 +165,18 @@ public class TrainingSessionServiceTests
 
     }
 
-    [Fact]
-    public async Task CreateSessionAsync_creating_return_success()
+    [Theory]
+    [InlineData("5-13-2024")]
+    [InlineData("5-13-2024 17:34:45")]
+    [InlineData("2-12-2024 11:18:05")]
+    public async Task CreateSessionAsync_creating_return_success(string creationDate)
     {
         DatabaseHelpers.SeedTypesExercisesAndMuscles(context);
 
         var newSessionDto = new TrainingSessionWriteDto
         {
             Calories = 666,
-            CreatedAt = "5-1-2024",
+            CreatedAt = creationDate,
             DurationInMinutes = 35,
             Mood = 9,
             Notes = "Test record for testing",
@@ -223,12 +226,12 @@ public class TrainingSessionServiceTests
             if (exerciseRecord.TimerInSeconds is not null) Assert.Equal(1800, exerciseRecord.TimerInSeconds);
             if (exerciseRecord.Repetitions is not null) Assert.Equal(20, exerciseRecord.Repetitions);
 
-            Assert.Equal(DateTime.Parse("5-1-2024"), sessionRecord.CreatedAt);
-            Assert.Equal(DateTime.Parse("5-1-2024"), exerciseRecord.CreatedAt);
+            Assert.Equal(DateTime.Parse(creationDate), sessionRecord.CreatedAt);
+            Assert.Equal(DateTime.Parse(creationDate), exerciseRecord.CreatedAt);
 
         }
         Assert.Equal(35 * 60, newSession.DurationInSeconds); // duration conversion
-        Assert.Equal(DateTime.Parse("5-1-2024"), newSession.CreatedAt);
+        Assert.Equal(DateTime.Parse(creationDate), newSession.CreatedAt);
 
     }
 
