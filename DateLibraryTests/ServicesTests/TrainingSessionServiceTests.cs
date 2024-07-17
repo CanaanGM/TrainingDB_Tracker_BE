@@ -73,7 +73,7 @@ public class TrainingSessionServiceTests
             {
                 new TrainingSession
                 {
-                    Calories = 666,
+                    TotalCaloriesBurned = 666,
                     CreatedAt = DateTime.UtcNow,
                     DurationInSeconds  = 7200,
                     Mood = 9,
@@ -119,7 +119,7 @@ public class TrainingSessionServiceTests
             {
                 new TrainingSession
                 {
-                    Calories = 666,
+                    TotalCaloriesBurned = 666,
                     CreatedAt = date, // may
                     DurationInSeconds  = 7200,
                     Mood = 9,
@@ -127,7 +127,7 @@ public class TrainingSessionServiceTests
                 },
                 new TrainingSession
                 {
-                    Calories = 666,
+                    TotalCaloriesBurned = 666,
                     CreatedAt = date.AddDays(5), // may
                     DurationInSeconds  = 7200,
                     Mood = 9,
@@ -135,7 +135,7 @@ public class TrainingSessionServiceTests
                 },
                 new TrainingSession
                 {
-                    Calories = 666,
+                    TotalCaloriesBurned = 666,
                     CreatedAt = date.AddMonths(2), // july
                     DurationInSeconds  = 7200,
                     Mood = 9,
@@ -143,7 +143,7 @@ public class TrainingSessionServiceTests
                 },
                 new TrainingSession
                 {
-                    Calories = 666,
+                    TotalCaloriesBurned = 666,
                     CreatedAt = date.AddMonths(2).AddDays(2), // july
                     DurationInSeconds  = 7200,
                     Mood = 9,
@@ -243,7 +243,7 @@ public class TrainingSessionServiceTests
         var trainingSessionToBUpdated =
                 new TrainingSession
                 {
-                    Calories = 666,
+                    TotalCaloriesBurned = 666,
                     CreatedAt = DateTime.UtcNow,
                     DurationInSeconds = 7200,
                     Mood = 9,
@@ -288,7 +288,7 @@ public class TrainingSessionServiceTests
         Assert.Equal(3, updatedSession.TrainingTypes.Count);
         Assert.Equal(DateTime.Parse(updateDto.CreatedAt), updatedSession.CreatedAt);
         Assert.Equal(updateDto.Notes, updatedSession.Notes);
-        Assert.Equal(updateDto.Calories, updatedSession.Calories);
+        Assert.Equal(updateDto.Calories, updatedSession.TotalCaloriesBurned);
         Assert.Equal(updateDto.DurationInMinutes, updatedSession.DurationInSeconds / 60);
         Assert.Equal(updateDto.DurationInMinutes * 60, updatedSession.DurationInSeconds);
         Assert.Equal(updateDto.Mood, updatedSession.Mood);
@@ -308,7 +308,7 @@ public class TrainingSessionServiceTests
         var trainingSessionToBUpdated =
                 new TrainingSession
                 {
-                    Calories = 666,
+                    TotalCaloriesBurned = 666,
                     CreatedAt = DateTime.UtcNow,
                     DurationInSeconds = 7200,
                     Mood = 9,
@@ -345,7 +345,7 @@ public class TrainingSessionServiceTests
         Assert.Equal(4, updatedSession.TrainingTypes.Count);
         Assert.Equal(DateTime.Parse(updateDto.CreatedAt), updatedSession.CreatedAt);
         Assert.Equal(updateDto.Notes, updatedSession.Notes);
-        Assert.Equal(updateDto.Calories, updatedSession.Calories);
+        Assert.Equal(updateDto.Calories, updatedSession.TotalCaloriesBurned);
         Assert.Equal(updateDto.DurationInMinutes, updatedSession.DurationInSeconds / 60);
         Assert.Equal(updateDto.DurationInMinutes * 60, updatedSession.DurationInSeconds);
         Assert.Equal(updateDto.Mood, updatedSession.Mood);
@@ -368,7 +368,7 @@ public class TrainingSessionServiceTests
             {
                 new Tuple<TrainingSession, TrainingSessionWriteDto>(
                     new TrainingSession {
-                    Calories = 000,
+                    TotalCaloriesBurned = 000,
                     Notes = "what the fuck am i seeing ?!",
                     DurationInSeconds =  1300,
                     Mood = 5,
@@ -381,7 +381,7 @@ public class TrainingSessionServiceTests
             {
                 new Tuple<TrainingSession, TrainingSessionWriteDto>(
                     new TrainingSession {
-                    Calories = 001,
+                    TotalCaloriesBurned = 001,
                     Notes = "Food is calling ?",
                     DurationInSeconds =  1700,
                     Mood = 2,
@@ -394,7 +394,7 @@ public class TrainingSessionServiceTests
             {
                 new Tuple<TrainingSession, TrainingSessionWriteDto>(
                     new TrainingSession {
-                    Calories = 000,
+                    TotalCaloriesBurned = 000,
                     Notes = "wait, i did not cook yet!",
                     DurationInSeconds =  2,
                     Mood = 1,
@@ -407,7 +407,7 @@ public class TrainingSessionServiceTests
             {
                 new Tuple<TrainingSession, TrainingSessionWriteDto>(
                     new TrainingSession {
-                    Calories = 000,
+                    TotalCaloriesBurned = 000,
                     Notes = "what the fuck am i seeing ?!",
                     DurationInSeconds =  1300,
                     Mood = 5,
@@ -420,7 +420,7 @@ public class TrainingSessionServiceTests
             {
                 new Tuple<TrainingSession, TrainingSessionWriteDto>(
                     new TrainingSession {
-                    Calories = 000,
+                    TotalCaloriesBurned = 000,
                     Notes = "what the fuck am i seeing ?!",
                     DurationInSeconds =  1300,
                     Mood = 5,
@@ -465,7 +465,7 @@ public class TrainingSessionServiceTests
 
         if (updateDto.CreatedAt is not null) Assert.Equal(DateTime.Parse(updateDto.CreatedAt), updatedSession.CreatedAt);
         if (updateDto.Notes is not null) Assert.Equal(updateDto.Notes, updatedSession.Notes);
-        if (updateDto.Calories is not null) Assert.Equal(updateDto.Calories, updatedSession.Calories);
+        if (updateDto.Calories is not null) Assert.Equal(updateDto.Calories, updatedSession.TotalCaloriesBurned);
         if (updateDto.DurationInMinutes is not null) Assert.Equal(updateDto.DurationInMinutes, updatedSession.DurationInSeconds / 60);
         if (updateDto.DurationInMinutes is not null) Assert.Equal(updateDto.DurationInMinutes * 60, updatedSession.DurationInSeconds);
         if (updateDto.Mood is not null) Assert.Equal(updateDto.Mood, updatedSession.Mood);
@@ -482,7 +482,7 @@ public class TrainingSessionServiceTests
             {
                 new Tuple<TrainingSession, TrainingSessionWriteDto>(
                     new TrainingSession {
-                    Calories = 000,
+                    TotalCaloriesBurned = 000,
                     Notes = "what the fuck am i seeing ?!",
                     DurationInSeconds =  1300,
                     Mood = 5,
@@ -518,7 +518,7 @@ public class TrainingSessionServiceTests
             {
                 new Tuple<TrainingSession, TrainingSessionWriteDto>(
                     new TrainingSession {
-                    Calories = 001,
+                    TotalCaloriesBurned = 001,
                     Notes = "Food is calling ?",
                     DurationInSeconds =  1700,
                     Mood = 2,
@@ -557,7 +557,7 @@ public class TrainingSessionServiceTests
             {
                 new Tuple<TrainingSession, TrainingSessionWriteDto>(
                     new TrainingSession {
-                    Calories = 000,
+                    TotalCaloriesBurned = 000,
                     Notes = "wait, i did not cook yet!",
                     DurationInSeconds =  2,
                     Mood = 1,
@@ -603,7 +603,7 @@ public class TrainingSessionServiceTests
             {
                 new Tuple<TrainingSession, TrainingSessionWriteDto>(
                     new TrainingSession {
-                    Calories = 000,
+                    TotalCaloriesBurned = 000,
                     Notes = "what the fuck am i seeing ?!",
                     DurationInSeconds =  1300,
                     Mood = 5,
@@ -649,7 +649,7 @@ public class TrainingSessionServiceTests
             {
                 new Tuple<TrainingSession, TrainingSessionWriteDto>(
                     new TrainingSession {
-                    Calories = 000,
+                    TotalCaloriesBurned = 000,
                     Notes = "what the fuck am i seeing ?!",
                     DurationInSeconds =  1300,
                     Mood = 5,
@@ -724,7 +724,7 @@ public class TrainingSessionServiceTests
 
         if (updateDto.CreatedAt is not null) Assert.Equal(DateTime.Parse(updateDto.CreatedAt), updatedSession.CreatedAt);
         if (updateDto.Notes is not null) Assert.Equal(updateDto.Notes, updatedSession.Notes);
-        if (updateDto.Calories is not null) Assert.Equal(updateDto.Calories, updatedSession.Calories);
+        if (updateDto.Calories is not null) Assert.Equal(updateDto.Calories, updatedSession.TotalCaloriesBurned);
         if (updateDto.DurationInMinutes is not null) Assert.Equal(updateDto.DurationInMinutes, updatedSession.DurationInSeconds / 60);
         if (updateDto.DurationInMinutes is not null) Assert.Equal(updateDto.DurationInMinutes * 60, updatedSession.DurationInSeconds);
         if (updateDto.Mood is not null) Assert.Equal(updateDto.Mood, updatedSession.Mood);
@@ -785,7 +785,7 @@ public class TrainingSessionServiceTests
         var trainingSessionToBUpdated =
                 new TrainingSession
                 {
-                    Calories = 666,
+                    TotalCaloriesBurned = 666,
                     CreatedAt = DateTime.UtcNow,
                     DurationInSeconds = 7200,
                     Mood = 9,

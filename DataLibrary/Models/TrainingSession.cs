@@ -9,7 +9,7 @@ public partial class TrainingSession
 
     public int? DurationInSeconds { get; set; }
 
-    public int? Calories { get; set; }
+    public int? TotalCaloriesBurned { get; set; }
 
     public string? Notes { get; set; }
 

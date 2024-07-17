@@ -91,7 +91,7 @@ public class TrainingSessionService : ITrainingSessionService
             TrainingSession newTrainingSession = new TrainingSession()
             {
                 DurationInSeconds = Utils.DurationSecondsFromMinutes(newSession.DurationInMinutes),
-                Calories = newSession.Calories,
+                TotalCaloriesBurned = newSession.Calories,
                 Notes = newSession.Notes,
                 Mood = newSession.Mood,
                 CreatedAt = sessionCreatedAt,
@@ -174,7 +174,7 @@ public class TrainingSessionService : ITrainingSessionService
             var newSession = new TrainingSession
             {
                 DurationInSeconds = Utils.DurationSecondsFromMinutes(sessionDto.DurationInMinutes),
-                Calories = sessionDto.Calories,
+                TotalCaloriesBurned = sessionDto.Calories,
                 Notes = sessionDto.Notes,
                 Mood = sessionDto.Mood,
                 CreatedAt = sessionCreatedAt,
