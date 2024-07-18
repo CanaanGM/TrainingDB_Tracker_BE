@@ -14,6 +14,7 @@ public class GenericController : ControllerBase
     private readonly ITrainingTypesService _trainingTypesService;
     private readonly IExerciseService _exerciseService;
     private readonly ITrainingSessionService _trainingSessionService;
+    private readonly IMeasurementsService _measurementsService;
 
     public GenericController(
         ILogger<GenericController> logger
@@ -21,6 +22,7 @@ public class GenericController : ControllerBase
         , ITrainingTypesService trainingTypesService
         , IExerciseService exerciseService
         , ITrainingSessionService trainingSessionService
+        , IMeasurementsService measurementsService
         )
     {
         _logger = logger;
@@ -28,6 +30,7 @@ public class GenericController : ControllerBase
         _trainingTypesService = trainingTypesService;
         _exerciseService = exerciseService;
         _trainingSessionService = trainingSessionService;
+        _measurementsService = measurementsService;
     }
 
     [HttpGet("/muscles")]
@@ -187,6 +190,29 @@ public class GenericController : ControllerBase
         return Ok(await _trainingSessionService.DeleteSessionAsync(sessionId, cancellationToken));
     }
 
+    [HttpGet("/measurements")]
+    public async Task<IActionResult> GetMeasurementssync(CancellationToken cancellationToken)
+    {
+       var measurements = await _measurementsService.GetAll(cancellationToken) ;
+        return Ok(measurements.Value);
+    }
 
+    [HttpPost("/measurements")]
+    public async Task<IActionResult> CreateMeasurementssync([FromBody] MeasurementsWriteDto newMeasurementsWriteDto, CancellationToken cancellationToken)
+    {
+        return Ok(await _measurementsService.CreateAsync(newMeasurementsWriteDto, cancellationToken));
+    }
+    
+    [HttpPut("/measurements/{measurementId}")]
+    public async Task<IActionResult> UpdateMeasurementssync(int measurementId, MeasurementsWriteDto updateMeasurementsDto, CancellationToken cancellationToken)
+    {
+        return Ok(await _measurementsService.UpdateAsync(measurementId, updateMeasurementsDto, cancellationToken));
+    }
+
+    [HttpDelete("/measurements/{measurementId}")]
+    public async Task<IActionResult> DeleteMeasurementsAsyn(int measurementId, CancellationToken cancellationToken)
+    {
+        return Ok(await _measurementsService.DeleteAsync(measurementId, cancellationToken));
+    }
 
 }
