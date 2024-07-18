@@ -32,7 +32,10 @@ public class Profiles : Profile
 
 
         CreateMap<Exercise, ExerciseReadDto>()
-            .ForMember(s => s.HowTos, opt => opt.MapFrom(src => src.ExerciseHowTos));
+            .ForMember(s => s.HowTos,
+                opt => opt
+                    .MapFrom(src => src.ExerciseHowTos)
+                );
         CreateMap<Exercise, ExerciseWriteDto>().ReverseMap();
         CreateMap<Exercise, ExerciseSearchResultDto>();
 
@@ -42,9 +45,11 @@ public class Profiles : Profile
 
         CreateMap<TrainingSession, TrainingSessionReadDto>()
             .ForMember(dt => dt.TrainingTypes
-            , src => src.MapFrom(o => o.TrainingTypes))
-            .ForMember(dt => dt.ExerciseRecords, src => src.MapFrom(r => r.TrainingSessionExerciseRecords.Select(r => r.ExerciseRecord)))
-            ;
+            , src => src
+                .MapFrom(o => o.TrainingTypes))
+            .ForMember(dt => dt.ExerciseRecords,
+                src => src
+                    .MapFrom(r => r.TrainingSessionExerciseRecords.Select(r => r.ExerciseRecord)));
 
         CreateMap<TrainingSessionWriteDto, TrainingSession>()
             .ForMember(dt => dt.DurationInSeconds, src => src.MapFrom(r => Utils.DurationSecondsFromMinutes(r.DurationInMinutes)))
@@ -66,6 +71,9 @@ public class Profiles : Profile
             .ForMember(dt => dt.Name, src => src.MapFrom(x => x.ExerciseName));
 
 
+
+        CreateMap<Measurements, MeasurementsReadDto>();
+        CreateMap<MeasurementsWriteDto, Measurements>();
 
     }
 }

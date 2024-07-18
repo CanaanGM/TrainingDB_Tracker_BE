@@ -140,7 +140,7 @@ public class TrainingSessionService : ITrainingSessionService
     using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
     try
     {
-        if (newSessions == null || !newSessions.Any())
+        if ( newSessions.Count == 0)
         {
             return Result<bool>.Failure("Error creating bulk sessions: The input list is empty.");
         }

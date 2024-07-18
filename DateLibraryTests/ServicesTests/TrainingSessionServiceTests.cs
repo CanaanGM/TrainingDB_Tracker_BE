@@ -926,7 +926,7 @@ public class TrainingSessionServiceTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Equal("Error creating bulk sessions: one or more exercises could not be found", result.ErrorMessage);
+        Assert.Equal("these exercises are not in the database, create them ? invalid exercise", result.ErrorMessage);
     }
 
     [Fact]
@@ -984,7 +984,7 @@ public class TrainingSessionServiceTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Equal("Error creating bulk sessions: one or more exercises could not be found", result.ErrorMessage);
+        Assert.Equal("these exercises are not in the database, create them ? invalid exercise", result.ErrorMessage);
     }
 
     [Fact]

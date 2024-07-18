@@ -32,7 +32,7 @@ namespace DataLibrary.Migrations
 
                     b.Property<string>("Instrcustions")
                         .HasColumnType("TEXT")
-                        .HasColumnName("instrcustions");
+                        .HasColumnName("instructions");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -298,6 +298,120 @@ namespace DataLibrary.Migrations
                     b.HasIndex(new[] { "Id" }, "idx_exercise_record_id");
 
                     b.ToTable("exercise_record", (string)null);
+                });
+
+            modelBuilder.Entity("DataLibrary.Models.Measurements", b =>
+                {
+                    b.Property<int>("MeasurementsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("BasalMetabolicRate")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("basal_metabolic_rate");
+
+                    b.Property<double?>("BodyFatMass")
+                        .HasColumnType("REAL")
+                        .HasColumnName("body_fat_mass");
+
+                    b.Property<double?>("BodyFatPercent")
+                        .HasColumnType("REAL")
+                        .HasColumnName("body_fat_percent");
+
+                    b.Property<double?>("BodyMassIndex")
+                        .HasColumnType("REAL")
+                        .HasColumnName("body_mass_index");
+
+                    b.Property<double?>("BodyWeight")
+                        .HasColumnType("REAL")
+                        .HasColumnName("body_weight");
+
+                    b.Property<int>("Chest")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("current_timestamp");
+
+                    b.Property<int>("Hip")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("hip");
+
+                    b.Property<double?>("InBodyScore")
+                        .HasColumnType("REAL")
+                        .HasColumnName("in_body_score");
+
+                    b.Property<int>("LeftCalf")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("left_calf");
+
+                    b.Property<int>("LeftForearm")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("left_forearm");
+
+                    b.Property<int>("LeftThigh")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("left_thigh");
+
+                    b.Property<int>("LeftUpperArm")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("left_upper_arm");
+
+                    b.Property<double?>("Minerals")
+                        .HasColumnType("REAL")
+                        .HasColumnName("minerals");
+
+                    b.Property<int>("Neck")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("neck");
+
+                    b.Property<double?>("Protein")
+                        .HasColumnType("REAL")
+                        .HasColumnName("protein");
+
+                    b.Property<int>("RightCalf")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("right_calf");
+
+                    b.Property<int>("RightForearm")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("right_forearm");
+
+                    b.Property<int>("RightThigh")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("right_thigh");
+
+                    b.Property<int>("RightUpperArm")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("right_upper_arm");
+
+                    b.Property<double?>("SkeletalMuscleMass")
+                        .HasColumnType("REAL")
+                        .HasColumnName("skeletal_muscle_mass");
+
+                    b.Property<double?>("TotalBodyWater")
+                        .HasColumnType("REAL")
+                        .HasColumnName("total_body_water");
+
+                    b.Property<int?>("VisceralFatLevel")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("visceral_fat_level");
+
+                    b.Property<int>("WaistOnBelly")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("waist_on_belly");
+
+                    b.Property<int>("WaistUnderBelly")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("waist_under_belly");
+
+                    b.HasKey("MeasurementsId");
+
+                    b.HasIndex(new[] { "MeasurementsId" }, "idx_measurements_id");
+
+                    b.ToTable("measurements", (string)null);
                 });
 
             modelBuilder.Entity("DataLibrary.Models.Muscle", b =>

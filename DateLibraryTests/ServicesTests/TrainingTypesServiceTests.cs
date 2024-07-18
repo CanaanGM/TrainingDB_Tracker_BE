@@ -44,7 +44,7 @@ public class TrainingTypesServiceTests
 
 
         var service = new TrainingTypesService(context, mapper!, logger.Object);
-        var creationResult = await service.CreateAsync(newTypeDto, new CancellationToken());
+        var creationResult = await service.UpdateAsync(newTypeDto, new CancellationToken());
 
         Assert.True(creationResult.Value >= 1); // a new ID has been assigned
         var newType = context.TrainingTypes.FirstOrDefault(x => x.Id == creationResult.Value);

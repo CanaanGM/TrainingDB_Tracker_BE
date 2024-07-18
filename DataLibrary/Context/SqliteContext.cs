@@ -53,10 +53,47 @@ public class SqliteContext : DbContext
 
     public virtual DbSet<TrainingWeek> TrainingWeeks { get; set; }
 
-
+    public DbSet<Measurements> Measurements { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Measurements>(entity =>
+        {
+            entity.ToTable("measurements");
+            entity.HasIndex(x => x.MeasurementsId, "idx_measurements_id");
+
+            entity.Property(x => x.Hip).HasColumnName("hip");
+            entity.Property(x => x.WaistOnBelly).HasColumnName("waist_on_belly");
+            entity.Property(x => x.WaistUnderBelly).HasColumnName("waist_under_belly");
+            entity.Property(x => x.LeftThigh).HasColumnName("left_thigh");
+            entity.Property(x => x.RightThigh).HasColumnName("right_thigh");
+            entity.Property(x => x.LeftCalf).HasColumnName("left_calf");
+            entity.Property(x => x.RightCalf).HasColumnName("right_calf");
+            entity.Property(x => x.LeftUpperArm).HasColumnName("left_upper_arm");
+            entity.Property(x => x.RightUpperArm).HasColumnName("right_upper_arm");
+            entity.Property(x => x.LeftForearm).HasColumnName("left_forearm");
+            entity.Property(x => x.RightForearm).HasColumnName("right_forearm");
+            entity.Property(x => x.Neck).HasColumnName("neck");
+            
+            entity.Property(x => x.TotalBodyWater).HasColumnName("total_body_water");
+            entity.Property(x => x.Protein).HasColumnName("protein");
+            entity.Property(x => x.Minerals).HasColumnName("minerals");
+            entity.Property(x => x.BodyFatMass).HasColumnName("body_fat_mass");
+            entity.Property(x => x.BodyWeight).HasColumnName("body_weight");
+            entity.Property(x => x.SkeletalMuscleMass).HasColumnName("skeletal_muscle_mass");
+            entity.Property(x => x.BodyFatPercent).HasColumnName("body_fat_percent");
+            entity.Property(x => x.BodyMassIndex).HasColumnName("body_mass_index");
+            entity.Property(x => x.InBodyScore).HasColumnName("in_body_score");
+            entity.Property(x => x.BasalMetabolicRate).HasColumnName("basal_metabolic_rate");
+            entity.Property(x => x.VisceralFatLevel).HasColumnName("visceral_fat_level");
+            
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("current_timestamp")
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            
+        });
+        
         modelBuilder.Entity<Block>(entity =>
         {
             entity.ToTable("block");
@@ -68,7 +105,7 @@ public class SqliteContext : DbContext
                 .HasDefaultValueSql("current_timestamp")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
-            entity.Property(e => e.Instrcustions).HasColumnName("instrcustions");
+            entity.Property(e => e.Instrcustions).HasColumnName("instructions");
             entity.Property(e => e.Name)
                 .HasColumnType("varchar(64)")
                 .HasColumnName("name");

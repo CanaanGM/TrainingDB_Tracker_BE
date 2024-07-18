@@ -42,12 +42,11 @@ public class TrainingTypesService : ITrainingTypesService
         }
     }
 
-    public async Task<Result<int>> CreateAsync(TrainingTypeWriteDto newTrainingType, CancellationToken cancellationToken)
+    public async Task<Result<int>> UpdateAsync(TrainingTypeWriteDto newTrainingType, CancellationToken cancellationToken)
     {
         try
         {
             var oldType = await _context.TrainingTypes
-                    .AsNoTracking()
                     .SingleOrDefaultAsync(x => x.Name == newTrainingType.Name, cancellationToken);
             if (oldType is not null)
                 return Result<int>.Success(oldType.Id);
@@ -62,7 +61,7 @@ public class TrainingTypesService : ITrainingTypesService
         }
         catch (Exception ex)
         {
-            _logger.LogError($"[ERROR]: an exception was thrown while calling {nameof(CreateAsync)}/n{ex} ");
+            _logger.LogError($"[ERROR]: an exception was thrown while calling {nameof(UpdateAsync)}/n{ex} ");
 
             return Result<int>.Failure(ex.Message, ex);
         }
