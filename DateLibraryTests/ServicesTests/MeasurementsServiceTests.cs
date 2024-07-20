@@ -149,7 +149,7 @@ public class MeasurementsServiceTests
         Assert.Equal(measurementsWriteDto.RightUpperArm,newMeasuremnt.RightUpperArm );
         Assert.Equal(measurementsWriteDto.WaistOnBelly,newMeasuremnt.WaistOnBelly);
         Assert.Equal(measurementsWriteDto.WaistUnderBelly,newMeasuremnt.WaistUnderBelly);
-        Assert.NotNull(newMeasuremnt.CreatedAt);
+        Assert.NotNull(newMeasuremnt.CreatedAt); // TODO: Do not use Assert.NotNull() on value type 'DateTime'.
     }
     [Fact]
     public async Task CreateAsync_NoBodyWeight_Components_Should_Create_propper_weight_return_sucess()
@@ -174,7 +174,7 @@ public class MeasurementsServiceTests
 
         var result = await service.CreateAsync(measurementsWriteDto, new CancellationToken());
         Assert.True(result.IsSuccess);
-        Assert.NotNull(result.Value);
+        Assert.NotNull(result.Value); // TODO: Do not use Assert.NotNull() on value type 'int'
         Assert.True(result.Value >= 1);
 
         // it's the only one there
@@ -222,7 +222,7 @@ public class MeasurementsServiceTests
 
         var result = await service.CreateAsync(measurementsWriteDto, new CancellationToken());
         Assert.True(result.IsSuccess);
-        Assert.NotNull(result.Value);
+        Assert.NotNull(result.Value); // TODO: Do not use Assert.NotNull() on value type 'int'
         Assert.True(result.Value >= 1);
 
         // it's the only one there
@@ -243,7 +243,7 @@ public class MeasurementsServiceTests
         Assert.Equal(
             (measurementsWriteDto.BodyFatMass + measurementsWriteDto.Protein + measurementsWriteDto.Minerals + measurementsWriteDto.TotalBodyWater)
             ,newMeasuremnt.BodyWeight);
-        Assert.NotNull(newMeasuremnt.CreatedAt);
+        Assert.NotNull(newMeasuremnt.CreatedAt); // TODO: Do not use Assert.NotNull() on value type 'DateTime'. Remove this assert.
     }
     [Fact]
     public async Task CreateAsync_BothBodyWeight_AndComponents_BodyWeightComponentsShouldTakePrecendance_Should_Create_propper_weight_return_sucess()

@@ -6,7 +6,7 @@ namespace DataLibrary.Context;
 
 public class SqliteContext : DbContext
 {
-    public string DatabaseConnectionString { get; set; } = "Data Source=E:/development/databases/training_log_v2.db";
+    public string DatabaseConnectionString { get; set; } = "./training_log_v2.db";
     public SqliteContext()
     {
     }

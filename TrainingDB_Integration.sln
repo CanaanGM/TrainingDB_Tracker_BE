@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6CC53DD2-1214-4DB2-A92E-D5785E126A4D}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		database_script.sql = database_script.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateLibraryTests", "DateLibraryTests\DateLibraryTests.csproj", "{DE8243D4-DE5B-4D72-ABA6-C1868B42F164}"

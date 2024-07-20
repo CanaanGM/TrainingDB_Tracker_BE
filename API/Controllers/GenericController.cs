@@ -118,8 +118,7 @@ public class GenericController : ControllerBase
     {
         return Ok(await _exerciseService.CreateAsync(newExercise, cancellationToken));
     }
-
-
+    
     [HttpPost("/exercise/bulk")]
     public async Task<IActionResult> CreateExercisesBulkAsync([FromBody] List<ExerciseWriteDto> newExercises, CancellationToken cancellationToken)
     {
