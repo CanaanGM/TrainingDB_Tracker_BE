@@ -28,6 +28,9 @@ public class ExerciseService : IExerciseService
     {
         try
         {
+            if (string.IsNullOrEmpty(exerciseName?.Trim()))
+                throw new ArgumentException("name cannot be empty");
+            
             ExerciseReadDto? exercise = await _context.Exercises
                 .AsNoTracking()
                 .ProjectTo<ExerciseReadDto>(_mapper.ConfigurationProvider)

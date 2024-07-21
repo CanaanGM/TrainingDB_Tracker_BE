@@ -121,7 +121,7 @@ namespace DataLibrary.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
                         .HasColumnName("created_at")
@@ -306,23 +306,23 @@ namespace DataLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("BasalMetabolicRate")
+                    b.Property<int>("BasalMetabolicRate")
                         .HasColumnType("INTEGER")
                         .HasColumnName("basal_metabolic_rate");
 
-                    b.Property<double?>("BodyFatMass")
+                    b.Property<double>("BodyFatMass")
                         .HasColumnType("REAL")
                         .HasColumnName("body_fat_mass");
 
-                    b.Property<double?>("BodyFatPercent")
+                    b.Property<double>("BodyFatPercent")
                         .HasColumnType("REAL")
                         .HasColumnName("body_fat_percent");
 
-                    b.Property<double?>("BodyMassIndex")
+                    b.Property<double>("BodyMassIndex")
                         .HasColumnType("REAL")
                         .HasColumnName("body_mass_index");
 
-                    b.Property<double?>("BodyWeight")
+                    b.Property<double>("BodyWeight")
                         .HasColumnType("REAL")
                         .HasColumnName("body_weight");
 
@@ -339,7 +339,7 @@ namespace DataLibrary.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("hip");
 
-                    b.Property<double?>("InBodyScore")
+                    b.Property<double>("InBodyScore")
                         .HasColumnType("REAL")
                         .HasColumnName("in_body_score");
 
@@ -359,7 +359,7 @@ namespace DataLibrary.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("left_upper_arm");
 
-                    b.Property<double?>("Minerals")
+                    b.Property<double>("Minerals")
                         .HasColumnType("REAL")
                         .HasColumnName("minerals");
 
@@ -367,7 +367,7 @@ namespace DataLibrary.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("neck");
 
-                    b.Property<double?>("Protein")
+                    b.Property<double>("Protein")
                         .HasColumnType("REAL")
                         .HasColumnName("protein");
 
@@ -387,15 +387,15 @@ namespace DataLibrary.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("right_upper_arm");
 
-                    b.Property<double?>("SkeletalMuscleMass")
+                    b.Property<double>("SkeletalMuscleMass")
                         .HasColumnType("REAL")
                         .HasColumnName("skeletal_muscle_mass");
 
-                    b.Property<double?>("TotalBodyWater")
+                    b.Property<double>("TotalBodyWater")
                         .HasColumnType("REAL")
                         .HasColumnName("total_body_water");
 
-                    b.Property<int?>("VisceralFatLevel")
+                    b.Property<int>("VisceralFatLevel")
                         .HasColumnType("INTEGER")
                         .HasColumnName("visceral_fat_level");
 

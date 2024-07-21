@@ -13,7 +13,7 @@ public partial class Equipment
 
     public double? WeightKg { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public virtual ICollection<TrainingPlan> TrainingPlans { get; set; } = new List<TrainingPlan>();
 }

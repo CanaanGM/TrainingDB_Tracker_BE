@@ -60,7 +60,7 @@ public partial class TrainingLogV2Context : DbContext
                 .HasDefaultValueSql("current_timestamp")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
-            entity.Property(e => e.Instrcustions).HasColumnName("instrcustions");
+            entity.Property(e => e.Instructions).HasColumnName("instrcustions");
             entity.Property(e => e.Name)
                 .HasColumnType("varchar(64)")
                 .HasColumnName("name");

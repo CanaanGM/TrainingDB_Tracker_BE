@@ -52,7 +52,9 @@ public class Profiles : Profile
                     .MapFrom(r => r.TrainingSessionExerciseRecords.Select(r => r.ExerciseRecord)));
 
         CreateMap<TrainingSessionWriteDto, TrainingSession>()
-            .ForMember(dt => dt.DurationInSeconds, src => src.MapFrom(r => Utils.DurationSecondsFromMinutes(r.DurationInMinutes)))
+            .ForMember(dt => dt.DurationInSeconds,
+                src => src
+                    .MapFrom(r => Utils.DurationSecondsFromMinutes(r.DurationInMinutes)))
             .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
         CreateMap<ExerciseRecord, ExerciseRecordReadDto>()
@@ -75,5 +77,8 @@ public class Profiles : Profile
         CreateMap<Measurements, MeasurementsReadDto>();
         CreateMap<MeasurementsWriteDto, Measurements>();
 
+
+        CreateMap<Equipment, EquipmentReadDto>();
+        CreateMap<EquipmentWriteDto, Equipment>();
     }
 }

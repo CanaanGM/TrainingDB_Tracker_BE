@@ -13,7 +13,7 @@ public partial class Block
 
     public int? RestInSeconds { get; set; }
 
-    public string? Instrcustions { get; set; }
+    public string? Instructions { get; set; }
 
     public int? OrderNumber { get; set; }
 

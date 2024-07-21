@@ -6,7 +6,7 @@ namespace DataLibrary.Context;
 
 public class SqliteContext : DbContext
 {
-    public string DatabaseConnectionString { get; set; } = "./training_log_v2.db";
+    public string DatabaseConnectionString { get; set; } = "Data Source = E:/development/c#/TrainingDB_Integration/training_log_v2.db"; //$"{Directory.GetCurrentDirectory()}/training_log_v2.db";
     public SqliteContext()
     {
     }
@@ -105,7 +105,7 @@ public class SqliteContext : DbContext
                 .HasDefaultValueSql("current_timestamp")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
-            entity.Property(e => e.Instrcustions).HasColumnName("instructions");
+            entity.Property(e => e.Instructions).HasColumnName("instructions");
             entity.Property(e => e.Name)
                 .HasColumnType("varchar(64)")
                 .HasColumnName("name");
