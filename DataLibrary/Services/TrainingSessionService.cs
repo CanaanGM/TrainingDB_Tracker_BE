@@ -76,7 +76,12 @@ public class TrainingSessionService : ITrainingSessionService
         Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
-            List<string> normalizedExerciseNames = Utils.NormalizeStringList(newSession.ExerciseRecords.Select(x => x.ExerciseName).Distinct().ToList());
+            List<string> normalizedExerciseNames = Utils.NormalizeStringList(
+                newSession.ExerciseRecords
+                    .Select(x => x.ExerciseName)
+                    .Distinct()
+                    .ToList()
+                );
             List<Exercise> relatedExercises = await GetRelatedExercises(normalizedExerciseNames, cancellationToken);
 
             List<TrainingType> relatedTrainingTypes = relatedExercises

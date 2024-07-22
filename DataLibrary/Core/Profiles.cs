@@ -9,6 +9,8 @@ public class Profiles : Profile
 {
     public Profiles()
     {
+        // TODO: move what's related into it's own file for clarity.
+        
         CreateMap<Muscle, MuscleReadDto>()
             .ForMember(x => x.MuscleName, src => src.MapFrom(w => w.Name))
             .ReverseMap();
@@ -80,5 +82,23 @@ public class Profiles : Profile
 
         CreateMap<Equipment, EquipmentReadDto>();
         CreateMap<EquipmentWriteDto, Equipment>();
+        
+        
+        /// Training plan related mapping.
+        
+       // write DTO -> normal models
+
+       CreateMap<TrainingPlanWriteDto, TrainingPlan>();
+       CreateMap<TrainingWeekWriteDto, TrainingWeek>();
+       CreateMap<TrainingDaysWriteDto, TrainingDay>();
+       CreateMap<BlockWriteDto, Block>();
+       CreateMap<BlockExercise, BlockExerciseWriteDto>()
+           .ForMember(x => x.ExerciseName,
+               src => src
+                   .MapFrom(dst => dst.Exercise.Name)
+           ).ReverseMap();
+
+
+
     }
 }

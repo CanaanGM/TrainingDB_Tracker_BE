@@ -11,8 +11,8 @@ public static class DatabaseHelpers
         // context.AddRange(CreateTrainingSessions(sessionNumber));
         context.SaveChanges();
     }
-    
-     /// <summary>
+
+    /// <summary>
     /// Seeds the database with <strong>3</strong> muscles, <strong>4</strong> training types, <strong>3</strong> exercises <i> with their relations</i> to the muscles and types.
     /// <em>Making a session have <strong>4 training types</strong></em>.<br></br>
     /// </summary>
@@ -55,7 +55,6 @@ public static class DatabaseHelpers
         context.Database.ExecuteSqlRaw(insertExercises);
         context.Database.ExecuteSqlRaw(insertExerciseMuscles);
         context.Database.ExecuteSqlRaw(insertExerciseTypes);
-
     }
 
     /// <summary>
@@ -96,10 +95,10 @@ public static class DatabaseHelpers
         context.Database.ExecuteSqlRaw(insertTrainingSessionExerciseRecords, sessionId);
         context.Database.ExecuteSqlRaw(insertTrainingSessionTrainingTypes, sessionId);
     }
-    
+
     public static void SeedExtendedTypesExercisesAndMuscles(SqliteContext context)
-{
-    string insertMuscles = @"
+    {
+        string insertMuscles = @"
         INSERT INTO muscle (name, muscle_group, ""function"", wiki_page_url) VALUES
         ('deltoid anterior head','shoulders','flexes and medially rotates the arm.','https://en.wikipedia.org/wiki/Deltoid_muscle#Anterior_part'),
         ('deltoid posterior head','shoulders','flexes and medially rotates the arm.','https://en.wikipedia.org/wiki/Deltoid_muscle#Anterior_part'),
@@ -113,7 +112,7 @@ public static class DatabaseHelpers
         ('gastrocnemius','calves','plantar flexes the foot.','https://en.wikipedia.org/wiki/Gastrocnemius_muscle');
     ";
 
-    string insertTrainingTypes = @"
+        string insertTrainingTypes = @"
         INSERT INTO training_type (name) VALUES 
         ('strength'), 
         ('cardio'),
@@ -124,7 +123,7 @@ public static class DatabaseHelpers
         ('flexibility');
     ";
 
-    string insertExercises = @"
+        string insertExercises = @"
         INSERT INTO exercise (name, description, how_to, difficulty) VALUES
         ('dragon flag', 'a flag', 'lie and cry', 4),
         ('rope jumping', 'jump', 'cant touch this!', 2),
@@ -138,12 +137,12 @@ public static class DatabaseHelpers
         ('plank', 'hold a plank position', 'stay in plank position', 2);
     ";
 
-    string insertExerciseMuscles = @"
+        string insertExerciseMuscles = @"
         INSERT INTO exercise_muscle (muscle_id, exercise_id) VALUES
         (1, 1), (2, 2), (3, 3), (1, 4), (4, 5), (5, 6), (6, 7), (7, 8), (8, 9), (9, 10);
     ";
 
-    string insertExerciseTypes = @"
+        string insertExerciseTypes = @"
         INSERT INTO exercise_type (exercise_id, training_type_id) VALUES 
         (1, 1), (1, 3), (1, 4),
         (2, 2), (2, 5), (2, 6),
@@ -157,7 +156,7 @@ public static class DatabaseHelpers
         (10, 2), (10, 5), (10, 6);
     ";
 
-    string insertExerciseHowTos = @"
+        string insertExerciseHowTos = @"
         INSERT INTO exercise_how_to (exercise_id, name, url) VALUES
         (1, 'Tutorial 1', 'http://example.com/1'),
         (2, 'Tutorial 2', 'http://example.com/2'),
@@ -171,13 +170,13 @@ public static class DatabaseHelpers
         (10, 'Tutorial 10', 'http://example.com/10');
     ";
 
-    context.Database.ExecuteSqlRaw(insertMuscles);
-    context.Database.ExecuteSqlRaw(insertTrainingTypes);
-    context.Database.ExecuteSqlRaw(insertExercises);
-    context.Database.ExecuteSqlRaw(insertExerciseMuscles);
-    context.Database.ExecuteSqlRaw(insertExerciseTypes);
-    context.Database.ExecuteSqlRaw(insertExerciseHowTos);
-}
+        context.Database.ExecuteSqlRaw(insertMuscles);
+        context.Database.ExecuteSqlRaw(insertTrainingTypes);
+        context.Database.ExecuteSqlRaw(insertExercises);
+        context.Database.ExecuteSqlRaw(insertExerciseMuscles);
+        context.Database.ExecuteSqlRaw(insertExerciseTypes);
+        context.Database.ExecuteSqlRaw(insertExerciseHowTos);
+    }
+
 
 }
-

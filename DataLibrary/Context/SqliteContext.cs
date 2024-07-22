@@ -136,7 +136,7 @@ public class SqliteContext : DbContext
             entity.Property(e => e.Repetitions).HasColumnName("repetitions");
             entity.Property(e => e.TimerInSeconds).HasColumnName("timer_in_seconds");
 
-            entity.HasOne(d => d.Block).WithMany(p => p.BlockExercises)
+            entity.HasOne(d => d.Block).WithMany(p => p.Exercises)
                 .HasForeignKey(d => d.BlockId)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -295,7 +295,7 @@ public class SqliteContext : DbContext
             entity.Property(e => e.OrderNumber).HasColumnName("order_number");
             entity.Property(e => e.TrainingWeekId).HasColumnName("training_week_id");
 
-            entity.HasOne(d => d.TrainingWeek).WithMany(p => p.TrainingDays)
+            entity.HasOne(d => d.TrainingWeek).WithMany(p => p.Days)
                 .HasForeignKey(d => d.TrainingWeekId)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -333,8 +333,6 @@ public class SqliteContext : DbContext
                 .HasColumnType("varchar(64)")
                 .HasColumnName("name");
             entity.Property(e => e.Notes).HasColumnName("notes");
-            entity.Property(e => e.TrainingDaysPerWeek).HasColumnName("training_days_per_week");
-            entity.Property(e => e.TrainingWeeks).HasColumnName("training_weeks");
 
             entity.HasMany(d => d.Equipment).WithMany(p => p.TrainingPlans)
                 .UsingEntity<Dictionary<string, object>>(
@@ -456,7 +454,7 @@ public class SqliteContext : DbContext
             entity.Property(e => e.OrderNumber).HasColumnName("order_number");
             entity.Property(e => e.TrainingPlanId).HasColumnName("training_plan_id");
 
-            entity.HasOne(d => d.TrainingPlan).WithMany(p => p.TrainingWeeksNavigation)
+            entity.HasOne(d => d.TrainingPlan).WithMany(p => p.Weeks)
                 .HasForeignKey(d => d.TrainingPlanId)
                 .OnDelete(DeleteBehavior.Cascade);
         });

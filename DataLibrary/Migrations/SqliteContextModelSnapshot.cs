@@ -30,7 +30,7 @@ namespace DataLibrary.Migrations
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("current_timestamp");
 
-                    b.Property<string>("Instrcustions")
+                    b.Property<string>("Instructions")
                         .HasColumnType("TEXT")
                         .HasColumnName("instructions");
 
@@ -510,14 +510,6 @@ namespace DataLibrary.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("TEXT")
                         .HasColumnName("notes");
-
-                    b.Property<int>("TrainingDaysPerWeek")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("training_days_per_week");
-
-                    b.Property<int>("TrainingWeeks")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("training_weeks");
 
                     b.HasKey("Id");
 
