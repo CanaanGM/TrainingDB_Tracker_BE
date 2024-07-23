@@ -18,6 +18,7 @@ public static class DependencyInjection
         services.AddScoped<IExerciseService, ExerciseService>();
         services.AddScoped<IMeasurementsService, MeasurementsService>();
         services.AddScoped<IEquipmentService, EquipmentService>();
+        services.AddScoped<IPlanService, PlanService>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddScoped<ITrainingSessionService, TrainingSessionService>();
         return services;

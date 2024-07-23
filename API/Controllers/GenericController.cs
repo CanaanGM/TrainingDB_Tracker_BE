@@ -16,6 +16,7 @@ public class GenericController : ControllerBase
     private readonly ITrainingSessionService _trainingSessionService;
     private readonly IMeasurementsService _measurementsService;
     private readonly IEquipmentService _equipmentService;
+    private readonly IPlanService _planService;
 
     public GenericController(
         ILogger<GenericController> logger
@@ -25,6 +26,7 @@ public class GenericController : ControllerBase
         , ITrainingSessionService trainingSessionService
         , IMeasurementsService measurementsService
         , IEquipmentService equipmentService
+        , IPlanService planService
         )
     {
         _logger = logger;
@@ -34,6 +36,7 @@ public class GenericController : ControllerBase
         _trainingSessionService = trainingSessionService;
         _measurementsService = measurementsService;
         _equipmentService = equipmentService;
+        _planService = planService;
     }
 
     [HttpGet("/muscles")]
@@ -243,6 +246,11 @@ public class GenericController : ControllerBase
         return Ok(await _equipmentService.DeleteAsync(equipmentName, cancellationToken));
     }
     
-    
+    [HttpPost("/plans")]
+    public async Task<IActionResult> CreateTrainingPlanBulkAsync([FromBody] TrainingPlanWriteDto newTrainingPlanWriteDto, CancellationToken cancellationToken)
+    {
+        return Ok(await _planService.CreateAsync(newTrainingPlanWriteDto, cancellationToken));
+    }
+
 
 }

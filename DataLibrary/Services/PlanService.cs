@@ -1,4 +1,5 @@
-﻿using DataLibrary.Context;
+﻿using AutoMapper;
+using DataLibrary.Context;
 using DataLibrary.Core;
 using DataLibrary.Dtos;
 using DataLibrary.Helpers;
@@ -8,15 +9,55 @@ using Microsoft.Extensions.Logging;
 
 namespace DataLibrary.Services;
 
-public class PlanService
+public interface IPlanService
+{
+    Task<Result<TrainingPlanReadDto>> GetByIdAsync(int id, CancellationToken cancellationToken);
+    Task<Result<int>> CreateAsync(TrainingPlanWriteDto newPlanDto, CancellationToken cancellationToken);
+
+    Task<Result<bool>> UpdateAsync(int planId, TrainingPlanWriteDto updateDto,
+        CancellationToken cancellationToken);
+
+    Task<Result<bool>> DeleteAsync(int planId, CancellationToken cancellationToken);
+}
+
+public class PlanService : IPlanService
 {
     private readonly SqliteContext _context;
+    private readonly IMapper _mapper;
     private readonly ILogger<PlanService> _logger;
 
-    public PlanService(SqliteContext context, ILogger<PlanService> logger)
+    public PlanService(SqliteContext context, IMapper mapper, ILogger<PlanService> logger)
     {
         _context = context;
+        _mapper = mapper;
         _logger = logger;
+    }
+
+    public async Task<Result<TrainingPlanReadDto>> GetByIdAsync(int id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var trainingPlan = await _context.TrainingPlans
+                .Include(tp => tp.Weeks)
+                .ThenInclude(tw => tw.Days)
+                .ThenInclude(td => td.Blocks)
+                .ThenInclude(b => b.Exercises)
+                .ThenInclude(be => be.Exercise)
+                .Include(tp => tp.Equipment)
+                .Include(tp => tp.TrainingTypes)
+                .FirstOrDefaultAsync(tp => tp.Id == id, cancellationToken);
+
+            if (trainingPlan == null)
+                return Result<TrainingPlanReadDto>.Failure("Training plan not found.");
+
+            var trainingPlanDto = _mapper.Map<TrainingPlanReadDto>(trainingPlan);
+            return Result<TrainingPlanReadDto>.Success(trainingPlanDto);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"[ERROR]: failed to retrieve training plan in {nameof(GetByIdAsync)}");
+            return Result<TrainingPlanReadDto>.Failure($"Failed to retrieve training plan: {ex.Message}", ex);
+        }
     }
 
 
@@ -40,6 +81,7 @@ public class PlanService
                 return Result<int>.Failure(string.Join("; ", validationErrors));
             }
 
+            // var trainingPlan = _mapper.Map<TrainingPlan>(newPlanDto);
             var trainingPlan = MapToTrainingPlan(newPlanDto, relatedExercises, trainingTypes, relatedEquipment);
 
             await _context.TrainingPlans.AddAsync(trainingPlan, cancellationToken);
@@ -56,108 +98,86 @@ public class PlanService
         }
     }
 
-public async Task<Result<bool>> UpdateAsync(int planId, TrainingPlanWriteDto updateDto, CancellationToken cancellationToken)
-{
-    await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-    try
+
+    public async Task<Result<bool>> UpdateAsync(int planId, TrainingPlanWriteDto updateDto,
+        CancellationToken cancellationToken)
     {
-        var existingPlan = await _context.TrainingPlans
-            .Include(tp => tp.Weeks)
+        if (!ValidateTrainingPlan(updateDto, out var validationError))
+            return Result<bool>.Failure(validationError);
+
+        await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+
+        try
+        {
+            var trainingPlan = await _context.TrainingPlans
+                .Include(tp => tp.Weeks)
                 .ThenInclude(tw => tw.Days)
-                    .ThenInclude(td => td.Blocks)
-                        .ThenInclude(b => b.Exercises)
-            .Include(tp => tp.Equipment)
-            .Include(tp => tp.TrainingTypes)
-            .FirstOrDefaultAsync(tp => tp.Id == planId, cancellationToken);
+                .ThenInclude(td => td.Blocks)
+                .ThenInclude(b => b.Exercises)
+                .ThenInclude(be => be.Exercise)
+                .Include(tp => tp.Equipment)
+                .Include(tp => tp.TrainingTypes)
+                .FirstOrDefaultAsync(tp => tp.Id == planId, cancellationToken);
 
-        if (existingPlan == null)
-        {
-            return Result<bool>.Failure("Training plan not found.");
-        }
+            if (trainingPlan == null)
+                return Result<bool>.Failure("Training plan not found.");
 
-        UpdateTrainingPlan(existingPlan, updateDto);
-        UpdateRelatedEntities(existingPlan, updateDto);
+            var normalizedExerciseNames = updateDto.Weeks
+                .SelectMany(w => w.Days)
+                .SelectMany(d => d.Blocks)
+                .SelectMany(b => b.Exercises)
+                .Select(e => Utils.NormalizeString(e.ExerciseName))
+                .ToList();
 
-        await _context.SaveChangesAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
+            if (!normalizedExerciseNames.Any())
+                return Result<bool>.Failure("The training plan must contain at least one exercise.");
 
-        return Result<bool>.Success(true);
-    }
-    catch (Exception ex)
-    {
-        await transaction.RollbackAsync(cancellationToken);
-        _logger.LogError(ex, $"[ERROR]: failed to update the training plan in {nameof(UpdateAsync)}");
-        return Result<bool>.Failure($"Failed to update training plan: {ex.Message}", ex);
-    }
-}
+            var relatedExercises = await _context.Exercises
+                .Include(e => e.TrainingTypes)
+                .Where(e => normalizedExerciseNames.Contains(e.Name))
+                .ToDictionaryAsync(e => e.Name, e => e, cancellationToken);
 
-private void UpdateTrainingPlan(TrainingPlan existingPlan, TrainingPlanWriteDto updateDto)
-{
-    if (!string.IsNullOrEmpty(updateDto.Name))
-    {
-        existingPlan.Name = Utils.NormalizeString(updateDto.Name);
-    }
+            var missingExercises = normalizedExerciseNames.Except(relatedExercises.Keys).ToList();
+            if (missingExercises.Any())
+                return Result<bool>.Failure(
+                    $"The following exercises do not exist: {string.Join(", ", missingExercises)}");
 
-    if (!string.IsNullOrEmpty(updateDto.Description))
-    {
-        existingPlan.Description = updateDto.Description;
-    }
+            var trainingTypes = Utils.NormalizeStringList(updateDto.TrainingTypes);
+            var dbRelatedTypes = await _context.TrainingTypes
+                .Where(tt => trainingTypes.Contains(tt.Name))
+                .ToListAsync(cancellationToken);
 
-    if (!string.IsNullOrEmpty(updateDto.Notes))
-    {
-        existingPlan.Notes = updateDto.Notes;
-    }
-}
+            var missingTypes = trainingTypes.Except(dbRelatedTypes.Select(tt => tt.Name)).ToList();
+            if (missingTypes.Any())
+                return Result<bool>.Failure(
+                    $"The following training types do not exist: {string.Join(", ", missingTypes)}");
 
-private void UpdateRelatedEntities(TrainingPlan existingPlan, TrainingPlanWriteDto updateDto)
-{
-    UpdateEquipment(existingPlan, updateDto);
-    UpdateTrainingTypes(existingPlan, updateDto);
-    UpdateWeeks(existingPlan, updateDto);
-}
+            var relatedEquipment = new List<Equipment>();
+            if (updateDto.Equipemnt.Any())
+            {
+                var normalizedEquipmentNames = Utils.NormalizeStringList(updateDto.Equipemnt);
+                relatedEquipment = await _context.Equipment
+                    .Where(eq => normalizedEquipmentNames.Contains(eq.Name))
+                    .ToListAsync(cancellationToken);
 
-private void UpdateEquipment(TrainingPlan existingPlan, TrainingPlanWriteDto updateDto)
-{
-    if (updateDto.Equipemnt != null && updateDto.Equipemnt.Any())
-    {
-        var normalizedEquipmentNames = Utils.NormalizeStringList(updateDto.Equipemnt);
-        var existingEquipment = _context.Equipment
-            .Where(e => normalizedEquipmentNames.Contains(e.Name))
-            .ToList();
+                var missingEquipment = normalizedEquipmentNames.Except(relatedEquipment.Select(eq => eq.Name)).ToList();
+                if (missingEquipment.Any())
+                    return Result<bool>.Failure(
+                        $"The following equipment do not exist: {string.Join(", ", missingEquipment)}");
+            }
 
-        existingPlan.Equipment.Clear();
-        foreach (var equipment in existingEquipment)
-        {
-            existingPlan.Equipment.Add(equipment);
-        }
-    }
-}
+            // Update the existing training plan
+            trainingPlan.Name = Utils.NormalizeString(updateDto.Name);
+            trainingPlan.Description = updateDto.Description;
+            trainingPlan.Notes = updateDto.Notes;
+            trainingPlan.TrainingTypes = dbRelatedTypes;
+            trainingPlan.Equipment = relatedEquipment;
 
-private void UpdateTrainingTypes(TrainingPlan existingPlan, TrainingPlanWriteDto updateDto)
-{
-    if (updateDto.TrainingTypes != null && updateDto.TrainingTypes.Any())
-    {
-        var normalizedTrainingTypes = Utils.NormalizeStringList(updateDto.TrainingTypes);
-        var existingTrainingTypes = _context.TrainingTypes
-            .Where(tt => normalizedTrainingTypes.Contains(tt.Name))
-            .ToList();
+            // Remove existing weeks, days, and blocks
+            _context.TrainingWeeks.RemoveRange(trainingPlan.Weeks);
 
-        existingPlan.TrainingTypes.Clear();
-        foreach (var trainingType in existingTrainingTypes)
-        {
-            existingPlan.TrainingTypes.Add(trainingType);
-        }
-    }
-}
-
-private void UpdateWeeks(TrainingPlan existingPlan, TrainingPlanWriteDto updateDto)
-{
-    if (updateDto.Weeks != null && updateDto.Weeks.Any())
-    {
-        existingPlan.Weeks.Clear();
-        foreach (var weekDto in updateDto.Weeks)
-        {
-            var week = new TrainingWeek
+            // Add new weeks, days, and blocks
+            trainingPlan.Weeks = updateDto.Weeks.Select(weekDto => new TrainingWeek
             {
                 Name = Utils.NormalizeString(weekDto.Name),
                 OrderNumber = weekDto.OrderNumber,
@@ -175,7 +195,7 @@ private void UpdateWeeks(TrainingPlan existingPlan, TrainingPlanWriteDto updateD
                         OrderNumber = blockDto.OrderNumber,
                         Exercises = blockDto.Exercises.Select(exerciseDto => new BlockExercise
                         {
-                            ExerciseId = _context.Exercises.FirstOrDefault(e => e.Name == Utils.NormalizeString(exerciseDto.ExerciseName))?.Id ?? 0,
+                            Exercise = relatedExercises[Utils.NormalizeString(exerciseDto.ExerciseName)],
                             Notes = exerciseDto.Notes,
                             OrderNumber = exerciseDto.OrderNumber,
                             Repetitions = exerciseDto.Repetitions,
@@ -184,11 +204,73 @@ private void UpdateWeeks(TrainingPlan existingPlan, TrainingPlanWriteDto updateD
                         }).ToList()
                     }).ToList()
                 }).ToList()
-            };
-            existingPlan.Weeks.Add(week);
+            }).ToList();
+
+            _context.TrainingPlans.Update(trainingPlan);
+            await _context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+
+            return Result<bool>.Success(true);
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            _logger.LogError($"[ERROR]: Failed to update training plan in {nameof(UpdateAsync)}. Exception: {ex}");
+            return Result<bool>.Failure($"Failed to update training plan: {ex.Message}", ex);
         }
     }
-}
+
+    public async Task<Result<bool>> DeleteAsync(int planId, CancellationToken cancellationToken)
+    {
+        await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+
+        try
+        {
+            var trainingPlan = await _context.TrainingPlans
+                .Include(tp => tp.Weeks)
+                .ThenInclude(tw => tw.Days)
+                .ThenInclude(td => td.Blocks)
+                .ThenInclude(b => b.Exercises)
+                .Include(tp => tp.Equipment)
+                .Include(tp => tp.TrainingTypes)
+                .FirstOrDefaultAsync(tp => tp.Id == planId, cancellationToken);
+
+            if (trainingPlan == null)
+                return Result<bool>.Failure("Training plan not found.");
+
+            // Remove associated entities
+            foreach (var week in trainingPlan.Weeks)
+            {
+                foreach (var day in week.Days)
+                {
+                    foreach (var block in day.Blocks)
+                    {
+                        _context.BlockExercises.RemoveRange(block.Exercises);
+                    }
+
+                    _context.Blocks.RemoveRange(day.Blocks);
+                }
+
+                _context.TrainingDays.RemoveRange(week.Days);
+            }
+
+            _context.TrainingWeeks.RemoveRange(trainingPlan.Weeks);
+
+            // Remove the training plan itself
+            _context.TrainingPlans.Remove(trainingPlan);
+
+            await _context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+
+            return Result<bool>.Success(true);
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            _logger.LogError(ex, $"[ERROR]: failed to delete training plan in {nameof(DeleteAsync)}");
+            return Result<bool>.Failure($"Failed to delete training plan: {ex.Message}", ex);
+        }
+    }
 
 
     /// <summary>

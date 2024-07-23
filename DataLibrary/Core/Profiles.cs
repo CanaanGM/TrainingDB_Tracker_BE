@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
-
 using DataLibrary.Dtos;
 using DataLibrary.Helpers;
 using DataLibrary.Models;
 
 namespace DataLibrary.Core;
+
 public class Profiles : Profile
 {
     public Profiles()
     {
         // TODO: move what's related into it's own file for clarity.
-        
+
         CreateMap<Muscle, MuscleReadDto>()
             .ForMember(x => x.MuscleName, src => src.MapFrom(w => w.Name))
             .ReverseMap();
@@ -37,7 +37,7 @@ public class Profiles : Profile
             .ForMember(s => s.HowTos,
                 opt => opt
                     .MapFrom(src => src.ExerciseHowTos)
-                );
+            );
         CreateMap<Exercise, ExerciseWriteDto>().ReverseMap();
         CreateMap<Exercise, ExerciseSearchResultDto>();
 
@@ -47,8 +47,8 @@ public class Profiles : Profile
 
         CreateMap<TrainingSession, TrainingSessionReadDto>()
             .ForMember(dt => dt.TrainingTypes
-            , src => src
-                .MapFrom(o => o.TrainingTypes))
+                , src => src
+                    .MapFrom(o => o.TrainingTypes))
             .ForMember(dt => dt.ExerciseRecords,
                 src => src
                     .MapFrom(r => r.TrainingSessionExerciseRecords.Select(r => r.ExerciseRecord)));
@@ -63,17 +63,15 @@ public class Profiles : Profile
             .ForMember(dt => dt.ExerciseName
                 , src => src
                     .MapFrom(o => o.Exercise!.Name))
-
             .ForMember(dt => dt.MuscleGroup
                 , src => src
                     .MapFrom(o => o.Exercise!.ExerciseMuscles
                         .Select(x => x.Muscle.MuscleGroup).Distinct()
-                        )
-                    //.Select(x => x.Muscle.Name))
-                    );
+                    )
+                //.Select(x => x.Muscle.Name))
+            );
         CreateMap<ExerciseRecordWriteDto, Exercise>()
             .ForMember(dt => dt.Name, src => src.MapFrom(x => x.ExerciseName));
-
 
 
         CreateMap<Measurements, MeasurementsReadDto>();
@@ -82,23 +80,34 @@ public class Profiles : Profile
 
         CreateMap<Equipment, EquipmentReadDto>();
         CreateMap<EquipmentWriteDto, Equipment>();
-        
-        
+
+
         /// Training plan related mapping.
+
+        // write DTO -> normal models
+        CreateMap<TrainingPlanWriteDto, TrainingPlan>();
+        CreateMap<TrainingWeekWriteDto, TrainingWeek>();
+        CreateMap<TrainingDaysWriteDto, TrainingDay>();
+        CreateMap<BlockWriteDto, Block>();
+        CreateMap<BlockExerciseWriteDto, BlockExercise>()
+            .ForMember(dest => dest.Exercise, opt => opt.Ignore())
+            .ForMember(dest => dest.ExerciseId, opt => opt.Ignore());
+        CreateMap<BlockExercise, BlockExerciseWriteDto>()
+            .ForMember(dest => dest.ExerciseName, opt => opt.MapFrom(src => src.Exercise.Name));
+
         
-       // write DTO -> normal models
+        CreateMap<TrainingPlan, TrainingPlanReadDto>()
+            .ForMember(dest => dest.Equipemnt, opt => opt.MapFrom(src => src.Equipment))
+            .ForMember(dest => dest.TrainingTypes, opt => opt.MapFrom(src => src.TrainingTypes));
 
-       CreateMap<TrainingPlanWriteDto, TrainingPlan>();
-       CreateMap<TrainingWeekWriteDto, TrainingWeek>();
-       CreateMap<TrainingDaysWriteDto, TrainingDay>();
-       CreateMap<BlockWriteDto, Block>();
-       CreateMap<BlockExercise, BlockExerciseWriteDto>()
-           .ForMember(x => x.ExerciseName,
-               src => src
-                   .MapFrom(dst => dst.Exercise.Name)
-           ).ReverseMap();
+        CreateMap<TrainingWeek, TrainingWeekReadDto>();
+        CreateMap<TrainingDay, TrainingDaysReadDto>();
+        CreateMap<Block, BlockReadDto>();
+        
+        CreateMap<BlockExercise, BlockExerciseReadDto>()
+            .ForMember(dest => dest.Exercise, opt => opt.MapFrom(src => src.Exercise));
+
+     }
 
 
-
-    }
 }
