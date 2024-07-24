@@ -488,7 +488,7 @@ public class ExerciseServiceTests
         Assert.Equal(newExercise.Difficulty, justCreatedExercise.Difficulty);
         Assert.Equal(newExercise.HowTo, justCreatedExercise.HowTo);
 
-        if (newExercise.HowTos is not null)
+        if (newExercise.HowTos is not null) // TODO: Lists is never null, check count
         {
             Assert.Equal(newExercise.HowTos.Count, justCreatedExercise.ExerciseHowTos.Count);
             for (int i = 0; i < newExercise.HowTos.Count(); i++)

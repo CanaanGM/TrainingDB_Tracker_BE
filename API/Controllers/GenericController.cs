@@ -15,6 +15,8 @@ public class GenericController : ControllerBase
     private readonly IExerciseService _exerciseService;
     private readonly ITrainingSessionService _trainingSessionService;
     private readonly IMeasurementsService _measurementsService;
+    private readonly IEquipmentService _equipmentService;
+    private readonly IPlanService _planService;
 
     public GenericController(
         ILogger<GenericController> logger
@@ -23,6 +25,8 @@ public class GenericController : ControllerBase
         , IExerciseService exerciseService
         , ITrainingSessionService trainingSessionService
         , IMeasurementsService measurementsService
+        , IEquipmentService equipmentService
+        , IPlanService planService
         )
     {
         _logger = logger;
@@ -31,6 +35,8 @@ public class GenericController : ControllerBase
         _exerciseService = exerciseService;
         _trainingSessionService = trainingSessionService;
         _measurementsService = measurementsService;
+        _equipmentService = equipmentService;
+        _planService = planService;
     }
 
     [HttpGet("/muscles")]
@@ -118,8 +124,7 @@ public class GenericController : ControllerBase
     {
         return Ok(await _exerciseService.CreateAsync(newExercise, cancellationToken));
     }
-
-
+    
     [HttpPost("/exercise/bulk")]
     public async Task<IActionResult> CreateExercisesBulkAsync([FromBody] List<ExerciseWriteDto> newExercises, CancellationToken cancellationToken)
     {
@@ -214,5 +219,38 @@ public class GenericController : ControllerBase
     {
         return Ok(await _measurementsService.DeleteAsync(measurementId, cancellationToken));
     }
+    
+      [HttpGet("/equipment")]
+    public async Task<IActionResult> GetEquipmentsAync(CancellationToken cancellationToken)
+    {
+       var equipments = await _equipmentService.GetAsync(cancellationToken) ;
+        return Ok(equipments.Value);
+    }
+
+    [HttpPost("/equipment")]
+    public async Task<IActionResult> UpsertEquipmentAsync([FromBody] EquipmentWriteDto newEquipmentWriteDto, CancellationToken cancellationToken)
+    {
+        return Ok(await _equipmentService.UpsertAsync(newEquipmentWriteDto, cancellationToken));
+    }
+    
+    [HttpPost("/equipment/bulk")]
+    public async Task<IActionResult> CreateEquipmentBulkAsync([FromBody] List<EquipmentWriteDto> newEquipmentWriteDtos, CancellationToken cancellationToken)
+    {
+        return Ok(await _equipmentService.CreateBulkAsync(newEquipmentWriteDtos, cancellationToken));
+    }
+    
+    
+    [HttpDelete("/equipment/{equipmentName}")]
+    public async Task<IActionResult> DeleteEquipmentAsync(string equipmentName, CancellationToken cancellationToken)
+    {
+        return Ok(await _equipmentService.DeleteAsync(equipmentName, cancellationToken));
+    }
+    
+    [HttpPost("/plans")]
+    public async Task<IActionResult> CreateTrainingPlanBulkAsync([FromBody] TrainingPlanWriteDto newTrainingPlanWriteDto, CancellationToken cancellationToken)
+    {
+        return Ok(await _planService.CreateAsync(newTrainingPlanWriteDto, cancellationToken));
+    }
+
 
 }

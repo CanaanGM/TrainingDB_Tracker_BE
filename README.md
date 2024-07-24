@@ -1,13 +1,14 @@
 # Training Records & Plans Keeper
+## Obviously a work in progrss
 
-> made this so i can
+---
+### made this so i can
 1. log my workouts
 1. see all my plans 
 1. create new plans
 1. keep a record of exercises and how they relate to muscles
 1. leep a record of my training equipment
 
-## Obviously a work in progrss
 
 ---
 
@@ -19,11 +20,28 @@ maybe imma use the result pattern ? will have to test performance, cause i kinda
 ## TODO: 
 - [ ] facilitate more things to to
 - [ ] ORM records
+- [ ] consider upsert
+- [ ] consider upsert plain sql for creation/updating
+
 
 ### dataBase
 
 - the [schema](https://dbdiagram.io/d/workout-tracker-65bf3a4dac844320ae64ab02) 
   - on going design. . .
+
+#### Exercises
+
+> Primary Movement - Modifier (if any) - Equipment (if any) 
+> 
+```txt
+
+Primary Movement: Bench Press
+Modifier: Reverse Grip
+Equipment: Barbell (if specified)
+Using this structure, you would name the exercise as:
+
+-> Bench Press - Reverse Grip
+```
 
 using sqlite, cause i want to use the database in a standalone mobile application that has **no** access to the internet. _the gym is in its own dimention it seems_.
 
@@ -45,6 +63,8 @@ meant to be a _stand alone layer_ that interacts with the database and handles a
 dotnet ef dbcontext scaffold "Data Source=E:/development/databases/training_log_v2.db" Microsoft.EntityFrameworkCore.Sqlite --output-dir
  ModelsV2 -p .\DataLibrary\  --context-dir Context
 ```
+
+then copy the `modelsV2` models into `models`.
 
 - migrations
 

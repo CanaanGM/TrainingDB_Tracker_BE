@@ -3,7 +3,7 @@
 namespace DataLibrary.Helpers;
 public static class Utils
 {
-    ///     /// <summary>
+    /// <summary>
     /// Normalizes the input string by: trimming it of white spaces then lowering its casing.
     /// </summary>
     /// <param name="string">the string you want normalized.</param>
