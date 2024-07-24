@@ -32,6 +32,8 @@ jobs:
       with:
         python-version: '3.x'
     
+    - name: Grant execute permission for the script
+      run: chmod +x .github/scripts/parse_test_results.py
       
     - name: Run Python script to convert TRX to JSON
       run: .github/scripts/parse_test_results.py
