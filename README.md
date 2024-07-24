@@ -29,6 +29,20 @@ maybe imma use the result pattern ? will have to test performance, cause i kinda
 - the [schema](https://dbdiagram.io/d/workout-tracker-65bf3a4dac844320ae64ab02) 
   - on going design. . .
 
+#### Exercises
+
+> Primary Movement - Modifier (if any) - Equipment (if any) 
+> 
+```txt
+
+Primary Movement: Bench Press
+Modifier: Reverse Grip
+Equipment: Barbell (if specified)
+Using this structure, you would name the exercise as:
+
+-> Bench Press - Reverse Grip
+```
+
 using sqlite, cause i want to use the database in a standalone mobile application that has **no** access to the internet. _the gym is in its own dimention it seems_.
 
 some tables are normalized some are not, some relate with a juncture table some directly reference their parent. all for the sake of simplicity, i can always remodel if the need arise.
