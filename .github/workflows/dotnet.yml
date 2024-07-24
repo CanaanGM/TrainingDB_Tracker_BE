@@ -33,7 +33,7 @@ jobs:
         python-version: '3.x'
 
     - name: Run Python script to convert TRX to JSON
-      run: python parse_test_results.py
+      run: python scripts/parse_test_results.py
 
     - name: Upload test summary
       if: always()
