@@ -26,3 +26,18 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Run Python script to convert TRX to JSON
+      run: python parse_test_results.py
+
+    - name: Upload test summary
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-summary
+        path: test_summary.json

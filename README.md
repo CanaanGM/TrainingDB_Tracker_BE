@@ -1,6 +1,10 @@
 # Training Records & Plans Keeper
 ## Obviously a work in progrss
 
+![Build Status](https://github.com/CanaanGM/TrainingDB_Tracker_BE/actions/workflows/dotnet.yml/badge.svg)
+
+
+
 ---
 ### made this so i can
 1. log my workouts
