@@ -205,7 +205,7 @@ create table if not exists localized_training_type
     FOREIGN KEY (training_type_id) REFERENCES Training_Type (id),
     FOREIGN KEY (language_id) REFERENCES Language (language_id)
 );
-CREATE unique index idx_training_type_name on training_type (name);
+CREATE unique index idx_training_type_name on localized_training_type (name);
 -- what types does an exercise have ; Dragon Flag, [BodyBuilding, Calisthenics, Athletics]
 create table if not exists exercise_type
 (
@@ -306,33 +306,40 @@ CREATE TABLE IF NOT EXISTS measurements
     user_id         integer,
     CONSTRAINT fk_user_id foreign key (user_id) references user (id) on delete cascade
 );
-create table if not exists user
+-- User table
+CREATE TABLE IF NOT EXISTS user
 (
-    id       integer primary key autoincrement,
-    username text unique not null,
-    email    text unique not null,
-    -- for calculations later
-    height   real,
-    gender   character
-                 -- for calculations end.
-                 created_at datetime default current_timestamp,
-    check ( gender = 'F' || gender = 'M' )
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    username   TEXT UNIQUE NOT NULL,
+    email      TEXT UNIQUE NOT NULL,
+    height     REAL,
+    gender     CHAR(1),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CHECK (gender IN ('F', 'M'))
 );
--- user profile images
-create table if not exists user_profile_images
+CREATE INDEX idx_user_username ON user (username);
+CREATE INDEX idx_user_email ON user (email);
+-- User profile images table
+CREATE TABLE IF NOT EXISTS user_profile_images
 (
-    user_id    integer,
-    is_primary boolean,
-    url        text,
-    created_at datetime default current_timestamp,
-    CONSTRAINT fk_user_id foreign key (user_id) references user (id) on delete cascade
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id    INTEGER,
+    is_primary BIT,
+    url        TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
 );
--- user passwords
-create table if not exists user_passwords
+CREATE INDEX idx_user_profile_images_user_id ON user_profile_images (user_id);
+-- User passwords table
+CREATE TABLE IF NOT EXISTS user_passwords
 (
-    user_id    integer,
-    password   text not null,
-    is_current boolean  default true,
-    created_at datetime default current_timestamp,
-    CONSTRAINT fk_user_id foreign key (user_id) references user (id) on delete cascade
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id       INTEGER,
+    password_hash TEXT NOT NULL,
+    password_salt TEXT NOT NULL,
+    is_current    BIT      DEFAULT 1,
+    created_at    DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
 );
+CREATE INDEX idx_user_passwords_user_id ON user_passwords (user_id);
+CREATE INDEX idx_user_passwords_is_current ON user_passwords (is_current);
