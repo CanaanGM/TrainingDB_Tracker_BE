@@ -20,8 +20,11 @@ public class Profiles : Profile
         CreateMap<LocalizedEquipment, EquipmentReadDto>()
             .ForMember(x => x.WeightKg, src => src.MapFrom(
                 c => c.Equipment.WeightKg))
-            .ReverseMap()
-            ;
+            .ReverseMap();
+        
+        CreateMap<Measurement, MeasurementsReadDto>();
+        CreateMap<MeasurementsWriteDto, Measurement>();
+        
 
         // TODO: move what's related into it's own file for clarity.
 

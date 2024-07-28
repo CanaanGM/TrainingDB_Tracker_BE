@@ -78,7 +78,7 @@ public class SqliteContext : DbContext
 
     public virtual DbSet<UserTrainingPlan> UserTrainingPlans { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+ protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Block>(entity =>
         {
@@ -334,32 +334,42 @@ public class SqliteContext : DbContext
             entity.HasOne(d => d.MuscleGroup).WithMany(p => p.LocalizedMuscleGroups).HasForeignKey(d => d.MuscleGroupId);
         });
 
-        modelBuilder.Entity<Measurement>(entity =>
+       modelBuilder.Entity<Measurement>(entity =>
         {
             entity.ToTable("measurements");
 
+            entity.HasIndex(e => e.CreatedAt, "idx__measurement_date");
+
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.BasalMetabolicRate).HasColumnName("basal_metabolic_rate");
+            entity.Property(e => e.BodyFatMass).HasColumnName("body_fat_mass");
+            entity.Property(e => e.BodyFatPercentage).HasColumnName("body_fat_percentage");
+            entity.Property(e => e.BodyMassIndex).HasColumnName("body_mass_index");
+            entity.Property(e => e.BodyWeight).HasColumnName("body_weight");
             entity.Property(e => e.Chest).HasColumnName("chest");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("current_timestamp")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
             entity.Property(e => e.Hip).HasColumnName("hip");
+            entity.Property(e => e.InBodyScore).HasColumnName("in_body_score");
             entity.Property(e => e.LeftCalf).HasColumnName("left_calf");
-            entity.Property(e => e.LeftLowerArm).HasColumnName("left_lower_arm");
+            entity.Property(e => e.LeftForearm).HasColumnName("left_forearm_arm");
             entity.Property(e => e.LeftThigh).HasColumnName("left_thigh");
             entity.Property(e => e.LeftUpperArm).HasColumnName("left_upper_arm");
+            entity.Property(e => e.Minerals).HasColumnName("minerals");
             entity.Property(e => e.Neck).HasColumnName("neck");
+            entity.Property(e => e.Protein).HasColumnName("protein");
             entity.Property(e => e.RightCalf).HasColumnName("right_calf");
-            entity.Property(e => e.RightLowerArm).HasColumnName("right_lower_arm");
+            entity.Property(e => e.RightForearm).HasColumnName("right_forearm_arm");
             entity.Property(e => e.RightThigh).HasColumnName("right_thigh");
             entity.Property(e => e.RightUpperArm).HasColumnName("right_upper_arm");
+            entity.Property(e => e.SkeletalMuscleMass).HasColumnName("skeletal_muscle_mass");
+            entity.Property(e => e.TotalBodyWater).HasColumnName("total_body_water");
             entity.Property(e => e.UserId).HasColumnName("user_id");
-            entity.Property(e => e.Waist).HasColumnName("waist");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Measurements)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+            entity.Property(e => e.VisceralFatLevel).HasColumnName("visceral_fat_level");
+            entity.Property(e => e.WaistOnBelly).HasColumnName("waist_on_belly");
+            entity.Property(e => e.WaistUnderBelly).HasColumnName("waist_under_belly");
         });
 
         modelBuilder.Entity<Muscle>(entity =>
@@ -632,6 +642,5 @@ public class SqliteContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("start_date");
         });
-
     }
 }

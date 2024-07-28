@@ -68,6 +68,12 @@ dotnet ef dbcontext scaffold "Data Source=E:/development/databases/training_log_
  ModelsV2 -p .\DataLibrary\  --context-dir Context
 ```
 
+- scaffold only a select table
+
+```powershell
+dotnet ef dbcontext scaffold "Data Source=E:/development/databases/training_log_v2.db" Microsoft.EntityFrameworkCore.Sqlite --output-dir ModelsV2 -p .\DataLibrary\  --context-dir Context -t measurements
+```
+
 then copy the `modelsV2` models into `models`.
 
 - migrations
