@@ -6,12 +6,60 @@ namespace DateLibraryTests.helpers;
 
 public static class DatabaseHelpers
 {
-    public static void SeedDatabaseTrainingSessions(this SqliteContext context, int sessionNumber = 10)
+    /// <summary>
+    /// seeds the database with 3 languages : 1: _english_, 2: _arabic_, 3: japanese
+    /// </summary>
+    /// <param name="context"></param>
+    public static void SeedLanguages(SqliteContext context)
     {
-        // context.AddRange(CreateTrainingSessions(sessionNumber));
+        // Ensure we do not duplicate entries if already seeded
+        if (context.Languages.Any()) return;
+        string insertLanguages = @"
+                INSERT INTO language (language_id, code, name) VALUES
+                (1, 'en', 'english'),
+                (2, 'ar', 'arabic'),
+                (3, 'ja', 'japanese');
+            ";
+        context.Database.ExecuteSqlRaw(insertLanguages);
         context.SaveChanges();
     }
+    
+    /// <summary>
+    /// seeds the database with 3 equipment for each language, so obviously this depends on <see cref="SeedLanguages"/>
+    /// </summary>
+    /// <param name="context"></param>
+    public static void SeedEquipmentAndAssociateThemWithLanguages(SqliteContext context)
+    {
+        // Ensure we do not duplicate entries if already seeded
+        string insertEquipment = @"
+        INSERT INTO equipment (id, weight_kg) VALUES
+        (1, 10.0),
+        (2, 15.5),
+        (3, 20.0);
+    ";
 
+        // Seed localized equipment
+        string insertLocalizedEquipment = @"
+        INSERT INTO localized_equipment (equipment_id, language_id, name, description, how_to) VALUES
+        (1, 1, 'dumbbell', 'A short barbell with a fixed weight.', 'Use for weight training and fitness.'),
+        (1, 2, 'دمبل', 'شريط قصير بوزن ثابت.', 'استخدم لتدريبات الوزن واللياقة.'),
+        (1, 3, 'ダンベル', '固定重量の短いバーベルです。', 'ウェイトトレーニングとフィットネスに使用します。'),
+
+        (2, 1, 'kettlebell', 'A cast iron ball with a handle.', 'Used for swing exercises and strength training.'),
+        (2, 2, 'كرة الحديد', 'كرة من الحديد الزهر مع مقبض.', 'تستخدم لتمارين السوينغ وتدريب القوة.'),
+        (2, 3, 'ケトルベル', 'ハンドル付きの鋳鉄球。', 'スイングエクササイズと力トレーニングに使用されます。'),
+
+        (3, 1, 'barbell', 'A long bar with weights at each end.', 'Utilized for bench press, squats, and deadlifts.'),
+        (3, 2, 'الباربل', 'عارضة طويلة بأوزان على كل طرف.', 'يستخدم لتمارين البنش برس والقرفصاء والرفعة المميتة.'),
+        (3, 3, 'バーベル', '両端に重りのある長いバー。', 'ベンチプレス、スクワット、デッドリフトに利用されます。');
+    ";
+        context.Database.ExecuteSqlRaw(insertEquipment);
+        context.Database.ExecuteSqlRaw(insertLocalizedEquipment);
+
+        context.SaveChanges();
+    }
+    
+    
     /// <summary>
     /// Seeds the database with <strong>3</strong> muscles, <strong>4</strong> training types, <strong>3</strong> exercises <i> with their relations</i> to the muscles and types.
     /// <em>Making a session have <strong>4 training types</strong></em>.<br></br>

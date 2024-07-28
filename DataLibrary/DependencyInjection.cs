@@ -14,11 +14,11 @@ public static class DependencyInjection
             ));
 
         services.AddScoped<ILanguageService, LanguageService>();
+        services.AddScoped<IEquipmentService, EquipmentService>();
         // services.AddScoped<IMuscleService, MuscleService>();
         // services.AddScoped<ITrainingTypesService, TrainingTypesService>();
         // services.AddScoped<IExerciseService, ExerciseService>();
         // services.AddScoped<IMeasurementsService, MeasurementsService>();
-        // services.AddScoped<IEquipmentService, EquipmentService>();
         // services.AddScoped<IPlanService, PlanService>();
         // services.AddScoped<ITrainingSessionService, TrainingSessionService>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

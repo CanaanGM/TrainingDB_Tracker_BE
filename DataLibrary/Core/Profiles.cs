@@ -14,6 +14,15 @@ public class Profiles : Profile
         CreateMap<Language, LanguageReadDto>();
         CreateMap<Language, LanguageWriteDto>().ReverseMap();
 
+        CreateMap<EquipmentWriteDto, Equipment>()
+            .ForMember(dest => dest.LocalizedEquipments, opt => opt.Ignore()); // Ignore this in AutoMapper, handle in service
+
+        CreateMap<LocalizedEquipment, EquipmentReadDto>()
+            .ForMember(x => x.WeightKg, src => src.MapFrom(
+                c => c.Equipment.WeightKg))
+            .ReverseMap()
+            ;
+
         // TODO: move what's related into it's own file for clarity.
 
         // CreateMap<Muscle, MuscleReadDto>()

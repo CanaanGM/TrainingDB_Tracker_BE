@@ -258,19 +258,19 @@ public class SqliteContext : DbContext
 
         modelBuilder.Entity<LocalizedEquipment>(entity =>
         {
-            entity.HasKey(e => new { e.ExerciseId, e.LanguageId });
+            entity.HasKey(e => new { e.EquipmentId, e.LanguageId });
 
             entity.ToTable("localized_equipment");
 
             entity.HasIndex(e => e.Name, "idx_equipment_name");
 
-            entity.Property(e => e.ExerciseId).HasColumnName("exercise_id");
+            entity.Property(e => e.EquipmentId).HasColumnName("equipment_id");
             entity.Property(e => e.LanguageId).HasColumnName("language_id");
             entity.Property(e => e.Description).HasColumnName("description");
             entity.Property(e => e.HowTo).HasColumnName("how_to");
             entity.Property(e => e.Name).HasColumnName("name");
 
-            entity.HasOne(d => d.Exercise).WithMany(p => p.LocalizedEquipments).HasForeignKey(d => d.ExerciseId);
+            entity.HasOne(d => d.Equipment).WithMany(p => p.LocalizedEquipments).HasForeignKey(d => d.EquipmentId);
 
             entity.HasOne(d => d.Language).WithMany(p => p.LocalizedEquipments).HasForeignKey(d => d.LanguageId);
         });
