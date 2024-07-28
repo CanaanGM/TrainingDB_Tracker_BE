@@ -13,14 +13,15 @@ public static class DependencyInjection
                 "Data Source=E:/development/databases/training_log_v2.db"
             ));
 
-        services.AddScoped<IMuscleService, MuscleService>();
-        services.AddScoped<ITrainingTypesService, TrainingTypesService>();
-        services.AddScoped<IExerciseService, ExerciseService>();
-        services.AddScoped<IMeasurementsService, MeasurementsService>();
-        services.AddScoped<IEquipmentService, EquipmentService>();
-        services.AddScoped<IPlanService, PlanService>();
+        services.AddScoped<ILanguageService, LanguageService>();
+        // services.AddScoped<IMuscleService, MuscleService>();
+        // services.AddScoped<ITrainingTypesService, TrainingTypesService>();
+        // services.AddScoped<IExerciseService, ExerciseService>();
+        // services.AddScoped<IMeasurementsService, MeasurementsService>();
+        // services.AddScoped<IEquipmentService, EquipmentService>();
+        // services.AddScoped<IPlanService, PlanService>();
+        // services.AddScoped<ITrainingSessionService, TrainingSessionService>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-        services.AddScoped<ITrainingSessionService, TrainingSessionService>();
         return services;
     }
 }

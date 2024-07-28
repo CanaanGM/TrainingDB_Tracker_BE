@@ -6,13 +6,13 @@ public static class Utils
     /// <summary>
     /// Normalizes the input string by: trimming it of white spaces then lowering its casing.
     /// </summary>
-    /// <param name="string">the string you want normalized.</param>
+    /// <param name="input">the string you want normalized.</param>
     /// <returns>a normalized string. example: " Can aaN " -> "can aan".</returns>
     /// <exception cref="ArgumentException">on incorrect input, an argument Exception is thrown!</exception>
-    public static string NormalizeString(string @string)
+    public static string NormalizeString(string input)
     {
-        if (string.IsNullOrEmpty(@string)) throw new ArgumentException($"Incorrect input passed: {@string}.");
-        return CultureInfo.CurrentCulture.TextInfo.ToLower(@string.Trim());
+        if (string.IsNullOrEmpty(input))  throw new ArgumentException($"Input string cannot be null or empty: {nameof(input)}");
+        return input.Trim().ToLower(CultureInfo.InvariantCulture);
     }
 
     /// <summary>
