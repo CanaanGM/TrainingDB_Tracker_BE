@@ -2,27 +2,35 @@
 
 // TODO: tighten this and make it handle many senarios
 // like a Successful operation but you still need to return a failure (IsSuccess=false) with the value of the operation.
-public class Result<T>
+public class Result
 {
-    public bool IsSuccess { get; set; }
-    public T? Value { get; set; }
-    public string? ErrorMessage { get; set; }
-    public Exception? Exception { get; set; }
+    public bool IsSuccess { get; }
+    public string? ErrorMessage { get; }
+    public Exception? Exception { get; }
 
-    // can extend this to take the error class itself 
+    protected Result(bool isSuccess, string? errorMessage, Exception? exception)
+    {
+        IsSuccess = isSuccess;
+        ErrorMessage = errorMessage;
+        Exception = exception;
+    }
 
-    /// <summary>
-    /// the Success state of the result
-    /// </summary>
-    /// <param name="value">The Value of the operation that you want to return</param>
-    /// <returns>a success state with the value</returns>
-    public static Result<T> Success(T value) => new Result<T> { IsSuccess = true, Value = value };
+    public static Result Success() => new Result(true, null, null);
 
-    /// <summary>
-    /// The failure state of the result
-    /// </summary>
-    /// <param name="error">The error message you want to send up he chain</param>
-    /// <param name="ex">The Exception that happened</param>
-    /// <returns>a failure state with a message and optionally the Exception that was thrown</returns>
-    public static Result<T> Failure(string error, Exception ex = null) => new Result<T> { IsSuccess = false, ErrorMessage = error, Exception = ex };
+    public static Result Failure(string error, Exception? ex = null) => new Result(false, error, ex);
+}
+
+public class Result<T> : Result
+{
+    public T? Value { get; }
+
+    private Result(bool isSuccess, T? value, string? errorMessage, Exception? exception)
+        : base(isSuccess, errorMessage, exception)
+    {
+        Value = value;
+    }
+
+    public static Result<T> Success(T value) => new Result<T>(true, value, null, null);
+
+    public static Result<T> Failure(string error, Exception? ex = null) => new Result<T>(false, default, error, ex);
 }
