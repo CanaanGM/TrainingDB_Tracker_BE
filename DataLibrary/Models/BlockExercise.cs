@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DataLibrary.Models;
+﻿namespace DataLibrary.Models;
 
 public partial class BlockExercise
 {
@@ -10,7 +7,6 @@ public partial class BlockExercise
     public int? BlockId { get; set; }
 
     public int? ExerciseId { get; set; }
-    public string Notes { get; set; }
 
     public int? OrderNumber { get; set; }
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 namespace DataLibrary.Models;
 
 public partial class Block
@@ -21,7 +19,7 @@ public partial class Block
 
     public DateTime? CreatedAt { get; set; }
 
-    public virtual ICollection<BlockExercise> Exercises { get; set; } = new List<BlockExercise>();
+    public virtual ICollection<BlockExercise> BlockExercises { get; set; } = new List<BlockExercise>();
 
     public virtual TrainingDay? TrainingDay { get; set; }
 }

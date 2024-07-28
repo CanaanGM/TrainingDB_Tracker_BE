@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DataLibrary.Models;
+﻿namespace DataLibrary.Models;
 
 public partial class TrainingWeek
 {
@@ -15,7 +12,7 @@ public partial class TrainingWeek
 
     public int? TrainingPlanId { get; set; }
 
-    public virtual ICollection<TrainingDay> Days { get; set; } = new List<TrainingDay>();
+    public virtual ICollection<TrainingDay> TrainingDays { get; set; } = new List<TrainingDay>();
 
     public virtual TrainingPlan? TrainingPlan { get; set; }
 }

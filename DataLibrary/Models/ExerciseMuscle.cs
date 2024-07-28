@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DataLibrary.Models;
+﻿namespace DataLibrary.Models;
 
 public partial class ExerciseMuscle
 {
