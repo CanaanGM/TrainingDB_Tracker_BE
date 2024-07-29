@@ -8,7 +8,7 @@ public partial class UserExercise
 
     public int? ExerciseId { get; set; }
 
-    public int? LoggCount { get; set; }
+    public int? UseCount { get; set; }
 
     public double? BestWeight { get; set; }
 

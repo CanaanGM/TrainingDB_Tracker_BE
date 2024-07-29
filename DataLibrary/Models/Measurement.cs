@@ -55,4 +55,6 @@ public partial class Measurement
     public DateTime? CreatedAt { get; set; }
 
     public int? UserId { get; set; }
+
+    public virtual User? User { get; set; }
 }

@@ -2,7 +2,7 @@
 
 public partial class Language
 {
-    public int LanguageId { get; set; }
+    public int Id { get; set; }
 
     public string Code { get; set; } = null!;
 

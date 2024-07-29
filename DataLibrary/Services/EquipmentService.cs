@@ -46,7 +46,7 @@ public class EquipmentService : IEquipmentService
             var normalizedEquipmentName = Utils.NormalizeString(newEquipmentDto.Name);
             var existingLocalizedEquipment = await _context.LocalizedEquipments
                 .Include(le => le.Equipment)
-                .FirstOrDefaultAsync(le => le.Name == normalizedEquipmentName && le.LanguageId == language.LanguageId,
+                .FirstOrDefaultAsync(le => le.Name == normalizedEquipmentName && le.LanguageId == language.Id,
                     cancellationToken);
 
             Equipment equipment;
@@ -77,7 +77,7 @@ public class EquipmentService : IEquipmentService
                     Name = normalizedEquipmentName,
                     Description = newEquipmentDto.Description,
                     HowTo = newEquipmentDto.HowTo,
-                    LanguageId = language.LanguageId,
+                    LanguageId = language.Id,
                     EquipmentId = equipment.Id
                 };
 

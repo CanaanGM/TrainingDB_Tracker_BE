@@ -2,7 +2,7 @@
 
 public partial class LocalizedMuscleGroup
 {
-    public int MuscleGroupId { get; set; }
+    public int MuscleGroup { get; set; }
 
     public int LanguageId { get; set; }
 
@@ -14,5 +14,5 @@ public partial class LocalizedMuscleGroup
 
     public virtual Language Language { get; set; } = null!;
 
-    public virtual MuscleGroup MuscleGroup { get; set; } = null!;
+    public virtual MuscleGroup MuscleGroupNavigation { get; set; } = null!;
 }

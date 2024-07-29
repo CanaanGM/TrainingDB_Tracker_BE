@@ -64,14 +64,13 @@ meant to be a _stand alone layer_ that interacts with the database and handles a
 - scaffold the database models
 
 ```bash
-dotnet ef dbcontext scaffold "Data Source=E:/development/databases/training_log_v2.db" Microsoft.EntityFrameworkCore.Sqlite --output-dir
- ModelsV2 -p .\DataLibrary\  --context-dir Context
+dotnet ef dbcontext scaffold "Data Source=E:/development/c#/TrainingDB_Integration/training_log_v2.db" Microsoft.EntityFrameworkCore.Sqlite --output-dir ModelsV2 -p .\DataLibrary\  --context-dir Context
 ```
 
 - scaffold only a select table
 
 ```powershell
-dotnet ef dbcontext scaffold "Data Source=E:/development/databases/training_log_v2.db" Microsoft.EntityFrameworkCore.Sqlite --output-dir ModelsV2 -p .\DataLibrary\  --context-dir Context -t measurements
+dotnet ef dbcontext scaffold "Data Source=E:/development/c#/TrainingDB_Integration/training_log_v2.db" Microsoft.EntityFrameworkCore.Sqlite --output-dir ModelsV2 -p .\DataLibrary\  --context-dir Context -t measurements
 ```
 
 then copy the `modelsV2` models into `models`.

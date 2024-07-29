@@ -15,7 +15,7 @@ public static class DatabaseHelpers
         // Ensure we do not duplicate entries if already seeded
         if (context.Languages.Any()) return;
         string insertLanguages = @"
-                INSERT INTO language (language_id, code, name) VALUES
+                INSERT INTO language (id, code, name) VALUES
                 (1, 'en', 'english'),
                 (2, 'ar', 'arabic'),
                 (3, 'ja', 'japanese');

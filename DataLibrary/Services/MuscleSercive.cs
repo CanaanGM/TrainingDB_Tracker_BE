@@ -29,7 +29,7 @@
 //         {
 //             return Result<List<MuscleReadDto>>.Success(
 //                 _mapper.Map<List<MuscleReadDto>>(
-//                     await _context.Muscles
+//                     await _context.LocalizedMuscles
 //                         .AsNoTracking()
 //                         .ToListAsync(cancellationToken)
 //                     )
@@ -50,7 +50,7 @@
 //             if (string.IsNullOrEmpty(muscleName))
 //                 throw new ArgumentNullException("muscleName cannot be null");
 //
-//             var muscle = await _context.Muscles
+//             var muscle = await _context.LocalizedMuscles
 //                         .AsNoTracking()
 //                         .SingleOrDefaultAsync(muscle => muscle.Name == Utils.NormalizeString(muscleName), cancellationToken);
 //
@@ -74,7 +74,7 @@
 //         {
 //             if (string.IsNullOrEmpty(muscleGroupName))
 //                 throw new ArgumentNullException("muscleGroupName cannot be null");
-//             var groupedMuscles = await _context.Muscles
+//             var groupedMuscles = await _context.LocalizedMuscles
 //                         .AsNoTracking()
 //                         .Where(muscle => muscle.MuscleGroup == Utils.NormalizeString(muscleGroupName))
 //                         .ToListAsync(cancellationToken);
@@ -95,7 +95,7 @@
 //         var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
 //         try
 //         {
-//             Muscle newMusce = _mapper.Map<Muscle>(newMuscle);
+//             var newMusce = _mapper.Map<LocalizedMuscle>(newMuscle);
 //             newMusce.Name = Utils.NormalizeString(newMusce.Name);
 //             newMusce.MuscleGroup = Utils.NormalizeString(newMusce.MuscleGroup);
 //             newMusce.Function = Utils.NormalizeString(newMusce.Function);
@@ -126,7 +126,7 @@
 //             List<Muscle> normalizedMuscles = newMuscles.Select(
 //                 newMuscleDto =>
 //                 {
-//                     Muscle newMuscle = _mapper.Map<Muscle>(newMuscleDto);
+//                     var newMuscle = _mapper.Map<LocalizedMuscle>(newMuscleDto);
 //                     newMuscle.Name = Utils.NormalizeString(newMuscle.Name!);
 //                     newMuscle.MuscleGroup = Utils.NormalizeString(newMuscle.MuscleGroup!);
 //                     newMuscle.Function = Utils.NormalizeString(newMuscle.Function!);
@@ -154,7 +154,7 @@
 //         var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
 //         try
 //         {
-//             Muscle? oldMuscle = await _context.Muscles.SingleOrDefaultAsync(x => x.Id == muscleId, cancellationToken);
+//             var oldMuscle = await _context.LocalizedMuscles.SingleOrDefaultAsync(x => x.Id == muscleId, cancellationToken);
 //             if (oldMuscle is null)
 //                 throw new Exception("Muscle not Found, double check the name!");
 //
@@ -176,11 +176,11 @@
 //         var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
 //         try
 //         {
-//             Muscle? muscleToTear = await _context.Muscles.SingleOrDefaultAsync(m => m.Id == muscleId, cancellationToken);
+//             var muscleToTear = await _context.LocalizedMuscles.SingleOrDefaultAsync(m => m.Id == muscleId, cancellationToken);
 //             if (muscleToTear is null)
 //                 throw new Exception("Muscle was resilient to tearing . . . CASUE IT'S NOT THERE!!");
 //
-//             _context.Muscles.Remove(muscleToTear);
+//             _context.LocalizedMuscles.Remove(muscleToTear);
 //             await _context.SaveChangesAsync(cancellationToken);
 //             await transaction.CommitAsync(cancellationToken);
 //         }
@@ -204,7 +204,7 @@
 //             }
 //             searchTerm = Utils.NormalizeString(searchTerm);
 //
-//             var muscles = await _context.Muscles
+//             var muscles = await _context.LocalizedMuscles
 //                 .AsNoTracking()
 //                 .Where(e => EF.Functions.Like(e.Name,$"%{searchTerm}%" ))
 //                 .ProjectTo<MuscleReadDto>(_mapper.ConfigurationProvider)

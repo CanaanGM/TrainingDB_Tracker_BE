@@ -57,8 +57,8 @@ public class LanguageServiceTests : BaseTestClass
         // Arrange
         var languages = new List<Language>
         {
-            new Language { LanguageId = 1, Code = "en", Name = "English" },
-            new Language { LanguageId = 2, Code = "fr", Name = "French" }
+            new Language { Id = 1, Code = "en", Name = "English" },
+            new Language { Id = 2, Code = "fr", Name = "French" }
         };
 
         await _context.Languages.AddRangeAsync(languages);
@@ -77,16 +77,16 @@ public class LanguageServiceTests : BaseTestClass
     public async Task DeleteAsync_ValidId_ReturnsSuccess()
     {
         // Arrange
-        var language = new Language { LanguageId = 1, Code = "en", Name = "English" };
+        var language = new Language { Id = 1, Code = "en", Name = "English" };
         await _context.Languages.AddAsync(language);
         await _context.SaveChangesAsync();
 
         // Act
-        var result = await _service.DeleteAsync(language.LanguageId, CancellationToken.None);
+        var result = await _service.DeleteAsync(language.Id, CancellationToken.None);
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.Null(await _context.Languages.FindAsync(language.LanguageId));
+        Assert.Null(await _context.Languages.FindAsync(language.Id));
     }
 
     [Fact]
@@ -150,19 +150,19 @@ public class LanguageServiceTests : BaseTestClass
     public async Task DeleteAsync_ValidId_LogsInformation()
     {
         // Arrange
-        var language = new Language { LanguageId = 1, Code = "en", Name = "English" };
+        var language = new Language { Id = 1, Code = "en", Name = "English" };
         await _context.Languages.AddAsync(language);
         await _context.SaveChangesAsync();
 
         // Act
-        var result = await _service.DeleteAsync(language.LanguageId, CancellationToken.None);
+        var result = await _service.DeleteAsync(language.Id, CancellationToken.None);
 
         // Assert
         Assert.True(result.IsSuccess);
         _logger.Verify(x => x.Log(
             It.Is<LogLevel>(l => l == LogLevel.Information),
             It.IsAny<EventId>(),
-            It.Is<It.IsAnyType>((v, t) => v.ToString() == $"Successfully deleted language with ID {language.LanguageId}."),
+            It.Is<It.IsAnyType>((v, t) => v.ToString() == $"Successfully deleted language with ID {language.Id}."),
             It.IsAny<Exception>(),
             It.Is<Func<It.IsAnyType, Exception, string>>((v, t) => true)), Times.Once);
     }
@@ -187,7 +187,7 @@ public class LanguageServiceTests : BaseTestClass
     public async Task UpdateAsync_ValidData_ReturnsSuccess()
     {
         // Arrange
-        var language = new Language { LanguageId = 1, Code = "en", Name = "English" };
+        var language = new Language { Id = 1, Code = "en", Name = "English" };
         await _context.Languages.AddAsync(language);
         await _context.SaveChangesAsync();
 

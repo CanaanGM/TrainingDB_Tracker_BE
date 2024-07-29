@@ -10,7 +10,5 @@ public partial class TrainingSessionExerciseRecord
 
     public DateTime? CreatedAt { get; set; }
 
-    public virtual ExerciseRecord ExerciseRecord { get; set; } = null!;
-
     public virtual TrainingSession TrainingSession { get; set; } = null!;
 }
