@@ -25,9 +25,6 @@ public class MeasurementsService
     {
         try
         {
-            var currentUser = await ValidateUser(userId, cancellationToken);
-
-
             var measurements = await _context.Measurements
                 .AsNoTracking()
                 .Where(x => x.UserId == userId)
@@ -45,7 +42,10 @@ public class MeasurementsService
     public async Task<Result<int>> CreateAsync(int userId, MeasurementsWriteDto newMeasurementDto,
         CancellationToken cancellationToken)
     {
-        var currentUser = await ValidateUser(userId, cancellationToken);
+        var userResult = await ValidateUser(userId, cancellationToken);
+        if (!userResult.IsSuccess)
+            return Result<int>.Failure(userResult.ErrorMessage!);
+        var currentUser = userResult.Value;
 
         try
         {
@@ -80,13 +80,10 @@ public class MeasurementsService
     public async Task<Result<bool>> UpdateAsync(int userId, int measurementId, MeasurementsWriteDto newMeasurementDto,
         CancellationToken cancellationToken)
     {
-        var currentUser = await ValidateUser(userId, cancellationToken);
-
-
         var measurementsToUpdate = await _context.Measurements
             .FirstOrDefaultAsync(x => x.Id == measurementId && x.UserId == userId, cancellationToken);
         if (measurementsToUpdate is null)
-            return Result<bool>.Failure("Measurements was not found");
+            return Result<bool>.Failure("Measurements record was not found");
         try
         {
             await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
@@ -112,8 +109,11 @@ public class MeasurementsService
 
     public async Task<Result<bool>> DeleteAsync(int userId, int measurementId, CancellationToken cancellationToken)
     {
-        var currentUser = await ValidateUser(userId, cancellationToken);
-
+        var userResult = await ValidateUser(userId, cancellationToken);
+        if (!userResult.IsSuccess)
+            return Result<bool>.Failure(userResult.ErrorMessage!);
+        var currentUser = userResult.Value;
+        
         var measurementToDelete = await _context.Measurements
             .SingleOrDefaultAsync(x => x.Id == measurementId && x.UserId == userId, cancellationToken);
 
@@ -123,7 +123,7 @@ public class MeasurementsService
         try
         {
             await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-            currentUser.Measurements.Remove(currentUser.Measurements.First(x => x.Id == measurementToDelete.Id));
+            currentUser!.Measurements.Remove(currentUser.Measurements.First(x => x.Id == measurementToDelete.Id));
             _context.Users.Update(currentUser);
             _context.Remove(measurementToDelete);
             await _context.SaveChangesAsync(cancellationToken);
@@ -138,10 +138,10 @@ public class MeasurementsService
         }
     }
     
-    private async Task<User> ValidateUser(int userId, CancellationToken cancellationToken) {
+    private async Task<Result<User>> ValidateUser(int userId, CancellationToken cancellationToken) {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
-        if (user == null) throw new ArgumentException("Invalid user");
-        return user;
+        if (user is null) Result<User>.Failure("Invalid user");
+        return Result<User>.Success(user!);
     }
 
 }
