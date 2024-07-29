@@ -1,6 +1,7 @@
 ﻿using DataLibrary.Dtos;
 using DataLibrary.Models;
 using DataLibrary.Services;
+using DateLibraryTests.helpers;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -20,14 +21,16 @@ public class MeasurementsServiceTests : BaseTestClass
     [Fact]
     public async Task GetALlMeasurements_Empty_Returns_empty_list()
     {
-        var result = await service.GetAll(new CancellationToken());
+        DatabaseHelpers.SeesDummyUsers(_context);
+        var result = await service.GetAll(1, new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.Empty(result.Value);
     }
 
     [Fact]
-    public async Task GetAllNotEmpty_returns_OrderedList()
+    public async Task GetAllNotEmpty_returns_OrderedList_for_user()
     {
+        DatabaseHelpers.SeesDummyUsers(_context);
         var currentDate = DateTime.UtcNow;
         _context.Measurements.AddRange(new List<Measurement>()
         {
@@ -46,6 +49,7 @@ public class MeasurementsServiceTests : BaseTestClass
                 RightUpperArm = 10,
                 WaistOnBelly = 10,
                 WaistUnderBelly = 10,
+                UserId = 1,
                 CreatedAt = currentDate.AddDays(2)
             },
             new Measurement()
@@ -63,6 +67,7 @@ public class MeasurementsServiceTests : BaseTestClass
                 RightUpperArm = 666,
                 WaistOnBelly = 666,
                 WaistUnderBelly = 666,
+                UserId = 1,
                 CreatedAt = currentDate
             },
             new Measurement()
@@ -80,23 +85,25 @@ public class MeasurementsServiceTests : BaseTestClass
                 RightUpperArm = 5,
                 WaistOnBelly = 5,
                 WaistUnderBelly = 5,
+                UserId = 3,
                 CreatedAt = currentDate.AddDays(1)
             }
             
         });
         _context.SaveChanges();
         
-        var result = await service.GetAll(new CancellationToken());
+        var result = await service.GetAll(1,new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.NotNull(result.Value);
         Assert.NotEmpty(result.Value);
-        Assert.Equal(3, result.Value.Count);
+        Assert.Equal(2, result.Value.Count);
         Assert.Equal(666, result.Value[0].Chest); // it should be ordered
     }
 
     [Fact]
     public async Task CreateAsync_Should_return_sucess()
     {
+        DatabaseHelpers.SeesDummyUsers(_context);
         MeasurementsWriteDto measurementsWriteDto = new MeasurementsWriteDto()
         {
             Chest = 10,
@@ -111,16 +118,20 @@ public class MeasurementsServiceTests : BaseTestClass
             LeftUpperArm = 10,
             RightUpperArm = 10,
             WaistOnBelly = 10,
-            WaistUnderBelly = 10,
+            WaistUnderBelly = 10
         };
 
-        var result = await service.CreateAsync(measurementsWriteDto, new CancellationToken());
+        var result = await service.CreateAsync(1, measurementsWriteDto, new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.NotNull(result.Value);
         Assert.True(result.Value >= 1);
 
         // it's the only one there
         var newMeasuremnt = _context.Measurements.FirstOrDefault();
+        var user = _context.Users.FirstOrDefault(x => x.Id == newMeasuremnt.UserId);
+        Assert.NotNull(user);
+        Assert.Equal("Canaan", user.Username);
+        Assert.NotEmpty(user.Measurements);
         Assert.NotNull(newMeasuremnt);
         Assert.Equal(measurementsWriteDto.Chest,newMeasuremnt.Chest );
         Assert.Equal(measurementsWriteDto.Hip,newMeasuremnt.Hip );
@@ -134,11 +145,13 @@ public class MeasurementsServiceTests : BaseTestClass
         Assert.Equal(measurementsWriteDto.RightUpperArm,newMeasuremnt.RightUpperArm );
         Assert.Equal(measurementsWriteDto.WaistOnBelly,newMeasuremnt.WaistOnBelly);
         Assert.Equal(measurementsWriteDto.WaistUnderBelly,newMeasuremnt.WaistUnderBelly);
+        
         Assert.NotNull(newMeasuremnt.CreatedAt); // TODO: Do not use Assert.NotNull() on value type 'DateTime'.
     }
     [Fact]
     public async Task CreateAsync_NoBodyWeight_Components_Should_Create_propper_weight_return_sucess()
     {
+        DatabaseHelpers.SeesDummyUsers(_context);
         MeasurementsWriteDto measurementsWriteDto = new MeasurementsWriteDto()
         {
             Chest = 10,
@@ -157,13 +170,17 @@ public class MeasurementsServiceTests : BaseTestClass
             BodyWeight = 65.5
         };
 
-        var result = await service.CreateAsync(measurementsWriteDto, new CancellationToken());
+        var result = await service.CreateAsync(2,measurementsWriteDto, new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.NotNull(result.Value); // TODO: Do not use Assert.NotNull() on value type 'int'
         Assert.True(result.Value >= 1);
 
         // it's the only one there
         var newMeasuremnt = _context.Measurements.FirstOrDefault();
+        var user = _context.Users.FirstOrDefault(x => x.Id == newMeasuremnt.UserId);
+        Assert.NotNull(user);
+        Assert.Equal("Dante", user.Username);
+        Assert.NotEmpty(user.Measurements);
         Assert.NotNull(newMeasuremnt);
         Assert.Equal(measurementsWriteDto.Chest,newMeasuremnt.Chest );
         Assert.Equal(measurementsWriteDto.Hip,newMeasuremnt.Hip );
@@ -184,6 +201,7 @@ public class MeasurementsServiceTests : BaseTestClass
     [Fact]
     public async Task CreateAsync_BodyWeight_Components_Should_Create_propper_weight_return_sucess()
     {
+        DatabaseHelpers.SeesDummyUsers(_context);
         MeasurementsWriteDto measurementsWriteDto = new MeasurementsWriteDto()
         {
             Chest = 10,
@@ -205,13 +223,17 @@ public class MeasurementsServiceTests : BaseTestClass
             TotalBodyWater = 54
         };
 
-        var result = await service.CreateAsync(measurementsWriteDto, new CancellationToken());
+        var result = await service.CreateAsync(3,measurementsWriteDto, new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.NotNull(result.Value); // TODO: Do not use Assert.NotNull() on value type 'int'
         Assert.True(result.Value >= 1);
 
         // it's the only one there
         var newMeasuremnt = _context.Measurements.FirstOrDefault();
+        var user = _context.Users.FirstOrDefault(x => x.Id == newMeasuremnt.UserId);
+        Assert.NotNull(user);
+        Assert.Equal("Alphrad", user.Username);
+        Assert.NotEmpty(user.Measurements);
         Assert.NotNull(newMeasuremnt);
         Assert.Equal(measurementsWriteDto.Chest,newMeasuremnt.Chest );
         Assert.Equal(measurementsWriteDto.Hip,newMeasuremnt.Hip );
@@ -228,11 +250,12 @@ public class MeasurementsServiceTests : BaseTestClass
         Assert.Equal(
             (measurementsWriteDto.BodyFatMass + measurementsWriteDto.Protein + measurementsWriteDto.Minerals + measurementsWriteDto.TotalBodyWater)
             ,newMeasuremnt.BodyWeight);
-        Assert.NotNull(newMeasuremnt.CreatedAt); // TODO: Do not use Assert.NotNull() on value type 'DateTime'. Remove this assert.
+        Assert.NotNull(newMeasuremnt.CreatedAt);
     }
     [Fact]
     public async Task CreateAsync_BothBodyWeight_AndComponents_BodyWeightComponentsShouldTakePrecendance_Should_Create_propper_weight_return_sucess()
     {
+        DatabaseHelpers.SeesDummyUsers(_context);
         MeasurementsWriteDto measurementsWriteDto = new MeasurementsWriteDto()
         {
             Chest = 10,
@@ -255,13 +278,17 @@ public class MeasurementsServiceTests : BaseTestClass
             BodyWeight = 99
         };
 
-        var result = await service.CreateAsync(measurementsWriteDto, new CancellationToken());
+        var result = await service.CreateAsync(4, measurementsWriteDto, new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.NotNull(result.Value);
         Assert.True(result.Value >= 1);
 
         // it's the only one there
         var newMeasuremnt = _context.Measurements.FirstOrDefault();
+        var user = _context.Users.FirstOrDefault(x => x.Id == newMeasuremnt.UserId);
+        Assert.NotNull(user);
+        Assert.Equal("Nero", user.Username);
+        Assert.NotEmpty(user.Measurements);
         Assert.NotNull(newMeasuremnt);
         Assert.Equal(measurementsWriteDto.Chest,newMeasuremnt.Chest );
         Assert.Equal(measurementsWriteDto.Hip,newMeasuremnt.Hip );
@@ -285,6 +312,7 @@ public class MeasurementsServiceTests : BaseTestClass
     [Fact]
     public async Task Update_Full_Should_Return_Suceess()
     {
+        DatabaseHelpers.SeesDummyUsers(_context);
         var newMeasurements = new Measurement()
         {
             Chest = 10,
@@ -299,7 +327,8 @@ public class MeasurementsServiceTests : BaseTestClass
             LeftUpperArm = 10,
             RightUpperArm = 10,
             WaistOnBelly = 10,
-            WaistUnderBelly = 10
+            WaistUnderBelly = 10,
+            UserId = 1
         };
         _context.Measurements.Add(newMeasurements);
         _context.SaveChanges();
@@ -325,13 +354,16 @@ public class MeasurementsServiceTests : BaseTestClass
             TotalBodyWater = 654
         };
 
-        var result = await service.UpdateAsync(newMeasurements.Id, updateMeasurementsWriteDto,
+        var result = await service.UpdateAsync(1,newMeasurements.Id, updateMeasurementsWriteDto,
             new CancellationToken());
         
         Assert.True(result.IsSuccess);
         Assert.True(result.Value);
 
         var updatedEntry = _context.Measurements.FirstOrDefault();
+        var user = _context.Users.FirstOrDefault(x => x.Id == updatedEntry.UserId);
+        Assert.NotNull(user);
+        Assert.Equal("Canaan", user.Username);
         Assert.NotNull(updatedEntry);
         Assert.Equal(updateMeasurementsWriteDto.Chest,updatedEntry.Chest );
         Assert.Equal(updateMeasurementsWriteDto.Hip,updatedEntry.Hip );
@@ -358,11 +390,14 @@ public class MeasurementsServiceTests : BaseTestClass
         
         Assert.NotNull(updatedEntry.CreatedAt);
 
+        // the record was updated successfully 
+        Assert.Equal( updateMeasurementsWriteDto.Chest, user.Measurements.First().Chest);
     }
 
     [Fact]
     public async Task DeleteAsync_Should_delete_successfuly()
     {
+        DatabaseHelpers.SeesDummyUsers(_context);
         var newMeasurements = new Measurement()
         {
             Chest = 10,
@@ -377,12 +412,13 @@ public class MeasurementsServiceTests : BaseTestClass
             LeftUpperArm = 10,
             RightUpperArm = 10,
             WaistOnBelly = 10,
-            WaistUnderBelly = 10
+            WaistUnderBelly = 10,
+            UserId = 1
         };
         _context.Measurements.Add(newMeasurements);
         _context.SaveChanges();
 
-        var result = await service.DeleteAsync(newMeasurements.Id, new CancellationToken());
+        var result = await service.DeleteAsync(1, newMeasurements.Id, new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.True(result.Value);
         
