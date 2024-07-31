@@ -8,6 +8,8 @@ public partial class LocalizedMuscle
 
     public string Name { get; set; } = null!;
 
+    public string MuscleGroup { get; set; } = null!;
+
     public string? Function { get; set; }
 
     public string? WikiPageUrl { get; set; }

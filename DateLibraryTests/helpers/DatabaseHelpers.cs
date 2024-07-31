@@ -18,7 +18,7 @@ public static class DatabaseHelpers
                 INSERT INTO language (id, code, name) VALUES
                 (1, 'en', 'english'),
                 (2, 'ar', 'arabic'),
-                (3, 'ja', 'japanese');
+                (3, 'jp', 'japanese');
             ";
         context.Database.ExecuteSqlRaw(insertLanguages);
         context.SaveChanges();

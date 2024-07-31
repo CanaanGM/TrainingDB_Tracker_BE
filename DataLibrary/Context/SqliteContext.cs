@@ -49,13 +49,9 @@ public class SqliteContext : DbContext
 
     public virtual DbSet<LocalizedMuscle> LocalizedMuscles { get; set; }
 
-    public virtual DbSet<LocalizedMuscleGroup> LocalizedMuscleGroups { get; set; }
-
     public virtual DbSet<Measurement> Measurements { get; set; }
 
     public virtual DbSet<Muscle> Muscles { get; set; }
-
-    public virtual DbSet<MuscleGroup> MuscleGroups { get; set; }
 
     public virtual DbSet<TrainingDay> TrainingDays { get; set; }
 
@@ -81,7 +77,7 @@ public class SqliteContext : DbContext
 
     public virtual DbSet<UserTrainingPlan> UserTrainingPlans { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+   protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Block>(entity =>
         {
@@ -218,14 +214,11 @@ public class SqliteContext : DbContext
 
         modelBuilder.Entity<ExerciseRecord>(entity =>
         {
-            entity.HasKey(e => new { e.UserId, e.UserExerciseId });
-
             entity.ToTable("exercise_record");
 
             entity.HasIndex(e => e.CreatedAt, "idx_exercise_record_created_at");
 
-            entity.Property(e => e.UserId).HasColumnName("user_id");
-            entity.Property(e => e.UserExerciseId).HasColumnName("user_exercise_id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("current_timestamp")
                 .HasColumnType("datetime")
@@ -240,11 +233,17 @@ public class SqliteContext : DbContext
             entity.Property(e => e.RestInSeconds).HasColumnName("rest_in_seconds");
             entity.Property(e => e.Speed).HasColumnName("speed");
             entity.Property(e => e.TimerInSeconds).HasColumnName("timer_in_seconds");
+            entity.Property(e => e.UserExerciseId).HasColumnName("user_exercise_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
             entity.Property(e => e.WeightUsedKg).HasColumnName("weight_used_kg");
 
-            entity.HasOne(d => d.UserExercise).WithMany(p => p.ExerciseRecords).HasForeignKey(d => d.UserExerciseId);
+            entity.HasOne(d => d.UserExercise).WithMany(p => p.ExerciseRecords)
+                .HasForeignKey(d => d.UserExerciseId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            entity.HasOne(d => d.User).WithMany(p => p.ExerciseRecords).HasForeignKey(d => d.UserId);
+            entity.HasOne(d => d.User).WithMany(p => p.ExerciseRecords)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Language>(entity =>
@@ -304,10 +303,17 @@ public class SqliteContext : DbContext
 
             entity.ToTable("localized_muscle");
 
+            entity.HasIndex(e => e.MuscleGroup, "idx_localized_muscle_muscle_group");
+
+            entity.HasIndex(e => e.Name, "idx_localized_muscle_name").IsUnique();
+
             entity.Property(e => e.MuscleId).HasColumnName("muscle_id");
             entity.Property(e => e.LanguageId).HasColumnName("language_id");
             entity.Property(e => e.Function).HasColumnName("function");
-            entity.Property(e => e.Name).HasColumnName("name");
+            entity.Property(e => e.MuscleGroup).HasColumnName("muscle_group");
+            entity.Property(e => e.Name)
+                
+                .HasColumnName("name");
             entity.Property(e => e.WikiPageUrl)
                 .HasColumnType("VARCHAR")
                 .HasColumnName("wiki_page_url");
@@ -315,24 +321,6 @@ public class SqliteContext : DbContext
             entity.HasOne(d => d.Language).WithMany(p => p.LocalizedMuscles).HasForeignKey(d => d.LanguageId);
 
             entity.HasOne(d => d.Muscle).WithMany(p => p.LocalizedMuscles).HasForeignKey(d => d.MuscleId);
-        });
-
-        modelBuilder.Entity<LocalizedMuscleGroup>(entity =>
-        {
-            entity.HasKey(e => new { e.MuscleGroup, e.LanguageId });
-
-            entity.ToTable("localized_muscle_group");
-
-            entity.Property(e => e.MuscleGroup).HasColumnName("muscle_group");
-            entity.Property(e => e.LanguageId).HasColumnName("language_id");
-            entity.Property(e => e.Function).HasColumnName("function");
-            entity.Property(e => e.Name).HasColumnName("name");
-            entity.Property(e => e.WikiPageUrl).HasColumnName("wiki_page_url");
-
-            entity.HasOne(d => d.Language).WithMany(p => p.LocalizedMuscleGroups).HasForeignKey(d => d.LanguageId);
-
-            entity.HasOne(d => d.MuscleGroupNavigation).WithMany(p => p.LocalizedMuscleGroups)
-                .HasForeignKey(d => d.MuscleGroup);
         });
 
         modelBuilder.Entity<Measurement>(entity =>
@@ -380,26 +368,6 @@ public class SqliteContext : DbContext
         modelBuilder.Entity<Muscle>(entity =>
         {
             entity.ToTable("muscle");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-
-            entity.HasMany(d => d.MuscleGroups).WithMany(p => p.Muscles)
-                .UsingEntity<Dictionary<string, object>>(
-                    "MuscleGroupMuscle",
-                    r => r.HasOne<MuscleGroup>().WithMany().HasForeignKey("MuscleGroupId"),
-                    l => l.HasOne<Muscle>().WithMany().HasForeignKey("MuscleId"),
-                    j =>
-                    {
-                        j.HasKey("MuscleId", "MuscleGroupId");
-                        j.ToTable("muscle_group_muscle");
-                        j.IndexerProperty<int>("MuscleId").HasColumnName("muscle_id");
-                        j.IndexerProperty<int>("MuscleGroupId").HasColumnName("muscle_group_id");
-                    });
-        });
-
-        modelBuilder.Entity<MuscleGroup>(entity =>
-        {
-            entity.ToTable("muscle_group");
 
             entity.Property(e => e.Id).HasColumnName("id");
         });
@@ -477,8 +445,9 @@ public class SqliteContext : DbContext
                 .HasColumnName("created_at");
             entity.Property(e => e.LastWeightUsedKg).HasColumnName("last_weight_used_kg");
 
-            entity.HasOne(d => d.TrainingSession).WithMany(p => p.TrainingSessionExerciseRecords)
-                .HasForeignKey(d => d.TrainingSessionId);
+            entity.HasOne(d => d.ExerciseRecord).WithMany(p => p.TrainingSessionExerciseRecords).HasForeignKey(d => d.ExerciseRecordId);
+
+            entity.HasOne(d => d.TrainingSession).WithMany(p => p.TrainingSessionExerciseRecords).HasForeignKey(d => d.TrainingSessionId);
         });
 
         modelBuilder.Entity<TrainingType>(entity =>
@@ -571,11 +540,11 @@ public class SqliteContext : DbContext
 
             entity.Property(e => e.Frequency).HasColumnName("frequency");
             entity.Property(e => e.MuscleCooldown).HasColumnName("muscle_cooldown");
-            entity.Property(e => e.MuscleGroupId).HasColumnName("muscle_group_id");
+            entity.Property(e => e.MuscleId).HasColumnName("muscle_id");
             entity.Property(e => e.TrainingVolume).HasColumnName("training_volume");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.MuscleGroup).WithMany().HasForeignKey(d => d.MuscleGroupId);
+            entity.HasOne(d => d.Muscle).WithMany().HasForeignKey(d => d.MuscleId);
 
             entity.HasOne(d => d.User).WithMany().HasForeignKey(d => d.UserId);
         });
@@ -659,5 +628,7 @@ public class SqliteContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("start_date");
         });
+
     }
+    
 }

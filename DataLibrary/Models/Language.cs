@@ -12,8 +12,6 @@ public partial class Language
 
     public virtual ICollection<LocalizedExercise> LocalizedExercises { get; set; } = new List<LocalizedExercise>();
 
-    public virtual ICollection<LocalizedMuscleGroup> LocalizedMuscleGroups { get; set; } = new List<LocalizedMuscleGroup>();
-
     public virtual ICollection<LocalizedMuscle> LocalizedMuscles { get; set; } = new List<LocalizedMuscle>();
 
     public virtual ICollection<TrainingType> TrainingTypes { get; set; } = new List<TrainingType>();

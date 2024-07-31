@@ -27,6 +27,9 @@ maybe imma use the result pattern ? will have to test performance, cause i kinda
 - [ ] consider upsert
 - [ ] consider upsert plain sql for creation/updating
 
+### Code Style and Choices
+
+- input trimmings are done in the dto init method.
 
 ### dataBase
 

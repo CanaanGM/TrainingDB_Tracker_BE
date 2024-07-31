@@ -2,9 +2,11 @@
 
 public partial class ExerciseRecord
 {
-    public int UserId { get; set; }
+    public int Id { get; set; }
 
-    public int UserExerciseId { get; set; }
+    public int? UserId { get; set; }
+
+    public int? UserExerciseId { get; set; }
 
     public int? Repetitions { get; set; }
 
@@ -32,7 +34,9 @@ public partial class ExerciseRecord
 
     public DateTime? CreatedAt { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    public virtual ICollection<TrainingSessionExerciseRecord> TrainingSessionExerciseRecords { get; set; } = new List<TrainingSessionExerciseRecord>();
 
-    public virtual UserExercise UserExercise { get; set; } = null!;
+    public virtual User? User { get; set; }
+
+    public virtual UserExercise? UserExercise { get; set; }
 }

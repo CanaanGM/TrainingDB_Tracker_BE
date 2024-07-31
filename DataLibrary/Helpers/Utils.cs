@@ -13,16 +13,11 @@ public static class Utils
     /// <exception cref="ArgumentException">Thrown when the input string is null or empty.</exception>
     public static string NormalizeString(string input)
     {
-        if (string.IsNullOrEmpty(input))
-            throw new ArgumentException("Input string cannot be null or empty.", nameof(input));
+        if (string.IsNullOrEmpty(input.Trim()))
+            return null;
 
-        // Detect the primary language based on characters in the string
         var detectedCulture = DetectCultureFromInput(input);
-
-        // Create culture info based on detected language
         var cultureInfo = new CultureInfo(detectedCulture);
-
-        // Return the normalized string using the detected culture
         return input.Trim().ToLower(cultureInfo);
     }
     

@@ -32,7 +32,7 @@
  -- User table
 CREATE TABLE IF NOT EXISTS user (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE NOT NULL, -- TODO: Not unique, i want 2 Canaans!
+    username TEXT UNIQUE NOT NULL, -- TODO: Not unique, i want 2 Canaan's!
     email TEXT UNIQUE NOT NULL,
     height REAL,
     gender CHAR(1),
@@ -53,45 +53,28 @@ Create INDEX idx_language_code on language(code);
 create table if not exists muscle (
 	id integer primary key autoincrement
 );
-create table if not exists muscle_group(
-    id integer primary key autoincrement
-);
-create table if not exists muscle_group_muscle(
-    muscle_id integer,
-    muscle_group_id integer,
-    CONSTRAINT fk_muscle_group_muscle_id FOREIGN KEY (muscle_id) references muscle(id) on delete cascade ,
-    CONSTRAINT fk_muscle_group_muscle_group_id FOREIGN KEY (muscle_group_id) references muscle_group(id) on delete cascade,
-    Constraint pk_muscle_group_muscle_id PRIMARY KEY (muscle_id, muscle_group_id)
-);
 create table if not exists localized_muscle(
     muscle_id integer,
     language_id integer,
     name TEXT NOT NULL,
+    muscle_group TEXT NOT NULL,
     function TEXT,
     wiki_page_url VARCHAR,
     CONSTRAINT fk_localized_muscle_muscle_id FOREIGN KEY (muscle_id) references muscle(id) on delete cascade ,
     CONSTRAINT fk_localized_muscle_language_id FOREIGN KEY (language_id) references language(id) on delete cascade,
     CONSTRAINT pk_localized_muscle_id primary key (muscle_id, language_id)
 );
-create table if not exists localized_muscle_group(
-    muscle_group integer,
-    language_id integer,
-    name text not null,
-    function text ,
-    wiki_page_url text,
-    CONSTRAINT fk_localized_muscle_muscle_id FOREIGN KEY (muscle_group) references muscle_group(id) on delete cascade,
-    CONSTRAINT fk_localized_muscle_group_language_id foreign key (language_id) references language(id) on delete cascade,
-    CONSTRAINT pk_localized_muscle_group_id primary key (muscle_group, language_id)
-);
--- to know/keep track of which group was trainined and the cooldown ??!
+create unique index idx_localized_muscle_name on localized_muscle(name);
+create index idx_localized_muscle_muscle_group on localized_muscle(muscle_group);
+-- to know/keep track of which group was trained and the cooldown ??!
 create table if not exists user_muscle(
     user_id integer,
-    muscle_group_id integer,
+    muscle_id integer,
     muscle_cooldown integer, -- TODO: calculate this based on age and rpe from the records (by user_id and records for today)
     frequency integer, -- calculated from the sessions that has this muscle trained
     training_volume integer, -- calculated from how many reps i did per an exercise that trains this muscle group
     CONSTRAINT fk_user_muscle_user_id FOREIGN KEY (user_id) references user(id),
-    CONSTRAINT fk_user_muscle_group_id FOREIGN KEY (muscle_group_id) references muscle_group(id)
+    CONSTRAINT fk_user_muscle_group_id FOREIGN KEY (muscle_id) references muscle(id)
 );
 -- singular exercise
 -- description: the description of the exercise
@@ -178,6 +161,7 @@ create table if not exists user_exercise(
 -- 0 weight = Body Weight
 -- for localization, no need to do anything here
 create table if not exists exercise_record (
+    id integer primary key autoincrement,
     user_id integer,
 	user_exercise_id integer,
 	repetitions integer,
@@ -197,8 +181,7 @@ create table if not exists exercise_record (
 	CHECK (mood >= 0 AND mood <= 10),
 	CHECK (rate_of_perceived_exertion >= 0 AND rate_of_perceived_exertion <= 10),
 	CONSTRAINT fk_exercise_record_user_exercise_id Foreign Key(user_exercise_id) references user_exercise(id) ON DELETE cascade,
-    CONSTRAINT fk_exercise_record_user_id foreign key (user_id) references user(id) on delete cascade,
-    CONSTRAINT pk_exercise_record_id primary key (user_id, user_exercise_id)
+    CONSTRAINT fk_exercise_record_user_id foreign key (user_id) references user(id) on delete cascade
 );
 create index idx_exercise_record_created_at on exercise_record (created_at);
 -- represents a singular training session no matter how big or small (a day can have a lot)
@@ -386,17 +369,3 @@ create table if not exists user_training_plan(
     check ( start_date < end_date )
 );
 create index idx_user_training_plan_status on user_training_plan(is_finished);
-
-
-insert into user (username, email, height, gender) VALUES
-('Canaan', 'canaan@test.com', 173, 'M'),
-('Dante', 'dante@test.com', 200, 'M'),
-('Alphrad', 'alphrad@test.com', 172, 'F'),
-('Nero', 'nero@test.com', 156, 'F');
-
-insert into user_passwords(user_id, password_hash, password_salt)
-VALUES
-    (1, '3sWPJCAzV2mDKsWdXLaHkxfli05NH5dAsQJ4U9teYXM=', 'pKHWv1AkNTGeBtkbsm6fIqjJJdYDFIotxXtMupqXm+0='),
-    (2, 'BzMDx05wo6wjTriEEjxDsb9jZTa6QkbeFAr7B46CAwc=', 'UqfeVl+kUvwURJ2Avx5nw2+qTBMKUUdrHE5m48RGFU0='),
-    (3, 'wA+0773CBog+MlcEjrNcAmHS6pSd06ceminYzPU4wlI=', 'ROtBSjEmAd8swaKpy0e7yV6n5IJl+K5i6yF/brfjTD0='),
-    (4, 'wTyWjvmC0bLE1Cqjav3N7UUB62BxMh4X+fkYJclk3h4=', 'yifKALQU7Uw//BXENsSVeZNXc14/qDEkW9V7MqrkVWQ=');

@@ -9,22 +9,33 @@ public class Profiles : Profile
 {
     public Profiles()
     {
-        
         // language
         CreateMap<Language, LanguageReadDto>();
         CreateMap<Language, LanguageWriteDto>().ReverseMap();
 
         CreateMap<EquipmentWriteDto, Equipment>()
-            .ForMember(dest => dest.LocalizedEquipments, opt => opt.Ignore()); // Ignore this in AutoMapper, handle in service
+            .ForMember(dest => dest.LocalizedEquipments,
+                opt => opt.Ignore()); // Ignore this in AutoMapper, handle in service
 
         CreateMap<LocalizedEquipment, EquipmentReadDto>()
             .ForMember(x => x.WeightKg, src => src.MapFrom(
                 c => c.Equipment.WeightKg))
             .ReverseMap();
-        
+
         CreateMap<Measurement, MeasurementsReadDto>();
         CreateMap<MeasurementsWriteDto, Measurement>();
-        
+
+
+        CreateMap<MuscleWriteDto, LocalizedMuscle>();
+        CreateMap<MuscleUpdateDto, LocalizedMuscle>();
+
+        CreateMap<LocalizedMuscle, MuscleReadDto>()
+            .ForMember(dto => dto.MuscleName, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dto => dto.Function, opt => opt.MapFrom(src => src.Function))
+            .ForMember(dto => dto.WikiPageUrl, opt => opt.MapFrom(src => src.WikiPageUrl))
+            .ForMember(dto => dto.LanguageName, opt => opt.MapFrom(src => src.Language.Name))
+            .ForMember(dto => dto.MuscleGroup, opt =>
+                opt.MapFrom(src => src.MuscleGroup));
 
         // TODO: move what's related into it's own file for clarity.
 
@@ -123,8 +134,5 @@ public class Profiles : Profile
         //
         // CreateMap<BlockExercise, BlockExerciseReadDto>()
         //     .ForMember(dest => dest.Exercise, opt => opt.MapFrom(src => src.Exercise));
-
     }
-
-
 }
