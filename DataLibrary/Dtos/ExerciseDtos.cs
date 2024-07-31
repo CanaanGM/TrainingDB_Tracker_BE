@@ -1,12 +1,13 @@
-﻿namespace DataLibrary.Dtos;
+﻿using System.ComponentModel.DataAnnotations;
+using DataLibrary.Helpers;
+
+namespace DataLibrary.Dtos;
+
 public class ExerciseReadDto
 {
     public int Id { get; set; }
-
     public string Name { get; set; } = null!;
-
     public string? Description { get; set; }
-
     public string? HowTo { get; set; }
     public int? Difficulty { get; set; }
     public List<TrainingTypeReadDto> TrainingTypes { get; set; }
@@ -16,15 +17,50 @@ public class ExerciseReadDto
 
 public class ExerciseSearchResultDto
 {
-    public string Name { get; set; } = null!;
+    private string _name;
+
+    [Required]
+    public string Name
+    {
+        get => _name;
+        set => _name = Utils.NormalizeString(value);
+    }
 }
 
 public class ExerciseWriteDto
 {
-    public string Name { get; set; } = null!;
+    private string _name;
+    private int _difficulty;
+    private string _languageCode;
+    
+    [Required]
+    public string Name
+    {
+        get => _name;
+        set => _name = Utils.NormalizeString(value);
+    }
+
+    [Required]
+    public string LanguageCode
+    {
+        get => _languageCode;
+        set => _languageCode = Utils.NormalizeString(value);
+    }
+    
     public string? Description { get; set; }
     public string? HowTo { get; set; }
-    public int? Difficulty { get; set; }
+
+    public int? Difficulty
+    {
+        get => _difficulty;
+        set
+        {
+            if (value <= 0) _difficulty = 0;
+            if (value >= 5) _difficulty = 5;
+            else _difficulty = (int) value!;
+        }
+    }
+
     public List<ExerciseHowToWriteDto> HowTos { get; set; }
     public List<string> TrainingTypes { get; set; }
     public List<ExerciseMuscleWriteDto> ExerciseMuscles { get; set; }
@@ -32,10 +68,15 @@ public class ExerciseWriteDto
 
 public class ExerciseMuscleWriteDto
 {
-    public required string MuscleName { get; init; }
+    private string _muscleName;
+
+    public string MuscleName
+    {
+        get => _muscleName;
+        init => _muscleName = Utils.NormalizeString(value);
+    }
     public bool? IsPrimary { get; init; } = false;
 }
-
 
 public class ExerciseHowToReadDto
 {
@@ -45,9 +86,17 @@ public class ExerciseHowToReadDto
 }
 
 public class ExerciseHowToWriteDto
-{
-    public required string Name { get; set; } = null!;
-    public required string Url { get; set; } = null!;
+ {
+    private string _name;
+
+    [Required]
+    public string Name
+    {
+        get => _name;
+        set => _name = Utils.NormalizeString(value);
+    }
+
+    [Required] public string Url { get; set; } = null!;
 }
 
 public class ExerciseFilterDto

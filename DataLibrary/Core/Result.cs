@@ -42,7 +42,6 @@ public class Result
     /// </summary>
     /// <returns>A successful result object.</returns>
     public static Result Success() => new Result(true, null, null);
-
     /// <summary>
     /// Creates a failure result with an error message and optionally an exception.
     /// </summary>

@@ -21,7 +21,7 @@ public class MeasurementsServiceTests : BaseTestClass
     [Fact]
     public async Task GetALlMeasurements_Empty_Returns_empty_list()
     {
-        DatabaseHelpers.SeesDummyUsers(_context);
+        DatabaseHelpers.SeedDummyUsers(_context);
         var result = await service.GetAll(1, new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.Empty(result.Value);
@@ -30,7 +30,7 @@ public class MeasurementsServiceTests : BaseTestClass
     [Fact]
     public async Task GetAllNotEmpty_returns_OrderedList_for_user()
     {
-        DatabaseHelpers.SeesDummyUsers(_context);
+        DatabaseHelpers.SeedDummyUsers(_context);
         var currentDate = DateTime.UtcNow;
         _context.Measurements.AddRange(new List<Measurement>()
         {
@@ -103,7 +103,7 @@ public class MeasurementsServiceTests : BaseTestClass
     [Fact]
     public async Task CreateAsync_Should_return_sucess()
     {
-        DatabaseHelpers.SeesDummyUsers(_context);
+        DatabaseHelpers.SeedDummyUsers(_context);
         MeasurementsWriteDto measurementsWriteDto = new MeasurementsWriteDto()
         {
             Chest = 10,
@@ -151,7 +151,7 @@ public class MeasurementsServiceTests : BaseTestClass
     [Fact]
     public async Task CreateAsync_NoBodyWeight_Components_Should_Create_propper_weight_return_sucess()
     {
-        DatabaseHelpers.SeesDummyUsers(_context);
+        DatabaseHelpers.SeedDummyUsers(_context);
         MeasurementsWriteDto measurementsWriteDto = new MeasurementsWriteDto()
         {
             Chest = 10,
@@ -201,7 +201,7 @@ public class MeasurementsServiceTests : BaseTestClass
     [Fact]
     public async Task CreateAsync_BodyWeight_Components_Should_Create_propper_weight_return_sucess()
     {
-        DatabaseHelpers.SeesDummyUsers(_context);
+        DatabaseHelpers.SeedDummyUsers(_context);
         MeasurementsWriteDto measurementsWriteDto = new MeasurementsWriteDto()
         {
             Chest = 10,
@@ -255,7 +255,7 @@ public class MeasurementsServiceTests : BaseTestClass
     [Fact]
     public async Task CreateAsync_BothBodyWeight_AndComponents_BodyWeightComponentsShouldTakePrecendance_Should_Create_propper_weight_return_sucess()
     {
-        DatabaseHelpers.SeesDummyUsers(_context);
+        DatabaseHelpers.SeedDummyUsers(_context);
         MeasurementsWriteDto measurementsWriteDto = new MeasurementsWriteDto()
         {
             Chest = 10,
@@ -312,7 +312,7 @@ public class MeasurementsServiceTests : BaseTestClass
     [Fact]
     public async Task Update_Full_Should_Return_Suceess()
     {
-        DatabaseHelpers.SeesDummyUsers(_context);
+        DatabaseHelpers.SeedDummyUsers(_context);
         var newMeasurements = new Measurement()
         {
             Chest = 10,
@@ -397,7 +397,7 @@ public class MeasurementsServiceTests : BaseTestClass
     [Fact]
     public async Task DeleteAsync_Should_delete_successfuly()
     {
-        DatabaseHelpers.SeesDummyUsers(_context);
+        DatabaseHelpers.SeedDummyUsers(_context);
         var newMeasurements = new Measurement()
         {
             Chest = 10,

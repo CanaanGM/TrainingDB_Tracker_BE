@@ -369,3 +369,5 @@ create table if not exists user_training_plan(
     check ( start_date < end_date )
 );
 create index idx_user_training_plan_status on user_training_plan(is_finished);
+
+
