@@ -37,6 +37,9 @@ public class Profiles : Profile
             .ForMember(dto => dto.MuscleGroup, opt =>
                 opt.MapFrom(src => src.MuscleGroup));
 
+        CreateMap<TrainingType, TrainingTypeReadDto>().ReverseMap();
+        CreateMap<TrainingType, TrainingTypeWriteDto>().ReverseMap();
+        
         // TODO: move what's related into it's own file for clarity.
 
         // CreateMap<Muscle, MuscleReadDto>()
@@ -57,8 +60,7 @@ public class Profiles : Profile
         //     .ForMember(dt => dt.WikiPageUrl, opt => opt.MapFrom(src => src.Muscle.WikiPageUrl));
         //
         //
-        // CreateMap<TrainingType, TrainingTypeReadDto>().ReverseMap();
-        // CreateMap<TrainingType, TrainingTypeWriteDto>().ReverseMap();
+
         //
         //
         // CreateMap<Exercise, ExerciseReadDto>()
