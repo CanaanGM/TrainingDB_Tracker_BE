@@ -37,13 +37,13 @@ public class EquipmentService : IEquipmentService
         try
         {
             var language = await _context.Languages
-                .FirstOrDefaultAsync(l => l.Code == Utils.NormalizeString(newEquipmentDto.LanguageCode),
+                .FirstOrDefaultAsync(l => l.Code == newEquipmentDto.LanguageCode,
                     cancellationToken);
             if (language == null)
                 return Result<int>.Failure("Language code is invalid.");
 
 
-            var normalizedEquipmentName = Utils.NormalizeString(newEquipmentDto.Name);
+            var normalizedEquipmentName = newEquipmentDto.Name;
             var existingLocalizedEquipment = await _context.LocalizedEquipments
                 .Include(le => le.Equipment)
                 .FirstOrDefaultAsync(le => le.Name == normalizedEquipmentName && le.LanguageId == language.Id,
@@ -60,7 +60,7 @@ public class EquipmentService : IEquipmentService
                 existingLocalizedEquipment.HowTo = newEquipmentDto.HowTo ?? existingLocalizedEquipment.HowTo;
 
                 if (!string.IsNullOrEmpty(newEquipmentDto.NewName))
-                    existingLocalizedEquipment.Name = Utils.NormalizeString(newEquipmentDto.NewName);
+                    existingLocalizedEquipment.Name = newEquipmentDto.NewName;
             }
             else
             {
@@ -101,7 +101,7 @@ public class EquipmentService : IEquipmentService
         try
         {
             // Normalize the equipment name to ensure consistent lookup
-            var normalizedEquipmentName = Utils.NormalizeString(equipmentName);
+            var normalizedEquipmentName = equipmentName;
 
             // Find the localized equipment entries that match the equipment name
             var localizedEquipments = await _context.LocalizedEquipments
@@ -149,7 +149,7 @@ public class EquipmentService : IEquipmentService
         {
             
             // Check if language code is provided and normalize if not null or empty
-            var normalizedLanguageCode = !string.IsNullOrWhiteSpace(languageCode) ? Utils.NormalizeString(languageCode) : null;
+            var normalizedLanguageCode = !string.IsNullOrWhiteSpace(languageCode) ? languageCode: null;
 
             var query = _context.LocalizedEquipments
                 .Include(le => le.Equipment)
@@ -180,7 +180,7 @@ public class EquipmentService : IEquipmentService
 
         try
         {
-            var normalizedEquipmentName = Utils.NormalizeString(name);
+            var normalizedEquipmentName = name;
 
             // Assume each equipment name is unique across all languages
             var equipmentDto = await _context.LocalizedEquipments
