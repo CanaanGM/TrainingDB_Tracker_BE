@@ -168,6 +168,20 @@ public static class DatabaseHelpers
         ";
         context.Database.ExecuteSqlRaw(createLocalizedMuscles);
     }
+
+    public static void SeedTrainingTypes(SqliteContext context)
+    {
+        string insertTrainingTypes = @"
+            INSERT INTO training_type (name, language_id) VALUES 
+            ('strength', 1), 
+            ('cardio', 1),
+            ('bodybuilding', 1), 
+            ('martial arts', 1),
+            ('endurance', 1);
+            ";
+
+        context.Database.ExecuteSqlRaw(insertTrainingTypes);
+    }
     /// <summary>
     /// Seeds the database with <strong>3</strong> muscles, <strong>4</strong> training types, <strong>3</strong> exercises <i> with their relations</i> to the muscles and types.
     /// <em>Making a session have <strong>4 training types</strong></em>.<br></br>

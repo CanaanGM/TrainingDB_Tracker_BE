@@ -28,7 +28,7 @@ public interface IExerciseService
     Task<Result<bool>> DeleteBulkAsync(List<string> exerciseNames, CancellationToken cancellationToken);
 }
 
-public class ExerciseService 
+public class ExerciseService
 {
     private readonly SqliteContext _context;
     private readonly IMapper _mapper;
@@ -41,86 +41,97 @@ public class ExerciseService
         _logger = logger;
     }
 
-    //GET
-    public async Task<Result<ExerciseReadDto>> GetByNameAsync(string exerciseName, CancellationToken cancellationToken)
-    {
-        try
-        {
-            if (string.IsNullOrEmpty(exerciseName?.Trim()))
-                throw new ArgumentException("name cannot be empty");
-
-            ExerciseReadDto? exercise = await _context.Exercises
-                .AsNoTracking()
-                .ProjectTo<ExerciseReadDto>(_mapper.ConfigurationProvider)
-                .SingleOrDefaultAsync(x => x.Name == exerciseName, cancellationToken);
-
-            if (exercise is not null) return Result<ExerciseReadDto>.Success(value: exercise);
-
-            _logger.LogError($"[ERROR]: exercise {exerciseName} was not found.\nin {nameof(GetByNameAsync)}");
-            return Result<ExerciseReadDto>.Failure($"exercise : {exerciseName} does not exists.");
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"[ERROR]: something went wrong in {nameof(GetByNameAsync)}\n{ex.Message}\n{ex}");
-            return Result<ExerciseReadDto>.Failure(ex.Message, ex);
-        }
-    }
-
-
-    // get all
-    // returns a list of :
-    // exercise by muscle or muscle group, muscle group takes precedence
-    // by trianing type
-    // by difficulty
-    // all 3 of them can be combined ; give me all exercises for the core where difficulty > 4 and type is body building
-
-    public async Task<Result<PaginatedList<ExerciseReadDto>>> GetAllAsync(ExerciseQueryOptions options,
+    public async Task<Result<bool>> CreateBulkAsync(List<ExerciseWriteDto> newExerciseDtos,
         CancellationToken cancellationToken)
     {
+        if (newExerciseDtos == null || !newExerciseDtos.Any())
+        {
+            _logger.LogError("Attempted to create bulk exercises with no exercise data provided.");
+            return Result<bool>.Failure("No exercises to create.");
+        }
+
         try
         {
-            if (options.PageNumber <= 0 || options.PageSize <= 0)
+            await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+
+            foreach (var newExerciseDto in newExerciseDtos)
             {
-                return Result<PaginatedList<ExerciseReadDto>>.Failure(
-                    "Page number and page size must be greater than zero.");
+                var validationResult = CheckValues(newExerciseDto);
+                if (!validationResult.IsSuccess)
+                {
+                    _logger.LogError(
+                        $"Validation failed for exercise: {newExerciseDto.Name}. Error: {validationResult.ErrorMessage}");
+                    return Result<bool>.Failure(validationResult.ErrorMessage!);
+                }
+
+                var language = await _context.Languages.FirstOrDefaultAsync(x => x.Code == newExerciseDto.LanguageCode,
+                    cancellationToken);
+                if (language == null)
+                {
+                    _logger.LogError($"Language code {newExerciseDto.LanguageCode} not found.");
+                    return Result<bool>.Failure(
+                        $"Language with code: {newExerciseDto.LanguageCode} could not be found.");
+                }
+
+                var muscleCreationResult =
+                    await CreateMuscleDictionary(newExerciseDto.ExerciseMuscles, cancellationToken);
+                if (!muscleCreationResult.IsSuccess)
+                {
+                    return Result<bool>.Failure(muscleCreationResult.ErrorMessage!);
+                }
+
+                var trainingTypeResult = await CreateTrainingTypeList(newExerciseDto.TrainingTypes, cancellationToken);
+                if (!trainingTypeResult.IsSuccess)
+                {
+                    return Result<bool>.Failure(trainingTypeResult.ErrorMessage!);
+                }
+
+                var equipmentListResult =
+                    await CreateEquipmentList(newExerciseDto.EquipmentNeeded ?? new List<string>(), cancellationToken);
+                if (!equipmentListResult.IsSuccess)
+                {
+                    return Result<bool>.Failure(equipmentListResult.ErrorMessage!);
+                }
+
+                Exercise newExercise = new Exercise
+                {
+                    Difficulty = newExerciseDto.Difficulty,
+                    ExerciseMuscles = newExerciseDto.ExerciseMuscles.Select(em => new ExerciseMuscle
+                    {
+                        Muscle = muscleCreationResult.Value[em.MuscleName].Muscle,
+                        IsPrimary = em.IsPrimary ?? false
+                    }).ToList(),
+                    TrainingTypes = trainingTypeResult.Value,
+                    Equipment = equipmentListResult.Value,
+                    ExerciseHowTos = newExerciseDto.HowTos?.Select(ht => new ExerciseHowTo
+                    {
+                        Name = ht.Name,
+                        Url = ht.Url
+                    }).ToList() ?? new List<ExerciseHowTo>()
+                };
+
+                _context.Exercises.Add(newExercise);
+
+                var newLocalizedExercise = new LocalizedExercise
+                {
+                    Name = newExerciseDto.Name,
+                    Description = newExerciseDto.Description,
+                    HowTo = newExerciseDto.HowTo,
+                    Language = language,
+                    Exercise = newExercise
+                };
+
+                _context.LocalizedExercises.Add(newLocalizedExercise);
             }
 
-            var query = _context.Exercises
-                .Include(e => e.TrainingTypes)
-                .Include(e => e.ExerciseMuscles)
-                .ThenInclude(em => em.Muscle)
-                .Include(e => e.ExerciseHowTos)
-                .ProjectTo<ExerciseReadDto>(_mapper.ConfigurationProvider)
-                .AsNoTracking();
-
-            query = ApplyFiltering(options, query);
-            query = ApplySorting(options, query);
-
-            var totalItems = await query.CountAsync(cancellationToken);
-            var totalPages = (int)Math.Ceiling(totalItems / (double)options.PageSize);
-
-            var exercises = await query
-                .Skip((options.PageNumber - 1) * options.PageSize)
-                .Take(options.PageSize)
-                .ToListAsync(cancellationToken);
-
-            var paginatedList = new PaginatedList<ExerciseReadDto>
-            {
-                Items = exercises,
-                Metadata = new PaginationMetadata
-                {
-                    TotalCount = totalItems,
-                    TotalPages = totalPages,
-                    CurrentPage = options.PageNumber,
-                    PageSize = options.PageSize
-                }
-            };
-
-            return Result<PaginatedList<ExerciseReadDto>>.Success(paginatedList);
+            await _context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+            return Result<bool>.Success(true);
         }
         catch (Exception ex)
         {
-            return Result<PaginatedList<ExerciseReadDto>>.Failure("Failed to retrieve exercises: " + ex.Message, ex);
+            _logger.LogError($"An error occurred while creating multiple exercises: {ex.Message}");
+            return Result<bool>.Failure("Failed to create exercises due to an unexpected error.");
         }
     }
 
@@ -141,51 +152,63 @@ public class ExerciseService
             if (language is null)
             {
                 _logger.LogError($"the language with code: {newExerciseDto.LanguageCode} could not be found.");
-                return Result<int>.Failure($"the language with code: {newExerciseDto.LanguageCode} could not be found.");
+                return Result<int>.Failure(
+                    $"the language with code: {newExerciseDto.LanguageCode} could not be found.");
             }
-            
-            var muscleCreationRes = await CreateMuscleDictionary(newExerciseDto.ExerciseMuscles , cancellationToken);
+
+            var muscleCreationRes = await CreateMuscleDictionary(newExerciseDto.ExerciseMuscles, cancellationToken);
             if (!muscleCreationRes.IsSuccess)
                 return Result<int>.Failure(muscleCreationRes.ErrorMessage!);
-            
 
-            Dictionary<string, LocalizedMuscle> muscles = muscleCreationRes.Value!; 
-           
-            var trainingTypesCreationResult = await CreateTrainingTypeList(newExerciseDto.TrainingTypes, cancellationToken);
-            if(! trainingTypesCreationResult.IsSuccess)
+
+            Dictionary<string, LocalizedMuscle> muscles = muscleCreationRes.Value!;
+
+            var trainingTypesCreationResult =
+                await CreateTrainingTypeList(newExerciseDto.TrainingTypes, cancellationToken);
+            if (!trainingTypesCreationResult.IsSuccess)
                 return Result<int>.Failure(trainingTypesCreationResult.ErrorMessage!);
-            
+
             List<TrainingType> trainingTypes = trainingTypesCreationResult.Value!;
-            
+
+            List<Equipment> neededEquipment = [];
+            if (newExerciseDto.EquipmentNeeded is not null)
+            {
+                var neededEquipmentCreationList =
+                    await CreateEquipmentList(newExerciseDto.EquipmentNeeded.Distinct().ToList(), cancellationToken);
+                neededEquipment = neededEquipmentCreationList.Value!;
+                if (!neededEquipmentCreationList.IsSuccess)
+                    return Result<int>.Failure(trainingTypesCreationResult.ErrorMessage!);
+            }
+
             Exercise newExercise = new Exercise()
+            {
+                Difficulty = newExerciseDto.Difficulty,
+                ExerciseMuscles = newExerciseDto.ExerciseMuscles.Select(em => new ExerciseMuscle
                 {
-                 Difficulty   = newExerciseDto.Difficulty,
-                 ExerciseMuscles = newExerciseDto.ExerciseMuscles.Select(em => new ExerciseMuscle
-                 {
-                     Muscle = muscles[em.MuscleName].Muscle,
-                     IsPrimary = em.IsPrimary
-                 }).ToList(),
-                 TrainingTypes = trainingTypes,
-                 ExerciseHowTos = newExerciseDto.HowTos is not null 
-                     ? newExerciseDto.HowTos.Select(howTo => new ExerciseHowTo
-                     {
-                         Name = howTo.Name,
-                         Url = howTo.Url
-                     }).ToList()
-                     : []
-                };
+                    Muscle = muscles[em.MuscleName].Muscle,
+                    IsPrimary = em.IsPrimary
+                }).ToList(),
+                TrainingTypes = trainingTypes,
+                ExerciseHowTos = newExerciseDto.HowTos is not null
+                    ? newExerciseDto.HowTos.Select(howTo => new ExerciseHowTo
+                    {
+                        Name = howTo.Name,
+                        Url = howTo.Url
+                    }).ToList()
+                    : [],
+                Equipment = neededEquipment
+            };
             _context.Exercises.Add(newExercise);
 
             var newLocalizedExercise = new LocalizedExercise()
             {
-                Name = Utils.NormalizeString(newExerciseDto.Name),
+                Name = newExerciseDto.Name,
                 Description = newExerciseDto.Description,
                 HowTo = newExerciseDto.HowTo,
                 Language = language,
                 Exercise = newExercise
             };
-            
-            
+
             await _context.LocalizedExercises.AddAsync(newLocalizedExercise, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
@@ -198,7 +221,146 @@ public class ExerciseService
         }
     }
 
-    private async Task<Result<Dictionary<string, LocalizedMuscle>>> CreateMuscleDictionary(List<ExerciseMuscleWriteDto> exerciseMuscles, CancellationToken cancellationToken)
+   public async Task<Result<int>> UpdateAsync(int exerciseId, ExerciseWriteDto updatedExerciseDto, CancellationToken cancellationToken)
+{
+    // Validate the incoming DTO
+    var validationResult = CheckValues(updatedExerciseDto);
+    if (!validationResult.IsSuccess)
+    {
+        return Result<int>.Failure(validationResult.ErrorMessage!);
+    }
+
+    try
+    {
+        await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+
+        // Find the existing exercise
+        var existingExercise = await _context.Exercises
+            .Include(e => e.ExerciseMuscles)
+            .Include(e => e.TrainingTypes)
+            .Include(e => e.ExerciseHowTos)
+            .Include(e => e.Equipment)
+            .FirstOrDefaultAsync(e => e.Id == exerciseId, cancellationToken);
+
+        if (existingExercise == null)
+        {
+            _logger.LogError($"Exercise with ID {exerciseId} not found.");
+            return Result<int>.Failure($"Exercise with ID {exerciseId} not found.");
+        }
+
+        // Update language
+        var language = await _context.Languages
+            .FirstOrDefaultAsync(x => x.Code == updatedExerciseDto.LanguageCode, cancellationToken);
+
+        if (language == null)
+        {
+            _logger.LogError($"Language code {updatedExerciseDto.LanguageCode} not found.");
+            return Result<int>.Failure($"Language with code {updatedExerciseDto.LanguageCode} not found.");
+        }
+
+        // Update muscles
+        var muscleCreationRes = await CreateMuscleDictionary(updatedExerciseDto.ExerciseMuscles, cancellationToken);
+        if (!muscleCreationRes.IsSuccess)
+        {
+            return Result<int>.Failure(muscleCreationRes.ErrorMessage!);
+        }
+        var muscles = muscleCreationRes.Value!;
+
+        // Update training types
+        var trainingTypesCreationResult = await CreateTrainingTypeList(updatedExerciseDto.TrainingTypes, cancellationToken);
+        if (!trainingTypesCreationResult.IsSuccess)
+        {
+            return Result<int>.Failure(trainingTypesCreationResult.ErrorMessage!);
+        }
+        var trainingTypes = trainingTypesCreationResult.Value!;
+
+        // Update equipment
+        List<Equipment> neededEquipment = new();
+        if (updatedExerciseDto.EquipmentNeeded != null)
+        {
+            var neededEquipmentCreationList = await CreateEquipmentList(updatedExerciseDto.EquipmentNeeded.Distinct().ToList(), cancellationToken);
+            neededEquipment = neededEquipmentCreationList.Value!;
+            if (!neededEquipmentCreationList.IsSuccess)
+            {
+                return Result<int>.Failure(neededEquipmentCreationList.ErrorMessage!);
+            }
+        }
+
+        // Update the existing exercise
+        existingExercise.Difficulty = updatedExerciseDto.Difficulty;
+        existingExercise.ExerciseMuscles = updatedExerciseDto.ExerciseMuscles.Select(em => new ExerciseMuscle
+        {
+            Muscle = muscles[em.MuscleName].Muscle,
+            IsPrimary = em.IsPrimary
+        }).ToList();
+        existingExercise.TrainingTypes = trainingTypes;
+        existingExercise.Equipment = neededEquipment;
+        existingExercise.ExerciseHowTos = updatedExerciseDto.HowTos != null 
+            ? updatedExerciseDto.HowTos.Select(howTo => new ExerciseHowTo
+            {
+                Name = howTo.Name,
+                Url = howTo.Url
+            }).ToList()
+            : new List<ExerciseHowTo>();
+
+        // Update the localized exercise
+        var existingLocalizedExercise = await _context.LocalizedExercises
+            .FirstOrDefaultAsync(le => le.ExerciseId == exerciseId && le.LanguageId == language.Id, cancellationToken);
+        if (existingLocalizedExercise == null)
+        {
+            _logger.LogError($"Localized exercise not found for ID {exerciseId} and language code {updatedExerciseDto.LanguageCode}.");
+            return Result<int>.Failure($"Localized exercise not found for ID {exerciseId} and language code {updatedExerciseDto.LanguageCode}.");
+        }
+
+        existingLocalizedExercise.Name = updatedExerciseDto.Name;
+        existingLocalizedExercise.Description = updatedExerciseDto.Description;
+        existingLocalizedExercise.HowTo = updatedExerciseDto.HowTo;
+
+        await _context.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+        
+        return Result<int>.Success(existingExercise.Id);
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, $"Failed to update exercise {exerciseId} due to an exception.");
+        return Result<int>.Failure("Failed to update exercise due to an error: " + ex.Message, ex);
+    }
+}
+
+public async Task<Result<bool>> DeleteAsync(int exerciseId, CancellationToken cancellationToken)
+{
+    try
+    {
+        var exercise = await _context.Exercises
+            .Include(e => e.LocalizedExercises)
+            .Include(e => e.ExerciseMuscles)
+            .Include(e => e.TrainingTypes)
+            .Include(e => e.Equipment)
+            .FirstOrDefaultAsync(e => e.Id == exerciseId, cancellationToken);
+
+        if (exercise == null)
+        {
+            _logger.LogWarning("Exercise with ID {ExerciseId} not found.", exerciseId);
+            return Result<bool>.Failure("Exercise not found.");
+        }
+
+        _context.Exercises.Remove(exercise);
+        await _context.SaveChangesAsync(cancellationToken);
+        _logger.LogInformation("Exercise with ID {ExerciseId} deleted successfully.", exerciseId);
+        return Result<bool>.Success(true);
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Error deleting exercise with ID {ExerciseId}.", exerciseId);
+        return Result<bool>.Failure($"Error deleting exercise: {ex.Message}");
+    }
+}
+
+   
+   
+    private async Task<Result<Dictionary<string, LocalizedMuscle>>> CreateMuscleDictionary(
+        List<ExerciseMuscleWriteDto> exerciseMuscles, CancellationToken cancellationToken)
     {
         var dtoMuscleNames = exerciseMuscles
             .Select(em => em.MuscleName)
@@ -213,14 +375,14 @@ public class ExerciseService
 
         if (muscles.Count == exerciseMuscles.Count)
             return Result<Dictionary<string, LocalizedMuscle>>.Success(muscles);
-        
+
         var nonExistingMuscles = muscles.Values
             .Where(x => !dtoMuscleNames.Contains(x.Name));
         var errorMessage = string.Join(", ", nonExistingMuscles);
         _logger
-            .LogError($"Could not create exercise due to these muscles not being present in the database: {errorMessage}");
-        return Result<Dictionary<string, LocalizedMuscle>>.Failure( $"{errorMessage},muscles could not be found.");
-        
+            .LogError(
+                $"Could not create exercise due to these muscles not being present in the database: {errorMessage}");
+        return Result<Dictionary<string, LocalizedMuscle>>.Failure($"{errorMessage},muscles could not be found.");
     }
 
     private async Task<Result<List<TrainingType>>> CreateTrainingTypeList(List<string> dtoTrainingTypeNames,
@@ -230,19 +392,42 @@ public class ExerciseService
             .Select(x => x)
             .Distinct()
             .ToList();
-            
+
         List<TrainingType> trainingTypes = await _context.TrainingTypes
             .Where(tt => trainingTypeNames.Contains(tt.Name))
             .ToListAsync(cancellationToken);
 
         if (trainingTypes.Count == trainingTypeNames.Count)
             return Result<List<TrainingType>>.Success(trainingTypes);
-        
+
         var nonExistingTypes = trainingTypes.Where(x => trainingTypeNames.Contains(x.Name));
         var errorMessage = string.Join(", ", nonExistingTypes);
         _logger.LogError($"could not create exercise, due to these training types not existsing: {errorMessage}");
-        
+
         return Result<List<TrainingType>>.Failure($"the following training types are not created: {errorMessage}");
+    }
+
+    private async Task<Result<List<Equipment>>> CreateEquipmentList(List<string> equipmentNames,
+        CancellationToken cancellationToken)
+    {
+        var neededLocalizedEquipment = await _context.LocalizedEquipments
+            .Include(x => x.Equipment)
+            .Where(x => equipmentNames.Contains(x.Name))
+            .ToListAsync(cancellationToken);
+        if (equipmentNames.Count == neededLocalizedEquipment.Count)
+        {
+            var neededEquipment = neededLocalizedEquipment.Select(x => x.Equipment).ToList();
+            return Result<List<Equipment>>.Success(neededEquipment);
+        }
+
+        var nonExistingEquipment = neededLocalizedEquipment
+            .Where(x => equipmentNames.Contains(x.Name))
+            .Select(x => x.Name)
+            .ToList();
+        var errorMessage = string.Join(", ", nonExistingEquipment);
+        _logger.LogError($"tried to create exercise but the following equipment was not found: {errorMessage}");
+
+        return Result<List<Equipment>>.Failure($"these equipment are not in the database: {errorMessage}.");
     }
 
     // TODO: make this static and checks the properties of the type passed into it.
@@ -257,7 +442,7 @@ public class ExerciseService
         if (string.IsNullOrEmpty(newExerciseDto.HowTo))
             errorList.Add("how to should have a value");
         if (newExerciseDto.Difficulty <= 0 || newExerciseDto.Difficulty > 10)
-            errorList.Add("difficulty should be between 1 and 10");
+            errorList.Add("difficulty should be between 1 and 5");
         if (newExerciseDto.ExerciseMuscles.Count == 0)
             errorList.Add("an exercise should have a related muscles");
         if (newExerciseDto.TrainingTypes.Count == 0)
@@ -284,265 +469,16 @@ public class ExerciseService
                 errorList.Add("[HOW TO]: url should not be empty!");
         });
 
+        newExerciseDto.EquipmentNeeded?.ForEach(x =>
+        {
+            if (string.IsNullOrEmpty(x))
+                errorList.Add("[NEEDED EQUIPMENTS]: name should not be empty!");
+        });
         return errorList.Count != 0
             ? Result.Failure(error: string.Join("\n", errorList))
             : Result.Success();
     }
 
-    // Create Bulk
-    // public async Task<Result<bool>> CreateBulkAsync(List<ExerciseWriteDto> newExerciseDtos,
-    //     CancellationToken cancellationToken)
-    // {
-    //     // maybe get the exercise names at the start of the thingy, check then go back to requester
-    //     using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction =
-    //         await _context.Database.BeginTransactionAsync(cancellationToken);
-    //     try
-    //     {
-    //         // this is important, cause let's say you have 300 in the db, and u want to create 60 but 13 are duplicate,
-    //         // you would want to know which are duplicated without goin to the db, dammit! 
-    //         var exerciseNamesInTheDatabase = await _context.LocalizedExercises
-    //             .Select(x => x.Name)
-    //             .ToListAsync(cancellationToken);
-    //
-    //         var exerciseNamesFromDto = newExerciseDtos.Select(x => Utils.NormalizeString(x.Name)).ToList();
-    //         var duplicates = exerciseNamesFromDto.Intersect(exerciseNamesInTheDatabase).ToList();
-    //
-    //         if (duplicates.Any())
-    //         {
-    //             // maybe draw them for cool effect ? 
-    //             return Result<bool>.Failure($"{string.Join(", ", duplicates)}");
-    //         }
-    //
-    //
-    //         List<string> muscleNames = newExerciseDtos
-    //             .SelectMany(dto => dto.ExerciseMuscles.Select(m => Utils.NormalizeString(m.MuscleName)))
-    //             .Distinct()
-    //             .ToList();
-    //         List<string> typeNames = newExerciseDtos
-    //             .SelectMany(dto => dto.TrainingTypes)
-    //             .Distinct()
-    //             .Select(Utils.NormalizeString)
-    //             .ToList();
-    //
-    //
-    //         // Fetch all relevant data once
-    //         Dictionary<string, LocalizedExercise> muscles = await _context.LocalizedExercises
-    //             .Where(m => muscleNames.Contains(m.Name))
-    //             .ToDictionaryAsync(m => m.Name, m => m, cancellationToken);
-    //         Dictionary<string, TrainingType> trainingTypes = await _context.TrainingTypes
-    //             .Where(tt => typeNames.Contains(tt.Name))
-    //             .ToDictionaryAsync(tt => tt.Name, tt => tt, cancellationToken);
-    //
-    //         // Identify missing training types
-    //         var missingTrainingTypes = typeNames.Except(trainingTypes.Keys).ToList();
-    //         if (missingTrainingTypes.Any())
-    //         {
-    //             var missingTypesMessage =
-    //                 $"The following training types could not be found: {string.Join(", ", missingTrainingTypes)}";
-    //             _logger.LogError(missingTypesMessage);
-    //             return Result<bool>.Failure(missingTypesMessage);
-    //         }
-    //
-    //
-    //         List<Exercise> exercises = new List<Exercise>();
-    //
-    //         foreach (ExerciseWriteDto dto in newExerciseDtos)
-    //         {
-    //             Exercise newExercise = new Exercise
-    //             {
-    //                 Name = Utils.NormalizeString(dto.Name),
-    //                 Description = dto.Description,
-    //                 HowTo = dto.HowTo,
-    //                 Difficulty = dto.Difficulty.GetValueOrDefault(),
-    //                 ExerciseHowTos = dto.HowTos is not null
-    //                     ? dto.HowTos.Select(howTo => new ExerciseHowTo
-    //                     {
-    //                         Name = Utils.NormalizeString(howTo.Name),
-    //                         Url = howTo.Url
-    //                     }).ToList()
-    //                     : [],
-    //                 ExerciseMuscles = dto.ExerciseMuscles.Select(em => new ExerciseMuscle
-    //                 {
-    //                     Muscle = muscles[Utils.NormalizeString(em.MuscleName)],
-    //                     IsPrimary = em.IsPrimary
-    //                 }).ToList(),
-    //                 TrainingTypes = dto.TrainingTypes.Select(tt => trainingTypes[Utils.NormalizeString(tt)]).ToList()
-    //             };
-    //             _logger.LogCritical($"Now Adding: {newExercise.Name}");
-    //
-    //             exercises.Add(newExercise);
-    //         }
-    //
-    //         await _context.Exercises.AddRangeAsync(exercises, cancellationToken);
-    //         await _context.SaveChangesAsync(cancellationToken);
-    //         await transaction.CommitAsync(cancellationToken);
-    //
-    //         return Result<bool>.Success(true);
-    //     }
-    //     catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
-    //     {
-    //         await transaction.RollbackAsync(cancellationToken);
-    //         return Result<bool>.Failure("exercise already exists: " + ex.InnerException?.Message, ex);
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         await transaction.RollbackAsync(cancellationToken);
-    //         return Result<bool>.Failure("Failed to create exercises: " + ex.Message, ex);
-    //     }
-    // }
-    //
-    //
-    // // Update
-    // public async Task<Result<bool>> UpdateAsync(int exerciseId, ExerciseWriteDto exerciseDto,
-    //     CancellationToken cancellationToken)
-    // {
-    //     using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction =
-    //         await _context.Database.BeginTransactionAsync(cancellationToken);
-    //     try
-    //     {
-    //         Exercise? exercise = await _context.Exercises
-    //             .Include(e => e.ExerciseHowTos)
-    //             .Include(e => e.ExerciseMuscles)
-    //             .Include(e => e.TrainingTypes)
-    //             .SingleOrDefaultAsync(e => e.Id == exerciseId, cancellationToken);
-    //
-    //         if (exercise == null)
-    //             return Result<bool>.Failure("Exercise not found.");
-    //
-    //         exercise.Name = Utils.NormalizeString(exerciseDto.Name);
-    //         exercise.Description = exerciseDto.Description;
-    //         exercise.HowTo = exerciseDto.HowTo;
-    //         exercise.Difficulty = exerciseDto.Difficulty.GetValueOrDefault();
-    //
-    //         _context.ExerciseHowTos.RemoveRange(exercise.ExerciseHowTos);
-    //         exercise.ExerciseHowTos = exerciseDto.HowTos.Select(howTo => new ExerciseHowTo
-    //         {
-    //             ExerciseId = exercise.Id,
-    //             Name = Utils.NormalizeString(howTo.Name),
-    //             Url = howTo.Url
-    //         }).ToList();
-    //
-    //         _context.ExerciseMuscles.RemoveRange(exercise.ExerciseMuscles);
-    //
-    //         List<Muscle> muscles = await _context.Muscles
-    //             .Where(m => exerciseDto.ExerciseMuscles.Select(em => Utils.NormalizeString(em.MuscleName))
-    //                 .Contains(m.Name))
-    //             .ToListAsync(cancellationToken);
-    //         exercise.ExerciseMuscles = exerciseDto.ExerciseMuscles.Select(em => new ExerciseMuscle
-    //         {
-    //             Muscle = muscles.Single(m => m.Name == Utils.NormalizeString(em.MuscleName)),
-    //             IsPrimary = em.IsPrimary
-    //         }).ToList();
-    //
-    //         exercise.TrainingTypes.Clear();
-    //         List<TrainingType> trainingTypes = await _context.TrainingTypes
-    //             .Where(tt => exerciseDto.TrainingTypes.Contains(tt.Name))
-    //             .ToListAsync(cancellationToken);
-    //         foreach (TrainingType? type in trainingTypes)
-    //         {
-    //             exercise.TrainingTypes.Add(type);
-    //         }
-    //
-    //         await _context.SaveChangesAsync(cancellationToken);
-    //         await transaction.CommitAsync(cancellationToken);
-    //
-    //         return Result<bool>.Success(true);
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         await transaction.RollbackAsync(cancellationToken);
-    //         return Result<bool>.Failure("Failed to update exercise: " + ex.Message, ex);
-    //     }
-    // }
-
-    public async Task<Result<bool>> DeleteExerciseAsync(int exerciseId, CancellationToken cancellationToken)
-    {
-        using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction =
-            await _context.Database.BeginTransactionAsync(cancellationToken);
-        try
-        {
-            Exercise? exercise = await _context.Exercises
-                .Include(e => e.ExerciseHowTos)
-                .Include(e => e.ExerciseMuscles)
-                .Include(e => e.TrainingTypes)
-                .SingleOrDefaultAsync(e => e.Id == exerciseId, cancellationToken);
-
-            if (exercise == null)
-                return Result<bool>.Failure("Exercise not found.");
-
-            _context.ExerciseHowTos.RemoveRange(exercise.ExerciseHowTos);
-            _context.ExerciseMuscles.RemoveRange(exercise.ExerciseMuscles);
-
-            _context.Exercises.Remove(exercise);
-
-            await _context.SaveChangesAsync(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
-
-            return Result<bool>.Success(true);
-        }
-        catch (Exception ex)
-        {
-            await transaction.RollbackAsync(cancellationToken);
-            return Result<bool>.Failure("Failed to delete exercise: " + ex.Message, ex);
-        }
-    }
-    //
-    // public async Task<Result<List<ExerciseSearchResultDto>>> SearchExercisesAsync(string searchTerm,
-    //     CancellationToken cancellationToken)
-    // {
-    //     try
-    //     {
-    //         if (string.IsNullOrWhiteSpace(searchTerm))
-    //         {
-    //             return Result<List<ExerciseSearchResultDto>>.Failure("Search term cannot be empty.");
-    //         }
-    //
-    //         searchTerm = Utils.NormalizeString(searchTerm);
-    //
-    //         var exercises = await _context.Exercises
-    //             .AsNoTracking()
-    //             .Where(e => EF.Functions.Like(e.Name, $"%{searchTerm}%"))
-    //             .ProjectTo<ExerciseSearchResultDto>(_mapper.ConfigurationProvider)
-    //             .ToListAsync(cancellationToken);
-    //
-    //         if (exercises == null || exercises.Count == 0)
-    //         {
-    //             return Result<List<ExerciseSearchResultDto>>.Failure("No exercises found matching the search term.");
-    //         }
-    //
-    //         return Result<List<ExerciseSearchResultDto>>.Success(exercises);
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         _logger.LogError($"[ERROR]: something went wrong in {nameof(SearchExercisesAsync)}\n{ex.Message}\n{ex}");
-    //         return Result<List<ExerciseSearchResultDto>>.Failure(ex.Message, ex);
-    //     }
-    // }
-    //
-    //
-    // public async Task<Result<bool>> DeleteBulkAsync(List<string> exerciseNames, CancellationToken cancellationToken)
-    // {
-    //     var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-    //     try
-    //     {
-    //         var exercisesToDelete = await _context.Exercises
-    //             .Include(e => e.ExerciseHowTos)
-    //             .Include(e => e.ExerciseMuscles)
-    //             .Include(e => e.TrainingTypes)
-    //             .Where(x => Utils.NormalizeStringList(exerciseNames).Contains(x.Name))
-    //             .ToListAsync(cancellationToken);
-    //
-    //         _context.RemoveRange(exercisesToDelete);
-    //         await _context.SaveChangesAsync(cancellationToken);
-    //         await transaction.CommitAsync(cancellationToken);
-    //         return Result<bool>.Success(true);
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         await transaction.RollbackAsync(cancellationToken);
-    //         return Result<bool>.Failure(ex.Message, ex);
-    //     }
-    // }
 
     private static IQueryable<ExerciseReadDto> ApplyFiltering(ExerciseQueryOptions options,
         IQueryable<ExerciseReadDto> query)
