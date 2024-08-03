@@ -19,13 +19,40 @@ public class UtilsTests
         Assert.Equal(normalizedString, CultureInfo.CurrentCulture.TextInfo.ToLower(@string.Trim()));
     }
 
+    [Fact]
+    public void NormalizeString_ShouldHandleArabic()
+    {
+        // Arrange
+        var input = "  مرحبا بالعالم  ";  // "Hello world" in Arabic
+        var expected = "مرحبا بالعالم";  // Arabic does not use lower or upper case
+
+        // Act
+        var result = Utils.NormalizeString(input);
+
+        // Assert
+        Assert.Equal(expected, result);
+    }
+
+    [Fact]
+    public void NormalizeString_ShouldHandleJapanese()
+    {
+        // Arrange
+        var input = "  こんにちは世界  ";  // "Hello world" in Japanese
+        var expected = "こんにちは世界";  // Japanese does not use lower or upper case
+
+        // Act
+        var result = Utils.NormalizeString(input);
+
+        // Assert
+        Assert.Equal(expected, result);
+    }
     
     [Theory]
     [InlineData("")]
     [InlineData(null)]
     public void NormalizeString_incorrect_input_returns_Failure(string @string)
     {
-        Assert.Throws<ArgumentException>(() => Utils.NormalizeString(@string));
+        Assert.Null( Utils.NormalizeString(@string));
     }
 
     [Theory] // how can i test incorrect input here?
