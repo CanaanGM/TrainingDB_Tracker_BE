@@ -45,21 +45,22 @@ public class EquipmentServiceTests
     [Fact]
     public async Task GetAllNotEmpty_Success()
     {
-        Console.WriteLine($"{Directory.GetCurrentDirectory()}/training_log_v2.db");
-        Console.WriteLine($"{AppContext.BaseDirectory}/training_log_v2.db");
+        var date =  DateTime.Today;
         List<Equipment> equipments = new()
         {
             new Equipment()
             {
                 Name = "straight bar",
                 WeightKg = 10,
-                Description = "Home training bar"
+                Description = "Home training bar",
+                CreatedAt = date
             },
             new Equipment()
             {
                 Name = "swiggly bar",
                 WeightKg = 7,
-                Description = "Home training swiggly bar"
+                Description = "Home training swiggly bar",
+                CreatedAt = date.AddDays(1)
             }
         };
         context.Equipment.AddRange(equipments);
@@ -71,11 +72,11 @@ public class EquipmentServiceTests
         Assert.Equal(equipments[0].Name, result.Value[0].Name);
         Assert.Equal(equipments[0].WeightKg, result.Value[0].WeightKg);
         Assert.Equal(equipments[0].Description, result.Value[0].Description);
-        Assert.Equal(DateTime.Now.Date, result.Value[0].CreatedAt?.Date);
+        Assert.Equal(equipments[0].CreatedAt, result.Value[0].CreatedAt);
         Assert.Equal(equipments[1].Name, result.Value[1].Name);
         Assert.Equal(equipments[1].WeightKg, result.Value[1].WeightKg);
         Assert.Equal(equipments[1].Description, result.Value[1].Description);
-        Assert.Equal(DateTime.UtcNow.Date, result.Value[1].CreatedAt?.Date);
+        Assert.Equal(equipments[1].CreatedAt, result.Value[1].CreatedAt);
     }
 
     [Fact]
