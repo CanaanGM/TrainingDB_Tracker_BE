@@ -105,6 +105,9 @@ public class MuscleService : IMuscleService
 
     public async Task<Result<int>> CreateMuscleAsync(MuscleWriteDto newMuscle, CancellationToken cancellationToken)
     {
+        var validation = Validation.ValidateDtoStrings(newMuscle);
+        if (!validation.IsSuccess)
+            return Result<int>.Failure(validation.ErrorMessage);
         var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
