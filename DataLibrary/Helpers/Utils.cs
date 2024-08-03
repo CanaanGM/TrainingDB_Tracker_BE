@@ -11,7 +11,7 @@ public static class Utils
     /// <param name="input">The string to be normalized.</param>
     /// <returns>A normalized string with whitespace trimmed and casing converted.</returns>
     /// <exception cref="ArgumentException">Thrown when the input string is null or empty.</exception>
-    public static string NormalizeString(string input)
+    public static string? NormalizeString(string input)
     {
         if (string.IsNullOrEmpty(input?.Trim()))
             return null;
