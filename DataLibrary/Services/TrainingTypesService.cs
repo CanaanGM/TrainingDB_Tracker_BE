@@ -10,6 +10,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace DataLibrary.Services;
+public interface ITrainingTypesService
+{
+    Task<Result<int>> UpdateAsync(TrainingTypeWriteDto newTrainingType, CancellationToken cancellationToken);
+    Task<Result<bool>> CreateBulkAsync(ICollection<TrainingTypeWriteDto> newTypes, CancellationToken cancellationToken);
+    Task<Result<bool>> DeleteAsync(int typeId, CancellationToken cancellationToken);
+    Task<Result<List<TrainingTypeReadDto>>> GetAllAsync(CancellationToken cancellationToken);
+    Task<Result<bool>> Update(int typeId, TrainingTypeWriteDto updatedType, CancellationToken cancellationToken);
+}
+
 public class TrainingTypesService : ITrainingTypesService
 {
     private readonly SqliteContext _context;
