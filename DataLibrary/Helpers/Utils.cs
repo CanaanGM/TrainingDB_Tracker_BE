@@ -74,10 +74,10 @@ public static class Utils
     /// </summary>
     /// <param name="listOfStrings">an ICollection of strings to be normalized</param>
     /// <returns>a distinct list of normalized names</returns>
-    public static List<string> NormalizeStringList(ICollection<string> listOfStrings)
+    public static List<string?> NormalizeStringList(ICollection<string> listOfStrings)
     {
         return listOfStrings
-            .Select(x => Utils.NormalizeString(x))
+            .Select(Utils.NormalizeString)
             .Distinct()
             .ToList();
     }

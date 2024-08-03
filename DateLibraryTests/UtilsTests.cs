@@ -99,7 +99,12 @@ public class UtilsTests
     [Fact]
     public void NormalizeDtoNames_reuturns_normalized_list_of_strings()
     {
-        var listOfStrings = new List<string> { "Wide Grip Pull-Up", "Dragon Flag", "DeadLift", "DeadLift", "BenchPress" };
+        var listOfStrings = new List<string>
+        {
+            "Wide Grip Pull-Up", "Dragon Flag", "DeadLift", "DeadLift", "BenchPress",
+            "مرحبا بالعالم",
+            "こんにちは世界"
+        };
 
         var normalizedStrings = Utils.NormalizeStringList(listOfStrings);
         Assert.NotNull(normalizedStrings);
@@ -107,7 +112,7 @@ public class UtilsTests
         Assert.NotEqual(listOfStrings.Count(), normalizedStrings.Count());
 
         // since they're duplicates, all of them should be in the normalized list.
-        foreach (var unString in listOfStrings.Select(x => Utils.NormalizeString(x)).ToList())
+        foreach (var unString in listOfStrings.Select(Utils.NormalizeString).ToList())
             Assert.Contains(unString, normalizedStrings);
 
     }
