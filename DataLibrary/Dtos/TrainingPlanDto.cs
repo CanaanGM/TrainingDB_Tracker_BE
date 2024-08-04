@@ -5,7 +5,7 @@ public class TrainingPlanWriteDto
     public required string? Name { get; set; }
     public required string? Description { get; set; }
     public required string? Notes { get; set; }
-    public required List<TrainingWeekWriteDto> Weeks { get; set; }
+    public required List<TrainingWeekWriteDto> TrainingWeeks { get; set; }
     public required List<string> Equipemnt { get; set; }
     public required List<string> TrainingTypes { get; set; }
 }
@@ -14,7 +14,7 @@ public class TrainingWeekWriteDto
 {
     public string Name { get; set; } = null!;
     public required int OrderNumber { get; set; }
-    public required List<TrainingDaysWriteDto> Days { get; set; }
+    public required List<TrainingDaysWriteDto> TrainingDays { get; set; }
 }
 
 public class TrainingDaysWriteDto
@@ -32,13 +32,13 @@ public class BlockWriteDto
     public required int RestInSeconds { get; set; }
     public required string Instructions { get; set; }
     public required int OrderNumber { get; set; }
-    public required List<BlockExerciseWriteDto> Exercises { get; set; }
+    public required List<BlockExerciseWriteDto> BlockExercises { get; set; }
 }
 
 public class BlockExerciseWriteDto
 {
     public required string ExerciseName { get; set; }
-    public required string Notes { get; set; }
+    public required string Instructions { get; set; }
     public required int OrderNumber { get; set; }
     public int? Repetitions { get; set; }
     public int? TimerInSeconds { get; set; }
@@ -47,14 +47,15 @@ public class BlockExerciseWriteDto
 
 public class TrainingPlanReadDto
 {
+    //TODO: make this more useful
     public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public string Notes { get; set; }
-
-    public List<TrainingWeekReadDto> Weeks { get; set; }
-    public List<EquipmentReadDto> Equipemnt { get; set; }
-    public List<TrainingTypeReadDto> TrainingTypes { get; set; }
+    public List<string> TrainingTypes { get; set; }
+    public List<string> RequiredEquipment { get; set; }
+    public List<TrainingWeekReadDto> TrainingWeeks { get; set; }
+    
 }
 
 public class TrainingWeekReadDto
@@ -62,7 +63,7 @@ public class TrainingWeekReadDto
     public string Name { get; set; } = null!;
 
     public int OrderNumber { get; set; }
-    public List<TrainingDaysReadDto> Days { get; set; }
+    public List<TrainingDaysReadDto> TrainingDays { get; set; }
 }
 
 public class TrainingDaysReadDto
@@ -80,7 +81,7 @@ public class BlockReadDto
     public required int RestInSeconds { get; set; }
     public required string Instructions { get; set; }
     public required int OrderNumber { get; set; }
-    public required List<BlockExerciseReadDto> Exercises { get; set; }
+    public required List<BlockExerciseReadDto> BlockExercises { get; set; }
 }
 
 public class BlockExerciseReadDto

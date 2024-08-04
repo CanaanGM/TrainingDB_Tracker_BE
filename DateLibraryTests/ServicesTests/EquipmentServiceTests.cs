@@ -12,26 +12,16 @@ using TestSupport.EfHelpers;
 
 namespace DateLibraryTests.ServicesTests;
 
-public class EquipmentServiceTests
+public class EquipmentServiceTests : BaseTestClass
 {
-    private readonly DbContextOptionsDisposable<SqliteContext> options;
-    private readonly SqliteContext context;
-    private readonly Profiles myProfile;
-    private readonly MapperConfiguration configuration;
-    private readonly Mapper mapper;
+
     private readonly Mock<ILogger<EquipmentService>> logger;
     private readonly EquipmentService service;
 
     public EquipmentServiceTests()
     {
-        options = SqliteInMemory.CreateOptions<SqliteContext>();
-        context = new SqliteContext(options);
-        context.Database.EnsureCreated();
-        myProfile = new Profiles();
-        configuration = new MapperConfiguration(cfg => cfg.AddProfile(myProfile));
-        mapper = new Mapper(configuration);
         logger = new Mock<ILogger<EquipmentService>>();
-        service = new EquipmentService(context, mapper, logger.Object);
+        service = new EquipmentService(_context, _mapper, logger.Object);
     }
 
     [Fact]
@@ -63,8 +53,8 @@ public class EquipmentServiceTests
                 CreatedAt = date.AddDays(1)
             }
         };
-        context.Equipment.AddRange(equipments);
-        context.SaveChanges();
+        _context.Equipment.AddRange(equipments);
+        _context.SaveChanges();
 
         var result = await service.GetAsync(new CancellationToken());
         Assert.True(result.IsSuccess);
@@ -94,7 +84,7 @@ public class EquipmentServiceTests
         Assert.True(result.IsSuccess);
         Assert.True(result.Value >= 1);
 
-        var newEquip = context.Equipment.First();
+        var newEquip = _context.Equipment.First();
         Assert.Equal(newEquip.Name, n.Name);
         Assert.Equal(newEquip.WeightKg, n.WeightKg);
         Assert.Equal(newEquip.Description, n.Description);
@@ -165,9 +155,9 @@ public class EquipmentServiceTests
     public async Task Upsert_UpdateShouldReturnSucess(Tuple<Equipment, EquipmentWriteDto> data)
     {
         var eq = data.Item1;
-        context.Equipment.Add(eq);
-        context.SaveChanges();
-        context.ChangeTracker.Clear();
+        _context.Equipment.Add(eq);
+        _context.SaveChanges();
+        _context.ChangeTracker.Clear();
         
         var n = data.Item2;
 
@@ -176,7 +166,7 @@ public class EquipmentServiceTests
         Assert.True(result.Value >= 1);
 
         
-        var newEquip = context.Equipment.First();
+        var newEquip = _context.Equipment.First();
         if(n.NewName is not null)
             Assert.Equal(newEquip.Name, Utils.NormalizeString(n.NewName));
         if (n.Description is not null)
@@ -225,7 +215,7 @@ public class EquipmentServiceTests
         Assert.True(result.IsSuccess);
         Assert.True(result.Value);
 
-        Assert.Equal(data.Count, context.Equipment.Count());
+        Assert.Equal(data.Count, _context.Equipment.Count());
         
     }
     
@@ -247,9 +237,9 @@ public class EquipmentServiceTests
             Description = "who is making this",
             WeightKg = 82.5
         };
-        context.Equipment.Add(n);
-        context.SaveChanges();
-        context.ChangeTracker.Clear();
+        _context.Equipment.Add(n);
+        _context.SaveChanges();
+        _context.ChangeTracker.Clear();
         
         
         var equipmentName = "canaan";
@@ -257,7 +247,7 @@ public class EquipmentServiceTests
         Assert.True(result.IsSuccess);
         Assert.True(result.Value);
         
-        Assert.Empty(context.Equipment);
+        Assert.Empty(_context.Equipment);
     }
     
     [Theory]

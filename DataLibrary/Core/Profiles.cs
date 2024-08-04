@@ -12,14 +12,14 @@ public class Profiles : Profile
         // TODO: move what's related into it's own file for clarity.
 
         CreateMap<Muscle, MuscleReadDto>()
-            .ForMember(x => x.MuscleName, src => 
+            .ForMember(x => x.MuscleName, src =>
                 src.MapFrom(w => w.Name))
             .ReverseMap();
 
 
         CreateMap<Muscle, MuscleWriteDto>().ReverseMap();
         CreateMap<MuscleUpdateDto, Muscle>()
-            .ForAllMembers(opts => 
+            .ForAllMembers(opts =>
                 opts.Condition((src, dest, srcMember) => srcMember != null));
 
 
@@ -63,7 +63,27 @@ public class Profiles : Profile
         CreateMap<Equipment, EquipmentReadDto>();
         CreateMap<EquipmentWriteDto, Equipment>();
 
-     }
+
+        CreateMap< BlockExercise, BlockExerciseWriteDto>()
+            .ForMember(x => x.ExerciseName,
+                dst =>
+                    dst.MapFrom(yt => yt.Exercise.Name));
+        CreateMap<BlockExerciseReadDto, BlockExercise>().ReverseMap();
+
+        CreateMap<Block, BlockReadDto>();
+        CreateMap<BlockWriteDto, Block>();
+
+        CreateMap<TrainingDaysWriteDto, TrainingDay>();
+        CreateMap<TrainingDaysReadDto, TrainingDay>().ReverseMap();
+
+        CreateMap<TrainingWeekWriteDto, TrainingWeek>();
+        CreateMap<TrainingWeekReadDto, TrainingWeek>().ReverseMap();
+
+        CreateMap<TrainingPlanWriteDto, TrainingPlan>();
+        CreateMap<TrainingPlan, TrainingPlanReadDto>()
+            ;
+        
+    }
 
 
 }
