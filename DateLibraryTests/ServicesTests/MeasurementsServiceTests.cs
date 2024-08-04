@@ -44,9 +44,9 @@ public class MeasurementsServiceTests
     public async Task GetAllNotEmpty_returns_OrderedList()
     {
         var currentDate = DateTime.UtcNow;
-        context.Measurements.AddRange(new List<Measurements>()
+        context.Measurements.AddRange(new List<Measurement>()
         {
-            new Measurements()
+            new Measurement()
             {
                 Chest = 10,
                 Hip = 10,
@@ -63,7 +63,7 @@ public class MeasurementsServiceTests
                 WaistUnderBelly = 10,
                 CreatedAt = currentDate.AddDays(2)
             },
-            new Measurements()
+            new Measurement()
             {
                 Chest = 666,
                 Hip = 666,
@@ -80,7 +80,7 @@ public class MeasurementsServiceTests
                 WaistUnderBelly = 666,
                 CreatedAt = currentDate
             },
-            new Measurements()
+            new Measurement()
             {
                 Chest = 5,
                 Hip = 5,
@@ -300,7 +300,7 @@ public class MeasurementsServiceTests
     [Fact]
     public async Task Update_Full_Should_Return_Suceess()
     {
-        var newMeasurements = new Measurements()
+        var newMeasurements = new Measurement()
         {
             Chest = 10,
             Hip = 10,
@@ -340,7 +340,7 @@ public class MeasurementsServiceTests
             TotalBodyWater = 654
         };
 
-        var result = await service.UpdateAsync(newMeasurements.MeasurementsId, updateMeasurementsWriteDto,
+        var result = await service.UpdateAsync(newMeasurements.Id, updateMeasurementsWriteDto,
             new CancellationToken());
         
         Assert.True(result.IsSuccess);
@@ -378,7 +378,7 @@ public class MeasurementsServiceTests
     [Fact]
     public async Task DeleteAsync_Should_delete_successfuly()
     {
-        var newMeasurements = new Measurements()
+        var newMeasurements = new Measurement()
         {
             Chest = 10,
             Hip = 10,
@@ -397,7 +397,7 @@ public class MeasurementsServiceTests
         context.Measurements.Add(newMeasurements);
         context.SaveChanges();
 
-        var result = await service.DeleteAsync(newMeasurements.MeasurementsId, new CancellationToken());
+        var result = await service.DeleteAsync(newMeasurements.Id, new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.True(result.Value);
         

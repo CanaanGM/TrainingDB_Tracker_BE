@@ -38,13 +38,11 @@ public class PlanService : IPlanService
         try
         {
             var trainingPlan = await _context.TrainingPlans
-                .Include(tp => tp.Weeks)
-                .ThenInclude(tw => tw.Days)
+                .Include(tp => tp.TrainingWeeks)
+                .ThenInclude(tw => tw.TrainingDays)
                 .ThenInclude(td => td.Blocks)
-                .ThenInclude(b => b.Exercises)
+                .ThenInclude(b => b.BlockExercises)
                 .ThenInclude(be => be.Exercise)
-                .Include(tp => tp.Equipment)
-                .Include(tp => tp.TrainingTypes)
                 .FirstOrDefaultAsync(tp => tp.Id == id, cancellationToken);
 
             if (trainingPlan == null)
@@ -110,13 +108,11 @@ public class PlanService : IPlanService
         try
         {
             var trainingPlan = await _context.TrainingPlans
-                .Include(tp => tp.Weeks)
-                .ThenInclude(tw => tw.Days)
+                .Include(tp => tp.TrainingWeeks)
+                .ThenInclude(tw => tw.TrainingDays)
                 .ThenInclude(td => td.Blocks)
-                .ThenInclude(b => b.Exercises)
+                .ThenInclude(b => b.BlockExercises)
                 .ThenInclude(be => be.Exercise)
-                .Include(tp => tp.Equipment)
-                .Include(tp => tp.TrainingTypes)
                 .FirstOrDefaultAsync(tp => tp.Id == planId, cancellationToken);
 
             if (trainingPlan == null)
@@ -170,18 +166,16 @@ public class PlanService : IPlanService
             trainingPlan.Name = Utils.NormalizeString(updateDto.Name);
             trainingPlan.Description = updateDto.Description;
             trainingPlan.Notes = updateDto.Notes;
-            trainingPlan.TrainingTypes = dbRelatedTypes;
-            trainingPlan.Equipment = relatedEquipment;
 
             // Remove existing weeks, days, and blocks
-            _context.TrainingWeeks.RemoveRange(trainingPlan.Weeks);
+            _context.TrainingWeeks.RemoveRange(trainingPlan.TrainingWeeks);
 
             // Add new weeks, days, and blocks
-            trainingPlan.Weeks = updateDto.Weeks.Select(weekDto => new TrainingWeek
+            trainingPlan.TrainingWeeks = updateDto.Weeks.Select(weekDto => new TrainingWeek
             {
                 Name = Utils.NormalizeString(weekDto.Name),
                 OrderNumber = weekDto.OrderNumber,
-                Days = weekDto.Days.Select(dayDto => new TrainingDay
+                TrainingDays = weekDto.Days.Select(dayDto => new TrainingDay
                 {
                     Name = Utils.NormalizeString(dayDto.Name),
                     Notes = dayDto.Notes,
@@ -193,10 +187,9 @@ public class PlanService : IPlanService
                         RestInSeconds = blockDto.RestInSeconds,
                         Instructions = blockDto.Instructions,
                         OrderNumber = blockDto.OrderNumber,
-                        Exercises = blockDto.Exercises.Select(exerciseDto => new BlockExercise
+                        BlockExercises = blockDto.Exercises.Select(exerciseDto => new BlockExercise
                         {
                             Exercise = relatedExercises[Utils.NormalizeString(exerciseDto.ExerciseName)],
-                            Notes = exerciseDto.Notes,
                             OrderNumber = exerciseDto.OrderNumber,
                             Repetitions = exerciseDto.Repetitions,
                             TimerInSeconds = exerciseDto.TimerInSeconds,
@@ -227,34 +220,32 @@ public class PlanService : IPlanService
         try
         {
             var trainingPlan = await _context.TrainingPlans
-                .Include(tp => tp.Weeks)
-                .ThenInclude(tw => tw.Days)
+                .Include(tp => tp.TrainingWeeks)
+                .ThenInclude(tw => tw.TrainingDays)
                 .ThenInclude(td => td.Blocks)
-                .ThenInclude(b => b.Exercises)
-                .Include(tp => tp.Equipment)
-                .Include(tp => tp.TrainingTypes)
+                .ThenInclude(b => b.BlockExercises)
                 .FirstOrDefaultAsync(tp => tp.Id == planId, cancellationToken);
 
             if (trainingPlan == null)
                 return Result<bool>.Failure("Training plan not found.");
 
             // Remove associated entities
-            foreach (var week in trainingPlan.Weeks)
+            foreach (var week in trainingPlan.TrainingWeeks)
             {
-                foreach (var day in week.Days)
+                foreach (var day in week.TrainingDays)
                 {
                     foreach (var block in day.Blocks)
                     {
-                        _context.BlockExercises.RemoveRange(block.Exercises);
+                        _context.BlockExercises.RemoveRange(block.BlockExercises);
                     }
 
                     _context.Blocks.RemoveRange(day.Blocks);
                 }
 
-                _context.TrainingDays.RemoveRange(week.Days);
+                _context.TrainingDays.RemoveRange(week.TrainingDays);
             }
 
-            _context.TrainingWeeks.RemoveRange(trainingPlan.Weeks);
+            _context.TrainingWeeks.RemoveRange(trainingPlan.TrainingWeeks);
 
             // Remove the training plan itself
             _context.TrainingPlans.Remove(trainingPlan);
@@ -391,13 +382,11 @@ public class PlanService : IPlanService
             Name = Utils.NormalizeString(newPlanDto.Name),
             Description = newPlanDto.Description,
             Notes = newPlanDto.Notes,
-            TrainingTypes = trainingTypes,
-            Equipment = relatedEquipment,
-            Weeks = newPlanDto.Weeks.Select(weekDto => new TrainingWeek
+            TrainingWeeks = newPlanDto.Weeks.Select(weekDto => new TrainingWeek
             {
                 Name = Utils.NormalizeString(weekDto.Name),
                 OrderNumber = weekDto.OrderNumber,
-                Days = weekDto.Days.Select(dayDto => new TrainingDay
+                TrainingDays = weekDto.Days.Select(dayDto => new TrainingDay
                 {
                     Name = Utils.NormalizeString(dayDto.Name),
                     Notes = dayDto.Notes,
@@ -409,10 +398,9 @@ public class PlanService : IPlanService
                         RestInSeconds = blockDto.RestInSeconds,
                         Instructions = blockDto.Instructions,
                         OrderNumber = blockDto.OrderNumber,
-                        Exercises = blockDto.Exercises.Select(exerciseDto => new BlockExercise
+                        BlockExercises = blockDto.Exercises.Select(exerciseDto => new BlockExercise
                         {
                             Exercise = relatedExercises[Utils.NormalizeString(exerciseDto.ExerciseName)],
-                            Notes = exerciseDto.Notes,
                             OrderNumber = exerciseDto.OrderNumber,
                             Repetitions = exerciseDto.Repetitions,
                             TimerInSeconds = exerciseDto.TimerInSeconds,

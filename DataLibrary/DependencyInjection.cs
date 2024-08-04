@@ -2,15 +2,19 @@
 using DataLibrary.Services;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DataLibrary;
 public static class DependencyInjection
 {
-    public static IServiceCollection AddDataLibrary(this IServiceCollection services)
+    public static IServiceCollection AddDataLibrary(
+        this IServiceCollection services,
+        string connectionString = "Data Source = E:\\development\\c#\\TrainingDB_Integration\\training_log_v2.db"
+        )
     {
         services.AddDbContext<SqliteContext>(opt => opt.UseSqlite(
-                "Data Source=E:/development/databases/training_log_v2.db"
+            connectionString
             ));
 
         services.AddScoped<IMuscleService, MuscleService>();

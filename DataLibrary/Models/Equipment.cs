@@ -7,13 +7,15 @@ public partial class Equipment
 {
     public int Id { get; set; }
 
+    public double? WeightKg { get; set; }
+
+    public DateTime? CreatedAt { get; set; }
+
     public string Name { get; set; } = null!;
 
     public string? Description { get; set; }
 
-    public double? WeightKg { get; set; }
+    public string? HowTo { get; set; }
 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-    public virtual ICollection<TrainingPlan> TrainingPlans { get; set; } = new List<TrainingPlan>();
+    public virtual ICollection<Exercise> Exercises { get; set; } = new List<Exercise>();
 }

@@ -85,6 +85,7 @@ public class MuscleService : IMuscleService
     {
         try
         {
+    
             if (string.IsNullOrEmpty(muscleGroupName))
                 throw new ArgumentNullException("muscleGroupName cannot be null");
             var groupedMuscles = await _context.Muscles

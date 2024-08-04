@@ -28,27 +28,24 @@
 create table if not exists muscle
 (
     id
-    integer
-    primary
-    key
-    autoincrement,
+        integer
+        primary
+            key
+        autoincrement,
     name
-    text
-    unique
-    NOT
-    NULL,
+        text
+        unique
+        NOT
+            NULL,
     muscle_group
-    text
-    NOT
-    null,
+        text
+        NOT
+            null,
     `function`
-    text,
+        text,
     wiki_page_url
-    varchar
-(
-    255
-)
-    );
+        varchar(255)
+);
 CREATE INDEX idx_muscle_name ON muscle (name);
 CREATE INDEX idx_muscle_group ON muscle (muscle_group);
 -- singular exercise
@@ -57,34 +54,34 @@ CREATE INDEX idx_muscle_group ON muscle (muscle_group);
 create table if not exists exercise
 (
     id
-    integer
-    primary
-    key
-    autoincrement,
+        integer
+        primary
+            key
+        autoincrement,
     name
-    text
-    not
-    null
-    unique,
+        text
+        not
+            null
+        unique,
     description
-    text,
+        text,
     how_to
-    text,
+        text,
     difficulty
-    integer
-    default
-    0,
+        integer
+        default
+            0,
     CHECK
-(
-    difficulty
-    >=
-    0
-    AND
-    difficulty
-    <=
-    5
-)
-    );
+        (
+        difficulty
+            >=
+        0
+            AND
+        difficulty
+            <=
+        5
+        )
+);
 create index idx_exercise_name on exercise (name);
 create index idx_exercise_difficulty on exercise (difficulty);
 -- what muscles involves in an exercise
@@ -92,84 +89,81 @@ create index idx_exercise_difficulty on exercise (difficulty);
 create table if not exists exercise_muscle
 (
     is_primary
-    boolean
-    DEFAULT
-    false,
+        boolean
+        DEFAULT
+            false,
     muscle_id
-    integer,
+        integer,
     exercise_id
-    integer,
+        integer,
     primary
-    key
-(
-    muscle_id,
-    exercise_id
-),
+        key
+        (
+         muscle_id,
+         exercise_id
+            ),
     CONSTRAINT fk_muscle_id Foreign Key
-(
-    muscle_id
-) references muscle
-(
-    id
-) ON DELETE cascade,
+        (
+         muscle_id
+            ) references muscle
+            (
+             id
+                ) ON DELETE cascade,
     CONSTRAINT fk_exercise_id Foreign Key
-(
-    exercise_id
-) references exercise
-(
-    id
-)
-  ON DELETE cascade
-    );
+        (
+         exercise_id
+            ) references exercise
+            (
+             id
+                )
+        ON DELETE cascade
+);
 create index idx_exercise_muscle_is_primary on exercise_muscle (is_primary);
 -- a link to a video or a pic/gif of how to perform an exercise
 create table if not exists exercise_how_to
 (
     id
-    integer
-    primary
-    key
-    autoincrement,
+        integer
+        primary
+            key
+        autoincrement,
     exercise_id
-    integer,
+        integer,
     name
-    text
-    not
-    null,
+        text
+                     not
+                         null,
     url
-    varchar
-(
-    255
-) not NULL,
+        varchar(255) not NULL,
     CONSTRAINT fk_exercise_id Foreign KEY
-(
-    exercise_id
-) REFERENCES exercise
-(
-    id
-) ON DELETE cascade
-    );
+        (
+         exercise_id
+            ) REFERENCES exercise
+            (
+             id
+                ) ON DELETE cascade
+);
 -- equipment table
 -- like dumbbell, changeable weights, 12kg
 create table if not exists equipment
 (
     id
-    integer
-    primary
-    key
-    autoincrement,
+        integer
+        primary
+            key
+        autoincrement,
     name
-    text
-    not
-    null,
+        text
+        not
+            null,
     description
-    text,
+        text,
     weight_kg
-    real,
+        real,
     created_at
-    datetime
-    default
-    current_timestamp
+        datetime
+        default
+            current_timestamp
 );
 -- singular exercise record
 -- Dragon flag, 20,0,0,0, "Go Slower", 0, 2024-06-24 00:55:24
@@ -177,58 +171,58 @@ create table if not exists equipment
 create table if not exists exercise_record
 (
     id
-    integer
-    primary
-    key
-    autoincrement,
+        integer
+        primary
+            key
+        autoincrement,
     exercise_id
-    integer,
+        integer,
     repetitions
-    integer,
+        integer,
     timer_in_seconds
-    integer,
+        integer,
     distance_in_meters
-    integer,
+        integer,
     weight_used_kg
-    real,
+        real,
     notes
-    text,
+        text,
     rest_in_seconds
-    integer,
+        integer,
     incline
-    integer,
+        integer,
     speed
-    integer,
+        integer,
     heart_rate_avg
-    integer,
+        integer,
     KcalBurned
-    integer,
+        integer,
     mood
-    integer,
+        integer,
     rate_of_perceived_exertion
-    int, -- effort
+        int, -- effort
     created_at
-    datetime
-    default
-    current_timestamp,
+        datetime
+        default
+            current_timestamp,
     CHECK
-(
-    mood
-    >=
-    0
-    AND
-    mood
-    <=
-    10
-),
+        (
+        mood
+            >=
+        0
+            AND
+        mood
+            <=
+        10
+        ),
     CONSTRAINT fk_exercise_id Foreign Key
-(
-    exercise_id
-) references exercise
-(
-    id
-) ON DELETE cascade
-    );
+        (
+         exercise_id
+            ) references exercise
+            (
+             id
+                ) ON DELETE cascade
+);
 create index idx_exercise_record_created_at on exercise_record (created_at);
 -- represents a singular training session no matter how big or small (a day can have a lot)
 -- 00:30:00, 495, "i love rope jumping", 2024-06-24 00:55:24
@@ -237,35 +231,35 @@ create index idx_exercise_record_created_at on exercise_record (created_at);
 create table if not exists training_session
 (
     id
-    integer
-    primary
-    key
-    autoincrement,
+        integer
+        primary
+            key
+        autoincrement,
     duration_in_seconds
-    integer,
+        integer,
     total_calories_burned
-    integer,
+        integer,
     notes
-    text,
+        text,
     mood
-    integer,
+        integer,
     feeling
-    text, -- my legs were dead from last time, or something similar
+        text, -- my legs were dead from last time, or something similar
     created_at
-    datetime
-    default
-    current_timestamp,
+        datetime
+        default
+            current_timestamp,
     CHECK
-(
-    mood
-    >=
-    0
-    AND
-    mood
-    <=
-    10
-)
-    );
+        (
+        mood
+            >=
+        0
+            AND
+        mood
+            <=
+        10
+        )
+);
 create index idx_training_session_created_at on training_session (created_at);
 -- all training records for a session, allowing this:
 -- 00:30:00, 495,Rope jumping,  "i love rope jumping", 2024-06-24 00:55:24
@@ -273,39 +267,39 @@ create index idx_training_session_created_at on training_session (created_at);
 create table if not exists training_session_exercise_record
 (
     id
-    integer
-    primary
-    key
-    autoincrement,
+        integer
+        primary
+            key
+        autoincrement,
     training_session_id
-    integer,
+        integer,
     exercise_record_id
-    integer,
+        integer,
     last_weight_used_kg
-    real, -- should be populated when reading the exercise
+        real, -- should be populated when reading the exercise
     created_at
-    datetime
-    default
-    current_timestamp,
+        datetime
+        default
+            current_timestamp,
     CONSTRAINT
-    fk_training_session_id
-    Foreign
-    Key
-(
-    training_session_id
-) references training_session
-(
-    id
-) ON DELETE cascade,
+        fk_training_session_id
+        Foreign
+            Key
+            (
+             training_session_id
+                ) references training_session
+            (
+             id
+                ) ON DELETE cascade,
     CONSTRAINT fk_exercise_record_id Foreign Key
-(
-    exercise_record_id
-) references exercise_record
-(
-    id
-)
-  ON DELETE CASCADE
-    );
+        (
+         exercise_record_id
+            ) references exercise_record
+            (
+             id
+                )
+        ON DELETE CASCADE
+);
 create index idx_training_session_exercise_record_created_at on training_session_exercise_record (created_at);
 -- what type of training have i done
 -- why no enums ??!
@@ -313,430 +307,430 @@ create index idx_training_session_exercise_record_created_at on training_session
 create table if not exists training_type
 (
     id
-    integer
-    primary
-    key
-    autoincrement,
+        integer
+        primary
+            key
+        autoincrement,
     name
-    text
-    not
-    NULL
-    unique
+        text
+        not
+            NULL
+        unique
 );
 CREATE unique index idx_training_type_name on training_type (name);
 -- what types does an exercise have ; Dragon Flag, [BodyBuilding, Calisthenics, Athletics]
 create table if not exists exercise_type
 (
     exercise_id
-    integer,
+        integer,
     training_type_id
-    integer,
+        integer,
     primary
-    key
-(
-    exercise_id,
-    training_type_id
-),
+        key
+        (
+         exercise_id,
+         training_type_id
+            ),
     CONSTRAINT fk_exercise_id Foreign Key
-(
-    exercise_id
-) references exercise
-(
-    id
-) ON DELETE cascade ,
+        (
+         exercise_id
+            ) references exercise
+            (
+             id
+                ) ON DELETE cascade,
     CONSTRAINT fk_training_type_id Foreign Key
-(
-    training_type_id
-) references training_type
-(
-    id
-)
-  ON DELETE cascade
-    );
+        (
+         training_type_id
+            ) references training_type
+            (
+             id
+                )
+        ON DELETE cascade
+);
 -- training session types
 create table if not exists training_session_type
 (
     training_session_id
-    integer,
+        integer,
     training_type_id
-    integer,
+        integer,
     primary
-    key
-(
-    training_session_id,
-    training_type_id
-),
+        key
+        (
+         training_session_id,
+         training_type_id
+            ),
     CONSTRAINT fk_training_session_id Foreign Key
-(
-    training_session_id
-) references training_session
-(
-    id
-) ON DELETE cascade,
+        (
+         training_session_id
+            ) references training_session
+            (
+             id
+                ) ON DELETE cascade,
     CONSTRAINT fk_training_type_id Foreign Key
-(
-    training_type_id
-) references training_type
-(
-    id
-)
-  ON DELETE cascade
-    );
+        (
+         training_type_id
+            ) references training_type
+            (
+             id
+                )
+        ON DELETE cascade
+);
 -- overall training plan that you follow for a set of weeks
 create table if not exists training_plan
 (
     id
-    integer
-    primary
-    key
-    autoincrement,
+        integer
+        primary
+            key
+        autoincrement,
     name
-    text,
+        text,
     training_weeks
-    integer
-    not
-    null, -- 4 weeks for example
+        integer
+        not
+            null, -- 4 weeks for example
     training_days_per_week
-    integer
-    not
-    null, -- 5 days per week of training for example
+        integer
+        not
+            null, -- 5 days per week of training for example
     description
-    text,
+        text,
     notes
-    text,
+        text,
     created_at
-    datetime
-    default
-    current_timestamp
+        datetime
+        default
+            current_timestamp
 );
 -- types of training plan ; [BodyBuilding, Strength Training] or [BodyBuilding] or [Strength Training]
 create table if not exists training_plan_type
 (
     training_plan_id
-    integer,
+        integer,
     training_type_id
-    integer,
+        integer,
     primary
-    key
-(
-    training_plan_id,
-    training_type_id
-),
+        key
+        (
+         training_plan_id,
+         training_type_id
+            ),
     CONSTRAINT fk_training_plan_id Foreign Key
-(
-    training_plan_id
-) references training_plan
-(
-    id
-) ON DELETE cascade,
+        (
+         training_plan_id
+            ) references training_plan
+            (
+             id
+                ) ON DELETE cascade,
     CONSTRAINT fk_training_type_id Foreign Key
-(
-    training_type_id
-) references training_type
-(
-    id
-)
-  ON DELETE cascade
-    );
+        (
+         training_type_id
+            ) references training_type
+            (
+             id
+                )
+        ON DELETE cascade
+);
 -- what equipment does the training plan needs/ require
 create table if not exists training_plan_equipment
 (
     training_plan_id
-    integer,
+        integer,
     equipment_id
-    integer,
+        integer,
     primary
-    key
-(
-    training_plan_id,
-    equipment_id
-),
+        key
+        (
+         training_plan_id,
+         equipment_id
+            ),
     CONSTRAINT fk_training_plan_id Foreign key
-(
-    training_plan_id
-) references training_plan
-(
-    id
-) ON DELETE cascade,
+        (
+         training_plan_id
+            ) references training_plan
+            (
+             id
+                ) ON DELETE cascade,
     CONSTRAINT fk_equipment_id Foreign Key
-(
-    equipment_id
-) references equipment
-(
-    id
-)
-  ON DELETE cascade
-    );
+        (
+         equipment_id
+            ) references equipment
+            (
+             id
+                )
+        ON DELETE cascade
+);
 -- training week record
 -- meso_cycle: number of weeks on a meso cycle (4-6 weeks or training, where the last week is recovery focused)
 create table if not exists training_week
 (
     id
-    integer
-    primary
-    key
-    autoincrement,
+        integer
+        primary
+            key
+        autoincrement,
     name
-    text
-    not
-    null,
+        text
+        not
+            null,
     -- mesocycle integer, -- maybe create a different table for this ¯\_(ツ)_/¯
     order_number
-    integer
-    not
-    null,
+        integer
+        not
+            null,
     created_at
-    datetime
-    default
-    current_timestamp,
+        datetime
+        default
+            current_timestamp,
     training_plan_id
-    integer,
+        integer,
     CONSTRAINT
-    fk_training_plan_id
-    Foreign
-    Key
-(
-    training_plan_id
-) references training_plan
-(
-    id
-) ON DELETE CASCADE,
+        fk_training_plan_id
+        Foreign
+            Key
+            (
+             training_plan_id
+                ) references training_plan
+            (
+             id
+                ) ON DELETE CASCADE,
     check
-(
-    order_number
-    >=
-    1
-)
-    );
+        (
+        order_number
+            >=
+        1
+        )
+);
 -- a day of training, holds the blocks
 -- for viewing the exercises in an ordered manner
 create table if not exists training_day
 (
     id
-    integer
-    primary
-    key
-    autoincrement,
+        integer
+        primary
+            key
+        autoincrement,
     name
-    text
-    not
-    null,
+        text
+        not
+            null,
     notes
-    text,
+        text,
     order_number
-    integer,
+        integer,
     created_at
-    datetime
-    default
-    current_timestamp,
+        datetime
+        default
+            current_timestamp,
     training_week_id
-    integer,
+        integer,
     CONSTRAINT
-    fk_training_week_id
-    Foreign
-    Key
-(
-    training_week_id
-) references training_week
-(
-    id
-) ON DELETE CASCADE,
+        fk_training_week_id
+        Foreign
+            Key
+            (
+             training_week_id
+                ) references training_week
+            (
+             id
+                ) ON DELETE CASCADE,
     check
-(
-    order_number
-    >=
-    1
-)
-    );
+        (
+        order_number
+            >=
+        1
+        )
+);
 -- what muscle  did i hit in a day of training
 create table if not exists training_day_muscle
 (
     training_day_id
-    integer,
+        integer,
     muscle_id
-    integer,
+        integer,
     primary
-    key
-(
-    training_day_id,
-    muscle_id
-),
+        key
+        (
+         training_day_id,
+         muscle_id
+            ),
     CONSTRAINT fk_training_day_muscle_training_day_id Foreign Key
-(
-    training_day_id
-) references training_day
-(
-    id
-),
+        (
+         training_day_id
+            ) references training_day
+            (
+             id
+                ),
     CONSTRAINT fk_training_day_muscle_muscle_id Foreign Key
-(
-    muscle_id
-) references muscle
-(
-    id
-)
-    );
+        (
+         muscle_id
+            ) references muscle
+            (
+             id
+                )
+);
 -- a block holds many exercises and denotes their order
 -- like a super set of exercises.
 -- or a drop set
 create table if not exists block
 (
     id
-    integer
-    primary
-    key
-    autoincrement,
+        integer
+        primary
+            key
+        autoincrement,
     name
-    text
-    not
-    null,
+        text
+        not
+            null,
     `sets`
-    integer,
+        integer,
     rest_in_seconds
-    integer,
+        integer,
     instructions
-    text,
+        text,
     order_number
-    integer,
+        integer,
     training_day_id
-    integer,
+        integer,
     created_at
-    datetime
-    default
-    current_timestamp,
+        datetime
+        default
+            current_timestamp,
     CONSTRAINT
-    fk_training_day_id
-    Foreign
-    Key
-(
-    training_day_id
-) references training_day
-(
-    id
-) ON DELETE CASCADE,
+        fk_training_day_id
+        Foreign
+            Key
+            (
+             training_day_id
+                ) references training_day
+            (
+             id
+                ) ON DELETE CASCADE,
     check
-(
-    order_number
-    >=
-    1
-)
-    );
+        (
+        order_number
+            >=
+        1
+        )
+);
 -- all exercises in a block
 create table if not exists block_exercises
 (
     id
-    integer
-    primary
-    key
-    autoincrement,
+        integer
+        primary
+            key
+        autoincrement,
     block_id
-    integer,
+        integer,
     exercise_id
-    integer,
+        integer,
     order_number
-    integer,
+        integer,
     instructions
-    text,
+        text,
     repetitions
-    integer, -- if it has a rep range to go thru
+        integer, -- if it has a rep range to go thru
     timer_in_seconds
-    integer, -- for timed sets
+        integer, -- for timed sets
     distance_in_meters
-    integer, -- for walking bullshit exercises, like walking lunges
+        integer, -- for walking bullshit exercises, like walking lunges
     created_at
-    datetime
-    default
-    current_timestamp,
+        datetime
+        default
+            current_timestamp,
     CONSTRAINT
-    fk_block_id
-    Foreign
-    Key
-(
-    block_id
-) references block
-(
-    id
-) ON DELETE cascade ,
+        fk_block_id
+        Foreign
+            Key
+            (
+             block_id
+                ) references block
+            (
+             id
+                ) ON DELETE cascade,
     CONSTRAINT fk_exercise_id Foreign Key
-(
-    exercise_id
-) references exercise
-(
-    id
-)
-  ON DELETE CASCADE,
+        (
+         exercise_id
+            ) references exercise
+            (
+             id
+                )
+        ON DELETE CASCADE,
     check
-(
-    order_number
-    >=
-    1
-)
-    );
+        (
+        order_number
+            >=
+        1
+        )
+);
 -- to keep track of the weight history for a certain exercise
 -- i have this in the relation table
 CREATE TABLE if NOT EXISTS exercise_last_used_weight
 (
     id
-    integer
-    primary
-    KEY
-    autoincrement,
+        integer
+        primary
+            KEY
+        autoincrement,
     exercise_id
-    integer,
+        integer,
     last_used_weight
-    REAL
-    NOT
-    NULL,
+        REAL
+        NOT
+            NULL,
     created_at
-    datetime
-    default
-    current_timestamp,
+        datetime
+        default
+            current_timestamp,
     Foreign
-    Key
-(
-    exercise_id
-) references exercise
-(
-    id
-)
-    );
+        Key
+        (
+         exercise_id
+            ) references exercise
+        (
+         id
+            )
+);
 CREATE INDEX idx_exercise_last_used_weight ON exercise_last_used_weight (created_at);
 -- table to keep track of muscle measurements
 CREATE TABLE IF NOT EXISTS measurements
 (
     id
-    integer
-    primary
-    KEY
-    autoincrement,
+        integer
+        primary
+            KEY
+        autoincrement,
     hip
-    integer,
+        integer,
     chest
-    integer,
+        integer,
     waist
-    integer,
+        integer,
     left_thigh
-    integer,
+        integer,
     right_thigh
-    integer,
+        integer,
     left_calf
-    integer,
+        integer,
     right_calf
-    integer,
+        integer,
     left_upper_arm
-    integer,
+        integer,
     left_lower_arm
-    integer,
+        integer,
     right_upper_arm
-    integer,
+        integer,
     right_lower_arm
-    integer,
+        integer,
     neck
-    integer,
+        integer,
     created_at
-    datetime
-    default
-    current_timestamp
+        datetime
+        default
+            current_timestamp
 );
 
 

@@ -51,12 +51,11 @@ public class TrainingSessionService : ITrainingSessionService
 
             IQueryable<TrainingSession> query = _context.TrainingSessions
                 .AsNoTracking()
-                    .Include(x => x.TrainingSessionExerciseRecords)
-                        .ThenInclude(w => w.ExerciseRecord)
-                        .ThenInclude(w => w.Exercise)
-                            .ThenInclude(e => e.ExerciseMuscles)
-                            .ThenInclude(em => em.Muscle)
-                    .Include(r => r.TrainingTypes);
+                .Include(x => x.TrainingSessionExerciseRecords)
+                .ThenInclude(w => w.ExerciseRecord)
+                .ThenInclude(w => w.UserExercise)
+                .ThenInclude(e => e.Exercise)
+                .ThenInclude(e => e.TrainingTypes);
 
 
             if (start.HasValue)
@@ -85,6 +84,7 @@ public class TrainingSessionService : ITrainingSessionService
 
     public async Task<Result<int>> CreateSessionAsync(TrainingSessionWriteDto newSession, CancellationToken cancellationToken)
     {
+        // get the user ID
         Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
@@ -112,7 +112,6 @@ public class TrainingSessionService : ITrainingSessionService
                 Notes = newSession.Notes,
                 Mood = newSession.Mood,
                 CreatedAt = sessionCreatedAt,
-                TrainingTypes = relatedTrainingTypes.ToList(),
                 TrainingSessionExerciseRecords = newSession.ExerciseRecords
                     .Select(x => new TrainingSessionExerciseRecord
                     {
@@ -123,8 +122,11 @@ public class TrainingSessionService : ITrainingSessionService
                             DistanceInMeters = x.DistanceInMeters,
                             WeightUsedKg = x.WeightUsedKg,
                             Notes = x.Notes,
-                            Exercise = relatedExercises
-                                .FirstOrDefault(e => Utils.NormalizeString(e.Name) == Utils.NormalizeString(x.ExerciseName)),
+                            UserExercise = new UserExercise()
+                            {
+                                Exercise = relatedExercises
+                                    .FirstOrDefault(e => Utils.NormalizeString(e.Name) == Utils.NormalizeString(x.ExerciseName))
+                            },
                             CreatedAt = sessionCreatedAt,
                             
                             RateOfPerceivedExertion =x.RateOfPerceivedExertion,
@@ -219,7 +221,6 @@ public class TrainingSessionService : ITrainingSessionService
                 Notes = sessionDto.Notes,
                 Mood = sessionDto.Mood,
                 CreatedAt = sessionCreatedAt,
-                TrainingTypes = relatedTrainingTypes,
                 TrainingSessionExerciseRecords = sessionDto.ExerciseRecords
                     .Select(er => new TrainingSessionExerciseRecord
                     {
@@ -230,7 +231,10 @@ public class TrainingSessionService : ITrainingSessionService
                             DistanceInMeters = er.DistanceInMeters,
                             WeightUsedKg = er.WeightUsedKg,
                             Notes = er.Notes,
-                            Exercise = relatedExercises.First(e => Utils.NormalizeString(e.Name) == Utils.NormalizeString(er.ExerciseName)),
+                            UserExercise = new UserExercise()
+                            {
+                                Exercise = relatedExercises.First(e => Utils.NormalizeString(e.Name) == Utils.NormalizeString(er.ExerciseName)) 
+                            } ,
                             CreatedAt = sessionCreatedAt,
                             RateOfPerceivedExertion = er.RateOfPerceivedExertion,
                             Incline = er.Incline,
@@ -311,82 +315,12 @@ public class TrainingSessionService : ITrainingSessionService
     private async Task PartialUpdateAsync(int sessionId, TrainingSessionWriteDto updateDto, CancellationToken cancellationToken)
     {
 
-        var trainingSession = await _context.TrainingSessions
-            .FirstOrDefaultAsync(ts => ts.Id == sessionId, cancellationToken);
-
-        if (trainingSession is null)
-            throw new Exception("Training session not found.");
-        _mapper.Map(updateDto, trainingSession);
 
     }
 
     private async Task FullSessionUpdateAsync(int sessionId, TrainingSessionWriteDto updateDto, CancellationToken cancellationToken)
     {
-        if (updateDto.DurationInMinutes <= 0)
-            throw new ArgumentException("duration should be more than zero, if it took 0 mins, you did not train!");
-
-        var trainingSession = await _context.TrainingSessions
-       .Include(ts => ts.TrainingSessionExerciseRecords)
-           .ThenInclude(e => e.ExerciseRecord)
-               .ThenInclude(x => x.Exercise)
-       .Include(ts => ts.TrainingTypes)
-       .FirstOrDefaultAsync(ts => ts.Id == sessionId, cancellationToken);
-
-        if (trainingSession is null)
-            throw new Exception("Training session not found.");
-
-        List<string> normalizedExerciseNames = Utils.NormalizeStringList(
-            updateDto.ExerciseRecords
-                .Select(s => s.ExerciseName).ToList()
-                );
-
-        List<Exercise> relatedExercises = await GetRelatedExercises(normalizedExerciseNames, cancellationToken);
-
-        List<TrainingType> relatedTypes = relatedExercises
-            .SelectMany(x => x.TrainingTypes)
-            .Distinct()
-            .ToList();
-
-        // clean old records
-        foreach (TrainingSessionExerciseRecord x in trainingSession.TrainingSessionExerciseRecords)
-            _context.Remove(x.ExerciseRecord);
-
-        trainingSession.TrainingTypes.Clear();
-
-
-        // create the date
-        DateTime? updatedCreatedAt = Utils.ParseDate(updateDto.CreatedAt) ?? trainingSession.CreatedAt;
-
-
-        _mapper.Map(updateDto, trainingSession);
-
-        trainingSession.TrainingTypes = relatedTypes;
-        trainingSession.TrainingSessionExerciseRecords = updateDto.ExerciseRecords
-            .Select(x => new TrainingSessionExerciseRecord
-            {
-                ExerciseRecord = new ExerciseRecord
-                {
-                    CreatedAt = updatedCreatedAt,
-                    DistanceInMeters = x.DistanceInMeters, // do it from utils
-                    Exercise = relatedExercises
-                        .FirstOrDefault(relatedExercise => Utils.NormalizeString(relatedExercise.Name) == Utils.NormalizeString(x.ExerciseName)),
-                    Notes = x.Notes,
-                    Repetitions = x.Repetitions,
-                    TimerInSeconds = x.TimerInSeconds,
-                    WeightUsedKg = x.WeightUsedKg,
-                    RateOfPerceivedExertion =x.RateOfPerceivedExertion,
-                    Incline =x.Incline,
-                    Speed =x.Speed,
-                    KcalBurned =x.KcalBurned,
-                    HeartRateAvg =x.HeartRateAvg,
-                    RestInSeconds =x.RestInSeconds
-                },
-                LastWeightUsedKg = x.WeightUsedKg
-                ,
-                CreatedAt = updatedCreatedAt
-
-            })
-            .ToList();
+        
 
     }
 
