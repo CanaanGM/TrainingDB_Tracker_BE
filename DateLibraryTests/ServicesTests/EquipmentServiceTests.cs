@@ -98,7 +98,7 @@ public class EquipmentServiceTests
         Assert.Equal(newEquip.Name, n.Name);
         Assert.Equal(newEquip.WeightKg, n.WeightKg);
         Assert.Equal(newEquip.Description, n.Description);
-        Assert.Equal(DateTime.UtcNow.Day, newEquip.CreatedAt.Day);
+        Assert.Equal(DateTime.UtcNow.Day, newEquip.CreatedAt?.Day);
     }
 
    public static IEnumerable<object[]> UpsertRecords() => new List<object[]>()
@@ -184,7 +184,7 @@ public class EquipmentServiceTests
         if (n.WeightKg is not null)
             Assert.Equal(newEquip.WeightKg, n.WeightKg);
         
-        Assert.Equal(DateTime.UtcNow.Day, newEquip.CreatedAt.Day); // the day should match, it's created today after all.
+        Assert.Equal(DateTime.UtcNow.Day, newEquip.CreatedAt?.Day); // the day should match, it's created today after all.
     }   public static IEnumerable<object[]> CreationBulkFaulty() => new List<object[]>()
     {
         new[]

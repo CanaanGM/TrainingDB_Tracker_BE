@@ -20,6 +20,4 @@ public partial class TrainingDay
     public virtual ICollection<Block> Blocks { get; set; } = new List<Block>();
 
     public virtual TrainingWeek? TrainingWeek { get; set; }
-
-    public virtual ICollection<Muscle> Muscles { get; set; } = new List<Muscle>();
 }

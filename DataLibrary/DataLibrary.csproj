@@ -20,6 +20,7 @@
   <ItemGroup>
     <Folder Include="Context\" />
     <Folder Include="ModelsV2\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

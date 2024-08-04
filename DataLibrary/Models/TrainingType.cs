@@ -10,8 +10,4 @@ public partial class TrainingType
     public string Name { get; set; } = null!;
 
     public virtual ICollection<Exercise> Exercises { get; set; } = new List<Exercise>();
-
-    public virtual ICollection<TrainingPlan> TrainingPlans { get; set; } = new List<TrainingPlan>();
-
-    public virtual ICollection<TrainingSession> TrainingSessions { get; set; } = new List<TrainingSession>();
 }

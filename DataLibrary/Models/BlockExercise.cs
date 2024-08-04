@@ -10,7 +10,6 @@ public partial class BlockExercise
     public int? BlockId { get; set; }
 
     public int? ExerciseId { get; set; }
-    public string Notes { get; set; }
 
     public int? OrderNumber { get; set; }
 

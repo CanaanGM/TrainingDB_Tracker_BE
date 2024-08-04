@@ -54,7 +54,7 @@ public class MeasurementsService : IMeasurementsService
         var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try
         {
-            var newMeasurements = _mapper.Map<Measurements>(newMeasurementDto);
+            var newMeasurements = _mapper.Map<Measurement>(newMeasurementDto);
             
             if (newMeasurementDto.Minerals is not null
                 && newMeasurementDto.Protein is not null
@@ -67,7 +67,7 @@ public class MeasurementsService : IMeasurementsService
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
 
-            return Result<int>.Success(newMeasurements.MeasurementsId);
+            return Result<int>.Success(newMeasurements.Id);
         }
         catch (Exception ex)
         {
@@ -81,7 +81,7 @@ public class MeasurementsService : IMeasurementsService
         CancellationToken cancellationToken)
     {
         var measurementsToUpdate = await _context.Measurements
-                .FirstOrDefaultAsync(x => x.MeasurementsId == measurementId, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == measurementId, cancellationToken);
         if (measurementsToUpdate is null)
             return Result<bool>.Failure("Measurements was not found");
         var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
@@ -110,7 +110,7 @@ public class MeasurementsService : IMeasurementsService
     public async Task<Result<bool>> DeleteAsync(int measurementId, CancellationToken cancellationToken)
     {
         var measurementToDelete = await _context.Measurements
-            .SingleOrDefaultAsync(x => x.MeasurementsId == measurementId, cancellationToken);
+            .SingleOrDefaultAsync(x => x.Id == measurementId, cancellationToken);
         
         if (measurementToDelete is null)
             return Result<bool>.Failure($"Measurement with the id: {measurementId}, does not exists.");

@@ -17,5 +17,5 @@ public partial class Muscle
 
     public virtual ICollection<ExerciseMuscle> ExerciseMuscles { get; set; } = new List<ExerciseMuscle>();
 
-    public virtual ICollection<TrainingDay> TrainingDays { get; set; } = new List<TrainingDay>();
+    public virtual ICollection<UserMuscle> UserMuscles { get; set; } = new List<UserMuscle>();
 }
