@@ -4,6 +4,13 @@ namespace DataLibrary.Helpers;
 
 public static class Validation
 {
+    
+    /// <summary>
+    /// takes in an object and goes thru it's sring props and validates that they're neither null or empty
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns>a result of Success or Failure</returns>
     public static Result ValidateDtoStrings<T>(T dto)
     {
         List<string> errors = [];
