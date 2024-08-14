@@ -6,12 +6,18 @@ namespace DataLibrary.Context;
 
 public class SqliteContext : DbContext
 {
-    public string DatabaseConnectionString { get; set; }
-
     public SqliteContext()
     {
     }
 
+    public SqliteContext(DbContextOptions<SqliteContext> options,
+        string? connectionString = "Data Source = E:\\development\\c#\\TrainingDB_Integration\\training_log_v2.db")
+        : base(options)
+    {
+        DatabaseConnectionString = connectionString;
+    }
+
+    public string DatabaseConnectionString { get; set; }
     public virtual DbSet<Block> Blocks { get; set; }
 
     public virtual DbSet<BlockExercise> BlockExercises { get; set; }
@@ -36,8 +42,6 @@ public class SqliteContext : DbContext
 
     public virtual DbSet<TrainingSession> TrainingSessions { get; set; }
 
-    public virtual DbSet<TrainingSessionExerciseRecord> TrainingSessionExerciseRecords { get; set; }
-
     public virtual DbSet<TrainingType> TrainingTypes { get; set; }
 
     public virtual DbSet<TrainingWeek> TrainingWeeks { get; set; }
@@ -46,36 +50,24 @@ public class SqliteContext : DbContext
 
     public virtual DbSet<UserExercise> UserExercises { get; set; }
 
-    public virtual DbSet<UserMuscle> UserMuscles { get; set; }
-
     public virtual DbSet<UserPassword> UserPasswords { get; set; }
 
     public virtual DbSet<UserProfileImage> UserProfileImages { get; set; }
 
     public virtual DbSet<UserTrainingPlan> UserTrainingPlans { get; set; }
-
-    public SqliteContext(DbContextOptions<SqliteContext> options,
-        string? connectionString = "Data Source = E:\\development\\c#\\TrainingDB_Integration\\training_log_v2.db")
-        : base(options)
-    {
-        DatabaseConnectionString = connectionString;
-    }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.EnableSensitiveDataLogging()
             .LogTo(Console.WriteLine, LogLevel.Information);
 
         if (!optionsBuilder.IsConfigured)
-        {
             optionsBuilder.UseSqlite(DatabaseConnectionString)
                 .LogTo(Console.WriteLine, LogLevel.Information);
-        }
 
         Console.WriteLine($"Connecting to database: {DatabaseConnectionString}");
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+   protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Block>(entity =>
         {
@@ -222,27 +214,50 @@ public class SqliteContext : DbContext
 
             entity.HasIndex(e => e.CreatedAt, "idx_exercise_record_created_at");
 
+            entity.HasIndex(e => e.RateOfPerceivedExertion, "idx_exercise_record_rate_of_perceived_exertion");
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("current_timestamp")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
-            entity.Property(e => e.DistanceInMeters).HasColumnName("distance_in_meters");
-            entity.Property(e => e.HeartRateAvg).HasColumnName("heart_rate_avg");
-            entity.Property(e => e.Incline).HasColumnName("incline");
-            entity.Property(e => e.Mood).HasColumnName("mood");
-            entity.Property(e => e.Notes).HasColumnName("notes");
-            entity.Property(e => e.RateOfPerceivedExertion).HasColumnName("rate_of_perceived_exertion");
-            entity.Property(e => e.Repetitions).HasColumnName("repetitions");
-            entity.Property(e => e.RestInSeconds).HasColumnName("rest_in_seconds");
-            entity.Property(e => e.Speed).HasColumnName("speed");
-            entity.Property(e => e.TimerInSeconds).HasColumnName("timer_in_seconds");
-            entity.Property(e => e.UserExerciseId).HasColumnName("user_exercise_id");
+            entity.Property(e => e.DistanceInMeters)
+                .HasDefaultValueSql("null")
+                .HasColumnName("distance_in_meters");
+            entity.Property(e => e.ExerciseId).HasColumnName("exercise_id");
+            entity.Property(e => e.HeartRateAvg)
+                .HasDefaultValueSql("null")
+                .HasColumnName("heart_rate_avg");
+            entity.Property(e => e.Incline)
+                .HasDefaultValueSql("null")
+                .HasColumnName("incline");
+            entity.Property(e => e.KcalBurned).HasDefaultValue(1);
+            entity.Property(e => e.Mood)
+                .HasDefaultValue(5)
+                .HasColumnName("mood");
+            entity.Property(e => e.Notes)
+                .HasDefaultValueSql("null")
+                .HasColumnName("notes");
+            entity.Property(e => e.RateOfPerceivedExertion)
+                .HasDefaultValue(1.0)
+                .HasColumnName("rate_of_perceived_exertion");
+            entity.Property(e => e.Repetitions)
+                .HasDefaultValue(1)
+                .HasColumnName("repetitions");
+            entity.Property(e => e.RestInSeconds)
+                .HasDefaultValue(10)
+                .HasColumnName("rest_in_seconds");
+            entity.Property(e => e.Speed)
+                .HasDefaultValueSql("null")
+                .HasColumnName("speed");
+            entity.Property(e => e.TimerInSeconds)
+                .HasDefaultValueSql("null")
+                .HasColumnName("timer_in_seconds");
             entity.Property(e => e.UserId).HasColumnName("user_id");
             entity.Property(e => e.WeightUsedKg).HasColumnName("weight_used_kg");
 
-            entity.HasOne(d => d.UserExercise).WithMany(p => p.ExerciseRecords)
-                .HasForeignKey(d => d.UserExerciseId)
+            entity.HasOne(d => d.Exercise).WithMany(p => p.ExerciseRecords)
+                .HasForeignKey(d => d.ExerciseId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(d => d.User).WithMany(p => p.ExerciseRecords)
@@ -254,7 +269,7 @@ public class SqliteContext : DbContext
         {
             entity.ToTable("measurements");
 
-            entity.HasIndex(e => e.CreatedAt, "idx_measurements_date");
+            entity.HasIndex(e => e.CreatedAt, "idx__measurement_date");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.BasalMetabolicRate).HasColumnName("basal_metabolic_rate");
@@ -344,47 +359,38 @@ public class SqliteContext : DbContext
         {
             entity.ToTable("training_session");
 
-            entity.HasIndex(e => e.CreatedAt, "idx_training_session_created_at");
-
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Calories).HasColumnName("calories");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("current_timestamp")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
             entity.Property(e => e.DurationInSeconds).HasColumnName("duration_in_seconds");
-            entity.Property(e => e.Feeling).HasColumnName("feeling");
+            entity.Property(e => e.Feeling)
+                .HasDefaultValue("good")
+                .HasColumnName("feeling");
             entity.Property(e => e.Mood).HasColumnName("mood");
             entity.Property(e => e.Notes).HasColumnName("notes");
-            entity.Property(e => e.RateOfPerceivedExertionAvg).HasColumnName("rate_of_perceived_exertion_avg");
-            entity.Property(e => e.TotalCaloriesBurned).HasColumnName("total_calories_burned");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.User).WithMany(p => p.TrainingSessions)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-        });
+            entity.HasOne(d => d.User).WithMany(p => p.TrainingSessions).HasForeignKey(d => d.UserId);
 
-        modelBuilder.Entity<TrainingSessionExerciseRecord>(entity =>
-        {
-            entity.HasKey(e => new { e.TrainingSessionId, e.ExerciseRecordId });
-
-            entity.ToTable("training_session_exercise_record");
-
-            entity.HasIndex(e => e.CreatedAt, "idx_training_session_exercise_record_created_at");
-
-            entity.Property(e => e.TrainingSessionId).HasColumnName("training_session_id");
-            entity.Property(e => e.ExerciseRecordId).HasColumnName("exercise_record_id");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("current_timestamp")
-                .HasColumnType("datetime")
-                .HasColumnName("created_at");
-            entity.Property(e => e.LastWeightUsedKg).HasColumnName("last_weight_used_kg");
-
-            entity.HasOne(d => d.ExerciseRecord).WithMany(p => p.TrainingSessionExerciseRecords)
-                .HasForeignKey(d => d.ExerciseRecordId);
-
-            entity.HasOne(d => d.TrainingSession).WithMany(p => p.TrainingSessionExerciseRecords)
-                .HasForeignKey(d => d.TrainingSessionId);
+            entity.HasMany(d => d.ExerciseRecords).WithMany(p => p.TrainingSessions)
+                .UsingEntity<Dictionary<string, object>>(
+                    "TrainingSessionExerciseRecord",
+                    r => r.HasOne<ExerciseRecord>().WithMany()
+                        .HasForeignKey("ExerciseRecordId")
+                        .OnDelete(DeleteBehavior.ClientSetNull),
+                    l => l.HasOne<TrainingSession>().WithMany()
+                        .HasForeignKey("TrainingSessionId")
+                        .OnDelete(DeleteBehavior.ClientSetNull),
+                    j =>
+                    {
+                        j.HasKey("TrainingSessionId", "ExerciseRecordId");
+                        j.ToTable("training_session_exercise_record");
+                        j.IndexerProperty<int>("TrainingSessionId").HasColumnName("training_session_id");
+                        j.IndexerProperty<int>("ExerciseRecordId").HasColumnName("exercise_record_id");
+                    });
         });
 
         modelBuilder.Entity<TrainingType>(entity =>
@@ -452,6 +458,7 @@ public class SqliteContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
             entity.Property(e => e.ExerciseId).HasColumnName("exercise_id");
+            entity.Property(e => e.LastUsedWeightKg).HasColumnName("last_used_weight_kg");
             entity.Property(e => e.UseCount).HasColumnName("use_count");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
@@ -462,23 +469,6 @@ public class SqliteContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.UserExercises)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-        });
-
-        modelBuilder.Entity<UserMuscle>(entity =>
-        {
-            entity.HasKey(e => new { e.UserId, e.MuscleId });
-
-            entity.ToTable("user_muscle");
-
-            entity.Property(e => e.UserId).HasColumnName("user_id");
-            entity.Property(e => e.MuscleId).HasColumnName("muscle_id");
-            entity.Property(e => e.Frequency).HasColumnName("frequency");
-            entity.Property(e => e.MuscleCooldown).HasColumnName("muscle_cooldown");
-            entity.Property(e => e.TrainingVolume).HasColumnName("training_volume");
-
-            entity.HasOne(d => d.Muscle).WithMany(p => p.UserMuscles).HasForeignKey(d => d.MuscleId);
-
-            entity.HasOne(d => d.User).WithMany(p => p.UserMuscles).HasForeignKey(d => d.UserId);
         });
 
         modelBuilder.Entity<UserPassword>(entity =>
@@ -560,5 +550,8 @@ public class SqliteContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("start_date");
         });
+
+
     }
+
 }

@@ -64,7 +64,7 @@ public class Profiles : Profile
         CreateMap<EquipmentWriteDto, Equipment>();
 
 
-        CreateMap< BlockExercise, BlockExerciseWriteDto>()
+        CreateMap<BlockExercise, BlockExerciseWriteDto>()
             .ForMember(x => x.ExerciseName,
                 dst =>
                     dst.MapFrom(yt => yt.Exercise.Name));
@@ -80,10 +80,25 @@ public class Profiles : Profile
         CreateMap<TrainingWeekReadDto, TrainingWeek>().ReverseMap();
 
         CreateMap<TrainingPlanWriteDto, TrainingPlan>();
-        CreateMap<TrainingPlan, TrainingPlanReadDto>()
-            ;
+        CreateMap<TrainingPlan, TrainingPlanReadDto>();
+
+        CreateMap<ExerciseRecord, ExerciseReadDto>()
+            .ForMember(x => x.Name,
+                c => c.
+                    MapFrom(t => t.Exercise.Name));
         
+        CreateMap<ExerciseRecordWriteDto, ExerciseRecord>();
+
+        CreateMap<TrainingSessionWriteDto, TrainingSession>()
+            .ForMember(x => x.Calories, o
+                => o.MapFrom(src => src.TotalCaloriesBurned))
+            .ForMember(x => x.DurationInSeconds, t 
+                => t.MapFrom(o => Utils.DurationSecondsFromMinutes(o.DurationInMinutes)));
+        
+        CreateMap<TrainingSession, TrainingSessionReadDto>()
+            .ForMember(x => x.TotalCaloriesBurned, src 
+                => src.MapFrom(x => x.Calories))    
+            .ForMember(x => x.DurationInMinutes, d 
+                => d.MapFrom(c => Utils.DurationMinutesFromSeconds(c.DurationInSeconds)));
     }
-
-
 }

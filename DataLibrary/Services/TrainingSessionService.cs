@@ -1,28 +1,15 @@
 ﻿using AutoMapper;
-
 using DataLibrary.Context;
 using DataLibrary.Core;
 using DataLibrary.Dtos;
 using DataLibrary.Helpers;
 using DataLibrary.Models;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace DataLibrary.Services;
 
-public interface ITrainingSessionService
-{
-    Task<Result<int>> CreateSessionAsync(TrainingSessionWriteDto newSession, CancellationToken cancellationToken);
-
-    Task<Result<bool>> CreateBulkSessionsAsync(List<TrainingSessionWriteDto> newSessions,
-        CancellationToken cancellationToken);
-    Task<Result<bool>> DeleteSessionAsync(int sessionId, CancellationToken cancellationToken);
-    Task<Result<List<TrainingSessionReadDto>>> GetTrainingSessionsAsync(string? startDate, string? endDate, CancellationToken cancellationToken);
-    Task<Result<bool>> UpdateSessionAsync(int sessionId, TrainingSessionWriteDto updateDto, CancellationToken cancellationToken);
-}
-
-public class TrainingSessionService : ITrainingSessionService
+public class TrainingSessionService
 {
     private readonly SqliteContext _context;
     private readonly IMapper _mapper;
@@ -35,325 +22,244 @@ public class TrainingSessionService : ITrainingSessionService
         _logger = logger;
     }
 
-    // this sould be by a date range ; get me the sessions from 4-7-2024 to 5-2-2024.
-    // no pagination, this needs to be all at once
-    // export to something else ? ?
-    public async Task<Result<List<TrainingSessionReadDto>>> GetTrainingSessionsAsync(
-        string? startDate,
-        string? endDate,
+    public async Task<Result> CreateSessionAsync(int userId, TrainingSessionWriteDto sessionDto,
         CancellationToken cancellationToken)
     {
+        var stringValidationResult = Validation.ValidateDtoStrings(sessionDto);
+        if (!stringValidationResult.IsSuccess)
+            return Result.Failure(stringValidationResult.ErrorMessage);
+
+        var collectionValidationResult = Validation.ValidateDtoICollections(sessionDto);
+        if (!collectionValidationResult.IsSuccess)
+            return Result.Failure(collectionValidationResult.ErrorMessage);
+
         try
         {
-            DateTime? start = Utils.ParseDate(startDate);
-            DateTime? end = Utils.ParseDate(endDate);
-            _logger.LogInformation($"Parsed dates - Start: {start}, End: {end}");
+            var user = await _context.Users
+                .Include(x => x.ExerciseRecords)
+                .ThenInclude(exerciseRecord => exerciseRecord.Exercise)
+                .Include(x => x.TrainingSessions)
+                .Include(x => x.UserExercises)
+                .ThenInclude(userExercise => userExercise.Exercise)
+                .FirstOrDefaultAsync(x => x.Id == userId, cancellationToken);
+            
+            if (user is null) return Result.Failure("User was not found");
 
-            IQueryable<TrainingSession> query = _context.TrainingSessions
-                .AsNoTracking()
-                .Include(x => x.TrainingSessionExerciseRecords)
-                .ThenInclude(w => w.ExerciseRecord)
-                .ThenInclude(w => w.UserExercise)
-                .ThenInclude(e => e.Exercise)
-                .ThenInclude(e => e.TrainingTypes);
+            await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
 
+            var relatedExercisesResult =
+                await GetRelatedExercisesDictionary(
+                    sessionDto.ExerciseRecords
+                        .Select(x => x.ExerciseName)
+                        .Distinct()
+                        .ToList(),
+                    cancellationToken);
 
-            if (start.HasValue)
-            {
-                _logger.LogInformation($"Applying start date filter: {start.Value}");
-                query = query.Where(x => x.CreatedAt >= start.Value);
-            }
+            if (!relatedExercisesResult.IsSuccess)
+                return Result.Failure(relatedExercisesResult.ErrorMessage!);
+            var relatedExercises = relatedExercisesResult.Value;
 
-            if (end.HasValue)
-            {
-                _logger.LogInformation($"Applying end date filter: {end.Value}");
-                query = query.Where(x => x.CreatedAt <= end.Value);
-            }
+            var newSessionDate = Utils.ParseDate(sessionDto.CreatedAt) ?? DateTime.Now;
+            var exerciseRecords =
+                CreateExerciseRecords(sessionDto.ExerciseRecords.ToList(), relatedExercises!, newSessionDate);
+            var newSession = CreateTrainingSession(user, sessionDto, newSessionDate, exerciseRecords);
 
+            await _context.TrainingSessions.AddAsync(newSession, cancellationToken);
 
+            UpdateUserExercises(user, exerciseRecords, newSessionDate);
 
-            List<TrainingSession> sessions = await query.ToListAsync(cancellationToken);
-            return Result<List<TrainingSessionReadDto>>.Success(_mapper.Map<List<TrainingSessionReadDto>>(sessions));
-        }
-        catch (Exception ex)
-        {
-            return Result<List<TrainingSessionReadDto>>.Failure($"Error retrieving training sessions: {ex.Message}", ex);
-        }
-    }
-
-
-    public async Task<Result<int>> CreateSessionAsync(TrainingSessionWriteDto newSession, CancellationToken cancellationToken)
-    {
-        // get the user ID
-        Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-        try
-        {
-            List<string> normalizedExerciseNames = Utils.NormalizeStringList(
-                newSession.ExerciseRecords
-                    .Select(x => x.ExerciseName)
-                    .Distinct()
-                    .ToList()
-                );
-            List<Exercise> relatedExercises = await GetRelatedExercises(normalizedExerciseNames, cancellationToken);
-
-            List<TrainingType> relatedTrainingTypes = relatedExercises
-                .SelectMany(x =>
-                {
-                    return x.TrainingTypes;
-                })
-                .Distinct()
-                .ToList();
-
-            DateTime sessionCreatedAt = Utils.ParseDate(newSession.CreatedAt) ?? DateTime.UtcNow;
-            TrainingSession newTrainingSession = new TrainingSession()
-            {
-                DurationInSeconds = Utils.DurationSecondsFromMinutes(newSession.DurationInMinutes),
-                TotalCaloriesBurned = newSession.TotalCaloriesBurned,
-                Notes = newSession.Notes,
-                Mood = newSession.Mood,
-                CreatedAt = sessionCreatedAt,
-                TrainingSessionExerciseRecords = newSession.ExerciseRecords
-                    .Select(x => new TrainingSessionExerciseRecord
-                    {
-                        ExerciseRecord = new ExerciseRecord
-                        {
-                            Repetitions = x.Repetitions,
-                            TimerInSeconds = x.TimerInSeconds,
-                            DistanceInMeters = x.DistanceInMeters,
-                            WeightUsedKg = x.WeightUsedKg,
-                            Notes = x.Notes,
-                            UserExercise = new UserExercise()
-                            {
-                                Exercise = relatedExercises
-                                    .FirstOrDefault(e => Utils.NormalizeString(e.Name) == Utils.NormalizeString(x.ExerciseName))
-                            },
-                            CreatedAt = sessionCreatedAt,
-                            
-                            RateOfPerceivedExertion =x.RateOfPerceivedExertion,
-                            Incline =x.Incline,
-                            Speed =x.Speed,
-                            KcalBurned =x.KcalBurned,
-                            HeartRateAvg =x.HeartRateAvg,
-                            RestInSeconds =x.RestInSeconds
-                        },
-                        LastWeightUsedKg = x.WeightUsedKg,
-                        CreatedAt = sessionCreatedAt
-                    })
-                    .ToList(),
-            };
-
-            await _context.TrainingSessions.AddAsync(newTrainingSession, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
-            return Result<int>.Success(newTrainingSession.Id);
+
+            return Result.Success("Training session created successfully ~!");
         }
         catch (Exception ex)
         {
-            await transaction.RollbackAsync(cancellationToken);
-            return Result<int>.Failure($"Error Creating Session: {ex.Message}", ex);
+            _logger.LogError($"Error has occured in {nameof(CreateSessionAsync)}: {ex}");
+            return Result.Failure("Could not create session");
         }
     }
 
-  public async Task<Result<bool>> CreateBulkSessionsAsync(List<TrainingSessionWriteDto> newSessions, CancellationToken cancellationToken)
+public async Task<Result> CreateSessionsBulkAsync(int userId, List<TrainingSessionWriteDto> newSessions,
+    CancellationToken cancellationToken)
 {
-    using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+    var stringValidationErrors = "";
+    var collectionValidatoinErrors = "";
+    foreach (var newSession in newSessions)
+    {
+        var stringValidationResult = Validation.ValidateDtoStrings(newSession);
+        if (!stringValidationResult.IsSuccess)
+            stringValidationErrors += stringValidationResult.ErrorMessage;
+
+        var collectionValidationResult = Validation.ValidateDtoICollections(newSession);
+        if (!collectionValidationResult.IsSuccess)
+            collectionValidatoinErrors += collectionValidationResult.ErrorMessage;
+    }
+
+    if(stringValidationErrors.Length > 0 || collectionValidatoinErrors.Length >0)
+        return Result.Failure($"these errors were encountered whist creating bulk exercises:\n{stringValidationErrors}\n{collectionValidatoinErrors}");
     try
     {
-        if ( newSessions.Count == 0)
-        {
-            return Result<bool>.Failure("Error creating bulk sessions: The input list is empty.");
-        }
+        var user = await _context.Users
+            .Include(x => x.ExerciseRecords)
+            .ThenInclude(exerciseRecord => exerciseRecord.Exercise)
+            .Include(x => x.TrainingSessions)
+            .Include(x => x.UserExercises)
+            .ThenInclude(userExercise => userExercise.Exercise)
+            .FirstOrDefaultAsync(x => x.Id == userId, cancellationToken);
+
+        if (user == null) return Result.Failure("User was not found");
+
+        await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         
-        // this is important, cause let's say you have 300 in the db, and u want to create 60 but 13 are duplicate,
-        // you would want to know which are duplicated without goin to the db, dammit! 
-        var exerciseNamesInTheDatabase = await _context.Exercises
-            .Select(x => x.Name)
-            .ToListAsync(cancellationToken);
+        var relatedExercisesResult = await GetRelatedExercisesDictionary(
+            newSessions.SelectMany(x => x.ExerciseRecords)
+                .Select(x => x.ExerciseName)
+                .Distinct()
+                .ToList(),
+            cancellationToken);
+
+        if (!relatedExercisesResult.IsSuccess)
+            return Result.Failure(relatedExercisesResult.ErrorMessage!);
+        var relatedExercises = relatedExercisesResult.Value;
         
-        var exerciseNamesFromDto = newSessions.SelectMany(x => x.ExerciseRecords)
-            .Select(s => Utils.NormalizeString(s.ExerciseName))
-            .ToList();
-        
-        var nonExistingExercises = exerciseNamesFromDto .Where(x => !exerciseNamesInTheDatabase.Contains(x)).ToList();
-        if (nonExistingExercises.Any())
-        {
-            // maybe draw them for cool effect ? 
-            return Result<bool>.Failure($"these exercises are not in the database, create them ? {string.Join(", ", nonExistingExercises)}");
-        }
-
-        var exerciseNames = newSessions
-            .SelectMany(s => s.ExerciseRecords.Select(er => Utils.NormalizeString(er.ExerciseName)))
-            .Distinct()
-            .ToList();
-
-        var exercises = await _context.Exercises
-            .Include(e => e.TrainingTypes)
-            .Where(e => exerciseNames.Contains(e.Name))
-            .ToListAsync(cancellationToken);
-
-        if (exerciseNames.Count != exercises.Count)
-        {
-            return Result<bool>.Failure("Error creating bulk sessions: one or more exercises could not be found");
-        }
-
-        var sessions = new List<TrainingSession>();
-
         foreach (var sessionDto in newSessions)
         {
-            if (sessionDto.ExerciseRecords == null || !sessionDto.ExerciseRecords.Any())
-            {
-                return Result<bool>.Failure("Error creating bulk sessions: No exercise records found in one or more sessions.");
-            }
+            var newSessionDate = Utils.ParseDate(sessionDto.CreatedAt) ?? DateTime.Now;
+            var exerciseRecords = CreateExerciseRecords(sessionDto.ExerciseRecords
+                .ToList(), relatedExercises, newSessionDate);
 
-            var relatedExercises = exercises.Where(e =>
-                sessionDto.ExerciseRecords.Select(er => Utils.NormalizeString(er.ExerciseName)).Contains(e.Name)).ToList();
+            var newSession = CreateTrainingSession(user, sessionDto, newSessionDate, exerciseRecords);
 
-            var relatedTrainingTypes = relatedExercises
-                .SelectMany(e => e.TrainingTypes)
-                .Distinct()
-                .ToList();
 
-            var sessionCreatedAt = Utils.ParseDate(sessionDto.CreatedAt) ?? DateTime.UtcNow;
-            var newSession = new TrainingSession
-            {
-                DurationInSeconds = Utils.DurationSecondsFromMinutes(sessionDto.DurationInMinutes),
-                TotalCaloriesBurned = sessionDto.TotalCaloriesBurned,
-                Notes = sessionDto.Notes,
-                Mood = sessionDto.Mood,
-                CreatedAt = sessionCreatedAt,
-                TrainingSessionExerciseRecords = sessionDto.ExerciseRecords
-                    .Select(er => new TrainingSessionExerciseRecord
-                    {
-                        ExerciseRecord = new ExerciseRecord
-                        {
-                            Repetitions = er.Repetitions,
-                            TimerInSeconds = er.TimerInSeconds, 
-                            DistanceInMeters = er.DistanceInMeters,
-                            WeightUsedKg = er.WeightUsedKg,
-                            Notes = er.Notes,
-                            UserExercise = new UserExercise()
-                            {
-                                Exercise = relatedExercises.First(e => Utils.NormalizeString(e.Name) == Utils.NormalizeString(er.ExerciseName)) 
-                            } ,
-                            CreatedAt = sessionCreatedAt,
-                            RateOfPerceivedExertion = er.RateOfPerceivedExertion,
-                            Incline = er.Incline,
-                            Speed = er.Speed,
-                            KcalBurned = er.KcalBurned,
-                            HeartRateAvg = er.HeartRateAvg,
-                            RestInSeconds = er.RestInSeconds
-                            
-                        },
-                        LastWeightUsedKg = er.WeightUsedKg,
-                        CreatedAt = sessionCreatedAt
-                    })
-                    .ToList()
-            };
-
-            sessions.Add(newSession);
+            await _context.TrainingSessions.AddAsync(newSession, cancellationToken);
+            UpdateUserExercises(user, exerciseRecords, newSessionDate);
         }
 
-        await _context.TrainingSessions.AddRangeAsync(sessions, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
         await transaction.CommitAsync(cancellationToken);
 
-        return Result<bool>.Success(true);
+        return Result.Success("Bulk training sessions created successfully!");
     }
     catch (Exception ex)
     {
-        await transaction.RollbackAsync(cancellationToken);
-        return Result<bool>.Failure("Error creating bulk sessions: " + ex.Message, ex);
+        _logger.LogError($"Error has occurred in {nameof(CreateSessionsBulkAsync)}: {ex}");
+        return Result.Failure("Could not create sessions");
     }
 }
 
-    /// <summary>
-    ///  Gets the related Exercises from the database based on the provided list of names.
-    /// </summary>
-    /// <param name="normalizedExerciseNames">List of exercise names to get from the database</param>
-    /// <param name="cancellationToken">cancelation token</param>
-    /// <returns>a List of Exercise </returns>
-    /// <exception cref="Exception">if one or more related exercises not found in the database, it will throw an exception</exception>
-    // TODO: Proper exception handling.
-    public async Task<List<Exercise>> GetRelatedExercises(List<string> normalizedExerciseNames, CancellationToken cancellationToken)
+    
+    private void UpdateUserExercises(User user, List<ExerciseRecord> exerciseRecords, DateTime newSessionDate)
     {
-        List<Exercise> relatedExercises = await _context.Exercises
-            .Include(x => x.TrainingTypes)
-            .Where(x => normalizedExerciseNames.Contains(x.Name))
-            .ToListAsync(cancellationToken);
-
-        if (normalizedExerciseNames.Count != relatedExercises.Count)
-            throw new Exception("one or more exercises could not be found");
-        return relatedExercises;
-    }
-
-
-
-    // think a bit more about this
-    public async Task<Result<bool>> UpdateSessionAsync(int sessionId, TrainingSessionWriteDto updateDto, CancellationToken cancellationToken)
-    {
-        Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = _context.Database.BeginTransaction();
-        try
+        foreach (var exerciseRecord in exerciseRecords)
         {
-
-            if (updateDto.ExerciseRecords is not null)
-                await FullSessionUpdateAsync(sessionId, updateDto, cancellationToken);
-            else
-                await PartialUpdateAsync(sessionId, updateDto, cancellationToken);
-
-            await _context.SaveChangesAsync(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
-
-            return Result<bool>.Success(true);
-        }
-        catch (Exception ex)
-        {
-            await transaction.RollbackAsync(cancellationToken);
-            return Result<bool>.Failure($"Error updating session: {ex.Message}", ex);
-        }
-    }
-
-    private async Task PartialUpdateAsync(int sessionId, TrainingSessionWriteDto updateDto, CancellationToken cancellationToken)
-    {
-
-
-    }
-
-    private async Task FullSessionUpdateAsync(int sessionId, TrainingSessionWriteDto updateDto, CancellationToken cancellationToken)
-    {
-        
-
-    }
-
-
-
-
-    // this simple for now.
-    public async Task<Result<bool>> DeleteSessionAsync(int sessionId, CancellationToken cancellationToken)
-    {
-        Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-        try
-        {
-            TrainingSession? session = await _context.TrainingSessions
-                .Include(x => x.TrainingSessionExerciseRecords)
-                    .ThenInclude(e => e.ExerciseRecord)
-                .FirstOrDefaultAsync(x => x.Id == sessionId, cancellationToken)
-
-                ;
-            if (session is null) throw new ArgumentException($"session with the id of {sessionId}, could not be found");
-
-            foreach (TrainingSessionExerciseRecord x in session.TrainingSessionExerciseRecords)
+            var existingUserExercise =
+                user.UserExercises.FirstOrDefault(x => x.Exercise.Name == exerciseRecord.Exercise.Name);
+            if (existingUserExercise is null)
             {
-                _context.Remove(x.ExerciseRecord!);
+                user.UserExercises.Add(
+                    new UserExercise()
+                    {
+                        Exercise = exerciseRecord.Exercise,
+                        User = user,
+                        CreatedAt = newSessionDate,
+                        LastUsedWeightKg = exerciseRecord.WeightUsedKg ?? 0,
+                        AverageWeight = exerciseRecord.WeightUsedKg ?? 0,
+                        BestWeight = exerciseRecord.WeightUsedKg ?? 0,
+                        AverageHeartRate = exerciseRecord.HeartRateAvg ?? 0,
+                        AverageTimerInSeconds = exerciseRecord.TimerInSeconds ?? 0,
+                        AverageDistance = exerciseRecord.DistanceInMeters ?? 0,
+                        AverageKCalBurned = exerciseRecord.KcalBurned ?? 0,
+                        AverageSpeed = exerciseRecord.Speed ?? 0,
+                        AverageRateOfPreceivedExertion = exerciseRecord.RateOfPerceivedExertion ?? 0,
+                        UseCount = 1
+                    });
             }
-            _context.TrainingSessions.Remove(session);
-            await _context.SaveChangesAsync(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
-            return Result<bool>.Success(true);
+            else
+            {
+                var userExerciseRecords = user.ExerciseRecords
+                    .Where(x => x.Exercise.Name == exerciseRecord.Exercise.Name);
+
+                existingUserExercise.UseCount++;
+                existingUserExercise.AverageWeight = userExerciseRecords.Average(x => x.WeightUsedKg ?? 0);
+                existingUserExercise.BestWeight = userExerciseRecords.Max(x => x.WeightUsedKg ?? 0);
+                existingUserExercise.LastUsedWeightKg = userExerciseRecords.OrderBy(x => x.CreatedAt).First().WeightUsedKg ?? 0;
+                existingUserExercise.AverageDistance = userExerciseRecords.Average(x => x.DistanceInMeters ?? 0);
+                existingUserExercise.AverageSpeed = userExerciseRecords.Average(x => x.Speed ?? 0);
+                existingUserExercise.AverageHeartRate = userExerciseRecords.Average(x => x.HeartRateAvg ?? 0);
+                existingUserExercise.AverageKCalBurned = userExerciseRecords.Average(x => x.KcalBurned ?? 0);
+                existingUserExercise.AverageTimerInSeconds = userExerciseRecords.Average(x => x.TimerInSeconds ?? 0);
+                existingUserExercise.AverageRateOfPreceivedExertion = userExerciseRecords.Average(x => x.RateOfPerceivedExertion ?? 0);
+            }
+
+            user.ExerciseRecords.Add(exerciseRecord);
         }
-        catch (Exception ex)
+    }
+
+    private TrainingSession CreateTrainingSession(User user, TrainingSessionWriteDto sessionDto,
+        DateTime newSessionDate, List<ExerciseRecord> exerciseRecords)
+    {
+        return new TrainingSession()
         {
-            await transaction.RollbackAsync(cancellationToken);
-            return Result<bool>.Failure($"Error deleting Session of ID: {sessionId}, error: {ex.Message}", ex);
+            Calories = (sessionDto.TotalCaloriesBurned ?? 0)
+                       + sessionDto.ExerciseRecords.Sum(x => x.KcalBurned),
+            Feeling = sessionDto.Feeling,
+            Notes = sessionDto.Notes,
+            Mood = sessionDto.Mood,
+            DurationInSeconds =
+                Utils.DurationSecondsFromMinutes(sessionDto.DurationInMinutes) ?? 0
+                + sessionDto.ExerciseRecords.Sum(x => x.TimerInSeconds ?? 1),
+            CreatedAt = newSessionDate,
+            ExerciseRecords = exerciseRecords,
+            User = user,
+            TotalRepetitions = sessionDto.ExerciseRecords.Sum(x => x.Repetitions),
+            TotalKgMoved = sessionDto.ExerciseRecords.Sum(x => x.WeightUsedKg),
+            AverageRateOfPreceivedExertion = sessionDto.ExerciseRecords.Average(x => x.RateOfPerceivedExertion)
+        };
+    }
+    
+    private List<ExerciseRecord> CreateExerciseRecords(List<ExerciseRecordWriteDto> sessionDtoExerciseRecords,
+        Dictionary<string, Exercise> relatedExercises,
+        DateTime newSessionDate)
+    {
+        return sessionDtoExerciseRecords.Select(exerciseDto => new ExerciseRecord()
+        {
+            Exercise = relatedExercises![exerciseDto.ExerciseName],
+            CreatedAt = newSessionDate,
+            Notes = exerciseDto.Notes,
+            KcalBurned = exerciseDto.KcalBurned,
+            WeightUsedKg = exerciseDto.WeightUsedKg,
+            Incline = exerciseDto.Incline,
+            Speed = exerciseDto.Speed,
+            TimerInSeconds = exerciseDto.TimerInSeconds,
+            DistanceInMeters = exerciseDto.DistanceInMeters,
+            RestInSeconds = exerciseDto.RestInSeconds,
+            HeartRateAvg = exerciseDto.HeartRateAvg,
+            Repetitions = exerciseDto.Repetitions,
+            RateOfPerceivedExertion = exerciseDto.RateOfPerceivedExertion,
+            Mood = exerciseDto.Mood,
+            
+        }).ToList();
+    }
+
+    private async Task<Result<Dictionary<string, Exercise>>> GetRelatedExercisesDictionary(List<string> exerciseNames,
+        CancellationToken cancellationToken)
+    {
+        var result = await _context.Exercises
+            .Where(x => exerciseNames
+                .Contains(x.Name))
+            .ToDictionaryAsync(x => x.Name, x => x, cancellationToken);
+        if (result.Count != exerciseNames.Count)
+        {
+            var missingExercises = exerciseNames
+                .Where(x => !result.Keys.Contains(x))
+                .Distinct(); // don't want 'barbell static lunge' more than once.
+            var errorMessage = string.Join("\n ", missingExercises);
+            _logger.LogError($"[ERROR]: these exercises were not in the database:\n{errorMessage}");
+            return Result<Dictionary<string, Exercise>>.Failure(
+                $"Some exercises are not in the database: {errorMessage}");
         }
+
+        return Result<Dictionary<string, Exercise>>.Success(result);
     }
 }

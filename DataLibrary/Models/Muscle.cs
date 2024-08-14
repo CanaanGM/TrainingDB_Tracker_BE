@@ -16,6 +16,4 @@ public partial class Muscle
     public string? WikiPageUrl { get; set; }
 
     public virtual ICollection<ExerciseMuscle> ExerciseMuscles { get; set; } = new List<ExerciseMuscle>();
-
-    public virtual ICollection<UserMuscle> UserMuscles { get; set; } = new List<UserMuscle>();
 }

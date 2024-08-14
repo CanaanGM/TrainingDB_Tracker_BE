@@ -84,7 +84,7 @@ public class EquipmentService : IEquipmentService
                     {
                         Name = Utils.NormalizeString(newEquipmentDto.Name),
                         Description = newEquipmentDto.Description,
-                        WeightKg = newEquipmentDto.WeightKg
+                        WeightKg = newEquipmentDto.WeightKg ?? 0
                     }                    
                 ).ToList();
             await _context.Equipment.AddRangeAsync(newEquipments, cancellationToken);

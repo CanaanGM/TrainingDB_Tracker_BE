@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using DataLibrary.Context;
-using DataLibrary.Core;
+﻿
 using DataLibrary.Dtos;
 using DataLibrary.Helpers;
 using DataLibrary.Models;
@@ -9,31 +7,19 @@ using DateLibraryTests.helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
-using TestSupport.EfHelpers;
 
 namespace DateLibraryTests.ServicesTests;
 
-public class PlanServiceTests 
+public class PlanServiceTests : BaseTestClass
 {
-    DbContextOptionsDisposable<SqliteContext> options;
-    SqliteContext context;
-    Profiles myProfile;
-    MapperConfiguration? configuration;
-    Mapper mapper;
     private PlanService service;
     private Mock<ILogger<PlanService>> logger;
 
 
     public PlanServiceTests()
     {
-        options = SqliteInMemory.CreateOptions<SqliteContext>();
-        context = new SqliteContext(options);
-        context.Database.EnsureCreated();
-        myProfile = new Profiles();
-        configuration = new MapperConfiguration(cfg => cfg.AddProfile(myProfile));
-        mapper = new Mapper(configuration);
         logger = new Mock<ILogger<PlanService>>();
-        service = new PlanService(context, mapper, logger.Object);
+        service = new PlanService(_context, _mapper, logger.Object);
     }
 
 
@@ -41,7 +27,7 @@ public class PlanServiceTests
     public async Task CreateAsyncWithEquipment_ShouldCreateTrainingPlanSuccessfully()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var newPlanDto = _correctPlanWithEquipment;
 
@@ -61,7 +47,7 @@ public class PlanServiceTests
     public async Task CreateAsyncWithNoEquipment_ShouldCreateTrainingPlanSuccessfully()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var newPlanDto = _correctPlanWithNoEquipment;
 
@@ -80,35 +66,35 @@ public class PlanServiceTests
     public async Task CreateAsync_MissingExercises_ShouldReturnErrorWithAllMissingExercises()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
         var newPlanDto = _missingExerciesPlan;
         // Act
         var result = await service.CreateAsync(newPlanDto, new CancellationToken());
         // Assert
         Assert.False(result.IsSuccess);
         Assert.Equal("The following exercises do not exist: nargacuga, tigrex", result.ErrorMessage);
-        Assert.Empty(context.TrainingPlans);
+        Assert.Empty(_context.TrainingPlans);
     }
 
     [Fact]
     public async Task CreateAsync_MissingTrainingTypes_ShouldReturnErrorWithAllMissingExercises()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
         var newPlanDto = _missingTrainingTypesPlan;
         // Act
         var result = await service.CreateAsync(newPlanDto, new CancellationToken());
         // Assert
         Assert.False(result.IsSuccess);
         Assert.Equal("The following training types do not exist: white fatalis, safijiva", result.ErrorMessage);
-        Assert.Empty(context.TrainingPlans);
+        Assert.Empty(_context.TrainingPlans);
     }
 
     [Fact]
     public async Task CreateAsync_EmptyExercises_ShouldReturnError()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var newPlanDto = _noExercisePlan;
 
@@ -119,14 +105,14 @@ public class PlanServiceTests
         Assert.False(result.IsSuccess);
         Assert.Equal("The training plan must have at least one week with one day and one exercise.",
             result.ErrorMessage);
-        Assert.Empty(context.TrainingPlans);
+        Assert.Empty(_context.TrainingPlans);
     }
 
     [Fact]
     public async Task CreateAsync_InvalidEquipment_ShouldReturnError()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var newPlanDto = _invalidEquipmentPlan;
 
@@ -136,14 +122,14 @@ public class PlanServiceTests
         // Assert
         Assert.False(result.IsSuccess);
         Assert.Equal("The following equipment do not exist: noh", result.ErrorMessage);
-        Assert.Empty(context.TrainingPlans);
+        Assert.Empty(_context.TrainingPlans);
     }
 
     [Fact]
     public async Task CreateAsync_EmptyPlan_ShouldReturnError()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var newPlanDto = new TrainingPlanWriteDto
         {
@@ -162,7 +148,7 @@ public class PlanServiceTests
         Assert.False(result.IsSuccess);
         Assert.Equal("The training plan must have at least one week with one day and one exercise.",
             result.ErrorMessage);
-        Assert.Empty(context.TrainingPlans);
+        Assert.Empty(_context.TrainingPlans);
     }
 
     private void AssertPlanCreatedSuccessfully(TrainingPlanWriteDto newPlanDto, TrainingPlan createdPlan)
@@ -180,7 +166,7 @@ public class PlanServiceTests
 
     private async Task<TrainingPlan> GetCreatedPlan(int planId)
     {
-        return await context.TrainingPlans
+        return await _context.TrainingPlans
             .Include(tp => tp.TrainingWeeks)
             .ThenInclude(tw => tw.TrainingDays)
             .ThenInclude(td => td.Blocks)
@@ -194,7 +180,7 @@ public class PlanServiceTests
     public async Task UpdateAsync_MissingExercises_ShouldReturnFailure()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var initialPlan = _correctPlanWithEquipment;
         var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
@@ -258,7 +244,7 @@ public class PlanServiceTests
     public async Task UpdateAsync_FullUpdate_ShouldUpdateTrainingPlanSuccessfully()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var initialPlan = _correctPlanWithEquipment;
         var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
@@ -316,7 +302,7 @@ public class PlanServiceTests
         // Assert
         Assert.True(updateResult.IsSuccess);
 
-        var updatedPlan = await context.TrainingPlans
+        var updatedPlan = await _context.TrainingPlans
             .Include(tp => tp.TrainingWeeks)
             .ThenInclude(tw => tw.TrainingDays)
             .ThenInclude(td => td.Blocks)
@@ -336,7 +322,7 @@ public class PlanServiceTests
     public async Task UpdateAsync_PartialUpdate_ShouldUpdateTrainingPlanSuccessfully()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var initialPlan = _correctPlanWithEquipment;
         var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
@@ -394,7 +380,7 @@ public class PlanServiceTests
         // Assert
         Assert.True(updateResult.IsSuccess);
 
-        var updatedPlan = await context.TrainingPlans
+        var updatedPlan = await _context.TrainingPlans
             .Include(tp => tp.TrainingWeeks)
             .ThenInclude(tw => tw.TrainingDays)
             .ThenInclude(td => td.Blocks)
@@ -415,7 +401,7 @@ public class PlanServiceTests
     public async Task UpdateAsync_NoChanges_ShouldNotChangeTrainingPlan()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var initialPlan = _correctPlanWithEquipment;
         var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
@@ -427,7 +413,7 @@ public class PlanServiceTests
         // Assert
         Assert.True(updateResult.IsSuccess);
 
-        var updatedPlan = await context.TrainingPlans
+        var updatedPlan = await _context.TrainingPlans
             .Include(tp => tp.TrainingWeeks)
             .ThenInclude(tw => tw.TrainingDays)
             .ThenInclude(td => td.Blocks)
@@ -451,7 +437,7 @@ public class PlanServiceTests
 public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
 {
     // Arrange
-    ProductionDatabaseHelpers.SeedProductionData(context);
+    ProductionDatabaseHelpers.SeedProductionData(_context);
 
     var initialPlan = _correctPlanWithEquipment;
     var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
@@ -517,7 +503,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
     public async Task UpdateAsync_EmptyTrainingPlan_ShouldReturnError()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var initialPlan = _correctPlanWithEquipment;
         var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
@@ -547,7 +533,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
     public async Task UpdateAsync_RemoveAllWeeks_ShouldReturnError()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var initialPlan = _correctPlanWithEquipment;
         var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
@@ -576,7 +562,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
     public async Task UpdateAsync_PartiallyRemoveBlocks_ShouldUpdateSuccessfully()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var initialPlan = _correctPlanWithEquipment;
         var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
@@ -608,7 +594,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
         // Assert
         Assert.True(updateResult.IsSuccess);
 
-        var updatedPlan = await context.TrainingPlans
+        var updatedPlan = await _context.TrainingPlans
             .Include(tp => tp.TrainingWeeks)
             .ThenInclude(tw => tw.TrainingDays)
             .ThenInclude(td => td.Blocks)
@@ -629,7 +615,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
     public async Task UpdateAsync_UpdatePlanNameOnly_ShouldUpdateSuccessfully()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var initialPlan = _correctPlanWithEquipment;
         var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
@@ -651,7 +637,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
         // Assert
         Assert.True(updateResult.IsSuccess);
 
-        var updatedPlan = await context.TrainingPlans
+        var updatedPlan = await _context.TrainingPlans
             .Include(tp => tp.TrainingWeeks)
             .ThenInclude(tw => tw.TrainingDays)
             .ThenInclude(td => td.Blocks)
@@ -667,7 +653,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
     public async Task UpdateAsync_UpdatePlanDescriptionOnly_ShouldUpdateSuccessfully()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var initialPlan = _correctPlanWithEquipment;
         var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
@@ -689,7 +675,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
         // Assert
         Assert.True(updateResult.IsSuccess);
 
-        var updatedPlan = await context.TrainingPlans
+        var updatedPlan = await _context.TrainingPlans
             .Include(tp => tp.TrainingWeeks)
             .ThenInclude(tw => tw.TrainingDays)
             .ThenInclude(td => td.Blocks)
@@ -704,7 +690,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
     public async Task UpdateAsync_UpdatePlanNotesOnly_ShouldUpdateSuccessfully()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var initialPlan = _correctPlanWithEquipment;
         var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
@@ -726,7 +712,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
         // Assert
         Assert.True(updateResult.IsSuccess);
 
-        var updatedPlan = await context.TrainingPlans
+        var updatedPlan = await _context.TrainingPlans
             .Include(tp => tp.TrainingWeeks)
             .ThenInclude(tw => tw.TrainingDays)
             .ThenInclude(td => td.Blocks)
@@ -743,7 +729,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
     public async Task DeleteAsync_ValidPlanId_ShouldDeleteSuccessfully()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var newPlanDto = _correctPlanWithEquipment;
         var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
@@ -754,7 +740,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
 
         // Assert
         Assert.True(deleteResult.IsSuccess);
-        var deletedPlan = await context.TrainingPlans
+        var deletedPlan = await _context.TrainingPlans
             .FirstOrDefaultAsync(tp => tp.Id == createResult.Value);
         Assert.Null(deletedPlan);
     }
@@ -774,7 +760,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
     public async Task DeleteAsync_PlanWithAssociatedEntities_ShouldDeleteAllRelatedEntities()
     {
         // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(context);
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
         var newPlanDto = _correctPlanWithEquipment;
         var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
@@ -786,7 +772,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
         // Assert
         Assert.True(deleteResult.IsSuccess);
 
-        var deletedPlan = await context.TrainingPlans
+        var deletedPlan = await _context.TrainingPlans
             .Include(tp => tp.TrainingWeeks)
             .ThenInclude(tw => tw.TrainingDays)
             .ThenInclude(td => td.Blocks)
@@ -794,22 +780,22 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
             .FirstOrDefaultAsync(tp => tp.Id == createResult.Value);
         Assert.Null(deletedPlan);
 
-        var weeks = await context.TrainingWeeks
+        var weeks = await _context.TrainingWeeks
             .Where(tw => tw.TrainingPlanId == createResult.Value)
             .ToListAsync();
         Assert.Empty(weeks);
 
-        var days = await context.TrainingDays
+        var days = await _context.TrainingDays
             .Where(td => td.TrainingWeek.TrainingPlanId == createResult.Value)
             .ToListAsync();
         Assert.Empty(days);
 
-        var blocks = await context.Blocks
+        var blocks = await _context.Blocks
             .Where(b => b.TrainingDay.TrainingWeek.TrainingPlanId == createResult.Value)
             .ToListAsync();
         Assert.Empty(blocks);
 
-        var blockExercises = await context.BlockExercises
+        var blockExercises = await _context.BlockExercises
             .Where(be => be.Block.TrainingDay.TrainingWeek.TrainingPlanId == createResult.Value)
             .ToListAsync();
         Assert.Empty(blockExercises);
@@ -819,7 +805,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
 public async Task DeleteAsync_ShouldDeleteAllRelatedEntities()
 {
     // Arrange
-    ProductionDatabaseHelpers.SeedProductionData(context);
+    ProductionDatabaseHelpers.SeedProductionData(_context);
 
     var newPlanDto = _correctPlanWithEquipment;
     var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
@@ -832,30 +818,30 @@ public async Task DeleteAsync_ShouldDeleteAllRelatedEntities()
     Assert.True(deleteResult.IsSuccess);
 
     // Check if the plan is deleted
-    var deletedPlan = await context.TrainingPlans
+    var deletedPlan = await _context.TrainingPlans
         .FirstOrDefaultAsync(tp => tp.Id == createResult.Value);
     Assert.Null(deletedPlan);
 
     // Check if all related weeks are deleted
-    var deletedWeeks = await context.TrainingWeeks
+    var deletedWeeks = await _context.TrainingWeeks
         .Where(tw => tw.TrainingPlanId == createResult.Value)
         .ToListAsync();
     Assert.Empty(deletedWeeks);
 
     // Check if all related days are deleted
-    var deletedDays = await context.TrainingDays
+    var deletedDays = await _context.TrainingDays
         .Where(td => td.TrainingWeek.TrainingPlanId == createResult.Value)
         .ToListAsync();
     Assert.Empty(deletedDays);
 
     // Check if all related blocks are deleted
-    var deletedBlocks = await context.Blocks
+    var deletedBlocks = await _context.Blocks
         .Where(b => b.TrainingDay.TrainingWeek.TrainingPlanId == createResult.Value)
         .ToListAsync();
     Assert.Empty(deletedBlocks);
 
     // Check if all related block exercises are deleted
-    var deletedBlockExercises = await context.BlockExercises
+    var deletedBlockExercises = await _context.BlockExercises
         .Where(be => be.Block.TrainingDay.TrainingWeek.TrainingPlanId == createResult.Value)
         .ToListAsync();
     Assert.Empty(deletedBlockExercises);
@@ -866,7 +852,7 @@ public async Task DeleteAsync_ShouldDeleteAllRelatedEntities()
 [Fact]
 public async Task GetByIdAsync_ShouldReturnTrainingPlan_WhenTrainingPlanExists()
 {
-    ProductionDatabaseHelpers.SeedProductionData(context);
+    ProductionDatabaseHelpers.SeedProductionData(_context);
     // Arrange
     var newPlanDto = _correctPlanWithEquipment;
     var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
@@ -902,7 +888,7 @@ public async Task GetByIdAsync_ShouldReturnFailure_WhenExceptionOccurs()
     var newPlanDto = _correctPlanWithEquipment;
     var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
 
-    context.Dispose(); // Force an exception by disposing the context
+    _context.Dispose(); // Force an exception by disposing the _context
 
     // Act
     var result = await service.GetByIdAsync(createResult.Value, new CancellationToken());

@@ -7,23 +7,24 @@ public partial class TrainingSession
 {
     public int Id { get; set; }
 
-    public int? DurationInSeconds { get; set; }
+    public int Calories { get; set; }
 
-    public int? TotalCaloriesBurned { get; set; }
+    public double DurationInSeconds { get; set; }
+
+    public int Mood { get; set; }
+
+    public double TotalKgMoved { get; set; }
+    public double TotalRepetitions { get; set; }
+    public double AverageRateOfPreceivedExertion { get; set; }
+    public string Feeling { get; set; } = null!;
 
     public string? Notes { get; set; }
 
-    public int? Mood { get; set; }
-
-    public string? Feeling { get; set; }
-
-    public int? RateOfPerceivedExertionAvg { get; set; }
+    public int? UserId { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 
-    public int? UserId { get; set; }
-
-    public virtual ICollection<TrainingSessionExerciseRecord> TrainingSessionExerciseRecords { get; set; } = new List<TrainingSessionExerciseRecord>();
-
     public virtual User? User { get; set; }
+
+    public virtual ICollection<ExerciseRecord> ExerciseRecords { get; set; } = new List<ExerciseRecord>();
 }

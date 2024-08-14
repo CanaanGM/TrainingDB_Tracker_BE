@@ -67,7 +67,15 @@ public static class Utils
     /// </summary>
     /// <param name="durationInMinutes">nullable duration in minutes</param>
     /// <returns>duration in seconds or null.</returns>
-    public static int? DurationSecondsFromMinutes(int? durationInMinutes) => durationInMinutes is not null ? durationInMinutes * 60 : null;
+    public static double? DurationSecondsFromMinutes(int? durationInMinutes) => durationInMinutes is not null ? durationInMinutes * 60 : null;
+
+    /// <summary>
+    /// turns seconds into minutes
+    /// </summary>
+    /// <param name="durationInSeconds">nullable duration in seconds</param>
+    /// <returns>duration in minutes or null.</returns>
+    public static double? DurationMinutesFromSeconds(double? durationInSeconds) 
+        => durationInSeconds is not null ? durationInSeconds / 60 : null;
 
     /// <summary>
     /// Takes in a list of exercises and return the same list but with a <seealso cref="NormalizeString(string)"/> normalized names

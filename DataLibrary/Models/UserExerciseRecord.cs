@@ -3,17 +3,15 @@ using System.Collections.Generic;
 
 namespace DataLibrary.Models;
 
-public partial class TrainingSessionExerciseRecord
+public partial class UserExerciseRecord
 {
-    public int TrainingSessionId { get; set; }
-
     public int ExerciseRecordId { get; set; }
 
-    public double? LastWeightUsedKg { get; set; }
+    public int UserId { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 
     public virtual ExerciseRecord ExerciseRecord { get; set; } = null!;
 
-    public virtual TrainingSession TrainingSession { get; set; } = null!;
+    public virtual User User { get; set; } = null!;
 }

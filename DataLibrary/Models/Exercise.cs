@@ -21,6 +21,8 @@ public partial class Exercise
 
     public virtual ICollection<ExerciseMuscle> ExerciseMuscles { get; set; } = new List<ExerciseMuscle>();
 
+    public virtual ICollection<ExerciseRecord> ExerciseRecords { get; set; } = new List<ExerciseRecord>();
+
     public virtual ICollection<UserExercise> UserExercises { get; set; } = new List<UserExercise>();
 
     public virtual ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();

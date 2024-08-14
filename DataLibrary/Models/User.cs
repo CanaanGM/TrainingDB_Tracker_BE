@@ -25,8 +25,6 @@ public partial class User
 
     public virtual ICollection<UserExercise> UserExercises { get; set; } = new List<UserExercise>();
 
-    public virtual ICollection<UserMuscle> UserMuscles { get; set; } = new List<UserMuscle>();
-
     public virtual ICollection<UserPassword> UserPasswords { get; set; } = new List<UserPassword>();
 
     public virtual ICollection<UserProfileImage> UserProfileImages { get; set; } = new List<UserProfileImage>();
