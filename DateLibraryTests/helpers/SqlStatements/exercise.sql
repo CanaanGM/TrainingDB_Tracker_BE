@@ -704,4 +704,28 @@ values (
                 'Barbell curls are a classic isolation exercise that primarily targets the biceps brachii. This exercise helps to build arm strength and size by focusing on the biceps, with some involvement from the brachialis and forearms.',
                 'Stand with your feet shoulder-width apart, holding a barbell with an underhand grip (palms facing up), hands positioned slightly wider than shoulder-width apart. Keep your elbows close to your torso as you curl the barbell upwards towards your shoulders. Squeeze your biceps at the top of the movement, then slowly lower the barbell back to the starting position. Repeat for the desired number of repetitions.',
                 2
+        ),
+        (
+                'arnold rotations - slight incline lying',
+                'Arnold rotations on a slight incline while lying down primarily target the rear deltoids, with additional emphasis on the middle deltoids and rotator cuff muscles. This variation of the exercise helps to improve shoulder stability, strength, and mobility, particularly focusing on the posterior deltoid.',
+                'Set an incline bench to a slight angle, around 15-30 degrees, and lie face down on the bench with your chest supported. Hold a dumbbell in each hand with your palms facing you at shoulder height. As you rotate your arms upward, twist your wrists so that your palms face outward at the top of the movement, focusing on engaging your rear delts. Reverse the motion as you lower the dumbbells back to the starting position, rotating your palms to face you again. Repeat for the desired number of repetitions.',
+                3
+        ),
+        (
+                'arnold rotations - slight incline',
+                'Arnold rotations on a slight incline target the shoulders, particularly the anterior and middle deltoids, while also engaging the triceps. The rotating motion helps to improve shoulder stability and strength, with the incline adding a unique challenge.',
+                'Set an incline bench to a slight angle, around 15-30 degrees. Sit back on the bench with a dumbbell in each hand, palms facing you at shoulder height. As you press the dumbbells upward, rotate your palms outward so that they face away from you at the top of the movement. Reverse the motion on the way down, bringing the dumbbells back to the starting position with palms facing you. Repeat for the desired number of repetitions.',
+                3
+        ),
+        (
+                'bus drivers - incline',
+                'Incline bus drivers target the deltoids, particularly the anterior and middle heads, while also engaging the upper chest and forearms. This exercise mimics the motion of turning a steering wheel, providing a unique rotational challenge that enhances shoulder stability and strength.',
+                'Set an incline bench to a 30-45 degree angle and lie back with a weight plate held in both hands at arm''s length in front of your chest. Keep your arms slightly bent. Rotate the plate from side to side as if you were turning a steering wheel, focusing on controlled movements and engaging your shoulder muscles throughout. Perform the motion for the desired number of repetitions.',
+                3
+        ),
+        (
+                'bus driver',
+                'The bus driver exercise targets the deltoids, particularly the anterior and middle heads, while also engaging the forearms. This movement mimics the action of turning a steering wheel, providing a rotational challenge that enhances shoulder stability, strength, and mobility.',
+                'Stand with your feet shoulder-width apart and hold a weight plate with both hands at arm''s length in front of you. Keep your arms slightly bent. Rotate the plate from side to side as if you were turning a steering wheel, focusing on controlled movements and engaging your shoulder muscles throughout the exercise. Perform the motion for the desired number of repetitions.',
+                2
         );

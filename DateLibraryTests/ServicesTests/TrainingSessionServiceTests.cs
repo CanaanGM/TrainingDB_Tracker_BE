@@ -1,5 +1,6 @@
 ﻿using DataLibrary.Dtos;
 using DataLibrary.Helpers;
+using DataLibrary.Models;
 using DataLibrary.Services;
 using DateLibraryTests.helpers;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,7 @@ public class TrainingSessionServiceTests : BaseTestClass
     [Fact]
     public async Task CreateSessionAsync_NoUser_Failure()
     {
-        var newSession = TrainingSessionDtoFactory.CreateMixedDto();
+        var newSession = TrainingSessionDtoFactory.CreateLegsSessionDto();
 
         var result = await _service.CreateSessionAsync(1, newSession, new CancellationToken());
         Assert.False(result.IsSuccess);
@@ -36,9 +37,9 @@ public class TrainingSessionServiceTests : BaseTestClass
         ProductionDatabaseHelpers.SeedProductionData(_context);
         ProductionDatabaseHelpers.SeedDummyUsers(_context);
         var result =
-            await _service.CreateSessionAsync(1, createMissingExerciseSessionWriteDto(), new CancellationToken());
+            await _service.CreateSessionAsync(1,TrainingSessionDtoFactory.createMissingExerciseSessionWriteDto(), new CancellationToken());
         Assert.False(result.IsSuccess);
-        Assert.Equal($"Some exercises are not in the database: alphard\n dante\n canaan", result.ErrorMessage);
+        Assert.Equal($"Some exercises are not in the database:\n alphard\n dante\n canaan", result.ErrorMessage);
     }
 
     [Fact]
@@ -46,7 +47,7 @@ public class TrainingSessionServiceTests : BaseTestClass
     {
         ProductionDatabaseHelpers.SeedProductionData(_context);
         ProductionDatabaseHelpers.SeedDummyUsers(_context);
-        var newSession = TrainingSessionDtoFactory.CreateCorrectSessionDtoMixedExerciseTypes();
+        var newSession = TrainingSessionDtoFactory.CreateCorrectSessionDtoMixedCardio();
 
         var result = await _service.CreateSessionAsync(1, newSession, new CancellationToken());
         Assert.True(result.IsSuccess);
@@ -66,6 +67,12 @@ public class TrainingSessionServiceTests : BaseTestClass
         Assert.Equal(6, user.ExerciseRecords.Count);
 
         var trainingSession = user.TrainingSessions.Single();
+        ValidateMixedCardioSession(trainingSession, newSession, user);
+    }
+
+    private static void ValidateMixedCardioSession(TrainingSession trainingSession, TrainingSessionWriteDto newSession,
+        User user)
+    {
         Assert.Equal(6, trainingSession.ExerciseRecords.Count);
         Assert.Equal(
             newSession.TotalCaloriesBurned + newSession.ExerciseRecords.Sum(x => x.KcalBurned)
@@ -75,9 +82,9 @@ public class TrainingSessionServiceTests : BaseTestClass
         Assert.NotNull(trainingSession.ExerciseRecords.First().CreatedAt);
         Assert.IsType<DateTime>(trainingSession.ExerciseRecords.First().CreatedAt);
 
-        Assert.Equal(newSession.Feeling, user.TrainingSessions.First().Feeling);
-        Assert.Equal(newSession.Mood, user.TrainingSessions.First().Mood);
-        Assert.Equal(newSession.Notes, user.TrainingSessions.First().Notes);
+        Assert.Equal(newSession.Feeling, trainingSession.Feeling);
+        Assert.Equal(newSession.Mood, trainingSession.Mood);
+        Assert.Equal(newSession.Notes, trainingSession.Notes);
         Assert.Equal(newSession.TotalCaloriesBurned + newSession.ExerciseRecords.Sum(x => x.KcalBurned)
             , trainingSession.Calories);
         Assert.Equal(Utils.DurationSecondsFromMinutes(newSession.DurationInMinutes) ?? 0
@@ -104,7 +111,6 @@ public class TrainingSessionServiceTests : BaseTestClass
         Assert.Single(user.UserExercises.Where(x => x.Exercise.Name == "dragon flag"));
         var dragonFlagExercise = user.UserExercises.First(x => x.Exercise.Name == "dragon flag");
         Assert.Equal(6.5, dragonFlagExercise.AverageRateOfPreceivedExertion);
-        
     }
 
     [Fact]
@@ -112,7 +118,7 @@ public class TrainingSessionServiceTests : BaseTestClass
     {
         ProductionDatabaseHelpers.SeedProductionData(_context);
         ProductionDatabaseHelpers.SeedDummyUsers(_context);
-        var newSession = TrainingSessionDtoFactory.CreateMixedDto();
+        var newSession = TrainingSessionDtoFactory.CreateLegsSessionDto();
         var result = await _service.CreateSessionAsync(1, newSession, new CancellationToken());
 
         Assert.True(result.IsSuccess);
@@ -129,13 +135,26 @@ public class TrainingSessionServiceTests : BaseTestClass
 
         // the training session
         var trainingSession = user.TrainingSessions.First();
+        
+        ValidateLegsSession(trainingSession, newSession, user);
+        // the user exercises
+        var userExerciseRecords = user.UserExercises;
+        Assert.Equal(5, userExerciseRecords.Count());
+
+        var sumoDeadLiftUserExercise = userExerciseRecords.First(x => x.Exercise.Name == "sumo deadlifts");
+        Assert.Equal(9, sumoDeadLiftUserExercise.UseCount);
+        Assert.Equal(90, sumoDeadLiftUserExercise.BestWeight);
+        Assert.Equal(90, sumoDeadLiftUserExercise.LastUsedWeightKg);
+    }
+
+    private void ValidateLegsSession(TrainingSession trainingSession, TrainingSessionWriteDto newSession, User user)
+    {
         Assert.Equal(30, trainingSession.ExerciseRecords.Count);
         Assert.Equal((489 + 366 + 29), trainingSession.Calories);
         Assert.Equal(newSession.Feeling, trainingSession.Feeling);
         Assert.Equal(newSession.Mood, trainingSession.Mood);
         Assert.IsType<DateTime>(trainingSession.CreatedAt);
         Assert.Equal(newSession.DurationInMinutes * 60, trainingSession.DurationInSeconds);
-        Assert.Equal(1, _context.TrainingSessions.Count());
         // the training records,
         Assert.Equal(30, trainingSession.ExerciseRecords.Count);
         Assert.Equal(267, trainingSession.ExerciseRecords.Sum(x => x.Repetitions));
@@ -164,14 +183,7 @@ public class TrainingSessionServiceTests : BaseTestClass
             .Sum(x => x.WeightUsedKg));
 
 
-        // the user exercises
-        var userExerciseRecords = user.UserExercises;
-        Assert.Equal(5, userExerciseRecords.Count());
 
-        var sumoDeadLiftUserExercise = userExerciseRecords.First(x => x.Exercise.Name == "sumo deadlifts");
-        Assert.Equal(9, sumoDeadLiftUserExercise.UseCount);
-        Assert.Equal(90, sumoDeadLiftUserExercise.BestWeight);
-        Assert.Equal(90, sumoDeadLiftUserExercise.LastUsedWeightKg);
     }
 
     [Fact]
@@ -208,8 +220,8 @@ public class TrainingSessionServiceTests : BaseTestClass
     
         var sessionDtos = new List<TrainingSessionWriteDto>
         {
-            TrainingSessionDtoFactory.CreateMixedDto(),
-            TrainingSessionDtoFactory.CreateCorrectSessionDtoMixedExerciseTypes()
+            TrainingSessionDtoFactory.CreateLegsSessionDto(),
+            TrainingSessionDtoFactory.CreateCorrectSessionDtoMixedCardio()
         };
     
         var result = await _service.CreateSessionsBulkAsync(1, sessionDtos, new CancellationToken());
@@ -225,7 +237,12 @@ public class TrainingSessionServiceTests : BaseTestClass
     
         Assert.NotNull(user);
         Assert.Equal(2, user.TrainingSessions.Count);
-        Assert.Equal(4, user.ExerciseRecords.Count);
+        Assert.Equal(36, user.ExerciseRecords.Count);
+
+        var userTrainingSessions = user.TrainingSessions.ToList();
+        ValidateLegsSession(userTrainingSessions[0] ,sessionDtos[0], user);
+        ValidateMixedCardioSession(userTrainingSessions[1], sessionDtos[1], user);
+        
     }
     
     [Fact]
@@ -233,8 +250,8 @@ public class TrainingSessionServiceTests : BaseTestClass
     {
         var sessionDtos = new List<TrainingSessionWriteDto>
         {
-            TrainingSessionDtoFactory.CreateMixedDto(),
-            TrainingSessionDtoFactory.CreateCorrectSessionDtoMixedExerciseTypes()
+            TrainingSessionDtoFactory.CreateLegsSessionDto(),
+            TrainingSessionDtoFactory.CreateCorrectSessionDtoMixedCardio()
         };
     
         var result = await _service.CreateSessionsBulkAsync(999, sessionDtos, new CancellationToken());
@@ -251,8 +268,8 @@ public class TrainingSessionServiceTests : BaseTestClass
     
         var sessionDtos = new List<TrainingSessionWriteDto>
         {
-            createInvalidSessionWriteDto(), // Assuming this method creates an invalid DTO
-            TrainingSessionDtoFactory.CreateCorrectSessionDtoMixedExerciseTypes()
+            TrainingSessionDtoFactory.createInvalidSessionWriteDto(),
+            TrainingSessionDtoFactory.CreateCorrectSessionDtoMixedCardio()
         };
     
         var result = await _service.CreateSessionsBulkAsync(1, sessionDtos, new CancellationToken());
@@ -279,157 +296,272 @@ public class TrainingSessionServiceTests : BaseTestClass
         var createdSessions = _context.TrainingSessions.Include(ts => ts.ExerciseRecords).ToList();
     
         Assert.Equal(trainingSessions.Count, createdSessions.Count);
+
+        var user = _context.Users
+            .Include(x => x.TrainingSessions)
+            .First(x => x.Id == 1);
+        Assert.Equal(user.TrainingSessions.Count, trainingSessions.Count);
+        Assert.Equal(user.TrainingSessions.Count, createdSessions.Count);
+
+    }
     
-        // Further assertions to verify each session and its exercise records match the JSON input
-    }
-    //
-    //    
-    //
-    // [Fact]
-    //    public async Task UpdateAsync_UserNotFound_ReturnsFailure()
-    //    {
-    //        // Arrange
-    //        ProductionDatabaseHelpers.SeedProductionData(_context);
-    //        var updateDto = createCorrectSessionWriteDto();
-    //
-    //        // Act
-    //        var result = await _service.UpdateAsync(999, 1, updateDto, new CancellationToken());
-    //
-    //        // Assert
-    //        Assert.False(result.IsSuccess);
-    //        Assert.Equal("User not found", result.ErrorMessage);
-    //    }
-    //
-    //    [Fact]
-    //    public async Task UpdateAsync_SessionNotFound_ReturnsFailure()
-    //    {
-    //        // Arrange
-    //        ProductionDatabaseHelpers.SeedProductionData(_context);
-    //        ProductionDatabaseHelpers.SeedDummyUsers(_context);
-    //        var updateDto = createUpdatedSessionWriteDto();
-    //
-    //        // Act
-    //        var result = await _service.UpdateAsync(1, 999, updateDto, new CancellationToken());
-    //
-    //        // Assert
-    //        Assert.False(result.IsSuccess);
-    //        Assert.Equal("Training session not found", result.ErrorMessage);
-    //    }
-    //
-    //    [Fact]
-    //    public async Task UpdateAsync_ValidUpdate_ReturnsSuccess()
-    //    {
-    //        // Arrange
-    //        ProductionDatabaseHelpers.SeedProductionData(_context);
-    //        ProductionDatabaseHelpers.SeedDummyUsers(_context);
-    //
-    //        var sessionDto = createCorrectSessionWriteDto();
-    //        var creationResult = await _service.CreateSessionAsync(1, sessionDto, new CancellationToken());
-    //        Assert.True(creationResult.IsSuccess);
-    //
-    //        var existingSession = _context.TrainingSessions.First();
-    //        var updateDto = createUpdatedSessionWriteDto();
-    //
-    //        // Act
-    //        var result = await _service.UpdateAsync(1, existingSession.Id, updateDto, new CancellationToken());
-    //
-    //        // Assert
-    //        Assert.True(result.IsSuccess);
-    //        Assert.Equal("Training session updated successfully!", result.SuccessMessage);
-    //
-    //        var updatedSession = _context.TrainingSessions
-    //            .Include(ts => ts.ExerciseRecords)
-    //            .FirstOrDefault(ts => ts.Id == existingSession.Id);
-    //
-    //        Assert.NotNull(updatedSession);
-    //        Assert.Equal(updateDto.Feeling, updatedSession.Feeling);
-    //        Assert.Equal(updateDto.Notes, updatedSession.Notes);
-    //        Assert.Equal(updateDto.Mood, updatedSession.Mood);
-    //        Assert.Equal(updateDto.TotalCaloriesBurned + updateDto.ExerciseRecords.Sum(x => x.KcalBurned), updatedSession.Calories);
-    //        Assert.Equal(updateDto.ExerciseRecords.Count, updatedSession.ExerciseRecords.Count);
-    //    }
-    private TrainingSessionWriteDto createInvalidSessionWriteDto()
+       
+    
+    [Fact]
+       public async Task UpdateAsync_UserNotFound_ReturnsFailure()
+       {
+           // Arrange
+           ProductionDatabaseHelpers.SeedProductionData(_context);
+           var updateDto = TrainingSessionDtoFactory.CreateLegsSessionDto();
+    
+           // Act
+           var result = await _service.UpdateTrainingSession(999, 1, updateDto, new CancellationToken());
+    
+           // Assert
+           Assert.False(result.IsSuccess);
+           Assert.Equal("User was not found", result.ErrorMessage);
+       }
+    
+    [Fact]
+    public async Task UpdateAsync_SessionNotFound_ReturnsFailure()
     {
-        return new TrainingSessionWriteDto()
-        {
-            Feeling = "", // Invalid because it's empty
-            Mood = 5,
-            Notes = "Invalid session",
-            DurationInMinutes = 30,
-            TotalCaloriesBurned = 300,
-            ExerciseRecords = new List<ExerciseRecordWriteDto>()
-            {
-                new ExerciseRecordWriteDto()
-                {
-                    ExerciseName = "bench press",
-                    Repetitions = 10,
-                    WeightUsedKg = 60
-                }
-            }
-        };
+        // Arrange
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+        ProductionDatabaseHelpers.SeedDummyUsers(_context);
+        var updateDto = TrainingSessionDtoFactory.CreateUpdateDto();
+    
+        // Act
+        var result = await _service.UpdateTrainingSession(1, 999, updateDto, new CancellationToken());
+    
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal($"Training Session of id:`{999}` was not found.", result.ErrorMessage);
     }
-
-
-    private TrainingSessionWriteDto createUpdatedSessionWriteDto()
+    
+    [Fact]
+    public async Task UpdateAsync_ValidUpdate_ReturnsSuccess()
     {
-        return new TrainingSessionWriteDto()
-        {
-            Feeling = "Exhausted",
-            Mood = 3,
-            Notes = "Updated leg day",
-            DurationInMinutes = 45,
-            TotalCaloriesBurned = 450,
-            ExerciseRecords = new List<ExerciseRecordWriteDto>()
-            {
-                new ExerciseRecordWriteDto()
-                {
-                    ExerciseName = "arnold rotations - slight incline",
-                    Repetitions = 12,
-                    WeightUsedKg = 85
-                },
-                new ExerciseRecordWriteDto()
-                {
-                    ExerciseName = "bus drivers - incline",
-                    Repetitions = 10,
-                    WeightUsedKg = 200
-                }
-            }
-        };
+        
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+        ProductionDatabaseHelpers.SeedDummyUsers(_context);
+    
+        var sessionDto = TrainingSessionDtoFactory.CreateLegsSessionDto();
+        var creationResult = await _service.CreateSessionAsync(1, sessionDto, new CancellationToken());
+        Assert.True(creationResult.IsSuccess);
+    
+        var existingSession = _context.TrainingSessions.First();
+        var updateDto = TrainingSessionDtoFactory.CreateUpdateDto();
+    
+    
+        var result = await _service.UpdateTrainingSession(1, existingSession.Id, updateDto, new CancellationToken());
+    
+       
+        Assert.True(result.IsSuccess);
+        Assert.Equal($"Updated session of id:'{existingSession.Id}' successfully", result.SuccessMessage);
+    
+        var updatedSession = _context.TrainingSessions
+            .Include(ts => ts.ExerciseRecords)
+            .FirstOrDefault(ts => ts.Id == existingSession.Id);
+    
+        Assert.NotNull(updatedSession);
+        Assert.Equal(updateDto.Feeling, updatedSession.Feeling);
+        Assert.Equal(updateDto.Notes, updatedSession.Notes);
+        Assert.Equal(updateDto.Mood, updatedSession.Mood);
+        Assert.Equal(updateDto.ExerciseRecords.Count, updatedSession.ExerciseRecords.Count);
+        Assert.Equal(
+            updateDto.TotalCaloriesBurned 
+            + updateDto.ExerciseRecords.Sum(x => x.KcalBurned),
+            updatedSession.Calories);
+        
+        var user = await _context.Users
+            .Include(x => x.ExerciseRecords)
+            .ThenInclude(exerciseRecord => exerciseRecord.Exercise)
+            .Include(x => x.TrainingSessions)
+            .ThenInclude(x => x.ExerciseRecords)
+            .Include(x => x.UserExercises)
+            .ThenInclude(userExercise => userExercise.Exercise)
+            .FirstOrDefaultAsync(x => x.Id == 1,new CancellationToken());
+
+        Assert.NotNull(user);
+        var userExerciseRecords = user.UserExercises.ToList();
+        var sissySquatDumbbell = userExerciseRecords
+                // it is there cause of the creation earlier, otherwise something IS wrong.
+            .FirstOrDefault(x => x.Exercise.Name == "sissy squat - dumbbell");
+        Assert.Null(sissySquatDumbbell);
+        Assert.Equal(2, user.UserExercises.Count);
+
+
     }
 
-
-    private TrainingSessionWriteDto createMissingExerciseSessionWriteDto()
+    [Fact]
+    public async Task UpdateAsync_Success_Secondus()
     {
-        return new TrainingSessionWriteDto()
-        {
-            Feeling = "Death",
-            Mood = 5,
-            Notes = "ma knees!!",
-            DurationInMinutes = 50,
-            TotalCaloriesBurned = 546,
-            ExerciseRecords =
-            [
-                new ExerciseRecordWriteDto()
-                {
-                    ExerciseName = "alphard",
-                    Repetitions = 30,
-                    RateOfPerceivedExertion = 1
-                },
-                new ExerciseRecordWriteDto()
-                {
-                    ExerciseName = "dante",
-                    Repetitions = 12,
-                    WeightUsedKg = 15,
-                    RateOfPerceivedExertion = 6
-                },
-                new ExerciseRecordWriteDto()
-                {
-                    ExerciseName = "canaan",
-                    Repetitions = 12,
-                    WeightUsedKg = 15,
-                    RateOfPerceivedExertion = 6
-                },
-            ]
-        };
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+        ProductionDatabaseHelpers.SeedDummyUsers(_context);
+    
+        var sessionDto = TrainingSessionDtoFactory.CreateLegsSessionDto();
+        var creationResult = await _service.CreateSessionAsync(1, sessionDto, new CancellationToken());
+        Assert.True(creationResult.IsSuccess);
+    
+        var oldLegDay = _context.TrainingSessions.First();
+        var updateLegDto = TrainingSessionDtoFactory.CreateUpdateLegsSessionDto();
+
+        var mixedDto = TrainingSessionDtoFactory.CreateCorrectSessionDtoMixedCardio();
+        
+        var messThingsUpSession = await  _service.CreateSessionAsync(1, mixedDto, new CancellationToken() ) ;
+        var mixedSession = _context.TrainingSessions.FirstOrDefault(x => x.Id == 2);
+
+        var oldDeadLiftMetadata = _context.UserExercises
+            .FirstOrDefault(x => x.Exercise.Name == "sumo deadlifts" && x.UserId == 1);
+
+        Assert.NotNull(oldDeadLiftMetadata);
+        Assert.Equal(90, oldDeadLiftMetadata.BestWeight);
+        Assert.Equal(90, oldDeadLiftMetadata.LastUsedWeightKg);
+        Assert.Equal(90, oldDeadLiftMetadata.AverageWeight);
+        
+        
+        
+        var result = await _service.UpdateTrainingSession(1, oldLegDay.Id, updateLegDto, new CancellationToken());
+        Assert.True(result.IsSuccess);
+        Assert.Equal($"Updated session of id:'{oldLegDay.Id}' successfully", result.SuccessMessage);
+
+        
+
+        var updatedLegDay = _context.TrainingSessions.FirstOrDefault();
+        Assert.NotNull(updateLegDto);
+        var updatedLegExerciseRecords = updatedLegDay.ExerciseRecords;
+        Assert.Equal(5, updatedLegExerciseRecords.Count(x => x.Exercise.Name == "sissy squat - dumbbell"));
+        Assert.Equal(3, updatedLegExerciseRecords.Count(x => x.Exercise.Name == "dumbbell split squat - glutes"));
+        Assert.Equal(3, updatedLegExerciseRecords.Count(x => x.Exercise.Name == "sumo deadlifts"));
+        Assert.Equal(1, updatedLegExerciseRecords.Count(x => x.Exercise.Name == "rope jumping"));
+        Assert.Equal(1, updatedLegExerciseRecords.Count(x => x.Exercise.Name == "dragon flag"));
+
+        var firstSissySquatRecord = updatedLegExerciseRecords.First(x => x.Exercise.Name == "sissy squat - dumbbell"); 
+        Assert.Equal("these are awesome",firstSissySquatRecord .Notes);
+        Assert.Equal(9,firstSissySquatRecord .RateOfPerceivedExertion);
+        
+        
+        
+        var user = await _context.Users
+            .Include(x => x.ExerciseRecords)
+            .ThenInclude(exerciseRecord => exerciseRecord.Exercise)
+            .Include(x => x.TrainingSessions)
+            .ThenInclude(x => x.ExerciseRecords)
+            .Include(x => x.UserExercises)
+            .ThenInclude(userExercise => userExercise.Exercise)
+            .FirstOrDefaultAsync(x => x.Id == 1, new CancellationToken());
+        
+        Assert.Equal(8, user.UserExercises.Count());
+
+
+        var newDeadLiftMetadata = user.UserExercises.FirstOrDefault(x => x.Exercise.Name == "sumo deadlifts");
+        Assert.Equal(190, newDeadLiftMetadata.BestWeight);
+        Assert.Equal(90, newDeadLiftMetadata.LastUsedWeightKg);
+        Assert.Equal(140, newDeadLiftMetadata.AverageWeight);
+        //TODO: add in more tests for this, im bored now
+
     }
+    
+    [Fact]
+    public async Task DeleteTrainingSessionAsync_UserNotFound_ReturnsFailure()
+    {
+        // Arrange
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+
+        // Act
+        var result = await _service.DeleteTrainingSessionAsync(999, 1, new CancellationToken());
+
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("User was not found", result.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task DeleteTrainingSessionAsync_SessionNotFound_ReturnsFailure()
+    {
+        // Arrange
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+        ProductionDatabaseHelpers.SeedDummyUsers(_context);
+
+        // Act
+        var result = await _service.DeleteTrainingSessionAsync(1, 999, new CancellationToken());
+
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal($"Training Session of id:`{999}` was not found.", result.ErrorMessage);
+    }
+
+    [Fact]
+    public async Task DeleteTrainingSessionAsync_SuccessfullyDeletesSession()
+    {
+        // Arrange
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+        ProductionDatabaseHelpers.SeedDummyUsers(_context);
+
+        var sessionDto = TrainingSessionDtoFactory.CreateLegsSessionDto();
+        var creationResult = await _service.CreateSessionAsync(1, sessionDto, new CancellationToken());
+        Assert.True(creationResult.IsSuccess);
+
+        var trainingSession = _context.TrainingSessions.First();
+
+        // Act
+        var result = await _service.DeleteTrainingSessionAsync(1, trainingSession.Id, new CancellationToken());
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal($"Deleted session of id:'{trainingSession.Id}' successfully", result.SuccessMessage);
+
+        var user = _context.Users
+            .Include(u => u.TrainingSessions)
+            .ThenInclude(ts => ts.ExerciseRecords)
+            .Include(u => u.UserExercises)
+            .Include(user => user.ExerciseRecords)
+            .FirstOrDefault(u => u.Id == 1);
+
+        Assert.NotNull(user);
+        Assert.Empty(user.TrainingSessions);
+        Assert.Empty(user.ExerciseRecords);
+
+        var userExerciseRecords = user.UserExercises.ToList();
+        Assert.Empty(userExerciseRecords);
+    }
+
+    [Fact]
+    public async Task DeleteTrainingSessionAsync_RemovesOnlyTargetedSessionAndUpdatesMetadata()
+    {
+        // Arrange
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+        ProductionDatabaseHelpers.SeedDummyUsers(_context);
+
+        var sessionDto1 = TrainingSessionDtoFactory.CreateLegsSessionDto();
+        var sessionDto2 = TrainingSessionDtoFactory.CreateCorrectSessionDtoMixedCardio();
+        await _service.CreateSessionAsync(1, sessionDto1, new CancellationToken());
+        await _service.CreateSessionAsync(1, sessionDto2, new CancellationToken());
+
+        var trainingSessionToDelete = _context.TrainingSessions.First();
+        var user = await _context.Users
+            .Include(u => u.TrainingSessions)
+            .ThenInclude(ts => ts.ExerciseRecords)
+            .Include(u => u.UserExercises)
+            .FirstOrDefaultAsync(u => u.Id == 1);
+
+        var initialUserExerciseCount = user.UserExercises.Count;
+
+        // Act
+        var result = await _service.DeleteTrainingSessionAsync(1, trainingSessionToDelete.Id, new CancellationToken());
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal($"Deleted session of id:'{trainingSessionToDelete.Id}' successfully", result.SuccessMessage);
+
+        user = await _context.Users
+            .Include(u => u.TrainingSessions)
+            .ThenInclude(ts => ts.ExerciseRecords)
+            .Include(u => u.UserExercises)
+            .FirstOrDefaultAsync(u => u.Id == 1);
+
+        Assert.Single(user.TrainingSessions);
+        Assert.True(user.UserExercises.Count <= initialUserExerciseCount); // The count could decrease but not increase.
+    }
+   
 }

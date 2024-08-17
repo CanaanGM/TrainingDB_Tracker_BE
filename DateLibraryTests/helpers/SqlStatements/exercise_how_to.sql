@@ -321,4 +321,25 @@ values (
     74,
     'youtube',
     'https://www.youtube.com/watch?v=h2sXIR3S-hU'
+  ),
+  (
+    77,
+    'youtube',
+    'https://www.youtube.com/watch?v=h2sXIR3S-hU'
+  ),
+  (
+    82,
+    'youtube',
+    'https://www.youtube.com/watch?v=h2sXIR3S-hU'
+  ),
+  (
+    84,
+    'youtube',
+    'https://youtu.be/kmbzQJoRMUU?t=125'
+  ),
+  (85, 'youtube', 'https://youtu.be/gRIX9uEYVZk'),
+  (
+    86,
+    'youtube',
+    'https://www.youtube.com/watch?v=JnLFSFurrqQ'
   );

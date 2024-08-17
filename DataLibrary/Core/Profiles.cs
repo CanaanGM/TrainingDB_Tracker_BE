@@ -94,6 +94,7 @@ public class Profiles : Profile
                 => o.MapFrom(src => src.TotalCaloriesBurned))
             .ForMember(x => x.DurationInSeconds, t 
                 => t.MapFrom(o => Utils.DurationSecondsFromMinutes(o.DurationInMinutes)));
+            
         
         CreateMap<TrainingSession, TrainingSessionReadDto>()
             .ForMember(x => x.TotalCaloriesBurned, src 
