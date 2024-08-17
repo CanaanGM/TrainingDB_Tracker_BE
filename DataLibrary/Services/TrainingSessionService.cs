@@ -22,6 +22,146 @@ public class TrainingSessionService
         _logger = logger;
     }
 
+
+    public async Task<Result<TrainingSessionReadDto>> GetTrainingSessionByIdAsync(int userId, int trainingSessionId,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var user = await _context.Users
+                .Include(u => u.TrainingSessions)
+                .ThenInclude(ts => ts.ExerciseRecords).ThenInclude(exerciseRecord => exerciseRecord.Exercise)
+                .ThenInclude(exercise => exercise.TrainingTypes)
+                .FirstOrDefaultAsync(u => u.Id == userId && u.TrainingSessions.Any(ts => ts.Id == trainingSessionId),
+                    cancellationToken);
+
+            if (user == null)
+                return Result<TrainingSessionReadDto>.Failure("User or training session not found");
+
+            var trainingSession = user.TrainingSessions.First(ts => ts.Id == trainingSessionId);
+            var trainingSessionDto = new TrainingSessionReadDto()
+            {
+                CreatedAt = trainingSession.CreatedAt,
+                ExerciseRecords = trainingSession.ExerciseRecords.Select(exerciseRecord => new ExerciseRecordReadDto()
+                {
+                    ExerciseName = exerciseRecord.Exercise.Name,
+                    Repetitions = exerciseRecord.Repetitions,
+                    RateOfPerceivedExertion = exerciseRecord.RateOfPerceivedExertion,
+                    Mood = exerciseRecord.Mood,
+                    CreatedAt = exerciseRecord.CreatedAt,
+                    WeightUsedKg = exerciseRecord.WeightUsedKg,
+                    Incline = exerciseRecord.Incline,
+                    Speed = exerciseRecord.Speed,
+                    TimerInSeconds = exerciseRecord.TimerInSeconds,
+                    DistanceInMeters = exerciseRecord.DistanceInMeters,
+                    RestInSeconds = exerciseRecord.RestInSeconds,
+                    HeartRateAvg = exerciseRecord.HeartRateAvg,
+                    Notes = exerciseRecord.Notes,
+                    KcalBurned = exerciseRecord.KcalBurned,
+                    Id = exerciseRecord.Id
+                }).ToList(),
+                DurationInMinutes = (int) Utils.DurationMinutesFromSeconds( trainingSession.DurationInSeconds),
+                TotalCaloriesBurned = trainingSession.Calories,
+                Mood = trainingSession.Mood,
+                Notes = trainingSession.Notes,
+                TotalRepetitions = trainingSession.TotalRepetitions,
+                Id = trainingSession.Id,
+                TotalKgMoved = trainingSession.TotalKgMoved,
+                AverageRateOfPreceivedExertion = trainingSession.AverageRateOfPreceivedExertion,
+                TrainingTypes = trainingSession.ExerciseRecords.SelectMany(x =>
+                    x.Exercise.TrainingTypes.Select(x => new TrainingTypeReadDto() { Name = x.Name })).ToList()
+            };
+
+            return Result<TrainingSessionReadDto>.Success(trainingSessionDto);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error occurred in {nameof(GetTrainingSessionByIdAsync)}: {ex}");
+            return Result<TrainingSessionReadDto>.Failure("Could not retrieve session", ex);
+        }
+    }
+
+    public async Task<Result<PaginatedList<TrainingSessionReadDto>>> GetPaginatedTrainingSessionsAsync(
+    int userId, int pageNumber, int pageSize, CancellationToken cancellationToken)
+{
+    try
+    {
+        var user = await _context.Users
+            .Include(u => u.TrainingSessions)
+            .ThenInclude(ts => ts.ExerciseRecords)
+            .ThenInclude(exerciseRecord => exerciseRecord.Exercise)
+            .ThenInclude(exercise => exercise.TrainingTypes)
+            .FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
+
+        if (user == null)
+            return Result<PaginatedList<TrainingSessionReadDto>>.Failure("User not found");
+
+        var totalSessionsCount = user.TrainingSessions.Count();
+
+        var sessionsQuery = user.TrainingSessions
+            .OrderByDescending(ts => ts.CreatedAt)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        var sessionDtos = sessionsQuery.Select(trainingSession => new TrainingSessionReadDto
+        {
+            Id = trainingSession.Id,
+            CreatedAt = trainingSession.CreatedAt,
+            DurationInMinutes = (int) Utils.DurationMinutesFromSeconds( trainingSession.DurationInSeconds),
+            TotalCaloriesBurned = trainingSession.Calories,
+            Mood = trainingSession.Mood,
+            Notes = trainingSession.Notes,
+            TotalRepetitions = trainingSession.TotalRepetitions,
+            TotalKgMoved = trainingSession.TotalKgMoved,
+            AverageRateOfPreceivedExertion = trainingSession.AverageRateOfPreceivedExertion,
+            TrainingTypes = trainingSession.ExerciseRecords
+                .SelectMany(x => x.Exercise.TrainingTypes.Select(tt => new TrainingTypeReadDto { Name = tt.Name }))
+                .ToList(),
+            ExerciseRecords = trainingSession.ExerciseRecords.Select(exerciseRecord => new ExerciseRecordReadDto
+            {
+                ExerciseName = exerciseRecord.Exercise.Name,
+                Repetitions = exerciseRecord.Repetitions,
+                RateOfPerceivedExertion = exerciseRecord.RateOfPerceivedExertion,
+                Mood = exerciseRecord.Mood,
+                CreatedAt = exerciseRecord.CreatedAt,
+                WeightUsedKg = exerciseRecord.WeightUsedKg,
+                Incline = exerciseRecord.Incline,
+                Speed = exerciseRecord.Speed,
+                TimerInSeconds = exerciseRecord.TimerInSeconds,
+                DistanceInMeters = exerciseRecord.DistanceInMeters,
+                RestInSeconds = exerciseRecord.RestInSeconds,
+                HeartRateAvg = exerciseRecord.HeartRateAvg,
+                Notes = exerciseRecord.Notes,
+                KcalBurned = exerciseRecord.KcalBurned,
+                Id = exerciseRecord.Id
+            }).ToList()
+        }).ToList();
+
+        var paginationMetadata = new PaginationMetadata
+        {
+            TotalCount = totalSessionsCount,
+            TotalPages = (int)Math.Ceiling(totalSessionsCount / (double)pageSize),
+            CurrentPage = pageNumber,
+            PageSize = pageSize
+        };
+
+        var paginatedSessions = new PaginatedList<TrainingSessionReadDto>
+        {
+            Items = sessionDtos,
+            Metadata = paginationMetadata
+        };
+
+        return Result<PaginatedList<TrainingSessionReadDto>>.Success(paginatedSessions);
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError($"Error occurred in {nameof(GetPaginatedTrainingSessionsAsync)}: {ex}");
+        return Result<PaginatedList<TrainingSessionReadDto>>.Failure("Could not retrieve paginated sessions", ex);
+    }
+}
+
+
     public async Task<Result> CreateSessionAsync(int userId, TrainingSessionWriteDto sessionDto,
         CancellationToken cancellationToken)
     {
@@ -198,62 +338,64 @@ public class TrainingSessionService
         }
     }
 
-public async Task<Result> DeleteTrainingSessionAsync(int userId, int trainingSessionId, CancellationToken cancellationToken)
-{
-    try
+    public async Task<Result> DeleteTrainingSessionAsync(int userId, int trainingSessionId,
+        CancellationToken cancellationToken)
     {
-        var user = await GetUser(userId, cancellationToken);
-        if (user == null)
-            return Result.Failure("User was not found");
-
-        var trainingSessionToDelete = user.TrainingSessions.FirstOrDefault(ts => ts.Id == trainingSessionId);
-        if (trainingSessionToDelete == null)
-            return Result.Failure($"Training Session of id:`{trainingSessionId}` was not found.");
-
-        await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-
-        foreach (var oldExerciseRecord in trainingSessionToDelete.ExerciseRecords.ToList())
+        try
         {
-            ModifyUserExercisesForRemovedRecord(user, oldExerciseRecord);
+            var user = await GetUser(userId, cancellationToken);
+            if (user == null)
+                return Result.Failure("User was not found");
 
-            trainingSessionToDelete.ExerciseRecords.Remove(oldExerciseRecord);
-            user.ExerciseRecords.Remove(oldExerciseRecord);
-            _context.ExerciseRecords.Remove(oldExerciseRecord);
+            var trainingSessionToDelete = user.TrainingSessions.FirstOrDefault(ts => ts.Id == trainingSessionId);
+            if (trainingSessionToDelete == null)
+                return Result.Failure($"Training Session of id:`{trainingSessionId}` was not found.");
+
+            await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+
+            foreach (var oldExerciseRecord in trainingSessionToDelete.ExerciseRecords.ToList())
+            {
+                ModifyUserExercisesForRemovedRecord(user, oldExerciseRecord);
+
+                trainingSessionToDelete.ExerciseRecords.Remove(oldExerciseRecord);
+                user.ExerciseRecords.Remove(oldExerciseRecord);
+                _context.ExerciseRecords.Remove(oldExerciseRecord);
+            }
+
+            user.TrainingSessions.Remove(trainingSessionToDelete);
+            _context.TrainingSessions.Remove(trainingSessionToDelete);
+
+            await _context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+
+            return Result.Success($"Deleted session of id:'{trainingSessionId}' successfully");
         }
-
-        user.TrainingSessions.Remove(trainingSessionToDelete);
-        _context.TrainingSessions.Remove(trainingSessionToDelete);
-
-        await _context.SaveChangesAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
-
-        return Result.Success($"Deleted session of id:'{trainingSessionId}' successfully");
-    }
-    catch (Exception ex)
-    {
-        _logger.LogError($"Error occurred in {nameof(DeleteTrainingSessionAsync)}: {ex}");
-        return Result.Failure("Could not delete session");
-    }
-}
-
-private void ModifyUserExercisesForRemovedRecord(User user, ExerciseRecord oldExerciseRecord)
-{
-    var userExercise = user.UserExercises.FirstOrDefault(ue => ue.ExerciseId == oldExerciseRecord.ExerciseId);
-    if (userExercise != null)
-    {
-        var remainingRecords = user.ExerciseRecords.Where(er => er.ExerciseId == userExercise.ExerciseId && er.Id != oldExerciseRecord.Id).ToList();
-        if (remainingRecords.Any())
+        catch (Exception ex)
         {
-            CalculateUserExerciseMetadata(userExercise, remainingRecords, false);
-            _context.UserExercises.Update(userExercise);
-        }
-        else
-        {
-            user.UserExercises.Remove(userExercise);
-            _context.UserExercises.Remove(userExercise);
+            _logger.LogError($"Error occurred in {nameof(DeleteTrainingSessionAsync)}: {ex}");
+            return Result.Failure("Could not delete session");
         }
     }
-}
+
+    private void ModifyUserExercisesForRemovedRecord(User user, ExerciseRecord oldExerciseRecord)
+    {
+        var userExercise = user.UserExercises.FirstOrDefault(ue => ue.ExerciseId == oldExerciseRecord.ExerciseId);
+        if (userExercise != null)
+        {
+            var remainingRecords = user.ExerciseRecords
+                .Where(er => er.ExerciseId == userExercise.ExerciseId && er.Id != oldExerciseRecord.Id).ToList();
+            if (remainingRecords.Any())
+            {
+                CalculateUserExerciseMetadata(userExercise, remainingRecords, false);
+                _context.UserExercises.Update(userExercise);
+            }
+            else
+            {
+                user.UserExercises.Remove(userExercise);
+                _context.UserExercises.Remove(userExercise);
+            }
+        }
+    }
 
     private static void ModifyUsersOldExercises(List<ExerciseRecord> oldExercises, User user,
         TrainingSession trainingSessionToUpdate)
