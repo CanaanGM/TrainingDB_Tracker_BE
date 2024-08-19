@@ -1,5 +1,4 @@
-﻿
-using DataLibrary.Dtos;
+﻿using DataLibrary.Dtos;
 using DataLibrary.Helpers;
 using DataLibrary.Models;
 using DataLibrary.Services;
@@ -40,7 +39,6 @@ public class PlanServiceTests : BaseTestClass
 
         var createdPlan = await GetCreatedPlan(result.Value);
         AssertPlanCreatedSuccessfully(newPlanDto, createdPlan);
-
     }
 
     [Fact]
@@ -60,7 +58,7 @@ public class PlanServiceTests : BaseTestClass
 
         var createdPlan = await GetCreatedPlan(result.Value);
         AssertPlanCreatedSuccessfully(newPlanDto, createdPlan);
- }
+    }
 
     [Fact]
     public async Task CreateAsync_MissingExercises_ShouldReturnErrorWithAllMissingExercises()
@@ -76,20 +74,7 @@ public class PlanServiceTests : BaseTestClass
         Assert.Empty(_context.TrainingPlans);
     }
 
-    [Fact]
-    public async Task CreateAsync_MissingTrainingTypes_ShouldReturnErrorWithAllMissingExercises()
-    {
-        // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(_context);
-        var newPlanDto = _missingTrainingTypesPlan;
-        // Act
-        var result = await service.CreateAsync(newPlanDto, new CancellationToken());
-        // Assert
-        Assert.False(result.IsSuccess);
-        Assert.Equal("The following training types do not exist: white fatalis, safijiva", result.ErrorMessage);
-        Assert.Empty(_context.TrainingPlans);
-    }
-
+    
     [Fact]
     public async Task CreateAsync_EmptyExercises_ShouldReturnError()
     {
@@ -107,23 +92,7 @@ public class PlanServiceTests : BaseTestClass
             result.ErrorMessage);
         Assert.Empty(_context.TrainingPlans);
     }
-
-    [Fact]
-    public async Task CreateAsync_InvalidEquipment_ShouldReturnError()
-    {
-        // Arrange
-        ProductionDatabaseHelpers.SeedProductionData(_context);
-
-        var newPlanDto = _invalidEquipmentPlan;
-
-        // Act
-        var result = await service.CreateAsync(newPlanDto, new CancellationToken());
-
-        // Assert
-        Assert.False(result.IsSuccess);
-        Assert.Equal("The following equipment do not exist: noh", result.ErrorMessage);
-        Assert.Empty(_context.TrainingPlans);
-    }
+    
 
     [Fact]
     public async Task CreateAsync_EmptyPlan_ShouldReturnError()
@@ -136,8 +105,7 @@ public class PlanServiceTests : BaseTestClass
             Name = "Empty Plan",
             Description = "An empty training plan",
             Notes = "Some notes",
-            Equipemnt = new List<string>(),
-            TrainingTypes = new List<string>(),
+
             TrainingWeeks = new List<TrainingWeekWriteDto>()
         };
 
@@ -191,8 +159,8 @@ public class PlanServiceTests : BaseTestClass
             Name = "Updated Training Plan",
             Description = "Updated description",
             Notes = "Updated notes",
-            Equipemnt = new List<string> { "Steel Dumbbells", "Straight Barbell" },
-            TrainingTypes = new List<string> { "Strength", "Cardio", "Flexibility" },
+
+
             TrainingWeeks = new List<TrainingWeekWriteDto>
             {
                 new TrainingWeekWriteDto
@@ -255,8 +223,8 @@ public class PlanServiceTests : BaseTestClass
             Name = "Updated Training Plan",
             Description = "Updated description",
             Notes = "Updated notes",
-            Equipemnt = new List<string> { "Steel Dumbbells", "Straight Barbell" },
-            TrainingTypes = new List<string> { "Strength", "Cardio", "Flexibility" },
+
+
             TrainingWeeks = new List<TrainingWeekWriteDto>
             {
                 new TrainingWeekWriteDto
@@ -282,7 +250,7 @@ public class PlanServiceTests : BaseTestClass
                                     {
                                         new BlockExerciseWriteDto
                                         {
-                                            ExerciseName = "dumbbell bench press - flat",
+                                            ExerciseName = "dumbbell press - flat",
                                             Instructions = "Updated notes",
                                             OrderNumber = 1,
                                             Repetitions = 12
@@ -333,8 +301,8 @@ public class PlanServiceTests : BaseTestClass
             Name = "Partially Updated Training Plan",
             Description = "Updated description",
             Notes = "Updated notes",
-            Equipemnt = new List<string> { "Steel Dumbbells" },
-            TrainingTypes = new List<string> { "Strength", "Cardio" },
+
+
             TrainingWeeks = new List<TrainingWeekWriteDto>
             {
                 new TrainingWeekWriteDto
@@ -360,7 +328,7 @@ public class PlanServiceTests : BaseTestClass
                                     {
                                         new BlockExerciseWriteDto
                                         {
-                                            ExerciseName = "dumbbell bench press - flat",
+                                            ExerciseName = "dumbbell press - flat",
                                             Instructions = "Updated notes",
                                             OrderNumber = 1,
                                             Repetitions = 12
@@ -396,7 +364,7 @@ public class PlanServiceTests : BaseTestClass
         Assert.Equal("updated block 1", updatedPlan.TrainingWeeks.First().TrainingDays.First().Blocks.First().Name);
     }
 
-    
+
     [Fact]
     public async Task UpdateAsync_NoChanges_ShouldNotChangeTrainingPlan()
     {
@@ -419,7 +387,6 @@ public class PlanServiceTests : BaseTestClass
             .ThenInclude(td => td.Blocks)
             .ThenInclude(b => b.BlockExercises)
             .ThenInclude(be => be.Exercise)
-
             .FirstOrDefaultAsync(tp => tp.Id == initialResult.Value);
 
         Assert.NotNull(updatedPlan);
@@ -432,53 +399,53 @@ public class PlanServiceTests : BaseTestClass
     }
 
 
-
     [Fact]
-public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
-{
-    // Arrange
-    ProductionDatabaseHelpers.SeedProductionData(_context);
-
-    var initialPlan = _correctPlanWithEquipment;
-    var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
-    Assert.True(initialResult.IsSuccess);
-
-    var updateDto = new TrainingPlanWriteDto
+    public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
     {
-        Name = initialPlan.Name,
-        Description = initialPlan.Description,
-        Notes = initialPlan.Notes,
-        Equipemnt = initialPlan.Equipemnt,
-        TrainingTypes = initialPlan.TrainingTypes,
-        TrainingWeeks = new List<TrainingWeekWriteDto>
+        // Arrange
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+
+        var initialPlan = _correctPlanWithEquipment;
+        var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
+        Assert.True(initialResult.IsSuccess);
+
+        var updateDto = new TrainingPlanWriteDto
         {
-            new TrainingWeekWriteDto
+            Name = initialPlan.Name,
+            Description = initialPlan.Description,
+            Notes = initialPlan.Notes,
+
+
+            TrainingWeeks = new List<TrainingWeekWriteDto>
             {
-                Name = "Week 1",
-                OrderNumber = 1,
-                TrainingDays = new List<TrainingDaysWriteDto>
+                new TrainingWeekWriteDto
                 {
-                    new TrainingDaysWriteDto
+                    Name = "Week 1",
+                    OrderNumber = 1,
+                    TrainingDays = new List<TrainingDaysWriteDto>
                     {
-                        Name = "Day 1",
-                        OrderNumber = 1,
-                        Blocks = new List<BlockWriteDto>
+                        new TrainingDaysWriteDto
                         {
-                            new BlockWriteDto
+                            Name = "Day 1",
+                            OrderNumber = 1,
+                            Blocks = new List<BlockWriteDto>
                             {
-                                Name = "Block 1",
-                                Sets = 3,
-                                RestInSeconds = 60,
-                                Instructions = "Some instructions",
-                                OrderNumber = 1,
-                                BlockExercises = new List<BlockExerciseWriteDto>
+                                new BlockWriteDto
                                 {
-                                    new BlockExerciseWriteDto
+                                    Name = "Block 1",
+                                    Sets = 3,
+                                    RestInSeconds = 60,
+                                    Instructions = "Some instructions",
+                                    OrderNumber = 1,
+                                    BlockExercises = new List<BlockExerciseWriteDto>
                                     {
-                                        ExerciseName = "Invalid Exercise Name",
-                                        Instructions = "Some notes",
-                                        OrderNumber = 1,
-                                        Repetitions = 10
+                                        new BlockExerciseWriteDto
+                                        {
+                                            ExerciseName = "Invalid Exercise Name",
+                                            Instructions = "Some notes",
+                                            OrderNumber = 1,
+                                            Repetitions = 10
+                                        }
                                     }
                                 }
                             }
@@ -486,19 +453,17 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
                     }
                 }
             }
-        }
-    };
+        };
 
-    // Act
-    var updateResult = await service.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
+        // Act
+        var updateResult = await service.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
 
-    // Assert
-    Assert.False(updateResult.IsSuccess);
-    Assert.Equal("The following exercises do not exist: invalid exercise name", updateResult.ErrorMessage);
-}
+        // Assert
+        Assert.False(updateResult.IsSuccess);
+        Assert.Equal("The following exercises do not exist: invalid exercise name", updateResult.ErrorMessage);
+    }
 
 
-    
     [Fact]
     public async Task UpdateAsync_EmptyTrainingPlan_ShouldReturnError()
     {
@@ -514,8 +479,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
             Name = "Updated Plan",
             Description = "Updated Description",
             Notes = "Updated Notes",
-            Equipemnt = new List<string>(),
-            TrainingTypes = new List<string>(),
+
             TrainingWeeks = new List<TrainingWeekWriteDto>()
         };
 
@@ -524,9 +488,9 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
 
         // Assert
         Assert.False(updateResult.IsSuccess);
-        Assert.Equal("The training plan must have at least one week with one day and one exercise.", updateResult.ErrorMessage);
+        Assert.Equal("The training plan must have at least one week with one day and one exercise.",
+            updateResult.ErrorMessage);
     }
-    
 
 
     [Fact]
@@ -544,8 +508,8 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
             Name = initialPlan.Name,
             Description = initialPlan.Description,
             Notes = initialPlan.Notes,
-            Equipemnt = initialPlan.Equipemnt,
-            TrainingTypes = initialPlan.TrainingTypes,
+
+
             TrainingWeeks = new List<TrainingWeekWriteDto>()
         };
 
@@ -554,7 +518,8 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
 
         // Assert
         Assert.False(updateResult.IsSuccess);
-        Assert.Equal("The training plan must have at least one week with one day and one exercise.", updateResult.ErrorMessage);
+        Assert.Equal("The training plan must have at least one week with one day and one exercise.",
+            updateResult.ErrorMessage);
     }
 
 
@@ -573,8 +538,8 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
             Name = initialPlan.Name,
             Description = initialPlan.Description,
             Notes = initialPlan.Notes,
-            Equipemnt = initialPlan.Equipemnt,
-            TrainingTypes = initialPlan.TrainingTypes,
+
+
             TrainingWeeks = initialPlan.TrainingWeeks.Select(w => new TrainingWeekWriteDto
             {
                 Name = w.Name,
@@ -601,16 +566,11 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
             .FirstOrDefaultAsync(tp => tp.Id == initialResult.Value);
 
         Assert.NotNull(updatedPlan);
-        Assert.All(updatedPlan.TrainingWeeks, week =>
-        {
-            Assert.All(week.TrainingDays, day =>
-            {
-                Assert.Single(day.Blocks);
-            });
-        });
+        Assert.All(updatedPlan.TrainingWeeks,
+            week => { Assert.All(week.TrainingDays, day => { Assert.Single(day.Blocks); }); });
     }
 
-    
+
     [Fact]
     public async Task UpdateAsync_UpdatePlanNameOnly_ShouldUpdateSuccessfully()
     {
@@ -626,8 +586,8 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
             Name = "Updated Plan Name",
             Description = initialPlan.Description,
             Notes = initialPlan.Notes,
-            Equipemnt = initialPlan.Equipemnt,
-            TrainingTypes = initialPlan.TrainingTypes,
+
+
             TrainingWeeks = initialPlan.TrainingWeeks
         };
 
@@ -664,8 +624,8 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
             Name = initialPlan.Name,
             Description = "Updated Description",
             Notes = initialPlan.Notes,
-            Equipemnt = initialPlan.Equipemnt,
-            TrainingTypes = initialPlan.TrainingTypes,
+
+
             TrainingWeeks = initialPlan.TrainingWeeks
         };
 
@@ -682,10 +642,11 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
             .FirstOrDefaultAsync(tp => tp.Id == initialResult.Value);
 
         Assert.NotNull(updatedPlan);
-        Assert.Equal(Utils.NormalizeString( initialPlan.Name), updatedPlan.Name);
+        Assert.Equal(Utils.NormalizeString(initialPlan.Name), updatedPlan.Name);
         Assert.Equal("Updated Description", updatedPlan.Description);
         Assert.Equal(initialPlan.Notes, updatedPlan.Notes);
     }
+
     [Fact]
     public async Task UpdateAsync_UpdatePlanNotesOnly_ShouldUpdateSuccessfully()
     {
@@ -701,8 +662,8 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
             Name = initialPlan.Name,
             Description = initialPlan.Description,
             Notes = "Updated Notes",
-            Equipemnt = initialPlan.Equipemnt,
-            TrainingTypes = initialPlan.TrainingTypes,
+
+
             TrainingWeeks = initialPlan.TrainingWeeks
         };
 
@@ -719,13 +680,13 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
             .FirstOrDefaultAsync(tp => tp.Id == initialResult.Value);
 
         Assert.NotNull(updatedPlan);
-        Assert.Equal(Utils.NormalizeString( initialPlan.Name), updatedPlan.Name);
+        Assert.Equal(Utils.NormalizeString(initialPlan.Name), updatedPlan.Name);
         Assert.Equal(initialPlan.Description, updatedPlan.Description);
         Assert.Equal("Updated Notes", updatedPlan.Notes);
     }
 
-    
-     [Fact]
+
+    [Fact]
     public async Task DeleteAsync_ValidPlanId_ShouldDeleteSuccessfully()
     {
         // Arrange
@@ -755,7 +716,7 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
         Assert.False(deleteResult.IsSuccess);
         Assert.Equal("Training plan not found.", deleteResult.ErrorMessage);
     }
-    
+
     [Fact]
     public async Task DeleteAsync_PlanWithAssociatedEntities_ShouldDeleteAllRelatedEntities()
     {
@@ -800,112 +761,111 @@ public async Task UpdateAsync_InvalidExerciseName_ShouldReturnError()
             .ToListAsync();
         Assert.Empty(blockExercises);
     }
-    
- [Fact]
-public async Task DeleteAsync_ShouldDeleteAllRelatedEntities()
-{
-    // Arrange
-    ProductionDatabaseHelpers.SeedProductionData(_context);
 
-    var newPlanDto = _correctPlanWithEquipment;
-    var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
-    Assert.True(createResult.IsSuccess);
+    [Fact]
+    public async Task DeleteAsync_ShouldDeleteAllRelatedEntities()
+    {
+        // Arrange
+        ProductionDatabaseHelpers.SeedProductionData(_context);
 
-    // Act
-    var deleteResult = await service.DeleteAsync(createResult.Value, new CancellationToken());
+        var newPlanDto = _correctPlanWithEquipment;
+        var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
+        Assert.True(createResult.IsSuccess);
 
-    // Assert
-    Assert.True(deleteResult.IsSuccess);
+        // Act
+        var deleteResult = await service.DeleteAsync(createResult.Value, new CancellationToken());
 
-    // Check if the plan is deleted
-    var deletedPlan = await _context.TrainingPlans
-        .FirstOrDefaultAsync(tp => tp.Id == createResult.Value);
-    Assert.Null(deletedPlan);
+        // Assert
+        Assert.True(deleteResult.IsSuccess);
 
-    // Check if all related weeks are deleted
-    var deletedWeeks = await _context.TrainingWeeks
-        .Where(tw => tw.TrainingPlanId == createResult.Value)
-        .ToListAsync();
-    Assert.Empty(deletedWeeks);
+        // Check if the plan is deleted
+        var deletedPlan = await _context.TrainingPlans
+            .FirstOrDefaultAsync(tp => tp.Id == createResult.Value);
+        Assert.Null(deletedPlan);
 
-    // Check if all related days are deleted
-    var deletedDays = await _context.TrainingDays
-        .Where(td => td.TrainingWeek.TrainingPlanId == createResult.Value)
-        .ToListAsync();
-    Assert.Empty(deletedDays);
+        // Check if all related weeks are deleted
+        var deletedWeeks = await _context.TrainingWeeks
+            .Where(tw => tw.TrainingPlanId == createResult.Value)
+            .ToListAsync();
+        Assert.Empty(deletedWeeks);
 
-    // Check if all related blocks are deleted
-    var deletedBlocks = await _context.Blocks
-        .Where(b => b.TrainingDay.TrainingWeek.TrainingPlanId == createResult.Value)
-        .ToListAsync();
-    Assert.Empty(deletedBlocks);
+        // Check if all related days are deleted
+        var deletedDays = await _context.TrainingDays
+            .Where(td => td.TrainingWeek.TrainingPlanId == createResult.Value)
+            .ToListAsync();
+        Assert.Empty(deletedDays);
 
-    // Check if all related block exercises are deleted
-    var deletedBlockExercises = await _context.BlockExercises
-        .Where(be => be.Block.TrainingDay.TrainingWeek.TrainingPlanId == createResult.Value)
-        .ToListAsync();
-    Assert.Empty(deletedBlockExercises);
-    
-}
+        // Check if all related blocks are deleted
+        var deletedBlocks = await _context.Blocks
+            .Where(b => b.TrainingDay.TrainingWeek.TrainingPlanId == createResult.Value)
+            .ToListAsync();
+        Assert.Empty(deletedBlocks);
+
+        // Check if all related block exercises are deleted
+        var deletedBlockExercises = await _context.BlockExercises
+            .Where(be => be.Block.TrainingDay.TrainingWeek.TrainingPlanId == createResult.Value)
+            .ToListAsync();
+        Assert.Empty(deletedBlockExercises);
+    }
 
 
-[Fact]
-public async Task GetByIdAsync_ShouldReturnTrainingPlan_WhenTrainingPlanExists()
-{
-    ProductionDatabaseHelpers.SeedProductionData(_context);
-    // Arrange
-    var newPlanDto = _correctPlanWithEquipment;
-    var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
+    [Fact]
+    public async Task GetByIdAsync_ShouldReturnTrainingPlan_WhenTrainingPlanExists()
+    {
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+        // Arrange
+        var newPlanDto = _correctPlanWithEquipment;
+        var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
 
-    // Act
-    var result = await service.GetByIdAsync(createResult.Value, new CancellationToken());
+        // Act
+        var result = await service.GetByIdAsync(createResult.Value, new CancellationToken());
 
-    // Assert
-    Assert.True(result.IsSuccess);
-    Assert.NotNull(result.Value);
-    Assert.Equal(createResult.Value, result.Value.Id);
-    Assert.NotEmpty(result.Value.TrainingWeeks);
-}
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Value);
+        Assert.Equal(createResult.Value, result.Value.Id);
+        Assert.NotEmpty(result.Value.TrainingWeeks);
+    }
 
-[Fact]
-public async Task GetByIdAsync_ShouldReturnFailure_WhenTrainingPlanDoesNotExist()
-{
-    // Arrange
-    var nonExistentPlanId = 999;
+    [Fact]
+    public async Task GetByIdAsync_ShouldReturnFailure_WhenTrainingPlanDoesNotExist()
+    {
+        // Arrange
+        var nonExistentPlanId = 999;
 
-    // Act
-    var result = await service.GetByIdAsync(nonExistentPlanId, new CancellationToken());
+        // Act
+        var result = await service.GetByIdAsync(nonExistentPlanId, new CancellationToken());
 
-    // Assert
-    Assert.False(result.IsSuccess);
-    Assert.Equal("Training plan not found.", result.ErrorMessage);
-}
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Training plan not found.", result.ErrorMessage);
+    }
 
-[Fact]
-public async Task GetByIdAsync_ShouldReturnFailure_WhenExceptionOccurs()
-{
-    // Arrange
-    var newPlanDto = _correctPlanWithEquipment;
-    var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
+    [Fact]
+    public async Task GetByIdAsync_ShouldReturnFailure_WhenExceptionOccurs()
+    {
+        // Arrange
+        var newPlanDto = _correctPlanWithEquipment;
+        var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
 
-    _context.Dispose(); // Force an exception by disposing the _context
+        _context.Dispose(); // Force an exception by disposing the _context
 
-    // Act
-    var result = await service.GetByIdAsync(createResult.Value, new CancellationToken());
+        // Act
+        var result = await service.GetByIdAsync(createResult.Value, new CancellationToken());
 
-    // Assert
-    Assert.False(result.IsSuccess);
-    Assert.Contains("Failed to retrieve training plan", result.ErrorMessage);
-}
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Contains("Failed to retrieve training plan", result.ErrorMessage);
+    }
 
-    
+
     private static readonly TrainingPlanWriteDto _correctPlanWithEquipment = new TrainingPlanWriteDto
     {
         Name = "New Training Plan",
         Description = "A new training plan for testing",
         Notes = "Some notes",
-        Equipemnt = new List<string> { "steel Dumbbells", "Straight Barbell" },
-        TrainingTypes = new List<string> { "Strength", "Cardio" },
+
+
         TrainingWeeks = new List<TrainingWeekWriteDto>
         {
             new TrainingWeekWriteDto
@@ -931,7 +891,7 @@ public async Task GetByIdAsync_ShouldReturnFailure_WhenExceptionOccurs()
                                 {
                                     new BlockExerciseWriteDto
                                     {
-                                        ExerciseName = "dumbbell bench press - flat",
+                                        ExerciseName = "dumbbell press - flat",
                                         Instructions = "Some notes",
                                         OrderNumber = 1,
                                         Repetitions = 10
@@ -950,8 +910,8 @@ public async Task GetByIdAsync_ShouldReturnFailure_WhenExceptionOccurs()
         Name = "New Training Plan",
         Description = "A new training plan for testing",
         Notes = "Some notes",
-        Equipemnt = new List<string> { },
-        TrainingTypes = new List<string> { "Strength", "Cardio" },
+
+
         TrainingWeeks = new List<TrainingWeekWriteDto>
         {
             new TrainingWeekWriteDto
@@ -977,7 +937,7 @@ public async Task GetByIdAsync_ShouldReturnFailure_WhenExceptionOccurs()
                                 {
                                     new BlockExerciseWriteDto
                                     {
-                                        ExerciseName = "dumbbell bench press - flat",
+                                        ExerciseName = "dumbbell press - flat",
                                         Instructions = "Some notes",
                                         OrderNumber = 1,
                                         Repetitions = 10
@@ -996,8 +956,8 @@ public async Task GetByIdAsync_ShouldReturnFailure_WhenExceptionOccurs()
         Name = "Plan With Empty Exercises",
         Description = "A training plan with empty exercises",
         Notes = "Some notes",
-        Equipemnt = new List<string> { "steel Dumbbells", "Straight Barbell" },
-        TrainingTypes = new List<string> { "Strength", "Cardio" },
+
+
         TrainingWeeks = new List<TrainingWeekWriteDto>
         {
             new TrainingWeekWriteDto
@@ -1027,61 +987,15 @@ public async Task GetByIdAsync_ShouldReturnFailure_WhenExceptionOccurs()
             }
         }
     };
-
-
-    private static readonly TrainingPlanWriteDto _missingTrainingTypesPlan = new TrainingPlanWriteDto
-    {
-        Name = "New Training Plan",
-        Description = "A new training plan for testing",
-        Notes = "Some notes",
-        Equipemnt = new List<string> { "steel Dumbbells", "Straight Barbell" },
-        TrainingTypes = new List<string> { "white fatalis", "safijiva", "bodyBuilding", "strength" },
-        TrainingWeeks = new List<TrainingWeekWriteDto>
-        {
-            new TrainingWeekWriteDto
-            {
-                Name = "Week 1",
-                OrderNumber = 1,
-                TrainingDays = new List<TrainingDaysWriteDto>
-                {
-                    new TrainingDaysWriteDto
-                    {
-                        Name = "Day 1",
-                        OrderNumber = 1,
-                        Blocks = new List<BlockWriteDto>
-                        {
-                            new BlockWriteDto
-                            {
-                                Name = "Block 1",
-                                Sets = 3,
-                                RestInSeconds = 60,
-                                Instructions = "Some instructions",
-                                OrderNumber = 1,
-                                BlockExercises = new List<BlockExerciseWriteDto>
-                                {
-                                    new BlockExerciseWriteDto
-                                    {
-                                        ExerciseName = "dumbbell bench press - flat",
-                                        Instructions = "Some notes",
-                                        OrderNumber = 1,
-                                        Repetitions = 10
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    };
+    
 
     private static readonly TrainingPlanWriteDto _missingExerciesPlan = new TrainingPlanWriteDto
     {
         Name = "New Training Plan",
         Description = "A new training plan for testing",
         Notes = "Some notes",
-        Equipemnt = new List<string> { "steel Dumbbells", "Straight Barbell" },
-        TrainingTypes = new List<string> { "Strength", "Cardio" },
+
+
         TrainingWeeks = new List<TrainingWeekWriteDto>
         {
             new TrainingWeekWriteDto
@@ -1128,49 +1042,5 @@ public async Task GetByIdAsync_ShouldReturnFailure_WhenExceptionOccurs()
         }
     };
 
-    private static readonly TrainingPlanWriteDto _invalidEquipmentPlan = new TrainingPlanWriteDto
-    {
-        Name = "New Training Plan",
-        Description = "A new training plan for testing",
-        Notes = "Some notes",
-        Equipemnt = new List<string> { "noh", "Straight Barbell" },
-        TrainingTypes = new List<string> { "Strength", "Cardio" },
-        TrainingWeeks = new List<TrainingWeekWriteDto>
-        {
-            new TrainingWeekWriteDto
-            {
-                Name = "Week 1",
-                OrderNumber = 1,
-                TrainingDays = new List<TrainingDaysWriteDto>
-                {
-                    new TrainingDaysWriteDto
-                    {
-                        Name = "Day 1",
-                        OrderNumber = 1,
-                        Blocks = new List<BlockWriteDto>
-                        {
-                            new BlockWriteDto
-                            {
-                                Name = "Block 1",
-                                Sets = 3,
-                                RestInSeconds = 60,
-                                Instructions = "Some instructions",
-                                OrderNumber = 1,
-                                BlockExercises = new List<BlockExerciseWriteDto>
-                                {
-                                    new BlockExerciseWriteDto
-                                    {
-                                        ExerciseName = "dumbbell bench press - flat",
-                                        Instructions = "Some notes",
-                                        OrderNumber = 1,
-                                        Repetitions = 10
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    };
+   
 }

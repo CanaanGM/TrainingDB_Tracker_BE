@@ -1,25 +1,28 @@
-﻿namespace DataLibrary.Dtos;
+﻿using DataLibrary.Helpers;
+
+namespace DataLibrary.Dtos;
 
 public class TrainingPlanWriteDto
 {
-    public required string? Name { get; set; }
+    public string _name { get; set; }
+    public required string Name { get => _name; set => _name = Utils.NormalizeString(value); }
     public required string? Description { get; set; }
     public required string? Notes { get; set; }
     public required List<TrainingWeekWriteDto> TrainingWeeks { get; set; }
-    public required List<string> Equipemnt { get; set; }
-    public required List<string> TrainingTypes { get; set; }
 }
 
 public class TrainingWeekWriteDto
 {
-    public string Name { get; set; } = null!;
+    public string _name { get; set; }
+    public required string Name { get => _name; set => _name = Utils.NormalizeString(value); }
     public required int OrderNumber { get; set; }
     public required List<TrainingDaysWriteDto> TrainingDays { get; set; }
 }
 
 public class TrainingDaysWriteDto
 {
-    public required string Name { get; set; } = null!;
+    public string _name { get; set; }
+    public required string Name { get => _name; set => _name = Utils.NormalizeString(value); }
     public string? Notes { get; set; }
     public required int OrderNumber { get; set; }
     public List<BlockWriteDto> Blocks { get; set; }
@@ -27,7 +30,8 @@ public class TrainingDaysWriteDto
 
 public class BlockWriteDto
 {
-    public required string Name { get; set; } = null!;
+    public string _name { get; set; }
+    public required string Name { get => _name; set => _name = Utils.NormalizeString(value); }
     public required int Sets { get; set; }
     public required int RestInSeconds { get; set; }
     public required string Instructions { get; set; }
@@ -37,7 +41,8 @@ public class BlockWriteDto
 
 public class BlockExerciseWriteDto
 {
-    public required string ExerciseName { get; set; }
+    public string _name { get; set; }
+    public required string ExerciseName { get => _name; set => _name = Utils.NormalizeString(value); }
     public required string Instructions { get; set; }
     public required int OrderNumber { get; set; }
     public int? Repetitions { get; set; }
@@ -52,22 +57,30 @@ public class TrainingPlanReadDto
     public string Name { get; set; }
     public string Description { get; set; }
     public string Notes { get; set; }
+    /// <summary>
+    /// from the exercises
+    /// </summary>
     public List<string> TrainingTypes { get; set; }
+    /// <summary>
+    /// From the exercises
+    /// </summary>
     public List<string> RequiredEquipment { get; set; }
     public List<TrainingWeekReadDto> TrainingWeeks { get; set; }
+    public DateTime CreatedAt { get; set; }
     
 }
 
 public class TrainingWeekReadDto
 {
+    public int Id { get; set; }
     public string Name { get; set; } = null!;
-
     public int OrderNumber { get; set; }
     public List<TrainingDaysReadDto> TrainingDays { get; set; }
 }
 
 public class TrainingDaysReadDto
 {
+    public int Id { get; set; }
     public string Name { get; set; } = null!;
     public string? Notes { get; set; }
     public int OrderNumber { get; set; }
@@ -76,6 +89,7 @@ public class TrainingDaysReadDto
 
 public class BlockReadDto
 {
+    public int Id { get; set; }
     public required string Name { get; set; } = null!;
     public required int Sets { get; set; }
     public required int RestInSeconds { get; set; }
@@ -86,6 +100,7 @@ public class BlockReadDto
 
 public class BlockExerciseReadDto
 {
+    public int Id { get; set; }
     public ExerciseReadDto Exercise { get; set; }
     public required string Notes { get; set; }
     public required int OrderNumber { get; set; }

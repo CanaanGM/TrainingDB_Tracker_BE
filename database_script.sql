@@ -102,11 +102,12 @@ create table if not exists equipment (
     id integer primary key autoincrement,
     weight_kg real not null default 0,
     created_at datetime default current_timestamp,
-    name TEXT NOT NULL,
+    name TEXT unique NOT NULL,
     description TEXT,
     how_to TEXT
 );
 create index idx_equipment_weight on equipment(weight_kg);
+create index idx_equipemnt_name on equipment(name);
 -- what equipment with what exercise
 -- dumbbell curls needs a dumbbell, dragon flag a bench or something to hold onto
 create table if not exists exercise_equipment (
@@ -160,10 +161,6 @@ create table if not exists exercise_record (
 	CONSTRAINT fk_exercise_record_exercise_id Foreign Key(exercise_id) references exercise(id) ON DELETE cascade,
     CONSTRAINT fk_exercise_record_user_id foreign key (user_id) references user(id) on delete cascade
 );
-
-
-
-
 create table if not exists training_session(
     id integer primary key autoincrement,
     calories integer not null default 0,
