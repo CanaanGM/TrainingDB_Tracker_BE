@@ -89,3 +89,24 @@ dotnet ef database update -p .\DataLibrary\ -s .\DataLibrary\ --no-build -c Sqli
 ```bash
 dotnet watch -p ./API
 ```
+
+
+- Quick search
+
+```sql
+select e.name, e.how_to from exercise e
+where e.name like '%plank%'
+order by e.name asc
+;
+```
+
+- For Taking data
+
+```sql
+select name, description, how_to,difficulty from exercise;
+select name, muscle_group, function, wiki_page_url from muscle;
+select name from training_type;
+select exercise_id, name, url from exercise_how_to;
+select * from exercise_muscle;
+select * from exercise_type;
+```
