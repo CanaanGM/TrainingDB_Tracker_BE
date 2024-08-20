@@ -62,7 +62,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "Diamond Pushup",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": " go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -77,13 +77,13 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Rope Cable Curls",
+                    "ExerciseName": "cable curls - rope",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "cable tricep pushdown",
+                    "ExerciseName": "cable triceps pushdown",
                     "Notes": "Triangle Grip",
                     "OrderNumber": 2,
                     "Repetitions": 12
@@ -210,7 +210,7 @@
                     "Repetitions": 30
                   },
                   {
-                    "ExerciseName": "dumbbell side lateral raise",
+                    "ExerciseName": "dumbbell side lateral",
                     "Notes": "go untill failure",
                     "OrderNumber": 2,
                     "Repetitions": 0
@@ -295,7 +295,7 @@
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "Wide Grip Lat Pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 12
@@ -380,7 +380,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "standing medium hight cable fly",
+                    "ExerciseName": "standing medium high cable fly",
                     "Notes": "go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -519,7 +519,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Barbell Back Squat",
+                    "ExerciseName": "back squat",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -658,7 +658,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "Diamond Pushup",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": "go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -673,13 +673,13 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Rope Cable Curls",
+                    "ExerciseName": "cable curls - rope",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "cable tricep pushdown",
+                    "ExerciseName": "cable triceps pushdown",
                     "Notes": "Triangle Grip",
                     "OrderNumber": 2,
                     "Repetitions": 12
@@ -806,7 +806,7 @@
                     "Repetitions": 30
                   },
                   {
-                    "ExerciseName": "dumbbell side lateral raise",
+                    "ExerciseName": "dumbbell side lateral",
                     "Notes": "go untill failure",
                     "OrderNumber": 2,
                     "Repetitions": 0
@@ -891,7 +891,7 @@
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "Wide Grip Lat Pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 12
@@ -976,7 +976,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "Standing Medium Hight Cable Fly",
+                    "ExerciseName": "standing medium high cable fly",
                     "Notes": "go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -1121,7 +1121,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Barbell Back Squat",
+                    "ExerciseName": "back squat",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -1260,7 +1260,7 @@
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "Diamond Pushup",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": "go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -1275,13 +1275,13 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Rope Cable Curls",
+                    "ExerciseName": "cable curls - rope",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10
                   },
                   {
-                    "ExerciseName": "cable tricep pushdown",
+                    "ExerciseName": "cable triceps pushdown",
                     "Notes": "Triangle Grip",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -1408,7 +1408,7 @@
                     "Repetitions": 30
                   },
                   {
-                    "ExerciseName": "dumbbell side lateral raise",
+                    "ExerciseName": "dumbbell side lateral",
                     "Notes": "go untill failure",
                     "OrderNumber": 2,
                     "Repetitions": 0
@@ -1493,7 +1493,7 @@
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "Wide Grip Lat Pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 12
@@ -1578,7 +1578,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "Standing Medium Hight Cable Fly",
+                    "ExerciseName": "standing medium high cable fly",
                     "Notes": "go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -1717,7 +1717,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Barbell Back Squat",
+                    "ExerciseName": "back squat",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -1856,7 +1856,7 @@
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "Diamond Pushup",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": "go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -1871,13 +1871,13 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Rope Cable Curls",
+                    "ExerciseName": "cable curls - rope",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10
                   },
                   {
-                    "ExerciseName": "cable tricep pushdown",
+                    "ExerciseName": "cable triceps pushdown",
                     "Notes": "Triangle Grip",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -2004,7 +2004,7 @@
                     "Repetitions": 30
                   },
                   {
-                    "ExerciseName": "dumbbell side lateral raise",
+                    "ExerciseName": "dumbbell side lateral",
                     "Notes": "go untill failure",
                     "OrderNumber": 2,
                     "Repetitions": 0
@@ -2089,7 +2089,7 @@
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "Wide Grip Lat Pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 12
@@ -2174,7 +2174,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "Standing Medium Hight Cable Fly",
+                    "ExerciseName": "standing medium high cable fly",
                     "Notes": "go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -2319,7 +2319,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Barbell Back Squat",
+                    "ExerciseName": "back squat",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15

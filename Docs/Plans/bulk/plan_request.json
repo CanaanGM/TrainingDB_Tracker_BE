@@ -538,7 +538,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "ez curls - reverse",
+                    "ExerciseName": "ez curls - reverse grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -1661,7 +1661,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "ez curls - reverse",
+                    "ExerciseName": "ez curls - reverse grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -2793,7 +2793,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "ez curls - reverse",
+                    "ExerciseName": "ez curls - reverse grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -3776,7 +3776,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "ez curls - reverse",
+                    "ExerciseName": "ez curls - reverse grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -8210,7 +8210,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Swiss Balls Pikes",
+                    "ExerciseName": "swiss ball pikes",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 20,
@@ -8771,7 +8771,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Swiss Balls Pikes",
+                    "ExerciseName": "swiss ball pikes",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 20,
@@ -9341,7 +9341,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Swiss Balls Pikes",
+                    "ExerciseName": "swiss ball pikes",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -9999,7 +9999,7 @@
                 "instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "exerciseName": "Skull Crushers - EZ Curl",
+                    "exerciseName": "skull crushers - ez bar",
                     "notes": "Left and Right = 1 rep",
                     "orderNumber": 1,
                     "repetitions": 10
@@ -10518,7 +10518,7 @@
                 "instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "exerciseName": "Skull Crushers - EZ Curl",
+                    "exerciseName": "skull crushers - ez bar",
                     "notes": "Left and Right = 1 rep",
                     "orderNumber": 1,
                     "repetitions": 10
@@ -11037,7 +11037,7 @@
                 "instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "exerciseName": "Skull Crushers - EZ Curl",
+                    "exerciseName": "skull crushers - ez bar",
                     "notes": "Left and Right = 1 rep",
                     "orderNumber": 1,
                     "repetitions": 10
@@ -11556,7 +11556,7 @@
                 "instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "exerciseName": "Skull Crushers - EZ Curl",
+                    "exerciseName": "skull crushers - ez bar",
                     "notes": "Left and Right = 1 rep",
                     "orderNumber": 1,
                     "repetitions": 8
@@ -12079,7 +12079,7 @@
                     "Repetitions": 30
                   },
                   {
-                    "ExerciseName": "dumbbell side lateral raise",
+                    "ExerciseName": "dumbbell side lateral",
                     "Notes": "go untill failure",
                     "OrderNumber": 2,
                     "Repetitions": 0
@@ -12675,7 +12675,7 @@
                     "Repetitions": 30
                   },
                   {
-                    "ExerciseName": "dumbbell side lateral raise",
+                    "ExerciseName": "dumbbell side lateral",
                     "Notes": "go untill failure",
                     "OrderNumber": 2,
                     "Repetitions": 0
@@ -13277,7 +13277,7 @@
                     "Repetitions": 30
                   },
                   {
-                    "ExerciseName": "dumbbell side lateral raise",
+                    "ExerciseName": "dumbbell side lateral",
                     "Notes": "go untill failure",
                     "OrderNumber": 2,
                     "Repetitions": 0
@@ -13873,7 +13873,7 @@
                     "Repetitions": 30
                   },
                   {
-                    "ExerciseName": "dumbbell side lateral raise",
+                    "ExerciseName": "dumbbell side lateral",
                     "Notes": "go untill failure",
                     "OrderNumber": 2,
                     "Repetitions": 0
