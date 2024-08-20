@@ -9,7 +9,7 @@ public static class PlanHelpers
     {
         try
         {
-            var jsonFile = await File.ReadAllTextAsync($"../../../helpers/Plans/{planFile}.json");
+            var jsonFile = await File.ReadAllTextAsync($@"E:\development\c#\TrainingDB_Integration\Docs\Plans\single\{planFile}.json");
             var plan = JsonConvert.DeserializeObject<TrainingPlanWriteDto>(jsonFile);
             return plan;
         }
@@ -31,7 +31,7 @@ public static class PlanHelpers
 
         try
         {
-            var planFiles = Directory.GetFiles("../../../helpers/Plans", "*.json");
+            var planFiles = Directory.GetFiles(@"E:\development\c#\TrainingDB_Integration\Docs\Plans\single", "*.json");
 
             foreach (var planFile in planFiles)
             {
@@ -54,7 +54,7 @@ public static class PlanHelpers
     {
         try
         {
-            var jsonFile = await File.ReadAllTextAsync($"E:\\development\\c#\\TrainingDB_Integration\\plan_request.json");
+            var jsonFile = await File.ReadAllTextAsync($@"E:\development\c#\TrainingDB_Integration\Docs\Plans\bulk\plan_request.json");
             var plan = JsonConvert.DeserializeObject<List<TrainingPlanWriteDto>>(jsonFile);
             return plan;
 
