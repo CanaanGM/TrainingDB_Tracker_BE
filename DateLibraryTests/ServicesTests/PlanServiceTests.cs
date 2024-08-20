@@ -41,6 +41,51 @@ public class PlanServiceTests : BaseTestClass
         AssertPlanCreatedSuccessfully(newPlanDto, createdPlan);
     }
 
+    public static IEnumerable<object[]> GeneratePlans ()
+    {
+        var plans =  PlanHelpers.GeneratePlans().Result;
+        return  new List<object[]>
+        {
+           new object[] { plans[0] },
+           new object[] { plans[1] },
+           new object[] { plans[2] },
+           new object[] { plans[3] },
+           new object[] { plans[4] },
+        };
+        
+    }
+    
+    [Theory]
+    [MemberData(nameof(GeneratePlans))]
+    public async Task CreateAsync_ShouldCreateTrainingPlanSuccessfully(TrainingPlanWriteDto plan)
+    {
+        // Arrange
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+
+        // Act
+        var result = await service.CreateAsync(plan, new CancellationToken());
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.True(result.Value > 0);
+
+        var createdPlan = await GetCreatedPlan(result.Value);
+        AssertPlanCreatedSuccessfully(plan, createdPlan);
+    }
+
+    [Fact]
+    public async Task CreateBulk_ShouldReturnSuccess()
+    {
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+        var plans = await PlanHelpers.GenerateBulkPlan();
+        var result = await service.CreateBulkAsync(plans, new CancellationToken());
+        
+        Assert.True(result.IsSuccess);
+
+        // AssertPlanCreatedSuccessfully(plan, createdPlan);
+
+    }
+    
     [Fact]
     public async Task CreateAsyncWithNoEquipment_ShouldCreateTrainingPlanSuccessfully()
     {

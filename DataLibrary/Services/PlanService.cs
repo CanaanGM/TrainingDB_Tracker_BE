@@ -27,10 +27,7 @@ public class PlanService
     {
         if (!ValidateTrainingPlan(newPlanDto, out var validationError))
             return Result<int>.Failure(validationError);
-
         
-        
-
         try
         {
 
@@ -40,7 +37,6 @@ public class PlanService
                 return Result<int>.Failure(string.Join("; ", validationErrors));
             
             await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-            // var trainingPlan = _mapper.Map<TrainingPlan>(newPlanDto);
             
             var trainingPlan = MapToTrainingPlan(newPlanDto, relatedExercises);
 
@@ -57,6 +53,53 @@ public class PlanService
         }
     }
    
+    public async Task<Result> CreateBulkAsync(List<TrainingPlanWriteDto> newPlanDtos, CancellationToken cancellationToken)
+    {
+        var allMissingExercises = new List<string>();
+
+        try
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+
+            foreach (var newPlanDto in newPlanDtos)
+            {
+                if (!ValidateTrainingPlan(newPlanDto, out var validationError))
+                    return Result.Failure(validationError);
+
+                var relatedExercises = await GetRelatedExercises(newPlanDto, cancellationToken);
+                var missingExercises = ValidateEntities(relatedExercises, newPlanDto);
+
+                if (missingExercises.Any())
+                    allMissingExercises.AddRange(missingExercises);
+                else
+                {
+                    var trainingPlan = MapToTrainingPlan(newPlanDto, relatedExercises);
+                    await _context.TrainingPlans.AddAsync(trainingPlan, cancellationToken);
+                }
+            }
+
+            if (allMissingExercises.Any())
+            {
+                var allMissingExerciseNames = allMissingExercises
+                    .Select(Utils.NormalizeString)
+                    .Distinct()
+                    .OrderDescending();
+                return Result.Failure($"{string.Join("\n", allMissingExerciseNames)}");
+            }
+
+            await _context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+
+            return Result.Success("All training plans created successfully.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"[ERROR]: failed to create bulk training plans in {nameof(CreateBulkAsync)}");
+            return Result.Failure($"Failed to create bulk training plans: {ex.Message}", ex);
+        }
+    }
+
+    
     public async Task<Result<TrainingPlanReadDto>> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
         try
@@ -314,7 +357,7 @@ public class PlanService
             .ToList();
         if (missingExercises.Any())
         {
-            errors.Add($"The following exercises do not exist: {string.Join(", ", missingExercises)}");
+            errors.Add($"{string.Join("\n", missingExercises)}");
         }
         return errors;
     }
