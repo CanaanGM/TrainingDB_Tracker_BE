@@ -1132,7 +1132,7 @@ values (
                 3
         ),
         (
-                'ez curls - reverse',
+                'ez curls - reverse grip',
                 'Reverse EZ curls target the brachioradialis and biceps, helping to build arm and forearm strength. The reverse grip places more emphasis on the forearms, making it a valuable exercise for overall arm development.',
                 'Stand with your feet shoulder-width apart, holding an EZ bar with a reverse (overhand) grip. Keep your elbows close to your body and curl the bar towards your shoulders, focusing on contracting your forearms and biceps. Lower the bar back to the starting position with control. Repeat for the desired number of repetitions.',
                 3
@@ -1264,7 +1264,7 @@ values (
                 4
         ),
         (
-                'heavy sled drag or kettlebell swing',
+                'heavy sled drag or kittlebell swing',
                 'This combo exercise alternates between heavy sled drags and kettlebell swings, targeting the entire body, particularly the lower body, core, and shoulders. This combination is effective for building strength, power, and endurance.',
                 'Start with a heavy sled drag for a set distance or time, focusing on engaging your lower body and core. Immediately transition into kettlebell swings, standing with your feet shoulder-width apart, holding a kettlebell with both hands. Swing the kettlebell between your legs and thrust your hips forward to bring it to chest height. Repeat the sequence for the desired number of rounds.',
                 4
@@ -1786,7 +1786,7 @@ values (
                 3
         ),
         (
-                'skull crushers - ez curl',
+                'skull crushers - ez bar',
                 'EZ curl bar skull crushers are a triceps isolation exercise that targets all three heads of the triceps, with the EZ curl bar providing a more comfortable grip. This exercise helps to build upper arm strength and muscle definition.',
                 'Lie on a bench with an EZ curl bar held above your chest, arms fully extended. Keep your upper arms stationary as you lower the bar towards your forehead by bending your elbows. Extend your arms back to the starting position, squeezing your triceps at the top. Repeat for the desired number of repetitions.',
                 3
@@ -1966,7 +1966,7 @@ values (
                 3
         ),
         (
-                'v-up isometric holds',
+                'v-ups isometric holds',
                 'V-up isometric holds are a core stabilization exercise that targets the rectus abdominis and hip flexors, helping to build core strength and endurance.',
                 'Lie flat on your back with your legs straight and arms extended overhead. Engage your core and lift your legs and upper body off the ground, reaching your hands towards your toes, forming a V shape with your body. Hold this position for the desired amount of time, maintaining tension in your core.',
                 3
@@ -2014,7 +2014,7 @@ values (
                 4
         ),
         (
-                'y, t, w''s',
+                'y,t,w''s',
                 'Y, T, W''s are a series of shoulder and upper back exercises that target the rotator cuff muscles, trapezius, and deltoids. This exercise helps to improve shoulder stability, mobility, and posture.',
                 'Lie face down on an incline bench or stability ball with your arms hanging straight down. Perform the following movements in sequence: Raise your arms to form a Y shape, then lower them back down. Raise your arms out to the sides to form a T shape, then lower them. Finally, raise your arms to form a W shape by bending your elbows, then lower them. Repeat the sequence for the desired number of repetitions.',
                 3
@@ -2024,4 +2024,148 @@ values (
                 'This drill combines a backpedal with a sprint to improve agility, acceleration, and overall athleticism. It targets the lower body muscles, including the quadriceps, hamstrings, glutes, and calves, while also engaging the core for stability.',
                 'Start in an athletic stance with your feet shoulder-width apart. Begin by backpedaling for 10 meters, staying low and maintaining a strong, balanced position. Once you reach the 10-meter mark, quickly transition into a forward sprint for the next 10 meters. Focus on accelerating as fast as possible during the sprint portion. Repeat for the desired number of repetitions.',
                 3
+        ),
+        (
+                'calf raises - standing',
+                'Standing calf raises are an isolation exercise that targets the calf muscles, specifically the gastrocnemius and soleus. This exercise helps to build calf strength and improve ankle stability.',
+                'Stand with your feet hip-width apart, toes pointed forward. Push through the balls of your feet to raise your heels off the ground, lifting your body as high as possible. Hold the top position for a moment, then slowly lower your heels back down. Repeat for the desired number of repetitions.',
+                2
+        ),
+        (
+                'side plank on knee',
+                'The side plank on knee is a core stabilization exercise that targets the obliques, rectus abdominis, and glutes. This exercise helps to build core strength, stability, and balance.',
+                'Lie on your side with your bottom knee bent and your top leg extended straight. Prop yourself up on your forearm, keeping your elbow directly under your shoulder. Lift your hips off the ground, forming a straight line from your head to your top foot. Hold this position for the desired amount of time, then switch sides.',
+                2
+        ),
+        (
+                'lizard stretch',
+                'The lizard stretch is a deep hip and groin stretch that targets the hip flexors, hamstrings, and groin muscles. This stretch helps to improve hip mobility, flexibility, and range of motion.',
+                'Start in a push-up position. Step your right foot outside your right hand, lowering your hips towards the ground. Keep your back leg extended straight behind you and your front foot flat on the ground. Hold this position, breathing deeply and relaxing into the stretch. Switch sides after holding for the desired amount of time.',
+                2
+        ),
+        (
+                'side plank',
+                'The side plank is a core stabilization exercise that targets the obliques, rectus abdominis, and glutes. This exercise helps to build core strength, stability, and balance.',
+                'Lie on your side with your legs extended straight and your feet stacked on top of each other. Prop yourself up on your forearm, keeping your elbow directly under your shoulder. Lift your hips off the ground, forming a straight line from your head to your feet. Hold this position for the desired amount of time, then switch sides.',
+                3
+        ),
+        (
+                'apley''s scratch test',
+                'Apley''s scratch test is a mobility assessment that evaluates shoulder range of motion and flexibility. This test helps to identify any limitations in shoulder mobility.',
+                'Reach one arm over your shoulder to touch your upper back and the other arm behind your back to touch your lower back. Try to touch your fingertips together. Repeat on the other side. This test assesses shoulder mobility by comparing the distance between the fingertips on each side.',
+                1
+        ),
+        (
+                'broad jumps',
+                'Broad jumps are a plyometric exercise that targets the quadriceps, hamstrings, glutes, and calves while also engaging the core. This exercise helps to build explosive power, leg strength, and coordination.',
+                'Stand with your feet shoulder-width apart. Lower into a squat position, then explosively jump forward as far as you can, swinging your arms for momentum. Land softly with your knees slightly bent and immediately go into the next jump. Repeat for the desired number of repetitions or distance.',
+                4
+        ),
+        (
+                'dumbbell side lateral',
+                'Dumbbell side laterals are an isolation exercise that targets the deltoid muscles, particularly the middle head. This exercise helps to build shoulder strength and improve upper body posture.',
+                'Stand with your feet shoulder-width apart, holding a dumbbell in each hand at your sides with your palms facing your body. Lift your arms out to the sides until they are parallel to the floor, keeping a slight bend in your elbows. Lower the dumbbells back down with control. Repeat for the desired number of repetitions.',
+                3
+        ),
+        (
+                'ball drops',
+                'Ball drops are a coordination and reaction drill that targets the lower body muscles and core while improving hand-eye coordination and reflexes. This exercise helps to develop agility and quickness.',
+                'Stand in an athletic stance with a partner or coach holding a tennis ball or similar object. When the ball is dropped, react quickly by sprinting forward to catch it before it bounces a second time. Repeat for the desired number of repetitions.',
+                2
+        ),
+        (
+                'lateral lunge',
+                'Lateral lunges are a lower body exercise that targets the quadriceps, hamstrings, glutes, and adductors. This exercise helps to build leg strength, improve lateral movement, and increase flexibility.',
+                'Stand with your feet shoulder-width apart. Take a large step to the side with one leg, bending that knee and lowering your hips while keeping the other leg straight. Push through the heel of the bent leg to return to the starting position. Repeat for the desired number of repetitions, then switch sides.',
+                3
+        ),
+        (
+                'kettlebell swing',
+                'The kettlebell swing is a dynamic exercise that targets the posterior chain, including the glutes, hamstrings, and lower back, while also engaging the core and shoulders. This exercise helps to build power, endurance, and functional strength.',
+                'Stand with your feet shoulder-width apart, holding a kettlebell with both hands in front of your hips. Hinge at your hips, swinging the kettlebell back between your legs, then explosively thrust your hips forward to swing the kettlebell up to shoulder height. Allow the kettlebell to swing back down between your legs as you prepare for the next repetition. Repeat for the desired number of repetitions.',
+                3
+        ),
+        (
+                'front plate raise',
+                'The front plate raise is an isolation exercise that targets the deltoid muscles, particularly the anterior head. This exercise helps to build shoulder strength and improve upper body posture.',
+                'Stand with your feet shoulder-width apart, holding a weight plate with both hands at your thighs. Keeping your arms straight, raise the plate in front of you until your arms are parallel to the ground. Lower the plate back down with control. Repeat for the desired number of repetitions.',
+                2
+        ),
+        (
+                '3 cone drill',
+                'The 3 cone drill is an agility and speed drill that targets the lower body muscles and core while improving coordination, quickness, and change of direction. This drill is commonly used in athletic training to enhance overall performance.',
+                'Set up three cones in an L-shape, with 5 yards between each cone. Start at the first cone, sprint to the second cone, touch the line, and sprint back to the first cone. Then, sprint around the outside of the second cone to the third cone, circle it, and sprint back through the second cone to finish. Focus on maintaining speed and control throughout the drill.',
+                3
+        ),
+        (
+                'cable tricep extension',
+                'Cable tricep extensions are an isolation exercise that targets all three heads of the triceps, helping to build upper arm strength and muscle mass.',
+                'Attach a straight bar or rope attachment to a high pulley of a cable machine. Stand facing the machine, holding the bar or rope with an overhand grip. Keep your elbows close to your sides as you extend your arms downward, fully contracting your triceps at the bottom of the movement. Slowly return to the starting position. Repeat for the desired number of repetitions.',
+                2
+        ),
+        (
+                'high plank with leg raise on bosu ball',
+                'This exercise combines a high plank with a leg raise on a Bosu ball, targeting the core, glutes, and shoulders while improving balance and stability.',
+                'Start in a high plank position with your hands on the flat side of a Bosu ball and your feet together. Engage your core and lift one leg towards the ceiling while keeping your hips level. Lower the leg back down and repeat on the other side. Continue alternating legs for the desired number of repetitions.',
+                4
+        ),
+        (
+                'cable curls - rope',
+                'Cable rope curls are an isolation exercise that targets the biceps, helping to build upper arm strength and muscle mass.',
+                'Attach a rope handle to a low pulley of a cable machine. Stand facing the machine, holding the rope with an underhand grip. Keep your elbows close to your sides as you curl the rope towards your shoulders, squeezing your biceps at the top. Slowly lower the rope back down to the starting position. Repeat for the desired number of repetitions.',
+                3
+        ),
+        (
+                'step ups - dumbbell',
+                'Dumbbell step ups are a lower body exercise that targets the quadriceps, hamstrings, and glutes while also engaging the core for stability. This exercise helps to build leg strength, muscle mass, and balance.',
+                'Stand in front of a bench or step with a dumbbell in each hand. Step up onto the bench with one foot, driving through the heel to lift your body up. Bring your other foot up to meet the first, then step back down with the same foot. Repeat on the other side, continuing to alternate legs for the desired number of repetitions.',
+                3
+        ),
+        (
+                'oblique crunches on hyper extension',
+                'Oblique crunches on a hyperextension bench target the obliques, helping to build core strength and improve lateral stability.',
+                'Position yourself sideways on a hyperextension bench with your hips supported and your feet secured. Place your hands behind your head. Lower your upper body towards the ground, then engage your obliques to lift your torso back up, twisting slightly at the top. Repeat for the desired number of repetitions, then switch sides.',
+                3
+        ),
+        (
+                'lateral line hops',
+                'Lateral line hops are a plyometric exercise that targets the lower body muscles, particularly the calves and ankles, while also improving coordination and agility.',
+                'Stand with your feet together next to a line or object on the ground. Hop side to side over the line, keeping your feet together and landing softly. Continue hopping back and forth for the desired number of repetitions or time.',
+                2
+        ),
+        (
+                'side plank - dumbbell reach',
+                'This variation of the side plank adds a dumbbell reach, targeting the obliques, shoulders, and core while also improving stability and coordination.',
+                'Start in a side plank position with a dumbbell in your top hand. Reach the dumbbell towards the ceiling, then slowly lower it down in front of you, passing it under your torso. Return to the starting position and repeat for the desired number of repetitions, then switch sides.',
+                4
+        ),
+        (
+                'shoulder press - supinated barbell',
+                'The supinated barbell shoulder press is an upper body exercise that targets the shoulders, triceps, and upper chest. This exercise helps to build shoulder strength and improve upper body posture.',
+                'Hold a barbell with a supinated (underhand) grip, hands shoulder-width apart. Press the barbell overhead until your arms are fully extended, then lower it back down to your shoulders with control. Repeat for the desired number of repetitions.',
+                4
+        ),
+        (
+                'high to low cable chops',
+                'High to low cable chops are a rotational core exercise that targets the obliques, rectus abdominis, and shoulders. This exercise helps to build core strength and improve rotational power.',
+                'Attach a handle to a high pulley of a cable machine. Stand sideways to the machine, holding the handle with both hands. Pull the handle down and across your body towards your opposite hip, rotating your torso as you move. Return to the starting position with control. Repeat for the desired number of repetitions, then switch sides.',
+                3
+        ),
+        (
+                'b-skips',
+                'B-skips are a dynamic warm-up exercise that targets the hip flexors, quadriceps, and hamstrings while improving coordination and running form.',
+                'Start by skipping forward, driving one knee up while extending your other leg forward and downward in a kicking motion. Alternate legs with each skip, focusing on maintaining rhythm and form. Continue for the desired distance or time.',
+                2
+        ),
+        (
+                'push ups - clapping',
+                'Clapping push-ups are an explosive upper body exercise that targets the chest, triceps, and shoulders while also improving power and coordination.',
+                'Start in a push-up position with your hands shoulder-width apart. Lower your body towards the ground, then explosively push yourself up, clapping your hands together before landing back in the push-up position. Repeat for the desired number of repetitions.',
+                4
+        ),
+        (
+                'ab roller',
+                'The ab roller is a core exercise that targets the rectus abdominis, obliques, and hip flexors, helping to build core strength, stability, and endurance.',
+                'Kneel on the ground with the ab roller in front of you. Slowly roll the ab roller forward, extending your body into a straight line. Engage your core and roll back to the starting position. Repeat for the desired number of repetitions.',
+                4
         );
