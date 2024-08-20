@@ -404,7 +404,7 @@
                 "Instructions": "No rest between stretches",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "90/90 Stretch (front and back)",
+                    "ExerciseName": "90/90 stretch",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 0,
@@ -1046,7 +1046,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "wide grip lat pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -1080,7 +1080,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Barbell Curl",
+                    "ExerciseName": "barbell curls",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -1527,7 +1527,7 @@
                 "Instructions": "No rest between stretches",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "90/90 Stretch (front and back)",
+                    "ExerciseName": "90/90 stretch",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 0,
@@ -2186,7 +2186,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "wide grip lat pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -2220,7 +2220,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Barbell Curl",
+                    "ExerciseName": "barbell curls",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -2659,7 +2659,7 @@
                 "Instructions": "No rest between stretches",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "90/90 Stretch (front and back)",
+                    "ExerciseName": "90/90 stretch",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 0,
@@ -3318,7 +3318,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "wide grip lat pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -3352,7 +3352,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Barbell Curl",
+                    "ExerciseName": "barbell curls",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -3683,7 +3683,7 @@
                 "Instructions": "No rest between stretches",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "90/90 Stretch (front and back)",
+                    "ExerciseName": "90/90 stretch",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 0,
@@ -4161,7 +4161,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "wide grip lat pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -4195,7 +4195,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Barbell Curl",
+                    "ExerciseName": "barbell curls",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -4309,7 +4309,7 @@
                 "Instructions": "always make sure to progress to a technical 1 rep max,This means you are maximally performing the drill but not sacrificing any technique.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "10 meters back pedal -> 10 meters sprint",
+                    "ExerciseName": "10 meters back pedal into 10 meters sprint",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 1,
@@ -4604,7 +4604,7 @@
                 "Instructions": "Lowering the weight should take 10secs and hold at the bottom for 10secs",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "dumbbell press - incline",
+                    "ExerciseName": "dumbbell chest press - incline",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -4857,7 +4857,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Swiss Ball seated leg curl",
+                    "ExerciseName": "swiss ball hamstring curl",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -5155,7 +5155,7 @@
                 "Instructions": "always make sure to progress to a technical 1 rep max,This means you are maximally performing the drill but not sacrificing any technique.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "10 meters back pedal -> 10 meters sprint",
+                    "ExerciseName": "10 meters back pedal into 10 meters sprint",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 1,
@@ -5450,7 +5450,7 @@
                 "Instructions": "Lowering the weight should take 10secs and hold at the bottom for 10secs",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "dumbbell press - incline",
+                    "ExerciseName": "dumbbell chest press - incline",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -5703,7 +5703,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Swiss Ball seated leg curl",
+                    "ExerciseName": "swiss ball hamstring curl",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -6001,7 +6001,7 @@
                 "Instructions": "always make sure to progress to a technical 1 rep max,This means you are maximally performing the drill but not sacrificing any technique.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "10 meters back pedal -> 10 meters sprint",
+                    "ExerciseName": "10 meters back pedal into 10 meters sprint",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 1,
@@ -6296,7 +6296,7 @@
                 "Instructions": "Lowering the weight should take 10secs and hold at the bottom for 10secs",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "dumbbell press - incline",
+                    "ExerciseName": "dumbbell chest press - incline",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -6549,7 +6549,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Swiss Ball seated leg curl",
+                    "ExerciseName": "swiss ball hamstring curl",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -6847,7 +6847,7 @@
                 "Instructions": "always make sure to progress to a technical 1 rep max,This means you are maximally performing the drill but not sacrificing any technique.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "10 meters back pedal -> 10 meters sprint",
+                    "ExerciseName": "10 meters back pedal into 10 meters sprint",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 1,
@@ -7074,7 +7074,7 @@
                 "Instructions": "Lowering the weight should take 10secs and hold at the bottom for 10secs",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "dumbbell press - incline",
+                    "ExerciseName": "dumbbell chest press - incline",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -7293,7 +7293,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Swiss Ball seated leg curl",
+                    "ExerciseName": "swiss ball hamstring curl",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -7591,7 +7591,7 @@
                     "DistanceInMeters": 0
                   },
                   {
-                    "ExerciseName": "Pull Ups- Rope/Towel",
+                    "ExerciseName": "pull ups - rope/towel",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 0,
@@ -7616,7 +7616,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Reverse EZ Cur",
+                    "ExerciseName": "ez curls - reverse grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -7732,7 +7732,7 @@
                 "Instructions": "2 seconds down, 2 seconds hold bottom, 2 seconds going up",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "dumbbell press - flat",
+                    "ExerciseName": "dumbbell chest press - flat",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -8152,7 +8152,7 @@
                     "DistanceInMeters": 0
                   },
                   {
-                    "ExerciseName": "Pull Ups- Rope/Towel",
+                    "ExerciseName": "pull ups - rope/towel",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 0,
@@ -8177,7 +8177,7 @@
                 "Instructions": "2 seconds lowering, 1 sec hold, 2 seconds up",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Reverse EZ Cur",
+                    "ExerciseName": "ez curls - reverse grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -8293,7 +8293,7 @@
                 "Instructions": "2 seconds down, 1 seconds hold bottom, 2 seconds going up",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "dumbbell press - flat",
+                    "ExerciseName": "dumbbell chest press - flat",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -8713,7 +8713,7 @@
                     "DistanceInMeters": 0
                   },
                   {
-                    "ExerciseName": "Pull Ups- Rope/Towel",
+                    "ExerciseName": "pull ups - rope/towel",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 0,
@@ -8738,7 +8738,7 @@
                 "Instructions": "2 seconds lowering, 1 sec hold, 2 seconds up",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Reverse EZ Cur",
+                    "ExerciseName": "ez curls - reverse grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -8854,7 +8854,7 @@
                 "Instructions": "2 seconds down, 1 seconds hold bottom, 2 seconds going up",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "dumbbell press - flat",
+                    "ExerciseName": "dumbbell chest press - flat",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -9283,7 +9283,7 @@
                     "DistanceInMeters": 0
                   },
                   {
-                    "ExerciseName": "Pull Ups- Rope/Towel",
+                    "ExerciseName": "pull ups - rope/towel",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 10,
@@ -9308,7 +9308,7 @@
                 "Instructions": "perform each movement with maximal intensity. choose a weight that will cause you to fail at the last rep.",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Reverse EZ Cur",
+                    "ExerciseName": "ez curls - reverse grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -9433,7 +9433,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "dumbbell press - flat",
+                    "ExerciseName": "dumbbell chest press - flat",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10,
@@ -10260,7 +10260,7 @@
                 "instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "exerciseName": "Seated shrugs - dumbbell",
+                    "exerciseName": "shrugs - seated dumbbell",
                     "notes": "",
                     "orderNumber": 1,
                     "repetitions": 20
@@ -10779,7 +10779,7 @@
                 "instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "exerciseName": "Seated shrugs - dumbbell",
+                    "exerciseName": "shrugs - seated dumbbell",
                     "notes": "",
                     "orderNumber": 1,
                     "repetitions": 20
@@ -11298,7 +11298,7 @@
                 "instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "exerciseName": "Seated shrugs - dumbbell",
+                    "exerciseName": "shrugs - seated dumbbell",
                     "notes": "",
                     "orderNumber": 1,
                     "repetitions": 20
@@ -11817,7 +11817,7 @@
                 "instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "exerciseName": "Seated shrugs - dumbbell",
+                    "exerciseName": "shrugs - seated dumbbell",
                     "notes": "",
                     "orderNumber": 1,
                     "repetitions": 10
@@ -11931,7 +11931,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "Diamond Pushup",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": " go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -11946,13 +11946,13 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Rope Cable Curls",
+                    "ExerciseName": "cable curls - rope",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "cable tricep pushdown",
+                    "ExerciseName": "cable triceps pushdown",
                     "Notes": "Triangle Grip",
                     "OrderNumber": 2,
                     "Repetitions": 12
@@ -12164,7 +12164,7 @@
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "Wide Grip Lat Pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 12
@@ -12249,7 +12249,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "standing medium hight cable fly",
+                    "ExerciseName": "standing medium high cable fly",
                     "Notes": "go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -12388,7 +12388,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Barbell Back Squat",
+                    "ExerciseName": "back squat",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -12527,7 +12527,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "Diamond Pushup",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": "go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -12542,13 +12542,13 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Rope Cable Curls",
+                    "ExerciseName": "cable curls - rope",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "cable tricep pushdown",
+                    "ExerciseName": "cable triceps pushdown",
                     "Notes": "Triangle Grip",
                     "OrderNumber": 2,
                     "Repetitions": 12
@@ -12760,7 +12760,7 @@
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "Wide Grip Lat Pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 12
@@ -12845,7 +12845,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "Standing Medium Hight Cable Fly",
+                    "ExerciseName": "standing medium high cable fly",
                     "Notes": "go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -12990,7 +12990,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Barbell Back Squat",
+                    "ExerciseName": "back squat",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -13129,7 +13129,7 @@
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "Diamond Pushup",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": "go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -13144,13 +13144,13 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Rope Cable Curls",
+                    "ExerciseName": "cable curls - rope",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10
                   },
                   {
-                    "ExerciseName": "cable tricep pushdown",
+                    "ExerciseName": "cable triceps pushdown",
                     "Notes": "Triangle Grip",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -13362,7 +13362,7 @@
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "Wide Grip Lat Pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 12
@@ -13447,7 +13447,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "Standing Medium Hight Cable Fly",
+                    "ExerciseName": "standing medium high cable fly",
                     "Notes": "go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -13586,7 +13586,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Barbell Back Squat",
+                    "ExerciseName": "back squat",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -13725,7 +13725,7 @@
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "Diamond Pushup",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": "go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -13740,13 +13740,13 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Rope Cable Curls",
+                    "ExerciseName": "cable curls - rope",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10
                   },
                   {
-                    "ExerciseName": "cable tricep pushdown",
+                    "ExerciseName": "cable triceps pushdown",
                     "Notes": "Triangle Grip",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -13958,7 +13958,7 @@
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "Wide Grip Lat Pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 12
@@ -14043,7 +14043,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "Standing Medium Hight Cable Fly",
+                    "ExerciseName": "standing medium high cable fly",
                     "Notes": "go untill failure",
                     "OrderNumber": 3,
                     "Repetitions": 0
@@ -14188,7 +14188,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Barbell Back Squat",
+                    "ExerciseName": "back squat",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -14351,13 +14351,13 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Close Grip Barbell Curls",
+                    "ExerciseName": "barbell curls - close grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "pushups - diamond",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": "Can be done from the knees",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -14473,7 +14473,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "wide grip lat pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -14564,7 +14564,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "dumbbell press - flat",
+                    "ExerciseName": "dumbbell chest press - flat",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -14606,7 +14606,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "pushups - diamond",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": "Can be done from the knees",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -14724,7 +14724,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "walking lunge - medicine ball",
+                    "ExerciseName": "walking lunges - medicine ball",
                     "Notes": "if no ball use a plate or a kittle bell",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -14845,13 +14845,13 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Close Grip Barbell Curls",
+                    "ExerciseName": "barbell curls - close grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "pushups - diamond",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": "Can be done from the knees",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -14967,7 +14967,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "wide grip lat pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -15058,7 +15058,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "dumbbell press - flat",
+                    "ExerciseName": "dumbbell chest press - flat",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -15100,7 +15100,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "pushups - diamond",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": "Can be done from the knees",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -15218,7 +15218,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "walking lunge - medicine ball",
+                    "ExerciseName": "walking lunges - medicine ball",
                     "Notes": "if no ball use a plate or a kittle bell",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -15339,13 +15339,13 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Close Grip Barbell Curls",
+                    "ExerciseName": "barbell curls - close grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "pushups - diamond",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": "Can be done from the knees",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -15461,7 +15461,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "wide grip lat pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -15552,7 +15552,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "dumbbell press - flat",
+                    "ExerciseName": "dumbbell chest press - flat",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -15594,7 +15594,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "pushups - diamond",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": "Can be done from the knees",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -15609,7 +15609,7 @@
                 "Instructions": "All Exercises are 45 seconds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Glute Bridge with medball on lap 3 sec holds",
+                    "ExerciseName": "glute bridge with medball on lap - 3 sec holds",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 1,
@@ -15712,7 +15712,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "walking lunge - medicine ball",
+                    "ExerciseName": "walking lunges - medicine ball",
                     "Notes": "if no ball use a plate or a kittle bell",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -15833,13 +15833,13 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Close Grip Barbell Curls",
+                    "ExerciseName": "barbell curls - close grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "pushups - diamond",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": "Can be done from the knees",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -15955,7 +15955,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "wide grip lat pulldown",
+                    "ExerciseName": "lat pulldown - wide grip",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -16046,7 +16046,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "dumbbell press - flat",
+                    "ExerciseName": "dumbbell chest press - flat",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -16088,7 +16088,7 @@
                     "Repetitions": 15
                   },
                   {
-                    "ExerciseName": "pushups - diamond",
+                    "ExerciseName": "push ups - diamond",
                     "Notes": "Can be done from the knees",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -16103,7 +16103,7 @@
                 "Instructions": "All Exercises are 45 seconds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Glute Bridge with medball on lap 3 sec holds",
+                    "ExerciseName": "glute bridge with medball on lap - 3 sec holds",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 1,
@@ -16206,7 +16206,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "walking lunge - medicine ball",
+                    "ExerciseName": "walking lunges - medicine ball",
                     "Notes": "if no ball use a plate or a kittle bell",
                     "OrderNumber": 1,
                     "Repetitions": 15
@@ -16444,7 +16444,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Front Raise - Plate",
+                    "ExerciseName": "front plate raise",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10
@@ -16499,7 +16499,7 @@
                     "Repetitions": 10
                   },
                   {
-                    "ExerciseName": "Bent over Barbell Rows",
+                    "ExerciseName": "bent over barbell row",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -16742,7 +16742,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "front squat - barbell - Barbell",
+                    "ExerciseName": "front squat - barbell",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10
@@ -16763,7 +16763,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "deadlift - Dumbbell Stiff Leg",
+                    "ExerciseName": "dumbbell stiff legged deadlift",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10
@@ -17017,7 +17017,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Front Raise - Plate",
+                    "ExerciseName": "front plate raise",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10
@@ -17072,7 +17072,7 @@
                     "Repetitions": 12
                   },
                   {
-                    "ExerciseName": "Bentover Barbell Row",
+                    "ExerciseName": "bent over barbell row",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 12
@@ -17352,7 +17352,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "front squat - barbell - Barbell",
+                    "ExerciseName": "front squat - barbell",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 12
@@ -17373,7 +17373,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "deadlift - Dumbbell Stiff Leg",
+                    "ExerciseName": "dumbbell stiff legged deadlift",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 12
@@ -17627,7 +17627,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Front Raise - Plate",
+                    "ExerciseName": "front plate raise",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 12
@@ -17682,7 +17682,7 @@
                     "Repetitions": 10
                   },
                   {
-                    "ExerciseName": "Bentover Barbell Row",
+                    "ExerciseName": "bent over barbell row",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -17925,7 +17925,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "front squat - barbell - Barbell",
+                    "ExerciseName": "front squat - barbell",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10
@@ -17946,7 +17946,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "deadlift - Dumbbell Stiff Leg",
+                    "ExerciseName": "dumbbell stiff legged deadlift",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10
@@ -18200,7 +18200,7 @@
                 "Instructions": "",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "Front Raise - Plate",
+                    "ExerciseName": "front plate raise",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10
@@ -18255,7 +18255,7 @@
                     "Repetitions": 10
                   },
                   {
-                    "ExerciseName": "Bentover Barbell Row",
+                    "ExerciseName": "bent over barbell row",
                     "Notes": "",
                     "OrderNumber": 2,
                     "Repetitions": 10
@@ -18535,7 +18535,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "front squat - barbell - Barbell",
+                    "ExerciseName": "front squat - barbell",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10
@@ -18556,7 +18556,7 @@
                 "Instructions": "No rest between exercises, only between rounds",
                 "BlockExercises": [
                   {
-                    "ExerciseName": "deadlift - Dumbbell Stiff Leg",
+                    "ExerciseName": "dumbbell stiff legged deadlift",
                     "Notes": "",
                     "OrderNumber": 1,
                     "Repetitions": 10

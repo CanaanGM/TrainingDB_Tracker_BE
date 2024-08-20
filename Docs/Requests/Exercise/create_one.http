@@ -3,8 +3,9 @@
 
 
 
-POST {{rootUrl}}/exercise
+POST {{rootUrl}}/exercise/
 Content-Type: application/json
+
 
 
 
