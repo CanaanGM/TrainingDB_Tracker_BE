@@ -6,7 +6,7 @@ namespace DateLibraryTests.helpers;
 public static class ProductionDatabaseHelpers
 {
     private static string ReadSqlFile(string fileName) {
-        return File.ReadAllText($"../../../helpers/SqlStatements/{fileName}.sql");
+        return File.ReadAllText($"E:\\development\\c#\\TrainingDB_Integration\\Docs\\Sql\\{fileName}.sql");
     }
     public static void SeedProductionData(SqliteContext context)
     {
