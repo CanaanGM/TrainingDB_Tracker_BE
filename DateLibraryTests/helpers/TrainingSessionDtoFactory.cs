@@ -46,17 +46,17 @@ public static class TrainingSessionDtoFactory
             new ExerciseRecordWriteDto { ExerciseName = "sumo deadlifts", Repetitions = 1, WeightUsedKg = 90 },
             new ExerciseRecordWriteDto { ExerciseName = "sumo deadlifts", Repetitions = 4, WeightUsedKg = 70 },
             new ExerciseRecordWriteDto
-                { ExerciseName = "barbell front squat", Repetitions = 15, WeightUsedKg = 50 },
+                { ExerciseName = "front squat - barbell", Repetitions = 15, WeightUsedKg = 50 },
             new ExerciseRecordWriteDto
-                { ExerciseName = "barbell front squat", Repetitions = 15, WeightUsedKg = 50 },
+                { ExerciseName = "front squat - barbell", Repetitions = 15, WeightUsedKg = 50 },
             new ExerciseRecordWriteDto
-                { ExerciseName = "barbell front squat", Repetitions = 15, WeightUsedKg = 50 },
-            new ExerciseRecordWriteDto { ExerciseName = "barbell front squat", Repetitions = 5, WeightUsedKg = 50 },
-            new ExerciseRecordWriteDto { ExerciseName = "barbell front squat", Repetitions = 6, WeightUsedKg = 50 },
-            new ExerciseRecordWriteDto { ExerciseName = "barbell front squat", Repetitions = 6, WeightUsedKg = 50 },
-            new ExerciseRecordWriteDto { ExerciseName = "barbell front squat", Repetitions = 6, WeightUsedKg = 50 },
-            new ExerciseRecordWriteDto { ExerciseName = "barbell front squat", Repetitions = 6, WeightUsedKg = 50 },
-            new ExerciseRecordWriteDto { ExerciseName = "barbell front squat", Repetitions = 6, WeightUsedKg = 50 },
+                { ExerciseName = "front squat - barbell", Repetitions = 15, WeightUsedKg = 50 },
+            new ExerciseRecordWriteDto { ExerciseName = "front squat - barbell", Repetitions = 5, WeightUsedKg = 50 },
+            new ExerciseRecordWriteDto { ExerciseName = "front squat - barbell", Repetitions = 6, WeightUsedKg = 50 },
+            new ExerciseRecordWriteDto { ExerciseName = "front squat - barbell", Repetitions = 6, WeightUsedKg = 50 },
+            new ExerciseRecordWriteDto { ExerciseName = "front squat - barbell", Repetitions = 6, WeightUsedKg = 50 },
+            new ExerciseRecordWriteDto { ExerciseName = "front squat - barbell", Repetitions = 6, WeightUsedKg = 50 },
+            new ExerciseRecordWriteDto { ExerciseName = "front squat - barbell", Repetitions = 6, WeightUsedKg = 50 },
             new ExerciseRecordWriteDto
                 { ExerciseName = "rope jumping", TimerInSeconds = 1380, HeartRateAvg = 157, KcalBurned = 366 }
         }
@@ -92,9 +92,9 @@ public static class TrainingSessionDtoFactory
             new ExerciseRecordWriteDto { ExerciseName = "sumo deadlifts", Repetitions = 15, WeightUsedKg = 190 },
             new ExerciseRecordWriteDto { ExerciseName = "sumo deadlifts", Repetitions = 2, WeightUsedKg = 90 },
             new ExerciseRecordWriteDto
-                { ExerciseName = "barbell front squat", Repetitions = 15, WeightUsedKg = 50 },
-            new ExerciseRecordWriteDto { ExerciseName = "barbell front squat", Repetitions = 5, WeightUsedKg = 50 },
-            new ExerciseRecordWriteDto { ExerciseName = "barbell front squat", Repetitions = 6, WeightUsedKg = 50 },
+                { ExerciseName = "front squat - barbell", Repetitions = 15, WeightUsedKg = 50 },
+            new ExerciseRecordWriteDto { ExerciseName = "front squat - barbell", Repetitions = 5, WeightUsedKg = 50 },
+            new ExerciseRecordWriteDto { ExerciseName = "front squat - barbell", Repetitions = 6, WeightUsedKg = 50 },
             new ExerciseRecordWriteDto
                 { ExerciseName = "rope jumping", TimerInSeconds = 1380, HeartRateAvg = 157, KcalBurned = 366 },
             new()

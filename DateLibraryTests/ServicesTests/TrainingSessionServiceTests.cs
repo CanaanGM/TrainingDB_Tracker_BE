@@ -166,15 +166,15 @@ public class TrainingSessionServiceTests : BaseTestClass
 
         // 1. how many kg moved in this exercise
         Assert.Equal((9 * 50), trainingSession.ExerciseRecords
-            .Where(x => x.Exercise.Name == "barbell front squat")
+            .Where(x => x.Exercise.Name == "front squat - barbell")
             .Sum(x => x.WeightUsedKg));
         // 2. how many reps for this exercise
         Assert.Equal(80, trainingSession.ExerciseRecords
-            .Where(x => x.Exercise.Name == "barbell front squat")
+            .Where(x => x.Exercise.Name == "front squat - barbell")
             .Sum(x => x.Repetitions));
         // 3. maximum weight used
         Assert.Equal(50, trainingSession.ExerciseRecords
-            .Where(x => x.Exercise.Name == "barbell front squat")
+            .Where(x => x.Exercise.Name == "front squat - barbell")
             .Max(x => x.WeightUsedKg));
 
         // 3. see the default weight is set properly 
