@@ -6,6 +6,7 @@ using DateLibraryTests.helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Newtonsoft.Json;
 
 namespace DateLibraryTests.ServicesTests;
 
@@ -26,7 +27,7 @@ public class PlanServiceTests : BaseTestClass
 
     public static IEnumerable<object[]> GeneratePlans ()
     {
-        var plans =  PlanHelpers.GeneratePlans().Result;
+        var plans =  PlanHelpers.GeneratePlansDtos().Result;
         return  new List<object[]>
         {
            new object[] { plans[0] },
@@ -76,7 +77,9 @@ public class PlanServiceTests : BaseTestClass
                 .FirstOrDefaultAsync(tp => tp.Name == plan.Name);
 
             AssertPlanCreatedSuccessfully(plan, createdPlan);
+
         }
+                    
     }
     private async Task<TrainingPlan> GetCreatedPlan(int planId)
     {
@@ -842,12 +845,84 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
     }
 
 
-   
-
+    //////
+    ///
+    ///
+    ///
     
-    
+    [Fact]
+    public async Task GetPaginatedPlansAsync_LastPage_ReturnsRemainingPlans()
+    {
+        // Arrange
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+        var plans = await PlanHelpers.GenerateBulkPlan();
+        await service.CreateBulkAsync(plans, new CancellationToken());
 
-    
+        // Act
+        var result = await service.GetPaginatedPlansAsync(2, 3, CancellationToken.None);
 
-   
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal(2, result.Value.Items.Count); // Assuming 5 plans total and 3 items per page
+    }
+    
+    [Fact]
+    public async Task GetPaginatedPlansAsync_ReturnsCorrectPlans()
+    {
+        // Arrange
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+        var plans = await PlanHelpers.GenerateBulkPlan();
+        await service.CreateBulkAsync(plans, new CancellationToken());
+
+        // Act
+        var result = await service.GetPaginatedPlansAsync(1, 5, CancellationToken.None);
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Value);
+        Assert.Equal(5, result.Value.Items.Count);
+        Assert.Equal("excel", result.Value.Items.First().Name);
+    }
+
+    [Fact]
+    public async Task GetPaginatedPlansAsync_WithEmptyDatabase_ReturnsEmptyList()
+    {
+        // Act
+        var result = await service.GetPaginatedPlansAsync(1, 5, CancellationToken.None);
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Empty(result.Value.Items);
+    }
+
+    [Fact]
+    public async Task GetPaginatedPlansAsync_WithInvalidPageNumber_ReturnsEmptyList()
+    {
+        // Arrange
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+        var plans = await PlanHelpers.GenerateBulkPlan();
+        await service.CreateBulkAsync(plans, new CancellationToken());
+        // Act
+        var result = await service.GetPaginatedPlansAsync(100, 5, CancellationToken.None);
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Empty(result.Value.Items);
+    }
+
+    [Fact]
+    public async Task GetPaginatedPlansAsync_PageSizeLargerThanAvailablePlans_ReturnsAllPlans()
+    {
+        // Arrange
+        ProductionDatabaseHelpers.SeedProductionData(_context);
+        var plans = await PlanHelpers.GenerateBulkPlan();
+        await service.CreateBulkAsync(plans, new CancellationToken());
+        // Act
+        var result = await service.GetPaginatedPlansAsync(1, 10, CancellationToken.None);
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal(plans.Count, result.Value.Items.Count);
+    }
+
 }

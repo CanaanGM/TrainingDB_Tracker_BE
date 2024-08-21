@@ -83,7 +83,7 @@ public static class PlanHelpers
         }
     }
 
-    public static async Task<List<TrainingPlanWriteDto>> GeneratePlans()
+    public static async Task<List<TrainingPlanWriteDto>> GeneratePlansDtos()
     {
         var plans = new List<TrainingPlanWriteDto>();
 
@@ -124,5 +124,7 @@ public static class PlanHelpers
         }
     }
 
+    
+    
 }
 

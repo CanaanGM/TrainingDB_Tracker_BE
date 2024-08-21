@@ -9,7 +9,29 @@ using Microsoft.Extensions.Logging;
 
 namespace DataLibrary.Services;
 
-public class TrainingSessionService
+public interface ITrainingSessionService
+{
+    Task<Result<TrainingSessionReadDto>> GetTrainingSessionByIdAsync(int userId, int trainingSessionId,
+        CancellationToken cancellationToken);
+
+    Task<Result<PaginatedList<TrainingSessionReadDto>>> GetPaginatedTrainingSessionsAsync(
+        int userId, int pageNumber, int pageSize, CancellationToken cancellationToken);
+
+    Task<Result> CreateSessionAsync(int userId, TrainingSessionWriteDto sessionDto,
+        CancellationToken cancellationToken);
+
+    Task<Result> CreateSessionsBulkAsync(int userId, List<TrainingSessionWriteDto> newSessions,
+        CancellationToken cancellationToken);
+
+    Task<Result> UpdateTrainingSession(int userId, int trainingSessionId,
+        TrainingSessionWriteDto updateSessionDto,
+        CancellationToken cancellationToken);
+
+    Task<Result> DeleteTrainingSessionAsync(int userId, int trainingSessionId,
+        CancellationToken cancellationToken);
+}
+
+public class TrainingSessionService : ITrainingSessionService
 {
     private readonly SqliteContext _context;
     private readonly IMapper _mapper;

@@ -10,7 +10,23 @@ using Microsoft.Extensions.Logging;
 
 namespace DataLibrary.Services;
 
-public class PlanService
+public interface IPlanService
+{
+    Task<Result<int>> CreateAsync(TrainingPlanWriteDto newPlanDto, CancellationToken cancellationToken);
+    Task<Result> CreateBulkAsync(List<TrainingPlanWriteDto> newPlanDtos, CancellationToken cancellationToken);
+
+    Task<Result<PaginatedList<TrainingPlanReadDto>>> GetPaginatedPlansAsync(
+        int pageNumber, int pageSize, CancellationToken cancellationToken);
+
+    Task<Result<TrainingPlanReadDto>> GetByIdAsync(int id, CancellationToken cancellationToken);
+
+    Task<Result<bool>> UpdateAsync(int planId, TrainingPlanWriteDto updateDto,
+        CancellationToken cancellationToken);
+
+    Task<Result<bool>> DeleteAsync(int planId, CancellationToken cancellationToken);
+}
+
+public class PlanService : IPlanService
 {
     private readonly SqliteContext _context;
     private readonly IMapper _mapper;
@@ -99,6 +115,41 @@ public class PlanService
         {
             _logger.LogError(ex, $"[ERROR]: failed to create bulk training plans in {nameof(CreateBulkAsync)}");
             return Result.Failure($"Failed to create bulk training plans: {ex.Message}", ex);
+        }
+    }
+
+    public async Task<Result<PaginatedList<TrainingPlanReadDto>>> GetPaginatedPlansAsync(
+        int pageNumber, int pageSize, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var totalPlansCount = await _context.TrainingPlans.CountAsync(cancellationToken);
+
+            var plans = await _context.TrainingPlans
+                .OrderBy(p => p.Name) 
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ProjectTo<TrainingPlanReadDto>(_mapper.ConfigurationProvider) 
+                .ToListAsync(cancellationToken);
+
+            var paginatedList = new PaginatedList<TrainingPlanReadDto>
+            {
+                Items = plans,
+                Metadata = new PaginationMetadata
+                {
+                    TotalCount = totalPlansCount,
+                    TotalPages = (int)Math.Ceiling(totalPlansCount / (double)pageSize),
+                    CurrentPage = pageNumber,
+                    PageSize = pageSize
+                }
+            };
+
+            return Result<PaginatedList<TrainingPlanReadDto>>.Success(paginatedList);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"[ERROR]: Failed to retrieve paginated plans in {nameof(GetPaginatedPlansAsync)}");
+            return Result<PaginatedList<TrainingPlanReadDto>>.Failure($"Failed to retrieve paginated plans: {ex.Message}", ex);
         }
     }
 
