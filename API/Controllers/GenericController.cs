@@ -167,32 +167,33 @@ public class GenericController : ControllerBase
     [HttpGet("/training")]
     public async Task<IActionResult> GetTrainingSessionsAsync(CancellationToken cancellationToken, string? startDate, string? endDate)
     {
-        Result<List<TrainingSessionReadDto>> sessions = await _trainingSessionService.GetTrainingSessionsAsync(startDate, endDate, cancellationToken);
+        var sessions = await _trainingSessionService.GetPaginatedTrainingSessionsAsync(
+            1, 1, 10, cancellationToken);
         return Ok(sessions.Value);
     }
 
     [HttpPost("/training")]
     public async Task<IActionResult> CreateTrainingSessionAsync([FromBody] TrainingSessionWriteDto newTrainingSessionDto, CancellationToken cancellationToken)
     {
-        return Ok(await _trainingSessionService.CreateSessionAsync(newTrainingSessionDto, cancellationToken));
+        return Ok(await _trainingSessionService.CreateSessionAsync(1,newTrainingSessionDto, cancellationToken));
     }
 
     [HttpPost("/training/bulk")]
     public async Task<IActionResult> CreateTrainingSessionBulkAsync([FromBody] List<TrainingSessionWriteDto> newTrainingSessionDtos, CancellationToken cancellationToken)
     {
-        return Ok(await _trainingSessionService.CreateBulkSessionsAsync(newTrainingSessionDtos, cancellationToken));
+        return Ok(await _trainingSessionService.CreateSessionsBulkAsync(1, newTrainingSessionDtos, cancellationToken));
     }
     
     [HttpPut("/training/{sessionId}")]
     public async Task<IActionResult> UpdateTrainingSessionAsync(int sessionId, TrainingSessionWriteDto updatedSessionDto, CancellationToken cancellationToken)
     {
-        return Ok(await _trainingSessionService.UpdateSessionAsync(sessionId, updatedSessionDto, cancellationToken));
+        return Ok(await _trainingSessionService.UpdateTrainingSession(1, sessionId, updatedSessionDto, cancellationToken));
     }
 
     [HttpDelete("/training/{sessionId}")]
     public async Task<IActionResult> DeleteTrainingSessionAsyn(int sessionId, CancellationToken cancellationToken)
     {
-        return Ok(await _trainingSessionService.DeleteSessionAsync(sessionId, cancellationToken));
+        return Ok(await _trainingSessionService.DeleteTrainingSessionAsync(1, sessionId, cancellationToken));
     }
 
     [HttpGet("/measurements")]
