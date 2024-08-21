@@ -504,21 +504,6 @@
                 ]
               }
             ]
-          },
-          {
-            "name": "Thursday",
-            "orderNumber": 5,
-            "blocks": []
-          },
-          {
-            "name": "Friday",
-            "orderNumber": 6,
-            "blocks": []
-          },
-          {
-            "name": "Saturday",
-            "orderNumber": 7,
-            "blocks": []
           }
         ]
       },
@@ -1023,21 +1008,6 @@
                 ]
               }
             ]
-          },
-          {
-            "name": "Thursday",
-            "orderNumber": 5,
-            "blocks": []
-          },
-          {
-            "name": "Friday",
-            "orderNumber": 6,
-            "blocks": []
-          },
-          {
-            "name": "Saturday",
-            "orderNumber": 7,
-            "blocks": []
           }
         ]
       },
@@ -1542,21 +1512,6 @@
                 ]
               }
             ]
-          },
-          {
-            "name": "Thursday",
-            "orderNumber": 5,
-            "blocks": []
-          },
-          {
-            "name": "Friday",
-            "orderNumber": 6,
-            "blocks": []
-          },
-          {
-            "name": "Saturday",
-            "orderNumber": 7,
-            "blocks": []
           }
         ]
       },
@@ -2061,21 +2016,6 @@
                 ]
               }
             ]
-          },
-          {
-            "name": "Thursday",
-            "orderNumber": 5,
-            "blocks": []
-          },
-          {
-            "name": "Friday",
-            "orderNumber": 6,
-            "blocks": []
-          },
-          {
-            "name": "Saturday",
-            "orderNumber": 7,
-            "blocks": []
           }
         ]
       }

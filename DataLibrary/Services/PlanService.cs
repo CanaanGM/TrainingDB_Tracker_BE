@@ -32,6 +32,7 @@ public class PlanService
         {
 
             var relatedExercises = await GetRelatedExercises(newPlanDto, cancellationToken);
+            
             var validationErrors = ValidateEntities(relatedExercises, newPlanDto);
             if (validationErrors.Any())
                 return Result<int>.Failure(string.Join("; ", validationErrors));
@@ -80,11 +81,8 @@ public class PlanService
 
             if (allMissingExercises.Any())
             {
-                var allMissingExerciseNames = allMissingExercises
-                    .Select(Utils.NormalizeString)
-                    .Distinct()
-                    .OrderDescending();
-                return Result.Failure($"{string.Join("\n", allMissingExerciseNames)}");
+                var allMissingExerciseNames = allMissingExercises;
+                return Result.Failure($"The following exercises do not exist:\n{string.Join("\n", allMissingExerciseNames)}");
             }
 
             await _context.SaveChangesAsync(cancellationToken);
