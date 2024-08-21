@@ -564,17 +564,18 @@ public class TrainingSessionService
             .Where(x => exerciseNames
                 .Contains(x.Name))
             .ToDictionaryAsync(x => x.Name, x => x, cancellationToken);
-        if (result.Count != exerciseNames.Count)
-        {
-            var missingExercises = exerciseNames
-                .Where(x => !result.Keys.Contains(x))
-                .Distinct(); // don't want 'barbell static lunge' more than once.
-            var errorMessage = string.Join("\n ", missingExercises);
-            _logger.LogError($"[ERROR]: these exercises were not in the database:\n{errorMessage}");
-            return Result<Dictionary<string, Exercise>>.Failure(
-                $"Some exercises are not in the database:\n {errorMessage}");
-        }
+        
+        if (result.Count == exerciseNames.Count) 
+            return Result<Dictionary<string, Exercise>>.Success(result);
+        
+        var missingExercises = exerciseNames
+            .Where(x => !result.Keys.Contains(x))
+            .Distinct(); // don't want 'barbell static lunge' more than once.
+        var errorMessage = string.Join("\n ", missingExercises);
+        _logger.LogError($"[ERROR]: these exercises were not in the database:\n{errorMessage}");
+        return Result<Dictionary<string, Exercise>>.Failure(
+            $"Some exercises are not in the database:\n {errorMessage}");
+   
 
-        return Result<Dictionary<string, Exercise>>.Success(result);
     }
 }

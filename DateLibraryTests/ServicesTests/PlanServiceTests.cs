@@ -65,7 +65,18 @@ public class PlanServiceTests : BaseTestClass
         
         Assert.True(result.IsSuccess);
         Assert.Equal(plans.Count, _context.TrainingPlans.Count());
-      
+        foreach (var plan in plans)
+        {
+            var createdPlan = await _context.TrainingPlans
+                .Include(tp => tp.TrainingWeeks)
+                .ThenInclude(tw => tw.TrainingDays)
+                .ThenInclude(td => td.Blocks)
+                .ThenInclude(b => b.BlockExercises)
+                .ThenInclude(be => be.Exercise)
+                .FirstOrDefaultAsync(tp => tp.Name == plan.Name);
+
+            AssertPlanCreatedSuccessfully(plan, createdPlan);
+        }
     }
     private async Task<TrainingPlan> GetCreatedPlan(int planId)
     {
@@ -78,19 +89,128 @@ public class PlanServiceTests : BaseTestClass
             .FirstOrDefaultAsync(tp => tp.Id == planId);
     }
     
-    private void AssertPlanCreatedSuccessfully(TrainingPlanWriteDto newPlanDto, TrainingPlan createdPlan)
+ private void AssertPlanCreatedSuccessfully(TrainingPlanWriteDto newPlanDto, TrainingPlan createdPlan)
+{
+    Assert.NotNull(createdPlan);
+    Assert.Equal(newPlanDto.Name, createdPlan.Name);
+    Assert.Equal(newPlanDto.Description, createdPlan.Description);
+    Assert.Equal(newPlanDto.Notes, createdPlan.Notes);
+
+    // Use a loop instead of indexing
+    Assert.Equal(newPlanDto.TrainingWeeks.Count, createdPlan.TrainingWeeks.Count);
+    var actualWeeksList = createdPlan.TrainingWeeks.ToList();
+    for (int i = 0; i < newPlanDto.TrainingWeeks.Count; i++)
     {
-        Assert.NotNull(createdPlan);
-        Assert.Equal(Utils.NormalizeString(newPlanDto.Name), createdPlan.Name);
-        Assert.Equal(newPlanDto.Description, createdPlan.Description);
-        Assert.Equal(newPlanDto.Notes, createdPlan.Notes);
-        Assert.NotEmpty(createdPlan.TrainingWeeks);
-        Assert.All(createdPlan.TrainingWeeks, week => Assert.NotEmpty(week.TrainingDays));
-        Assert.All(createdPlan.TrainingWeeks.SelectMany(week => week.TrainingDays), day => Assert.NotEmpty(day.Blocks));
-        Assert.All(createdPlan.TrainingWeeks.SelectMany(week => week.TrainingDays).SelectMany(day => day.Blocks),
-            block => Assert.NotEmpty(block.BlockExercises));
+        var expectedWeek = newPlanDto.TrainingWeeks[i];
+        var actualWeek = actualWeeksList[i];
+
+        Assert.Equal(expectedWeek.Name, actualWeek.Name);
+        Assert.Equal(expectedWeek.OrderNumber, actualWeek.OrderNumber);
+        Assert.Equal(expectedWeek.TrainingDays.Count, actualWeek.TrainingDays.Count);
+
+        var actualDaysList = actualWeek.TrainingDays.ToList();
+        for (int j = 0; j < expectedWeek.TrainingDays.Count; j++)
+        {
+            var expectedDay = expectedWeek.TrainingDays[j];
+            var actualDay = actualDaysList[j];
+
+            Assert.Equal(expectedDay.Name, actualDay.Name);
+            Assert.Equal(expectedDay.OrderNumber, actualDay.OrderNumber);
+            Assert.Equal(expectedDay.Notes, actualDay.Notes);
+            Assert.Equal(expectedDay.Blocks.Count, actualDay.Blocks.Count);
+
+            var actualBlocksList = actualDay.Blocks.ToList();
+            for (int k = 0; k < expectedDay.Blocks.Count; k++)
+            {
+                var expectedBlock = expectedDay.Blocks[k];
+                var actualBlock = actualBlocksList[k];
+
+                Assert.Equal(expectedBlock.Name, actualBlock.Name);
+                Assert.Equal(expectedBlock.OrderNumber, actualBlock.OrderNumber);
+                Assert.Equal(expectedBlock.Sets, actualBlock.Sets);
+                Assert.Equal(expectedBlock.RestInSeconds, actualBlock.RestInSeconds);
+                Assert.Equal(expectedBlock.Instructions, actualBlock.Instructions);
+                Assert.Equal(expectedBlock.BlockExercises.Count, actualBlock.BlockExercises.Count);
+
+                var actualExercisesList = actualBlock.BlockExercises.ToList();
+                for (int l = 0; l < expectedBlock.BlockExercises.Count; l++)
+                {
+                    var expectedExercise = expectedBlock.BlockExercises[l];
+                    var actualExercise = actualExercisesList[l];
+
+                    Assert.Equal(expectedExercise.ExerciseName, actualExercise.Exercise.Name);
+                    Assert.Equal(expectedExercise.OrderNumber, actualExercise.OrderNumber);
+                    Assert.Equal(expectedExercise.Repetitions, actualExercise.Repetitions);
+
+                    if (expectedExercise.TimerInSeconds.HasValue)
+                    {
+                        Assert.Equal(expectedExercise.TimerInSeconds.Value, actualExercise.TimerInSeconds);
+                    }
+                    else
+                    {
+                        Assert.Null(actualExercise.TimerInSeconds);
+                    }
+
+                    if (expectedExercise.DistanceInMeters.HasValue)
+                    {
+                        Assert.Equal(expectedExercise.DistanceInMeters.Value, actualExercise.DistanceInMeters);
+                    }
+                    else
+                    {
+                        Assert.Null(actualExercise.DistanceInMeters);
+                    }
+
+                    Assert.Equal(expectedExercise.Instructions, actualExercise.Instructions);
+                }
+            }
+        }
     }
+}
+
+[Fact]
+public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
+{
+    // Arrange
+    ProductionDatabaseHelpers.SeedProductionData(_context);
     
+    // Load the plan from the excel.json file
+    var excelPlan = await PlanHelpers.ReadPlanFile("excel");
+
+    // Act: Create the plan
+    var creationResult = await service.CreateAsync(excelPlan, new CancellationToken());
+    Assert.True(creationResult.IsSuccess);
+
+    // Retrieve the created plan
+    var createdPlanId = creationResult.Value;
+    var createdPlan = await _context.TrainingPlans
+        .Include(tp => tp.TrainingWeeks)
+        .FirstOrDefaultAsync(tp => tp.Id == createdPlanId);
+
+    Assert.NotNull(createdPlan);
+    Assert.Equal(excelPlan.TrainingWeeks.Count, createdPlan.TrainingWeeks.Count);
+
+    // Act: Reverse the weeks
+    var reversedWeeks = excelPlan.TrainingWeeks.AsEnumerable().Reverse().ToList();
+    excelPlan.TrainingWeeks = reversedWeeks;
+
+    // Update the plan with reversed weeks
+    var updateResult = await service.UpdateAsync(createdPlanId, excelPlan, new CancellationToken());
+    Assert.True(updateResult.IsSuccess);
+
+    // Retrieve the updated plan
+    var updatedPlan = await _context.TrainingPlans
+        .Include(tp => tp.TrainingWeeks)
+        .ThenInclude(tw => tw.TrainingDays)
+        .ThenInclude(td => td.Blocks)
+        .ThenInclude(b => b.BlockExercises)
+        .ThenInclude(be => be.Exercise)
+        .FirstOrDefaultAsync(tp => tp.Id == createdPlanId);
+
+    Assert.NotNull(updatedPlan);
+    AssertPlanCreatedSuccessfully(excelPlan, updatedPlan);
+}
+
+
     [Fact]
     public async Task CreateAsync_MissingExercises_ShouldReturnErrorWithAllMissingExercises()
     {
@@ -687,7 +807,40 @@ public class PlanServiceTests : BaseTestClass
     }
     
     
-    
+    [Fact]
+    public async Task CreatePlan_WithInvalidOrderNumbers_ShouldFail()
+    {
+        // Arrange
+        var planWithInvalidOrderNumbers = new TrainingPlanWriteDto
+        {
+            Name = "Invalid Order Numbers",
+            Description = "Plan with non-sequential order numbers.",
+            Notes = "Invalid Order Numbers",
+            TrainingWeeks = new List<TrainingWeekWriteDto>
+            {
+                new TrainingWeekWriteDto
+                {
+                    Name = "Week 1",
+                    OrderNumber = 1,
+                    TrainingDays = PlanHelpers.GenerateTrainingDays(5)
+                },
+                new TrainingWeekWriteDto
+                {
+                    Name = "Week 2",
+                    OrderNumber = 10,  // Invalid order number
+                    TrainingDays = PlanHelpers.GenerateTrainingDays(5)
+                }
+            }
+        };
+
+        // Act
+        var result = await service.CreateAsync(planWithInvalidOrderNumbers, new CancellationToken());
+
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Contains("Training weeks must have sequential order numbers starting from 1.", result.ErrorMessage);
+    }
+
 
    
 

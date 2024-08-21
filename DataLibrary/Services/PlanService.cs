@@ -25,9 +25,11 @@ public class PlanService
 
     public async Task<Result<int>> CreateAsync(TrainingPlanWriteDto newPlanDto, CancellationToken cancellationToken)
     {
-        if (!ValidateTrainingPlan(newPlanDto, out var validationError))
+        if (!Validation.ValidateTrainingPlan(newPlanDto, out var validationError))
             return Result<int>.Failure(validationError);
         
+        if(!Validation.ValidateOrderNumbers(newPlanDto, out validationError))
+            return Result<int>.Failure(validationError);
         try
         {
 
@@ -64,7 +66,10 @@ public class PlanService
 
             foreach (var newPlanDto in newPlanDtos)
             {
-                if (!ValidateTrainingPlan(newPlanDto, out var validationError))
+                if (!Validation.ValidateTrainingPlan(newPlanDto, out var validationError))
+                    return Result.Failure(validationError);
+                
+                if (!Validation.ValidateOrderNumbers(newPlanDto, out validationError))
                     return Result.Failure(validationError);
 
                 var relatedExercises = await GetRelatedExercises(newPlanDto, cancellationToken);
@@ -161,9 +166,11 @@ public class PlanService
     public async Task<Result<bool>> UpdateAsync(int planId, TrainingPlanWriteDto updateDto,
         CancellationToken cancellationToken)
     {
-        if (!ValidateTrainingPlan(updateDto, out var validationError))
+        if (!Validation.ValidateTrainingPlan(updateDto, out var validationError))
             return Result<bool>.Failure(validationError);
-
+        
+        if(!Validation.ValidateOrderNumbers(updateDto, out validationError))
+            return Result<bool>.Failure(validationError);
 
         try
         {
@@ -299,24 +306,7 @@ public class PlanService
     }
 
 
-    /// <summary>
-    /// Validated if there's any exercises in a plan, as it should have at least one
-    /// </summary>
-    /// <param name="newPlanDto">the creation dto</param>
-    /// <param name="validationError">if there were no exercises found</param>
-    /// <returns></returns>
-    private bool ValidateTrainingPlan(TrainingPlanWriteDto newPlanDto, out string validationError)
-    {
-        validationError = string.Empty;
-        if (newPlanDto.TrainingWeeks.Count == 0 || !newPlanDto.TrainingWeeks
-                .Any(week => week.TrainingDays.Any(day => day.Blocks.Any(block => block.BlockExercises.Any()))))
-        {
-            validationError = "The training plan must have at least one week with one day and one exercise.";
-            return false;
-        }
 
-        return true;
-    }
 
     /// <summary>
     /// Gets and returns the related exercises for a plan dto
