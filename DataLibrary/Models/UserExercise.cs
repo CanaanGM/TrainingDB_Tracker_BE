@@ -19,12 +19,18 @@ public partial class UserExercise
 
     public double LastUsedWeightKg { get; set; }
 
-    public double AverageTimerInSeconds { get; set; }
-    public double AverageHeartRate { get; set; }
-    public double AverageKCalBurned { get; set; }
-    public double AverageDistance { get; set; }
-    public double AverageSpeed { get; set; }
-    public double AverageRateOfPreceivedExertion { get; set; }
+    public double? AverageTimerInSeconds { get; set; }
+
+    public double? AverageHeartRate { get; set; }
+
+    public double? AverageKcalBurned { get; set; }
+
+    public double? AverageDistance { get; set; }
+
+    public double? AverageSpeed { get; set; }
+
+    public double? AverageRateOfPerceivedExertion { get; set; }
+
     public DateTime? CreatedAt { get; set; }
 
     public virtual Exercise? Exercise { get; set; }

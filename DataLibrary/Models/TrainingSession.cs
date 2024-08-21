@@ -13,10 +13,13 @@ public partial class TrainingSession
 
     public int Mood { get; set; }
 
-    public double TotalKgMoved { get; set; }
-    public double TotalRepetitions { get; set; }
-    public double AverageRateOfPreceivedExertion { get; set; }
     public string Feeling { get; set; } = null!;
+
+    public double? TotalKgMoved { get; set; }
+
+    public double? TotalRepetitions { get; set; }
+
+    public double? AverageRateOfPerceivedExertion { get; set; }
 
     public string? Notes { get; set; }
 

@@ -1,0 +1,2377 @@
+  {
+    "Name": "V3-Intermediate",
+    "Description": "an Intermediate body building plan",
+    "Notes": "Choose a weight that is 65~70% of a weight you can do once, if you can left 20kg once, train with 13~15kg.",
+    "TrainingWeeks": [
+      {
+        "Name": "week 1",
+        "OrderNumber": 1,
+        "TrainingDays": [
+          {
+            "Name": "Sunday",
+            "OrderNumber": 1,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "preacher curls",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "overhead tricep extension - rope cable",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell curls - seated supinated",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Tricep Pushdown - Straight Bar Attachment",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell hammer curl - alternating",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Skull Crushers - ez bar",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "overhead cable curls",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Tricep Kickbacks - Cable",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "barbell curls - reverse grip",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Monday",
+            "OrderNumber": 2,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Arnold Press",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "dumbbell side lateral - standing",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 15
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Shoulder Press - Supinated Barbell",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Shrugs - Barbell",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell shoulder press - hammer grip",
+                    "Notes": "Do one side then the other",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "front plate raise",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Landmine Press",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell side lateral - negative",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "machine shoulder press",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Tuesday",
+            "OrderNumber": 3,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "deadlift",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "bent over barbell row",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 4,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell row - alternating",
+                    "Notes": "One side then the next",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "dumbbell row - incline",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "lat pulldown",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "lat pulldown - Close Grip",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "seated lat row - wide grip",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Farmer Walk",
+                    "Notes": "Aim for 20 meters per rep",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Inverted Row",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Wednesday",
+            "OrderNumber": 4,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "bench press - incline",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Dumbbell Fly - Incline",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "bench press - decline ",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Dumbbell Fly - Decline",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell chest press - hammer grip",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leverage Incline Press",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Landmine Press",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Machine Fly - Negative Seated",
+                    "Notes": "1 rep should take 5 secs to complete",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "push ups",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 0
+                  }
+                ]
+              },
+              {
+                "Name": "F",
+                "OrderNumber": 6,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "All Exercises are 45 seconds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Plank on swiss ball then stir the pot",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "opposite arm to foot V-Up on swiss ball",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "Medicine Ball Leg raise",
+                    "Notes": "",
+                    "OrderNumber": 3,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "v-ups on weight bench",
+                    "Notes": "the bench is for support",
+                    "OrderNumber": 4,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Thursday",
+            "OrderNumber": 5,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "front squat - barbell",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "reverse lunges - dumbbell",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 15
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell stiff legged deadlift",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "barbell squats - close stance",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leg Press",
+                    "Notes": "if no ball use a plate or a kittle bell",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leg Press Calf Raise",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "walking lunge",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leg Extensions",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Glute Bridge",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "week 2",
+        "OrderNumber": 2,
+        "TrainingDays": [
+          {
+            "Name": "Sunday",
+            "OrderNumber": 1,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "preacher curls",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "overhead tricep extension - rope cable",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell curls - seated supinated",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "Tricep Pushdown - Straight Bar Attachment",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell hammer curl - alternating",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Skull Crushers - ez bar",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "overhead cable curls",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Tricep Kickbacks - Cable",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "barbell curls - reverse grip",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Monday",
+            "OrderNumber": 2,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Arnold Press",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "dumbbell side lateral - standing",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 15
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Shoulder Press - Supinated Barbell",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "Shrugs - Barbell",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell shoulder press - hammer grip",
+                    "Notes": "Do one side then the other",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "front plate raise",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Landmine Press",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell side lateral - negative",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "machine shoulder press",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Tuesday",
+            "OrderNumber": 3,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "deadlift",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "bent over barbell row",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 4,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell row - alternating",
+                    "Notes": "One side then the next",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "dumbbell row - incline",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "lat pulldown",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "lat pulldown - Close Grip",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "seated lat row - wide grip",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Farmer Walk",
+                    "Notes": "Aim for 20 meters per rep",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Inverted Row",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Wednesday",
+            "OrderNumber": 4,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "bench press - incline",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "Dumbbell Fly - Incline",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "bench press - decline ",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "Dumbbell Fly - Decline",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell chest press - hammer grip",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leverage Incline Press",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Landmine Press",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Machine Fly - Negative Seated",
+                    "Notes": "1 rep should take 5 secs to complete",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "push ups",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 0
+                  }
+                ]
+              },
+              {
+                "Name": "F",
+                "OrderNumber": 6,
+                "Sets": 3,
+                "RestInSeconds": 60,
+                "Instructions": "All Exercises are 45 seconds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Side Plank - Dumbbell Reach",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "Side Plank - Dumbbell Reach",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "v-ups isometric holds",
+                    "Notes": "",
+                    "OrderNumber": 3,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "Windshield Wipers",
+                    "Notes": "",
+                    "OrderNumber": 4,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  }
+                ]
+              },
+              {
+                "Name": "G",
+                "OrderNumber": 7,
+                "Sets": 3,
+                "RestInSeconds": 60,
+                "Instructions": "All Exercises are 45 seconds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Oblique Crunches on Hyper Extension",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "Oblique Crunches on Hyper Extension",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "Hyperextension Situp",
+                    "Notes": "",
+                    "OrderNumber": 3,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "Hyperextensions",
+                    "Notes": "",
+                    "OrderNumber": 4,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Thursday",
+            "OrderNumber": 5,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "front squat - barbell",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "reverse lunges - dumbbell",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 15
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell stiff legged deadlift",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "barbell squats - close stance",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leg Press",
+                    "Notes": "if no ball use a plate or a kittle bell",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leg Press Calf Raise",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "walking lunge",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leg Extensions",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Glute Bridge",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "week 3",
+        "OrderNumber": 3,
+        "TrainingDays": [
+          {
+            "Name": "Sunday",
+            "OrderNumber": 1,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "preacher curls",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "overhead tricep extension - rope cable",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell curls - seated supinated",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Tricep Pushdown - Straight Bar Attachment",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell hammer curl - alternating",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Skull Crushers - ez bar",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "overhead cable curls",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Tricep Kickbacks - Cable",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "barbell curls - reverse grip",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Monday",
+            "OrderNumber": 2,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Arnold Press",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "dumbbell side lateral - standing",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Shoulder Press - Supinated Barbell",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Shrugs - Barbell",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell shoulder press - hammer grip",
+                    "Notes": "Do one side then the other",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "front plate raise",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "Landmine Press",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell side lateral - negative",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "machine shoulder press",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Tuesday",
+            "OrderNumber": 3,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "deadlift",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "bent over barbell row",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 5,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell row - alternating",
+                    "Notes": "One side then the next",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "dumbbell row - incline",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "lat pulldown",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "lat pulldown - Close Grip",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "seated lat row - wide grip",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Farmer Walk",
+                    "Notes": "Aim for 20 meters per rep",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "Inverted Row",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Wednesday",
+            "OrderNumber": 4,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "bench press - incline",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Dumbbell Fly - Incline",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "bench press - decline ",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Dumbbell Fly - Decline",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell chest press - hammer grip",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leverage Incline Press",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "Landmine Press",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Machine Fly - Negative Seated",
+                    "Notes": "1 rep should take 5 secs to complete",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "push ups",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 0
+                  }
+                ]
+              },
+              {
+                "Name": "F",
+                "OrderNumber": 6,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "All Exercises are 45 seconds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Plank on swiss ball then stir the pot",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "opposite arm to foot V-Up on swiss ball",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "Medicine Ball Leg raise",
+                    "Notes": "",
+                    "OrderNumber": 3,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "v-ups on weight bench",
+                    "Notes": "the bench is for support",
+                    "OrderNumber": 4,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Thursday",
+            "OrderNumber": 5,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "front squat - barbell",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "reverse lunges - dumbbell",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell stiff legged deadlift",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "barbell squats - close stance",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leg Press",
+                    "Notes": "if no ball use a plate or a kittle bell",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leg Press Calf Raise",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "walking lunge",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 12
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 4,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leg Extensions",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 12
+                  },
+                  {
+                    "ExerciseName": "Glute Bridge",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "week 4",
+        "OrderNumber": 4,
+        "TrainingDays": [
+          {
+            "Name": "Sunday",
+            "OrderNumber": 1,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "preacher curls",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "overhead tricep extension - rope cable",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell curls - seated supinated",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Tricep Pushdown - Straight Bar Attachment",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell hammer curl - alternating",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Skull Crushers - ez bar",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "overhead cable curls",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Tricep Kickbacks - Cable",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "barbell curls - reverse grip",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Monday",
+            "OrderNumber": 2,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Arnold Press",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "dumbbell side lateral - standing",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Shoulder Press - Supinated Barbell",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Shrugs - Barbell",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell shoulder press - hammer grip",
+                    "Notes": "Do one side then the other",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "front plate raise",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Landmine Press",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell side lateral - negative",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "machine shoulder press",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Tuesday",
+            "OrderNumber": 3,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "deadlift",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "bent over barbell row",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 5,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell row - alternating",
+                    "Notes": "One side then the next",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "dumbbell row - incline",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "lat pulldown",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 5,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "lat pulldown - Close Grip",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "seated lat row - wide grip",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 5,
+                "RestInSeconds": 90,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Farmer Walk",
+                    "Notes": "Aim for 20 meters per rep",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Inverted Row",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Wednesday",
+            "OrderNumber": 4,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "bench press - incline",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Dumbbell Fly - Incline",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "bench press - decline ",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Dumbbell Fly - Decline",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell chest press - hammer grip",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leverage Incline Press",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Landmine Press",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Machine Fly - Negative Seated",
+                    "Notes": "1 rep should take 5 secs to complete",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "push ups",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 0
+                  }
+                ]
+              },
+              {
+                "Name": "F",
+                "OrderNumber": 6,
+                "Sets": 3,
+                "RestInSeconds": 60,
+                "Instructions": "All Exercises are 45 seconds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Side Plank - Dumbbell Reach",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "Side Plank - Dumbbell Reach",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "v-ups isometric holds",
+                    "Notes": "",
+                    "OrderNumber": 3,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "Windshield Wipers",
+                    "Notes": "",
+                    "OrderNumber": 4,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  }
+                ]
+              },
+              {
+                "Name": "G",
+                "OrderNumber": 7,
+                "Sets": 3,
+                "RestInSeconds": 60,
+                "Instructions": "All Exercises are 45 seconds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Oblique Crunches on Hyper Extension",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "Oblique Crunches on Hyper Extension",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "Hyperextension Situp",
+                    "Notes": "",
+                    "OrderNumber": 3,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  },
+                  {
+                    "ExerciseName": "Hyperextensions",
+                    "Notes": "",
+                    "OrderNumber": 4,
+                    "Repetitions": 1,
+                    "TimerInSeconds": 45
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Thursday",
+            "OrderNumber": 5,
+            "Notes": "",
+            "Blocks": [
+              {
+                "Name": "A",
+                "OrderNumber": 1,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "front squat - barbell",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "reverse lunges - dumbbell",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "B",
+                "OrderNumber": 2,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "dumbbell stiff legged deadlift",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "barbell squats - close stance",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "C",
+                "OrderNumber": 3,
+                "Sets": 1,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leg Press",
+                    "Notes": "if no ball use a plate or a kittle bell",
+                    "OrderNumber": 1,
+                    "Repetitions": 30
+                  }
+                ]
+              },
+              {
+                "Name": "D",
+                "OrderNumber": 4,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leg Press Calf Raise",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "walking lunge",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 10
+                  }
+                ]
+              },
+              {
+                "Name": "E",
+                "OrderNumber": 5,
+                "Sets": 5,
+                "RestInSeconds": 60,
+                "Instructions": "No rest between exercises, only between rounds",
+                "BlockExercises": [
+                  {
+                    "ExerciseName": "Leg Extensions",
+                    "Notes": "",
+                    "OrderNumber": 1,
+                    "Repetitions": 10
+                  },
+                  {
+                    "ExerciseName": "Glute Bridge",
+                    "Notes": "",
+                    "OrderNumber": 2,
+                    "Repetitions": 0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "Equipemnt": [],
+    "TrainingTypes": [
+      "BodyBuilding"
+    ]
+  }

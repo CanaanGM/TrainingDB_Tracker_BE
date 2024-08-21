@@ -1,0 +1,8 @@
+@rootUrl = http://localhost:5134
+
+
+
+
+POST {{rootUrl}}/exercise/
+Content-Type: application/json
+

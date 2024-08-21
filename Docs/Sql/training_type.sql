@@ -16,4 +16,7 @@ values ('bodybuilding'),
   ('flexibility'),
   ('calisthenics'),
   ('coordination'),
-  ('functional');
+  ('functional'),
+  ('warm-up'),
+  ('plyometrics'),
+  ('powerlifting');

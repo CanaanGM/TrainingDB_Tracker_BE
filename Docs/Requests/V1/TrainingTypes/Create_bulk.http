@@ -1,0 +1,78 @@
+@rootUrl = http://localhost:5134
+
+POST {{rootUrl}}/types/bulk
+Content-Type: application/json
+
+[
+    {
+        "name": "BodyBuilding"
+    },
+    {
+        "name": "Strength"
+    },
+    {
+        "name": "Yoga"
+    },
+    {
+        "name": "Athletics"
+    },
+    {
+        "name": "Karate"
+    },
+    {
+        "name": "stretch"
+    },
+    {
+        "name": "stability"
+    },
+    {
+        "name": "cardiovascular"
+    },
+    {
+        "name": "agility"
+    },
+    {
+        "name": "endurance"
+    },
+    {
+        "name": "rehabilitation"
+    },
+    {
+        "name": "mobility"
+    },
+    {
+        "name": "power"
+    },
+    {
+        "name": "speed"
+    },
+    {
+        "name": "flexibility"
+    },
+    {
+        "name": "calisthenics"
+    },
+    {
+        "name": "coordination"
+    },
+    {
+        "name": "functional"
+    },
+    {
+        "name": "warm-up"
+    },
+    {
+        "name": "Powerlifting"
+    },
+    {
+        "name": "Plyometrics"
+    }
+]
+
+###
+
+POST {{rootUrl}}/types/<ID>
+Content-Type: application/json
+{
+  "name": ""
+}

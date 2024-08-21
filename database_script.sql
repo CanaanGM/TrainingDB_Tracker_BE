@@ -102,11 +102,12 @@ create table if not exists equipment (
     id integer primary key autoincrement,
     weight_kg real not null default 0,
     created_at datetime default current_timestamp,
-    name TEXT NOT NULL,
+    name TEXT unique NOT NULL,
     description TEXT,
     how_to TEXT
 );
 create index idx_equipment_weight on equipment(weight_kg);
+create index idx_equipemnt_name on equipment(name);
 -- what equipment with what exercise
 -- dumbbell curls needs a dumbbell, dragon flag a bench or something to hold onto
 create table if not exists exercise_equipment (
@@ -132,7 +133,7 @@ create table if not exists user_exercise(
     average_kcal_burned real,
     average_distance real,
     average_speed real,
-
+    average_rate_of_perceived_exertion real,
     created_at datetime default current_timestamp,
     CONSTRAINT fk_user_exercise_user_id FOREIGN KEY (user_id) references user(id) on delete cascade ,
     CONSTRAINT fk_user_exercise_exercise_id FOREIGN KEY (exercise_id) references exercise(id) on delete cascade
@@ -160,10 +161,6 @@ create table if not exists exercise_record (
 	CONSTRAINT fk_exercise_record_exercise_id Foreign Key(exercise_id) references exercise(id) ON DELETE cascade,
     CONSTRAINT fk_exercise_record_user_id foreign key (user_id) references user(id) on delete cascade
 );
-
-
-
-
 create table if not exists training_session(
     id integer primary key autoincrement,
     calories integer not null default 0,
@@ -243,9 +240,6 @@ CREATE TABLE IF NOT EXISTS user_passwords (
 );
 CREATE INDEX idx_user_passwords_user_id ON user_passwords(user_id);
 CREATE INDEX idx_user_passwords_is_current ON user_passwords(is_current);
-
-
-
 -- overall training plan that you follow for a set of weeks
 -- both the type and equipment are aggregated from the exercises inside the plan, not thru a table
 -- training weeks and days per week prop can be an aggregate query
@@ -324,10 +318,46 @@ create table if not exists user_training_plan(
     check ( start_date < end_date )
 );
 create index idx_user_training_plan_status on user_training_plan(is_finished);
+create table if not exists role(
+    id integer primary key autoincrement,
+    name text unique not null
+);
+create table if not exists user_roles(
+    user_id integer not null,
+    role_id integer not null,
+    created_at datetime default current_timestamp,
+    CONSTRAINT pk_user_roles_id PRIMARY KEY (user_id, role_id),
+    CONSTRAINT fk_user_roles_user_id FOREIGN KEY (user_id) references user(id) on delete cascade,
+    CONSTRAINT fk_user_roles_role_id FOREIGN KEY (role_id) references role(id) on delete cascade
+);
+create index idx_role_name on role(name);
 
+-- TODO: REMOVE LATER!
+insert into user (username, email, height, gender) VALUES
+    ('Canaan', 'canaan@test.com', 173, 'M'),
+    ('Dante', 'dante@test.com', 200, 'M'),
+    ('Alphrad', 'alphrad@test.com', 172, 'F'),
+    ('Nero', 'nero@test.com', 156, 'F');
 
+insert into user_passwords(user_id, password_hash, password_salt)
+        VALUES
+            (1, 'iUXNkjg5RS/0/uEH8f6tasaKKKt8IVsZgTTtyGH3dmQ=', 'wnGHc9SponguR0Givr2Zcvy7UI3Szs0y0lYfAwdatUE='),
+            (2, 'BzMDx05wo6wjTriEEjxDsb9jZTa6QkbeFAr7B46CAwc=', 'UqfeVl+kUvwURJ2Avx5nw2+qTBMKUUdrHE5m48RGFU0='),
+            (3, 'wA+0773CBog+MlcEjrNcAmHS6pSd06ceminYzPU4wlI=', 'ROtBSjEmAd8swaKpy0e7yV6n5IJl+K5i6yF/brfjTD0='),
+            (4, 'Kw1vjlzykwUqruCdhzdMOQBuOkn4hljD3JLiOdAogWg=', 'a5MaAfB/7zpN8dd3+i10RgHGJ455lpoSIOrAXXXQbyY=');
 
-
+insert into role(name) values
+                           ('user'),
+                           ('admin'),
+                           ('owner'),
+                           ('thieves');
+insert into user_roles(user_id, role_id) VALUES
+                                             (1, 1),
+                                             (1,2),
+                                             (1,3),
+                                             (2,1),
+                                             (3,1),
+                                             (4,1);
 
 
 

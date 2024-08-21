@@ -103,5 +103,28 @@ public class Profiles : Profile
                 => d.MapFrom(c => Utils.DurationMinutesFromSeconds(c.DurationInSeconds)))
 
             .ReverseMap();
+
+        CreateMap<TrainingPlan, TrainingPlanReadDto>();
+        CreateMap<TrainingPlanWriteDto, TrainingPlan>();
+
+        CreateMap<TrainingWeek, TrainingWeekReadDto>();
+        CreateMap<TrainingWeekWriteDto, TrainingWeek>();
+
+        CreateMap<TrainingDay, TrainingDaysReadDto>();
+        CreateMap<TrainingDaysWriteDto, TrainingDay>();
+
+        CreateMap<Block, BlockReadDto>();
+        CreateMap<BlockWriteDto, Block>();
+
+        CreateMap<BlockExercise, BlockExerciseReadDto>();
+        CreateMap<BlockExerciseWriteDto, BlockExercise>();
+
+
+
+
+
+
+
+
     }
 }

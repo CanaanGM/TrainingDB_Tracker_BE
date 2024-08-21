@@ -23,7 +23,7 @@ public static class DependencyInjection
         services.AddScoped<IEquipmentService, EquipmentService>();
         services.AddScoped<IPlanService, PlanService>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-        // services.AddScoped<ITrainingSessionService, TrainingSessionService>();
+        services.AddScoped<ITrainingSessionService, TrainingSessionService>();
         return services;
     }
 }

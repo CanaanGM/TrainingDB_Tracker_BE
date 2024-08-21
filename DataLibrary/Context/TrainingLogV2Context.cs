@@ -1,23 +1,21 @@
-﻿using DataLibrary.Models;
+﻿using System;
+using System.Collections.Generic;
+using DataLibrary.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace DataLibrary.Context;
 
-public class SqliteContext : DbContext
+public partial class TrainingLogV2Context : DbContext
 {
-    public SqliteContext()
+    public TrainingLogV2Context()
     {
     }
 
-    public SqliteContext(DbContextOptions<SqliteContext> options,
-        string? connectionString = "Data Source = E:\\development\\c#\\TrainingDB_Integration\\training_log_v2.db")
+    public TrainingLogV2Context(DbContextOptions<TrainingLogV2Context> options)
         : base(options)
     {
-        DatabaseConnectionString = connectionString;
     }
 
-    public string DatabaseConnectionString { get; set; }
     public virtual DbSet<Block> Blocks { get; set; }
 
     public virtual DbSet<BlockExercise> BlockExercises { get; set; }
@@ -61,16 +59,8 @@ public class SqliteContext : DbContext
     public virtual DbSet<UserTrainingPlan> UserTrainingPlans { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.EnableSensitiveDataLogging()
-            .LogTo(Console.WriteLine, LogLevel.Information);
-
-        if (!optionsBuilder.IsConfigured)
-            optionsBuilder.UseSqlite(DatabaseConnectionString)
-                .LogTo(Console.WriteLine, LogLevel.Information);
-
-        Console.WriteLine($"Connecting to database: {DatabaseConnectionString}");
-    }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlite("Data Source=E:/development/c#/TrainingDB_Integration/training_log_v2.db");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -599,7 +589,8 @@ public class SqliteContext : DbContext
                 .HasColumnName("start_date");
         });
 
-
+        OnModelCreatingPartial(modelBuilder);
     }
 
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

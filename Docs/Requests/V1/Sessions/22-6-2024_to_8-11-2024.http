@@ -1,0 +1,5118 @@
+@rootUrl = http://localhost:5134
+
+Post {{rootUrl}}/training/bulk
+Content-Type: application/json
+
+[
+  {
+    "durationInMinutes": 120,
+    "calories": 1270,
+    "notes": "wasted too much time",
+    "mood": 6,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 1860,
+        "notes": "burned 496kcal",
+        "exerciseName": "rope jumping",
+        "kcalBurned": 496
+      },
+      {
+        "repetitions": 40,
+        "weightUsedKg": 23,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 40,
+        "weightUsedKg": 23,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 70,
+        "weightUsedKg": 23,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 80,
+        "weightUsedKg": 23,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 100,
+        "weightUsedKg": 23,
+        "exerciseName": "leg extensions",
+        "notes": "the burn started at 90"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 23,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 26,
+        "weightUsedKg": 23,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 32,
+        "weightUsedKg": 23,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 25,
+        "weightUsedKg": 23,
+        "exerciseName": "seated leg curl",
+        "notes": "failure"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 23,
+        "exerciseName": "Machine Glute Kickback"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 23,
+        "exerciseName": "Machine Glute Kickback"
+      },
+      {
+        "repetitions": 21,
+        "weightUsedKg": 54,
+        "exerciseName": "Machine Glute Kickback"
+      },
+      {
+        "repetitions": 25,
+        "weightUsedKg": 23,
+        "exerciseName": "Machine Glute Kickback"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 23,
+        "exerciseName": "Machine Glute Kickback"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 23,
+        "exerciseName": "wide leg press"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 23,
+        "exerciseName": "wide leg press"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 27,
+        "exerciseName": "wide leg press"
+      },
+      {
+        "repetitions": 24,
+        "weightUsedKg": 27,
+        "exerciseName": "wide leg press"
+      },
+      {
+        "repetitions": 24,
+        "weightUsedKg": 27,
+        "exerciseName": "wide leg press"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 23,
+        "exerciseName": "wide leg press",
+        "notes": "Death!"
+      }
+    ],
+    "createdAt": "6-22-2024"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 300,
+    "notes": "",
+    "mood": 9,
+    "exerciseRecords": [
+      {
+        "repetitions": 12,
+        "weightUsedKg": 53,
+        "exerciseName": "lat pulldown - wide grip",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 53,
+        "exerciseName": "lat pulldown - wide grip",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 53,
+        "exerciseName": "lat pulldown - wide grip",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 53,
+        "exerciseName": "lat pulldown - wide grip",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 53,
+        "exerciseName": "lat pulldown - wide grip",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 53,
+        "exerciseName": "lat pulldown - wide grip",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 53,
+        "exerciseName": "lat pulldown - wide grip",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 4,
+        "weightUsedKg": 53,
+        "exerciseName": "lat pulldown - wide grip",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 3,
+        "weightUsedKg": 53,
+        "exerciseName": "lat pulldown - wide grip",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 53,
+        "exerciseName": "lat pulldown - wide grip",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 4,
+        "weightUsedKg": 53,
+        "exerciseName": "lat pulldown - wide grip",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 2,
+        "weightUsedKg": 53,
+        "exerciseName": "lat pulldown - wide grip",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 1,
+        "weightUsedKg": 53,
+        "exerciseName": "lat pulldown - wide grip",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 1,
+        "weightUsedKg": 53,
+        "exerciseName": "lat pulldown - wide grip",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 47,
+        "exerciseName": "seated lat row",
+        "notes": "pronated grip"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 47,
+        "exerciseName": "seated lat row",
+        "notes": "pronated grip"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 41,
+        "exerciseName": "seated lat row",
+        "notes": "pronated grip"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 65,
+        "exerciseName": "t-bar row",
+        "notes": "mechanical drop"
+      },
+      {
+        "repetitions": 3,
+        "weightUsedKg": 53,
+        "exerciseName": "t-bar row",
+        "notes": "mechanical drop"
+      },
+      {
+        "repetitions": 11,
+        "weightUsedKg": 65,
+        "exerciseName": "t-bar row",
+        "notes": "mechanical drop"
+      },
+      {
+        "repetitions": 4,
+        "weightUsedKg": 53,
+        "exerciseName": "t-bar row",
+        "notes": "mechanical drop"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 65,
+        "exerciseName": "t-bar row",
+        "notes": "mechanical drop"
+      },
+      {
+        "repetitions": 4,
+        "weightUsedKg": 53,
+        "exerciseName": "t-bar row",
+        "notes": "mechanical drop"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 10,
+        "exerciseName": "Hyper Extensions",
+        "notes": "drop set"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 0,
+        "exerciseName": "Hyper Extensions",
+        "notes": "drop set"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 10,
+        "exerciseName": "Hyper Extensions",
+        "notes": "drop set"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 0,
+        "exerciseName": "Hyper Extensions",
+        "notes": "drop set"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 10,
+        "exerciseName": "Hyper Extensions",
+        "notes": "drop set"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 0,
+        "exerciseName": "Hyper Extensions",
+        "notes": "drop set"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 0,
+        "exerciseName": "Wide Pull-Ups",
+        "notes": "super set"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 0,
+        "exerciseName": "hanging shrugs",
+        "notes": "super set"
+      },
+      {
+        "repetitions": 1,
+        "weightUsedKg": 0,
+        "exerciseName": "Wide Pull-Ups",
+        "notes": "super set"
+      },
+      {
+        "repetitions": 4,
+        "weightUsedKg": 0,
+        "exerciseName": "hanging shrugs",
+        "notes": "super set"
+      },
+      {
+        "repetitions": 2,
+        "weightUsedKg": 0,
+        "exerciseName": "Wide Pull-Ups",
+        "notes": "super set"
+      },
+      {
+        "repetitions": 3,
+        "weightUsedKg": 0,
+        "exerciseName": "hanging shrugs",
+        "notes": "super set"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 4,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine",
+        "notes": "cluster"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine",
+        "notes": "cluster"
+      }
+    ],
+    "createdAt": "6-23-2024"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 10,
+    "notes": "",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "repetitions": 12,
+        "weightUsedKg": 20,
+        "exerciseName": "dumbbell chest press - flat"
+      },
+      {
+        "repetitions": 6,
+        "weightUsedKg": 34,
+        "exerciseName": "dumbbell chest press - flat"
+      },
+      {
+        "repetitions": 6,
+        "weightUsedKg": 36,
+        "exerciseName": "dumbbell chest press - flat"
+      },
+      {
+        "repetitions": 6,
+        "weightUsedKg": 36,
+        "exerciseName": "dumbbell chest press - flat"
+      },
+      {
+        "repetitions": 6,
+        "weightUsedKg": 32,
+        "exerciseName": "dumbbell chest press - slight incline"
+      },
+      {
+        "repetitions": 6,
+        "weightUsedKg": 32,
+        "exerciseName": "dumbbell chest press - slight incline"
+      },
+      {
+        "repetitions": 23,
+        "weightUsedKg": 0,
+        "exerciseName": "dips"
+      },
+      {
+        "repetitions": 21,
+        "weightUsedKg": 0,
+        "exerciseName": "dips"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 0,
+        "exerciseName": "dips"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 0,
+        "exerciseName": "dips"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 36,
+        "exerciseName": "Machine Flye",
+        "notes": "tilted back"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 36,
+        "exerciseName": "Machine Flye",
+        "notes": "tilted back"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 47,
+        "exerciseName": "Machine Flye",
+        "notes": "tilted back"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 27,
+        "exerciseName": "Machine Flye",
+        "notes": "tilted back"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 17,
+        "exerciseName": "Cable Internal Rotation"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 17,
+        "exerciseName": "Cable Internal Rotation"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 17,
+        "exerciseName": "Cable Internal Rotation"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 20,
+        "exerciseName": "Barbell French Press",
+        "notes": "Trifecta - 1st at bottom, then full then partials top"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 20,
+        "exerciseName": "Barbell French Press",
+        "notes": "Trifecta - 1st at bottom, then full then partials top"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 20,
+        "exerciseName": "Barbell French Press",
+        "notes": "Trifecta - 1st at bottom, then full then partials top"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 20,
+        "exerciseName": "Barbell French Press",
+        "notes": "Trifecta - 1st at bottom, then full then partials top"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 20,
+        "exerciseName": "Barbell French Press",
+        "notes": "Trifecta - 1st at bottom, then full then partials top"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 20,
+        "exerciseName": "Barbell French Press",
+        "notes": "Trifecta - 1st at bottom, then full then partials top"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 20,
+        "exerciseName": "Barbell French Press",
+        "notes": "Trifecta - 1st at bottom, then full then partials top"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 20,
+        "exerciseName": "Barbell French Press",
+        "notes": "Trifecta - 1st at bottom, then full then partials top"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 20,
+        "exerciseName": "Barbell French Press",
+        "notes": "Trifecta - 1st at bottom, then full then partials top"
+      },
+      {
+        "repetitions": 3,
+        "weightUsedKg": 20,
+        "exerciseName": "Barbell French Press",
+        "notes": "Trifecta - 1st at bottom, then full then partials top"
+      },
+      {
+        "repetitions": 2,
+        "weightUsedKg": 20,
+        "exerciseName": "Barbell French Press",
+        "notes": "Trifecta - 1st at bottom, then full then partials top"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 20,
+        "exerciseName": "Barbell French Press",
+        "notes": "Trifecta - 1st at bottom, then full then partials top"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 36,
+        "exerciseName": "Cable Triceps Pushdown"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 36,
+        "exerciseName": "Cable Triceps Pushdown"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 36,
+        "exerciseName": "Cable Triceps Pushdown"
+      },
+      {
+        "repetitions": 7,
+        "weightUsedKg": 36,
+        "exerciseName": "Cable Triceps Pushdown"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 36,
+        "exerciseName": "Cable Triceps Pushdown"
+      },
+      {
+        "repetitions": 7,
+        "weightUsedKg": 36,
+        "exerciseName": "Cable Triceps Pushdown"
+      }
+    ],
+    "createdAt": "6-24-2024"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 500,
+    "notes": "cardio day",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Machine Glute Kickback"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Machine Glute Kickback"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Machine Glute Kickback"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Machine Glute Kickback"
+      },
+      {
+        "repetitions": 6,
+        "weightUsedKg": 41,
+        "exerciseName": "Machine Glute Kickback"
+      },
+      {
+        "timerInSeconds": 2220,
+        "exerciseName": "fast walking",
+        "speed": 7,
+        "incline": 4,
+        "heartRateAVG": 116,
+        "kcalBurned": 323
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      }
+    ],
+    "createdAt": "6-25-2024"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 500,
+    "notes": "super high reps",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "repetitions": 41,
+        "weightUsedKg": 23,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 61,
+        "weightUsedKg": 23,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 61,
+        "weightUsedKg": 23,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 81,
+        "weightUsedKg": 23,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 81,
+        "weightUsedKg": 23,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 100,
+        "weightUsedKg": 23,
+        "exerciseName": "leg extensions",
+        "notes": "started to burn here"
+      },
+      {
+        "repetitions": 100,
+        "weightUsedKg": 23,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 130,
+        "weightUsedKg": 23,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 135,
+        "weightUsedKg": 23,
+        "exerciseName": "leg extensions",
+        "notes": "complete failure"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 50,
+        "weightUsedKg": 21,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 100,
+        "weightUsedKg": 21,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 50,
+        "weightUsedKg": 27,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 60,
+        "weightUsedKg": 27,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 58,
+        "weightUsedKg": 27,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 43,
+        "weightUsedKg": 27,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 43,
+        "weightUsedKg": 27,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 30,
+        "exerciseName": "Dumbbell Stiff Legged Deadlift"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 30,
+        "exerciseName": "Dumbbell Stiff Legged Deadlift"
+      },
+      {
+        "repetitions": 13,
+        "weightUsedKg": 30,
+        "exerciseName": "Dumbbell Stiff Legged Deadlift"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "cable crunch"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "cable crunch"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 17,
+        "exerciseName": "standing cable rotation"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 29,
+        "exerciseName": "standing cable rotation"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 29,
+        "exerciseName": "standing cable rotation"
+      }
+    ],
+    "createdAt": "6-28-2024"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 500,
+    "notes": "super high reps",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 1860,
+        "exerciseName": "jogging",
+        "speed": 10,
+        "incline": 1,
+        "heartRateAVG": 142,
+        "kcalBurned": 422
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 47,
+        "exerciseName": "lat pulldown - wide grip"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 55,
+        "exerciseName": "Bent Over Barbell Row"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 55,
+        "exerciseName": "Bent Over Barbell Row"
+      },
+      {
+        "repetitions": 6,
+        "weightUsedKg": 55,
+        "exerciseName": "Bent Over Barbell Row"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 55,
+        "exerciseName": "Bent Over Barbell Row"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 55,
+        "exerciseName": "Bent Over Barbell Row"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 10,
+        "exerciseName": "Hyper Extensions"
+      },
+      {
+        "repetitions": 1,
+        "weightUsedKg": 0,
+        "exerciseName": "Hyper Extensions"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 10,
+        "exerciseName": "Hyper Extensions"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 0,
+        "exerciseName": "Hyper Extensions"
+      },
+      {
+        "repetitions": 11,
+        "weightUsedKg": 10,
+        "exerciseName": "Hyper Extensions"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 10,
+        "exerciseName": "Hyper Extensions"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 0,
+        "exerciseName": "Hyper Extensions"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 10,
+        "exerciseName": "Hyper Extensions"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 0,
+        "exerciseName": "Hyper Extensions"
+      }
+    ],
+    "createdAt": "6-30-2024"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 500,
+    "notes": "legs",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 51,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 47,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 53,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 59,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 65,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 71,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 77,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 21,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 21,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 13,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 50,
+        "weightUsedKg": 25,
+        "exerciseName": "Seated Hip Abductor"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 45,
+        "exerciseName": "Seated Hip Abductor"
+      },
+      {
+        "repetitions": 24,
+        "weightUsedKg": 65,
+        "exerciseName": "Seated Hip Abductor"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 65,
+        "exerciseName": "Seated Hip Abductor"
+      },
+      {
+        "repetitions": 23,
+        "weightUsedKg": 15,
+        "exerciseName": "Seated Hip Adduction Machine"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 20,
+        "exerciseName": "Seated Hip Adduction Machine"
+      },
+      {
+        "repetitions": 31,
+        "weightUsedKg": 25,
+        "exerciseName": "Seated Hip Adduction Machine"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 25,
+        "exerciseName": "Seated Hip Adduction Machine"
+      }
+    ],
+    "createdAt": "7-2-2024"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 500,
+    "notes": "legs",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 37,
+        "exerciseName": "Machine Flye",
+        "notes": "tilted back"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Machine Flye",
+        "notes": "tilted back"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "Machine Flye",
+        "notes": "tilted back"
+      },
+      {
+        "repetitions": 9,
+        "weightUsedKg": 41,
+        "exerciseName": "Machine Flye",
+        "notes": "tilted back"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Incline Chest Press Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Incline Chest Press Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Incline Chest Press Machine"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 77,
+        "exerciseName": "Incline Chest Press Machine"
+      },
+      {
+        "repetitions": 3,
+        "weightUsedKg": 77,
+        "exerciseName": "Incline Chest Press Machine"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 35,
+        "exerciseName": "lat pulldown - wide grip"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "lat pulldown - wide grip"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 65,
+        "exerciseName": "lat pulldown - wide grip"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 65,
+        "exerciseName": "lat pulldown - wide grip"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 17.5,
+        "exerciseName": "Hyper Extensions"
+      },
+      {
+        "repetitions": 3,
+        "weightUsedKg": 0,
+        "exerciseName": "Hyper Extensions"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 17.5,
+        "exerciseName": "Hyper Extensions"
+      },
+      {
+        "repetitions": 4,
+        "weightUsedKg": 0,
+        "exerciseName": "Hyper Extensions"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 17.5,
+        "exerciseName": "Hyper Extensions"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 60,
+        "exerciseName": "Cable Triceps Pushdown"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "Cable Triceps Pushdown"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "Cable Triceps Pushdown"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 23,
+        "exerciseName": "standing cable rotation"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 23,
+        "exerciseName": "standing cable rotation"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 29,
+        "exerciseName": "standing cable rotation"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 23,
+        "exerciseName": "standing cable rotation"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 23,
+        "exerciseName": "standing cable rotation"
+      }
+    ],
+    "createdAt": "7-4-2024"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 500,
+    "notes": "legs",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "repetitions": 12,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 21,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 23,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 23,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 29,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 26,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 60,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 70,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 112,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 90,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 37,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "seated leg curl",
+        "notes": "near failure"
+      },
+      {
+        "repetitions": 41,
+        "weightUsedKg": 27,
+        "exerciseName": "seated leg curl",
+        "notes": "failure at 39"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 35,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 35,
+        "weightUsedKg": 35,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 40,
+        "weightUsedKg": 35,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 46,
+        "weightUsedKg": 35,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 51,
+        "weightUsedKg": 35,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 32,
+        "weightUsedKg": 30,
+        "exerciseName": "Seated Hip Adduction Machine"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 30,
+        "exerciseName": "Seated Hip Adduction Machine",
+        "notes": "got bored"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 30,
+        "exerciseName": "Seated Hip Adduction Machine"
+      }
+    ],
+    "createdAt": "7-6-2024"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 995,
+    "notes": "cardio",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 900,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 151,
+        "kcalBurned": 224
+      },
+      {
+        "timerInSeconds": 960,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 161,
+        "kcalBurned": 259
+      },
+      {
+        "timerInSeconds": 960,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 156,
+        "kcalBurned": 252
+      },
+      {
+        "timerInSeconds": 1080,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 149,
+        "kcalBurned": 260
+      }
+    ],
+    "createdAt": "7-7-2024"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 993,
+    "notes": "cardio",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 1200,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 151,
+        "kcalBurned": 299
+      },
+      {
+        "timerInSeconds": 1380,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 156,
+        "kcalBurned": 359
+      },
+      {
+        "timerInSeconds": 1260,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 155,
+        "kcalBurned": 335
+      }
+    ],
+    "createdAt": "7-8-2024"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 448,
+    "notes": "cardio",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 1920,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 146,
+        "kcalBurned": 448
+      }
+    ],
+    "createdAt": "7-9-2024"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 993,
+    "notes": "cardio",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 1800,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 147,
+        "kcalBurned": 447
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 35,
+        "exerciseName": "Narrow Grip Shoulder Press Machine"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 41,
+        "exerciseName": "Narrow Grip Shoulder Press Machine"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 47,
+        "exerciseName": "Narrow Grip Shoulder Press Machine"
+      },
+      {
+        "repetitions": 16,
+        "weightUsedKg": 41,
+        "exerciseName": "Narrow Grip Shoulder Press Machine"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 53,
+        "exerciseName": "Narrow Grip Shoulder Press Machine"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 29,
+        "exerciseName": "machine shoulder press"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 29,
+        "exerciseName": "machine shoulder press"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 29,
+        "exerciseName": "machine shoulder press"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 35,
+        "exerciseName": "machine shoulder press"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 41,
+        "exerciseName": "machine shoulder press"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 15,
+        "exerciseName": "Bent Over Dumbbell Rear Delt Raise"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 15,
+        "exerciseName": "Bent Over Dumbbell Rear Delt Raise"
+      },
+      {
+        "repetitions": 11,
+        "weightUsedKg": 15,
+        "exerciseName": "Bent Over Dumbbell Rear Delt Raise"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 89,
+        "exerciseName": "Incline Chest Press Machine",
+        "notes": "do the wide grip next time"
+      },
+      {
+        "repetitions": 17,
+        "weightUsedKg": 89,
+        "exerciseName": "Incline Chest Press Machine",
+        "notes": "do the wide grip next time"
+      },
+      {
+        "repetitions": 7,
+        "weightUsedKg": 91,
+        "exerciseName": "Incline Chest Press Machine",
+        "notes": "do the wide grip next time"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 77,
+        "exerciseName": "Incline Chest Press Machine",
+        "notes": "do the wide grip next time"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 24,
+        "weightUsedKg": 41,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 60,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 70,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 53,
+        "exerciseName": "Cable Triceps Pushdown"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 53,
+        "exerciseName": "Cable Triceps Pushdown"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 53,
+        "exerciseName": "Cable Triceps Pushdown"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 41,
+        "exerciseName": "Cable Triceps Pushdown"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 29,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 47,
+        "exerciseName": "seated leg curl"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 41,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 53,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 71,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 77,
+        "exerciseName": "leg extensions"
+      },
+      {
+        "repetitions": 22,
+        "weightUsedKg": 20,
+        "exerciseName": "Seated Hip Adduction Machine"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 20,
+        "exerciseName": "Seated Hip Adduction Machine"
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 20,
+        "exerciseName": "Seated Hip Adduction Machine"
+      }
+    ],
+    "createdAt": "7-10-2024"
+  },
+  {
+    "durationInMinutes": 62,
+    "calories": 883,
+    "notes": "cardio",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 1920,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 146,
+        "kcalBurned": 462
+      },
+      {
+        "timerInSeconds": 1680,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 149,
+        "kcalBurned": 421
+      }
+    ],
+    "createdAt": "7-12-2024"
+  },
+  {
+    "durationInMinutes": 62,
+    "calories": 445,
+    "notes": "cardio",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 1800,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 148,
+        "kcalBurned": 445
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 80,
+        "exerciseName": "High Bar Squats"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 85,
+        "exerciseName": "High Bar Squats"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 100,
+        "exerciseName": "High Bar Squats"
+      },
+      {
+        "repetitions": 4,
+        "weightUsedKg": 90,
+        "exerciseName": "High Bar Squats"
+      }
+    ],
+    "createdAt": "7-13-2024"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 993,
+    "notes": "cardio",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 1800,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 147,
+        "kcalBurned": 447
+      },
+      {
+        "repetitions": 20,
+        "weightUsedKg": 70,
+        "exerciseName": "Bent Over Barbell Row"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 90,
+        "exerciseName": "Bent Over Barbell Row"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 100,
+        "exerciseName": "Bent Over Barbell Row"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 100,
+        "exerciseName": "Bent Over Barbell Row",
+        "notes": "last one felt super dizzy"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 100,
+        "exerciseName": "floor press"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 100,
+        "exerciseName": "floor press"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 47,
+        "exerciseName": "Narrow Grip Shoulder Press Machine"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 47,
+        "exerciseName": "Narrow Grip Shoulder Press Machine"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 47,
+        "exerciseName": "Narrow Grip Shoulder Press Machine"
+      },
+      {
+        "repetitions": 8,
+        "weightUsedKg": 47,
+        "exerciseName": "Narrow Grip Shoulder Press Machine"
+      },
+      {
+        "repetitions": 6,
+        "weightUsedKg": 47,
+        "exerciseName": "Narrow Grip Shoulder Press Machine"
+      },
+      {
+        "repetitions": 25,
+        "weightUsedKg": 27,
+        "exerciseName": "Narrow Grip Shoulder Press Machine"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 35,
+        "exerciseName": "machine shoulder press"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 35,
+        "exerciseName": "machine shoulder press"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 41,
+        "exerciseName": "machine shoulder press"
+      },
+      {
+        "repetitions": 2,
+        "weightUsedKg": 35,
+        "exerciseName": "machine shoulder press"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 35,
+        "exerciseName": "machine shoulder press"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 37,
+        "exerciseName": "machine ab crunch"
+      },
+      {
+        "repetitions": 12,
+        "weightUsedKg": 41,
+        "exerciseName": "machine ab crunch"
+      },
+      {
+        "repetitions": 11,
+        "weightUsedKg": 53,
+        "exerciseName": "machine ab crunch"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 57,
+        "exerciseName": "machine ab crunch"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 65,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 11,
+        "weightUsedKg": 77,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 77,
+        "exerciseName": "Standing Calf Raise Machine"
+      },
+      {
+        "repetitions": 14,
+        "weightUsedKg": 77,
+        "exerciseName": "Standing Calf Raise Machine",
+        "notes": "complete failure"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 60,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 60,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 110,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 100,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 30,
+        "weightUsedKg": 0,
+        "exerciseName": "tibialis raises"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 23,
+        "exerciseName": "standing cable rotation"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 23,
+        "exerciseName": "standing cable rotation"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 23,
+        "exerciseName": "standing cable rotation"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 23,
+        "exerciseName": "standing cable rotation"
+      },
+      {
+        "repetitions": 15,
+        "weightUsedKg": 27,
+        "exerciseName": "standing cable rotation"
+      }
+    ],
+    "createdAt": "7-14-2024"
+  },
+  {
+    "durationInMinutes": 28,
+    "calories": 993,
+    "notes": "cardio",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 1680,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 147,
+        "kcalBurned": 413
+      }
+    ],
+    "createdAt": "7-15-2024"
+  },
+  {
+    "durationInMinutes": 26,
+    "calories": 367,
+    "notes": "full body",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "exerciseName": "machine shoulder press",
+        "weightUsedKg": 35,
+        "repetitions": 12
+      },
+      {
+        "exerciseName": "machine shoulder press",
+        "weightUsedKg": 35,
+        "repetitions": 11
+      },
+      {
+        "exerciseName": "machine shoulder press",
+        "weightUsedKg": 35,
+        "repetitions": 6
+      },
+      {
+        "exerciseName": "Standing Calf Raise Machine",
+        "weightUsedKg": 65,
+        "repetitions": 12
+      },
+      {
+        "exerciseName": "tibialis raises",
+        "weightUsedKg": 0,
+        "repetitions": 30
+      },
+      {
+        "exerciseName": "Standing Calf Raise Machine",
+        "weightUsedKg": 65,
+        "repetitions": 15
+      },
+      {
+        "exerciseName": "tibialis raises",
+        "weightUsedKg": 0,
+        "repetitions": 50
+      },
+      {
+        "exerciseName": "Standing Calf Raise Machine",
+        "weightUsedKg": 65,
+        "repetitions": 12
+      },
+      {
+        "exerciseName": "tibialis raises",
+        "weightUsedKg": 0,
+        "repetitions": 20
+      },
+      {
+        "exerciseName": "leg extensions",
+        "weightUsedKg": 53,
+        "repetitions": 30
+      },
+      {
+        "exerciseName": "leg extensions",
+        "weightUsedKg": 53,
+        "repetitions": 30
+      },
+      {
+        "exerciseName": "leg extensions",
+        "weightUsedKg": 53,
+        "repetitions": 30
+      },
+      {
+        "exerciseName": "seated leg curl",
+        "weightUsedKg": 41,
+        "repetitions": 20
+      },
+      {
+        "exerciseName": "seated leg curl",
+        "weightUsedKg": 41,
+        "repetitions": 15
+      },
+      {
+        "exerciseName": "seated leg curl",
+        "weightUsedKg": 41,
+        "repetitions": 14
+      },
+      {
+        "exerciseName": "Hyper Extensions",
+        "weightUsedKg": 20,
+        "repetitions": 20,
+        "notes": "drop set"
+      },
+      {
+        "exerciseName": "Hyper Extensions",
+        "weightUsedKg": 0,
+        "repetitions": 6,
+        "notes": "drop set"
+      },
+      {
+        "exerciseName": "Hyper Extensions",
+        "weightUsedKg": 20,
+        "repetitions": 14,
+        "notes": "drop set"
+      },
+      {
+        "exerciseName": "Hyper Extensions",
+        "weightUsedKg": 0,
+        "repetitions": 7,
+        "notes": "drop set"
+      },
+      {
+        "exerciseName": "Hyper Extensions",
+        "weightUsedKg": 20,
+        "repetitions": 10,
+        "notes": "drop set"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 29,
+        "exerciseName": "standing cable rotation"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 29,
+        "exerciseName": "standing cable rotation"
+      },
+      {
+        "repetitions": 10,
+        "weightUsedKg": 29,
+        "exerciseName": "standing cable rotation"
+      },
+      {
+        "repetitions": 5,
+        "weightUsedKg": 29,
+        "exerciseName": "standing cable rotation"
+      }
+    ],
+    "createdAt": "7-15-2024"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 993,
+    "notes": "cardio",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 1860,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 162,
+        "kcalBurned": 532
+      },
+      {
+        "timerInSeconds": 540,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 151,
+        "kcalBurned": 150
+      },
+      {
+        "exerciseName": "Floor Press",
+        "weightUsedKg": 70,
+        "repetitions": 20
+      },
+      {
+        "exerciseName": "Floor Press",
+        "weightUsedKg": 70,
+        "repetitions": 12
+      },
+      {
+        "exerciseName": "Floor Press",
+        "weightUsedKg": 80,
+        "repetitions": 12
+      }
+    ],
+    "createdAt": "7-16-2024 14:50:40"
+  },
+  {
+    "durationInMinutes": 90,
+    "calories": 0,
+    "notes": "cardio",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 780,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 135,
+        "kcalBurned": 168
+      },
+      {
+        "timerInSeconds": 1080,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 147,
+        "kcalBurned": 271
+      },
+      {
+        "timerInSeconds": 960,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 153,
+        "kcalBurned": 257
+      }
+    ],
+    "createdAt": "7-17-2024 14:50:40"
+  },
+  {
+    "durationInMinutes": 0,
+    "calories": 0,
+    "notes": "cardio",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 1800,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 141,
+        "kcalBurned": 403
+      }
+    ],
+    "createdAt": "7-18-2024 17:00:40"
+  },
+  {
+    "durationInMinutes": 0,
+    "calories": 0,
+    "notes": "cardio",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 3900,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 119,
+        "kcalBurned": 606
+      }
+    ],
+    "createdAt": "7-18-2024 22:00:40"
+  },
+  {
+    "durationInMinutes": 0,
+    "calories": 0,
+    "notes": "cardio",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 780,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 140,
+        "kcalBurned": 180
+      }
+    ],
+    "createdAt": "7-20-2024 14:50:40"
+  },
+  {
+    "durationInMinutes": 0,
+    "calories": 0,
+    "notes": "cardio",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "timerInSeconds": 780,
+        "exerciseName": "rope jumping",
+        "heartRateAVG": 140,
+        "kcalBurned": 180
+      }
+    ],
+    "createdAt": "7-20-2024 14:50:40"
+  },
+  {
+    "durationInMinutes": 68,
+    "calories": 652,
+    "notes": "leg day",
+    "mood": 5,
+    "exerciseRecords": [
+      {
+        "exerciseName": "Standing Calf Raise Machine",
+        "weightUsedKg": 77,
+        "repetitions": 12
+      },
+      {
+        "exerciseName": "tibialis raises",
+        "weightUsedKg": 0,
+        "repetitions": 100
+      },
+      {
+        "exerciseName": "Standing Calf Raise Machine",
+        "weightUsedKg": 77,
+        "repetitions": 15
+      },
+      {
+        "exerciseName": "tibialis raises",
+        "weightUsedKg": 0,
+        "repetitions": 100
+      },
+      {
+        "exerciseName": "Standing Calf Raise Machine",
+        "weightUsedKg": 77,
+        "repetitions": 16
+      },
+      {
+        "exerciseName": "tibialis raises",
+        "weightUsedKg": 0,
+        "repetitions": 114
+      },
+      {
+        "exerciseName": "Standing Calf Raise Machine",
+        "weightUsedKg": 89,
+        "repetitions": 15
+      },
+      {
+        "exerciseName": "tibialis raises",
+        "weightUsedKg": 0,
+        "repetitions": 115
+      },
+      {
+        "exerciseName": "Standing Calf Raise Machine",
+        "weightUsedKg": 95,
+        "repetitions": 14
+      },
+      {
+        "exerciseName": "tibialis raises",
+        "weightUsedKg": 0,
+        "repetitions": 100
+      },
+      {
+        "exerciseName": "leg extensions",
+        "weightUsedKg": 47,
+        "repetitions": 30
+      },
+      {
+        "exerciseName": "leg extensions",
+        "weightUsedKg": 59,
+        "repetitions": 30
+      },
+      {
+        "exerciseName": "leg extensions",
+        "weightUsedKg": 77,
+        "repetitions": 30
+      },
+      {
+        "exerciseName": "leg extensions",
+        "weightUsedKg": 83,
+        "repetitions": 30
+      },
+      {
+        "exerciseName": "leg extensions",
+        "weightUsedKg": 95,
+        "repetitions": 30,
+        "notes": "failed at 25"
+      },
+      {
+        "exerciseName": "seated leg curl",
+        "weightUsedKg": 47,
+        "repetitions": 15
+      },
+      {
+        "exerciseName": "seated leg curl",
+        "weightUsedKg": 53,
+        "repetitions": 11,
+        "notes": "didn't feel it as much as the 47kg"
+      },
+      {
+        "exerciseName": "seated leg curl",
+        "weightUsedKg": 53,
+        "repetitions": 12
+      },
+      {
+        "exerciseName": "seated leg curl",
+        "weightUsedKg": 53,
+        "repetitions": 10
+      },
+      {
+        "exerciseName": "seated leg curl",
+        "weightUsedKg": 41,
+        "repetitions": 10
+      },
+      {
+        "exerciseName": "seated leg curl",
+        "weightUsedKg": 17,
+        "repetitions": 30
+      },
+      {
+        "exerciseName": "machine shoulder press",
+        "weightUsedKg": 41,
+        "repetitions": 12
+      },
+      {
+        "exerciseName": "machine shoulder press",
+        "weightUsedKg": 41,
+        "repetitions": 12
+      },
+      {
+        "exerciseName": "machine shoulder press",
+        "weightUsedKg": 47,
+        "repetitions": 4,
+        "notes": "complete failure"
+      },
+      {
+        "exerciseName": "machine shoulder press",
+        "weightUsedKg": 41,
+        "repetitions": 1
+      },
+      {
+        "exerciseName": "machine shoulder press",
+        "weightUsedKg": 38,
+        "repetitions": 1
+      },
+      {
+        "exerciseName": "machine shoulder press",
+        "weightUsedKg": 23,
+        "repetitions": 10
+      },
+      {
+        "exerciseName": "Cable Triceps Pushdown",
+        "weightUsedKg": 23,
+        "repetitions": 40
+      },
+      {
+        "exerciseName": "Cable Triceps Pushdown",
+        "weightUsedKg": 41,
+        "repetitions": 20
+      },
+      {
+        "exerciseName": "Cable Triceps Pushdown",
+        "weightUsedKg": 47,
+        "repetitions": 20
+      }
+    ],
+    "createdAt": "7-20-2024 14:50:40"
+  },
+    {
+      "durationInMinutes": 0,
+      "calories": 0,
+      "notes": "cardio",
+      "mood": 5,
+      "exerciseRecords": [
+        {
+          "timerInSeconds": 900,
+          "exerciseName": "rope jumping",
+          "heartRateAVG": 143,
+          "kcalBurned": 250
+        }
+      ],
+      "createdAt": "7-21-2024 13:56:40"
+    },
+      {
+        "durationInMinutes": 0,
+        "calories": 0,
+        "notes": "cardio",
+        "mood": 5,
+        "exerciseRecords": [
+          {
+            "timerInSeconds": 1020,
+            "exerciseName": "rope jumping",
+            "heartRateAVG": 143,
+            "kcalBurned": 239
+          }
+        ],
+        "createdAt": "7-21-2024 17:55:40"
+      },
+      {
+        "durationInMinutes": 0,
+        "calories": 0,
+        "notes": "cardio",
+        "mood": 5,
+        "exerciseRecords": [
+          {
+            "timerInSeconds": 1440,
+            "exerciseName": "rope jumping",
+            "heartRateAVG": 147,
+            "kcalBurned": 353
+          }
+        ],
+        "createdAt": "7-22-2024 19:05:40"
+      },
+      {
+        "durationInMinutes": 0,
+        "calories": 0,
+        "notes": "cardio",
+        "mood": 5,
+        "exerciseRecords": [
+          {
+            "timerInSeconds": 1800,
+            "exerciseName": "rope jumping",
+            "heartRateAVG": 150,
+            "kcalBurned": 450
+          }
+        ],
+        "createdAt": "7-23-2024 18:17:40"
+      },
+      {
+        "durationInMinutes": 0,
+        "calories": 0,
+        "notes": "cardio",
+        "mood": 5,
+        "exerciseRecords": [
+          {
+            "timerInSeconds": 2040,
+            "exerciseName": "rope jumping",
+            "heartRateAVG": 143,
+            "kcalBurned": 471
+          }
+        ],
+        "createdAt": "7-24-2024 14:37:40"
+      },
+      {
+        "durationInMinutes": 63,
+        "calories": 522,
+        "notes": "back",
+        "mood": 5,
+        "exerciseRecords": [
+        {
+          "exerciseName":"lat pulldown - wide grip",
+          "weightUsedKg": 71,
+          "repetitions": 12
+        },
+        {
+          "exerciseName":"lat pulldown - wide grip",
+          "weightUsedKg": 71,
+          "repetitions": 12
+        },
+        {
+          "exerciseName":"lat pulldown - wide grip",
+          "weightUsedKg": 71,
+          "repetitions": 7
+        },
+        {
+          "exerciseName":"lat pulldown - wide grip",
+          "weightUsedKg": 53,
+          "repetitions": 5
+        },
+        {
+          "exerciseName":"seated lat row",
+          "weightUsedKg": 92,
+          "repetitions": 10
+        },
+        {
+          "exerciseName":"seated lat row",
+          "weightUsedKg": 92,
+          "repetitions": 12
+        },
+        {
+          "exerciseName":"seated lat row",
+          "weightUsedKg": 92,
+          "repetitions": 11,
+          "notes": "this exercise is not as good as the bar"
+        },
+        {
+          "exerciseName": "machine shoulder press",
+          "weightUsedKg": 41,
+          "repetitions": 15
+        },
+        {
+          "exerciseName": "machine shoulder press",
+          "weightUsedKg": 41,
+          "repetitions": 12
+        },
+        {
+          "exerciseName": "machine shoulder press",
+          "weightUsedKg": 41,
+          "repetitions": 16
+        },
+        {
+          "exerciseName": "seated lat row - close grip",
+          "weightUsedKg": 71,
+          "repetitions": 12
+        },
+        {
+          "exerciseName": "seated lat row - close grip",
+          "weightUsedKg": 77,
+          "repetitions": 10
+        },
+        {
+          "exerciseName": "seated lat row - close grip",
+          "weightUsedKg": 77,
+          "repetitions": 9
+        },
+        
+        {
+          "exerciseName": "Standing Calf Raise Machine",
+          "weightUsedKg": 77,
+          "repetitions": 15
+        },
+        {
+          "exerciseName": "tibialis raises",
+          "weightUsedKg": 0,
+          "repetitions": 100
+        },
+        {
+          "exerciseName": "Standing Calf Raise Machine",
+          "weightUsedKg": 77,
+          "repetitions": 15
+        },
+        {
+          "exerciseName": "tibialis raises",
+          "weightUsedKg": 0,
+          "repetitions": 100
+        },
+        {
+          "exerciseName": "Standing Calf Raise Machine",
+          "weightUsedKg": 77,
+          "repetitions": 9
+        },
+        {
+          "exerciseName": "tibialis raises",
+          "weightUsedKg": 0,
+          "repetitions": 100
+        },
+        {
+          "exerciseName": "Machine Glute Kickback",
+          "weightUsedKg": 66,
+          "repetitions": 15
+        },
+        {
+          "exerciseName": "Machine Glute Kickback",
+          "weightUsedKg": 66,
+          "repetitions": 15
+        },
+        {
+          "exerciseName": "Machine Glute Kickback",
+          "weightUsedKg": 66,
+          "repetitions": 15
+        },
+        {
+          "exerciseName": "Machine Glute Kickback",
+          "weightUsedKg": 66,
+          "repetitions": 15
+        },
+        {
+          "exerciseName": "standing cable rotation",
+          "weightUsedKg": 29,
+          "repetitions": 25
+        },
+        {
+          "exerciseName": "cable crunch",
+          "weightUsedKg": 29,
+          "repetitions": 20,
+          "notes": "no rest"
+        },
+        {
+          "exerciseName": "cable crunch",
+          "weightUsedKg": 34,
+          "repetitions": 15,
+          "notes": "no rest"
+        },
+        {
+          "exerciseName": "cable crunch",
+          "weightUsedKg": 71,
+          "repetitions": 15,
+          "notes": "no rest, upper abs cramped for 10 mins after it xD"
+        }
+        ],
+        "createdAt": "7-24-2024 22:16:40"
+      },
+        {
+          "durationInMinutes": 73,
+          "calories": 538,
+          "notes": "leg day",
+          "mood": 5,
+          "exerciseRecords": [
+            {
+              "exerciseName": "Standing Calf Raise Machine",
+              "weightUsedKg": 65,
+              "repetitions": 12
+            },
+            {
+              "exerciseName": "tibialis raises",
+              "weightUsedKg": 0,
+              "repetitions": 50
+            },
+            {
+              "exerciseName": "Standing Calf Raise Machine",
+              "weightUsedKg": 41,
+              "repetitions": 12
+            },
+            {
+              "exerciseName": "tibialis raises",
+              "weightUsedKg": 0,
+              "repetitions": 30,
+              "notes": "discoverd that doing these off of a platform is better"
+            },
+            {
+              "exerciseName": "Standing Calf Raise Machine",
+              "weightUsedKg": 29,
+              "repetitions": 12
+            },
+            {
+              "exerciseName": "tibialis raises",
+              "weightUsedKg": 0,
+              "repetitions": 25
+            },
+            {
+              "exerciseName": "leg extensions",
+              "weightUsedKg": 41,
+              "repetitions": 30
+            },
+            {
+              "exerciseName": "leg extensions",
+              "weightUsedKg": 41,
+              "repetitions": 40
+            },
+            {
+              "exerciseName": "leg extensions",
+              "weightUsedKg": 41,
+              "repetitions": 50
+            },
+            {
+              "exerciseName": "leg extensions",
+              "weightUsedKg": 41,
+              "repetitions": 60
+            },
+            {
+              "exerciseName": "leg extensions",
+              "weightUsedKg": 41,
+              "repetitions": 80
+            },
+            {
+              "exerciseName": "leg extensions",
+              "weightUsedKg": 41,
+              "repetitions": 100
+            },
+            {
+              "exerciseName": "seated leg curl",
+              "weightUsedKg": 41,
+              "repetitions": 15
+            },
+            {
+              "exerciseName": "seated leg curl",
+              "weightUsedKg": 41,
+              "repetitions": 15
+            },
+            {
+              "exerciseName": "seated leg curl",
+              "weightUsedKg": 41,
+              "repetitions": 15
+            },
+            {
+              "exerciseName": "Incline Chest Press Machine",
+              "weightUsedKg": 94.8,
+              "repetitions": 10
+            },
+            {
+              "exerciseName": "Incline Chest Press Machine",
+              "weightUsedKg": 94.8,
+              "repetitions": 8
+            },
+            {
+              "exerciseName": "Incline Chest Press Machine",
+              "weightUsedKg": 94.8,
+              "repetitions": 5
+            },
+            {
+              "exerciseName": "Cable Triceps Pushdown",
+              "weightUsedKg": 29,
+              "repetitions": 10
+            },
+            {
+              "exerciseName": "Cable Triceps Pushdown",
+              "weightUsedKg": 53,
+              "repetitions": 10
+            },
+            {
+              "exerciseName": "Cable Triceps Pushdown",
+              "weightUsedKg": 29,
+              "repetitions": 10
+            },
+            {
+              "exerciseName": "cable crunch",
+              "weightUsedKg": 77,
+              "repetitions": 10
+            },
+            {
+              "exerciseName": "cable crunch",
+              "weightUsedKg": 83,
+              "repetitions": 10
+            },
+            {
+              "exerciseName": "cable crunch",
+              "weightUsedKg": 83,
+              "repetitions": 10
+            },
+            {
+              "exerciseName": "cable crunch",
+              "weightUsedKg": 83,
+              "repetitions": 8
+            },
+            {
+              "exerciseName": "cable crunch",
+              "weightUsedKg": 93,
+              "repetitions": 9
+            },
+            {
+              "exerciseName": "standing cable rotation",
+              "weightUsedKg": 29,
+              "repetitions": 15
+            }
+          ],
+          "createdAt": "7-25-2024 22:18:40"
+        },
+              {
+                "durationInMinutes": 0,
+                "calories": 0,
+                "notes": "cardio",
+                "mood": 5,
+                "exerciseRecords": [
+                  {
+                    "timerInSeconds": 1860,
+                    "exerciseName": "rope jumping",
+                    "heartRateAVG": 151,
+                    "kcalBurned": 464
+                  }
+                ],
+                "createdAt": "7-26-2024 17:22:40"
+              },
+              {
+                "durationInMinutes": 65,
+                "calories": 526,
+                "notes": "leg day",
+                "mood": 5,
+                "exerciseRecords": [
+                  {
+                    "exerciseName": "Standing Calf Raise Machine",
+                    "repetitions": 15,
+                    "weightUsedKg" : 53
+                  },
+                  {
+                    "exerciseName": "tibialis raises",
+                    "repetitions": 30,
+                    "weightUsedKg" : 0
+                  },
+                  {
+                    "exerciseName": "Standing Calf Raise Machine",
+                    "repetitions": 13,
+                    "weightUsedKg" : 53
+                  },
+                  {
+                    "exerciseName": "tibialis raises",
+                    "repetitions": 30,
+                    "weightUsedKg" : 0
+                  },
+                  {
+                    "exerciseName": "Standing Calf Raise Machine",
+                    "repetitions": 11,
+                    "weightUsedKg" : 53
+                  },
+                  {
+                    "exerciseName": "tibialis raises",
+                    "repetitions": 35,
+                    "weightUsedKg" : 0
+                  },
+                  {
+                    "exerciseName": "Machine Glute Kickback",
+                    "repetitions": 15,
+                    "weightUsedKg" : 77
+                  },
+                  {
+                    "exerciseName": "Machine Glute Kickback",
+                    "repetitions": 10,
+                    "weightUsedKg" : 92
+                  },
+                  {
+                    "exerciseName": "Machine Glute Kickback",
+                    "repetitions": 12,
+                    "weightUsedKg" : 92,
+                    "notes":"felt electricity running up ma knee!!"
+                  },
+                  {
+                    "exerciseName": "Machine Glute Kickback",
+                    "repetitions": 10,
+                    "weightUsedKg" : 92
+                  },
+                  {
+                    "exerciseName": "seated leg curl",
+                    "repetitions": 15,
+                    "weightUsedKg" : 34
+                  },
+                  {
+                    "exerciseName": "seated leg curl",
+                    "repetitions": 15,
+                    "weightUsedKg" : 34
+                  },
+                  {
+                    "exerciseName": "seated leg curl",
+                    "repetitions": 20,
+                    "weightUsedKg" : 34
+                  },
+                  {
+                    "exerciseName": "Dumbbell Stiff Legged Deadlift",
+                    "repetitions": 20,
+                    "weightUsedKg" : 12.5
+                  },
+                  {
+                    "exerciseName": "Dumbbell Stiff Legged Deadlift",
+                    "repetitions": 20,
+                    "weightUsedKg" : 17.5
+                  },
+                  
+                  {
+                    "exerciseName": "machine shoulder press",
+                    "repetitions": 5,
+                    "weightUsedKg" : 53
+                  },
+                  {
+                    "exerciseName": "machine shoulder press",
+                    "repetitions": 3,
+                    "weightUsedKg" : 53
+                  },
+                  {
+                    "exerciseName": "Hyper Extensions",
+                    "repetitions": 20,
+                    "weightUsedKg" : 20,
+                    "notes": "drop set"
+                  },
+                  {
+                    "exerciseName": "Hyper Extensions",
+                    "repetitions": 3,
+                    "weightUsedKg" : 0,
+                    "notes": "drop set"
+                  },
+                  {
+                    "exerciseName": "Hyper Extensions",
+                    "repetitions": 20,
+                    "weightUsedKg" : 20,
+                    "notes": "drop set"
+                  },
+                  {
+                    "exerciseName": "Hyper Extensions",
+                    "repetitions": 14,
+                    "weightUsedKg" : 20,
+                    "notes": "drop set"
+                  },
+                  {
+                    "exerciseName": "Hyper Extensions",
+                    "repetitions": 6,
+                    "weightUsedKg" : 0,
+                    "notes": "drop set"
+                  }
+
+                ],
+                "createdAt": "7-27-2024 22:50:40"
+              },
+{
+  "durationInMinutes": 0,
+  "calories": 0,
+  "notes": "cardio",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "timerInSeconds": 1800,
+      "exerciseName": "rope jumping",
+      "heartRateAVG": 143,
+      "kcalBurned": 404
+    }
+  ],
+  "createdAt": "7-29-2024 00:45:40"
+},
+{
+  "durationInMinutes": 72,
+  "calories": 480,
+  "notes": "leg day",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "exerciseName": "Standing Calf Raise Machine",
+      "repetitions": 20,
+      "weightUsedKg": 29
+    },
+    {
+      "exerciseName": "tibialis raises",
+      "repetitions": 30,
+      "weightUsedKg": 0
+    },
+    {
+      "exerciseName": "Standing Calf Raise Machine",
+      "repetitions": 30,
+      "weightUsedKg": 29
+    },
+    {
+      "exerciseName": "tibialis raises",
+      "repetitions": 30,
+      "weightUsedKg": 0
+    },
+    {
+      "exerciseName": "Standing Calf Raise Machine",
+      "repetitions": 20,
+      "weightUsedKg": 29
+    },
+    {
+      "exerciseName": "tibialis raises",
+      "repetitions": 30,
+      "weightUsedKg": 0
+    },
+    {
+      "exerciseName": "Standing Calf Raise Machine",
+      "repetitions": 30,
+      "weightUsedKg": 29
+    },
+    {
+      "exerciseName": "tibialis raises",
+      "repetitions": 30,
+      "weightUsedKg": 0
+    },
+    {
+      "exerciseName": "Standing Calf Raise Machine",
+      "repetitions": 20,
+      "weightUsedKg": 29
+    },
+    {
+      "exerciseName": "tibialis raises",
+      "repetitions": 30,
+      "weightUsedKg": 0
+    },
+    {
+      "exerciseName": "Standing Calf Raise Machine",
+      "repetitions": 20,
+      "weightUsedKg": 29
+    },
+    {
+      "exerciseName": "tibialis raises",
+      "repetitions": 30,
+      "weightUsedKg": 0
+    },
+    {
+      "exerciseName": "Standing Calf Raise Machine",
+      "repetitions": 12,
+      "weightUsedKg": 95
+    },
+    {
+      "exerciseName": "tibialis raises",
+      "repetitions": 30,
+      "weightUsedKg": 0
+    },
+    {
+      "exerciseName": "Standing Calf Raise Machine",
+      "repetitions": 8,
+      "weightUsedKg": 95
+    },
+    {
+      "exerciseName": "seated leg curl",
+      "repetitions": 20,
+      "weightUsedKg": 35
+    },
+    {
+      "exerciseName": "seated leg curl",
+      "repetitions": 20,
+      "weightUsedKg": 35
+    },
+    {
+      "exerciseName": "seated leg curl",
+      "repetitions": 20,
+      "weightUsedKg": 35
+    },
+    {
+      "exerciseName": "seated leg curl",
+      "repetitions": 20,
+      "weightUsedKg": 35
+    },
+    {
+      "exerciseName": "seated leg curl",
+      "repetitions": 20,
+      "weightUsedKg": 35
+    },
+    {
+      "exerciseName": "seated leg curl",
+      "repetitions": 20,
+      "weightUsedKg": 35
+    },
+    {
+      "exerciseName": "seated leg curl",
+      "repetitions": 20,
+      "weightUsedKg": 35
+    },
+    {
+      "exerciseName": "seated leg curl",
+      "repetitions": 20,
+      "weightUsedKg": 35
+    },
+    {
+      "exerciseName": "leg extensions",
+      "repetitions": 20,
+      "weightUsedKg": 41
+    },
+    {
+      "exerciseName": "leg extensions",
+      "repetitions": 21,
+      "weightUsedKg": 41
+    },
+    {
+      "exerciseName": "leg extensions",
+      "repetitions": 23,
+      "weightUsedKg": 53
+    },
+    {
+      "exerciseName": "leg extensions",
+      "repetitions": 20,
+      "weightUsedKg": 53
+    },
+    {
+      "exerciseName": "leg extensions",
+      "repetitions": 20,
+      "weightUsedKg": 59
+    },
+    {
+      "exerciseName": "leg extensions",
+      "repetitions": 16,
+      "weightUsedKg": 72
+    },
+    {
+      "exerciseName": "leg extensions",
+      "repetitions": 4,
+      "weightUsedKg": 59
+    },
+    {
+      "exerciseName": "leg extensions",
+      "repetitions": 10,
+      "weightUsedKg": 95
+    },
+    {
+      "exerciseName": "leg extensions",
+      "repetitions": 12,
+      "weightUsedKg": 95
+    },
+    {
+      "exerciseName": "leg extensions",
+      "repetitions": 12,
+      "weightUsedKg": 95
+    },
+    {
+      "exerciseName": "standing cable rotation",
+      "repetitions": 10,
+      "weightUsedKg": 29
+    },
+    {
+      "exerciseName": "standing cable rotation",
+      "repetitions": 10,
+      "weightUsedKg": 29
+    },
+    {
+      "exerciseName": "standing cable rotation",
+      "repetitions": 10,
+      "weightUsedKg": 29
+    },
+    {
+      "exerciseName": "standing cable rotation",
+      "repetitions": 10,
+      "weightUsedKg": 29
+    },
+    {
+      "exerciseName": "cable crunch",
+      "repetitions": 10,
+      "weightUsedKg": 77
+    },
+    {
+      "exerciseName": "cable crunch",
+      "repetitions": 10,
+      "weightUsedKg": 83
+    },
+    {
+      "exerciseName": "cable crunch",
+      "repetitions": 10,
+      "weightUsedKg": 83
+    },
+    {
+      "exerciseName": "cable crunch",
+      "repetitions": 10,
+      "weightUsedKg": 77
+    },
+    {
+      "exerciseName": "cable crunch",
+      "repetitions": 10,
+      "weightUsedKg": 77
+    },
+    {
+      "exerciseName": "cable crunch",
+      "repetitions": 5,
+      "weightUsedKg": 95
+    },
+    {
+      "exerciseName": "cable crunch",
+      "repetitions": 5,
+      "weightUsedKg": 95
+    }
+  ],
+  "createdAt": "7-28-2024 22:40:00"
+},
+{
+  "durationInMinutes": 0,
+  "calories": 0,
+  "notes": "cardio",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "timerInSeconds": 1800,
+      "exerciseName": "rope jumping",
+      "heartRateAVG": 143,
+      "kcalBurned": 404
+    }
+  ],
+  "createdAt": "7-29-2024 00:45:40"
+},
+{
+  "durationInMinutes": 72,
+  "calories": 480,
+  "notes": "Arms",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "exerciseName": "dumbbell hammer curls",
+      "repetitions": 20,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell hammer curls",
+      "repetitions": 20,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell hammer curls",
+      "repetitions": 20,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell hammer curls",
+      "repetitions": 20,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "bench press - close grip",
+      "repetitions": 30,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "bench press - close grip",
+      "repetitions": 30,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "bench press - close grip",
+      "repetitions": 30,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "bench press - close grip",
+      "repetitions": 30,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "dumbbell curls - supinated",
+      "repetitions": 20,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell curls - supinated",
+      "repetitions": 20,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell curls - supinated",
+      "repetitions": 20,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell curls - supinated",
+      "repetitions": 20,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "bench press - reverse grip",
+      "repetitions": 30,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "bench press - reverse grip",
+      "repetitions": 30,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "bench press - reverse grip",
+      "repetitions": 30,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "bench press - reverse grip",
+      "repetitions": 30,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "straight bar curls - reverse grip",
+      "repetitions": 20,
+      "weightUsedKg": 25
+    },
+    {
+      "exerciseName": "straight bar curls - reverse grip",
+      "repetitions": 20,
+      "weightUsedKg": 25
+    },
+    {
+      "exerciseName": "straight bar curls - reverse grip",
+      "repetitions": 20,
+      "weightUsedKg": 25
+    },
+    {
+      "exerciseName": "straight bar curls - reverse grip",
+      "repetitions": 20,
+      "weightUsedKg": 25
+    },
+    {
+      "exerciseName": "dumbbell skull crushers - incline",
+      "repetitions": 20,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell skull crushers - incline",
+      "repetitions": 20,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell skull crushers - incline",
+      "repetitions": 20,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell skull crushers - incline",
+      "repetitions": 20,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "barbell curls",
+      "repetitions": 20,
+      "weightUsedKg": 25
+    },
+    {
+      "exerciseName": "barbell curls",
+      "repetitions": 20,
+      "weightUsedKg": 25
+    },
+    {
+      "exerciseName": "barbell curls",
+      "repetitions": 20,
+      "weightUsedKg": 25
+    },
+    {
+      "exerciseName": "barbell curls",
+      "repetitions": 20,
+      "weightUsedKg": 25
+    },
+    {
+      "exerciseName": "skull crushers - 45 degree",
+      "repetitions": 20,
+      "weightUsedKg": 25
+    },
+    {
+      "exerciseName": "skull crushers - 45 degree",
+      "repetitions": 20,
+      "weightUsedKg": 25
+    },
+    {
+      "exerciseName": "skull crushers - 45 degree",
+      "repetitions": 20,
+      "weightUsedKg": 25
+    },
+    {
+      "exerciseName": "skull crushers - 45 degree",
+      "repetitions": 20,
+      "weightUsedKg": 25
+    }
+  ],
+  "createdAt": "7-29-2024 01:40:40"
+},
+{
+  "durationInMinutes": 0,
+  "calories": 0,
+  "notes": "cardio",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "timerInSeconds": 1920,
+      "exerciseName": "rope jumping",
+      "heartRateAVG": 146,
+      "kcalBurned": 459
+    }
+  ],
+  "createdAt": "7-30-2024 17:45:40"
+},
+{
+  "durationInMinutes": 50,
+  "calories": 377,
+  "notes": "Chest / Triceps / Abs",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "exerciseName": "dumbbell chest press - incline",
+      "repetitions": 10,
+      "weightUsedKg": 27
+    },
+    {
+      "exerciseName": "dumbbell chest press - incline",
+      "repetitions": 10,
+      "weightUsedKg": 27
+    },
+    {
+      "exerciseName": "dumbbell chest press - incline",
+      "repetitions": 10,
+      "weightUsedKg": 27
+    },
+    {
+      "exerciseName": "slight incline barbell press",
+      "repetitions": 12,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "slight incline barbell press",
+      "repetitions": 12,
+      "weightUsedKg": 60
+    },
+    {
+      "exerciseName": "slight incline barbell press",
+      "repetitions": 8,
+      "weightUsedKg": 60
+    },
+    {
+      "exerciseName": "slight incline barbell press",
+      "repetitions": 8,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "slight incline barbell press",
+      "repetitions": 4,
+      "weightUsedKg": 60
+    },
+    {
+      "exerciseName": "slight incline barbell press",
+      "repetitions": 4,
+      "weightUsedKg": 60
+    },
+    {
+      "exerciseName": "dumbbell chest press - flat",
+      "repetitions": 8,
+      "weightUsedKg": 27
+    },
+    {
+      "exerciseName": "dumbbell chest press - flat",
+      "repetitions": 8,
+      "weightUsedKg": 27
+    },
+    {
+      "exerciseName": "dumbbell chest press - flat",
+      "repetitions": 8,
+      "weightUsedKg": 27
+    },
+    {
+      "exerciseName": "bench press - close grip",
+      "repetitions": 15,
+      "weightUsedKg": 30
+    },
+    {
+      "exerciseName": "bench press - close grip",
+      "repetitions": 15,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "bench press - close grip",
+      "repetitions": 15,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "bench press - close grip",
+      "repetitions": 5,
+      "weightUsedKg": 30
+    },
+    {
+      "exerciseName": "bench press - close grip",
+      "repetitions": 8,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "bench press - close grip",
+      "repetitions": 8,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "bench press - close grip",
+      "repetitions": 5,
+      "weightUsedKg": 30
+    },
+    {
+      "exerciseName": "bench press - close grip",
+      "repetitions": 3,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "bench press - close grip",
+      "repetitions": 3,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "Skull Crushers - Incline",
+      "repetitions": 12,
+      "weightUsedKg": 30
+    },
+    {
+      "exerciseName": "Skull Crushers - Incline",
+      "repetitions": 12,
+      "weightUsedKg": 30
+    },
+    {
+      "exerciseName": "Skull Crushers - Incline",
+      "repetitions": 10,
+      "weightUsedKg": 30
+    },
+    {
+      "exerciseName": "Skull Crushers - Incline",
+      "repetitions": 10,
+      "weightUsedKg": 30
+    },
+    {
+      "exerciseName": "Skull Crushers - Incline",
+      "repetitions": 5,
+      "weightUsedKg": 30
+    },
+    {
+      "exerciseName": "Skull Crushers - Incline",
+      "repetitions": 5,
+      "weightUsedKg": 30
+    },
+    {
+      "exerciseName": "Skull Crushers - Incline",
+      "repetitions": 5,
+      "weightUsedKg": 30
+    },
+    {
+      "exerciseName": "Skull Crushers - Incline",
+      "repetitions": 5,
+      "weightUsedKg": 30
+    },
+    {
+      "exerciseName": "hanging knee raises - weighted",
+      "repetitions": 1,
+      "weightUsedKg": 5
+    },
+    {
+      "exerciseName": "hanging knee raises - weighted",
+      "repetitions": 1,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "hanging knee raises - weighted",
+      "repetitions": 1,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "hanging knee raises - weighted",
+      "repetitions": 4,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "hanging knee raises - weighted",
+      "repetitions": 20,
+      "weightUsedKg": 10
+    }
+  ],
+  "createdAt": "7-30-2024 23:43:40"
+},
+{
+  "durationInMinutes": 39,
+  "calories": 385,
+  "notes": "Back / Traps / Calves",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "exerciseName": "pullovers - barbell",
+      "repetitions": 12,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "pullovers - barbell",
+      "repetitions": 12,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "pullovers - barbell",
+      "repetitions": 12,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "pullovers - barbell",
+      "repetitions": 8,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "pullovers - barbell",
+      "repetitions": 5,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "pullovers - barbell",
+      "repetitions": 5,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "pullovers - barbell",
+      "repetitions": 4,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "pullovers - barbell",
+      "repetitions": 3,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "pullovers - barbell",
+      "repetitions": 3,
+      "weightUsedKg": 40
+    },
+    {
+      "exerciseName": "one arm row - pronated",
+      "repetitions": 10,
+      "weightUsedKg": 41
+    },
+    {
+      "exerciseName": "one arm row - pronated",
+      "repetitions": 5,
+      "weightUsedKg": 41
+    },
+    {
+      "exerciseName": "one arm row - pronated",
+      "repetitions": 6,
+      "weightUsedKg": 41
+    },
+    {
+      "exerciseName": "bent over dumbbell row - high elbow",
+      "repetitions": 10,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "bent over dumbbell row - high elbow",
+      "repetitions": 10,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "bent over dumbbell row - high elbow",
+      "repetitions": 1,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "bent over dumbbell row - high elbow",
+      "repetitions": 5,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "bent over dumbbell row - high elbow",
+      "repetitions": 3,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "bent over dumbbell row - high elbow",
+      "repetitions": 2,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "standing hyperextensions - barbell",
+      "repetitions": 10,
+      "weightUsedKg": 2
+    },
+    {
+      "exerciseName": "standing hyperextensions - barbell",
+      "repetitions": 10,
+      "weightUsedKg": 2
+    },
+    {
+      "exerciseName": "standing hyperextensions - barbell",
+      "repetitions": 8,
+      "weightUsedKg": 0
+    },
+    {
+      "exerciseName": "standing hyperextensions - barbell",
+      "repetitions": 8,
+      "weightUsedKg": 0
+    },
+    {
+      "exerciseName": "shrugs - seated dumbbell",
+      "repetitions": 15,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "shrugs - seated dumbbell",
+      "repetitions": 15,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "shrugs - seated dumbbell",
+      "repetitions": 15,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "shrugs - seated dumbbell",
+      "repetitions": 15,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "calf raises - seated garage style",
+      "repetitions": 20,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "calf raises - seated garage style",
+      "repetitions": 20,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "calf raises - seated garage style",
+      "repetitions": 20,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "calf raises - seated garage style",
+      "repetitions": 15,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "calf raises - seated garage style",
+      "repetitions": 15,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "calf raises - seated garage style",
+      "repetitions": 15,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "calf raises - seated garage style",
+      "repetitions": 15,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "calf raises - seated garage style",
+      "repetitions": 15,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "calf raises - seated garage style",
+      "repetitions": 15,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "calf raises - seated garage style",
+      "repetitions": 20,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "calf raises - seated garage style",
+      "repetitions": 5,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName": "calf raises - seated garage style",
+      "repetitions": 5,
+      "weightUsedKg": 20
+    }
+  ],
+  "createdAt": "7-31-2024 20:00:40"
+},
+{
+  "durationInMinutes": 0,
+  "calories": 0,
+  "notes": "cardio",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "timerInSeconds": 1800,
+      "exerciseName": "rope jumping",
+      "heartRateAVG": 141,
+      "kcalBurned": 410
+    }
+  ],
+  "createdAt": "8-1-2024 00:01:40"
+},
+{
+  "durationInMinutes":20,
+  "calories": 0,
+  "notes": "cardio / abs",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "timerInSeconds": 3600,
+      "exerciseName": "fast walking",
+      "heartRateAVG": 112,
+      "kcalBurned": 459
+    },
+    {
+      "exerciseName": "standing cable rotation",
+      "repetitions": 10,
+      "weightUsedKg": 35
+    },
+    {
+      "exerciseName": "standing cable rotation",
+      "repetitions": 10,
+      "weightUsedKg": 35
+    },
+    {
+      "exerciseName": "standing cable rotation",
+      "repetitions": 10,
+      "weightUsedKg": 35
+    },
+    {
+      "exerciseName": "standing cable rotation",
+      "repetitions": 10,
+      "weightUsedKg": 35
+    },
+    {
+      "exerciseName": "standing cable rotation",
+      "repetitions": 10,
+      "weightUsedKg": 35
+    },
+    {
+      "exerciseName": "cable crunch",
+      "repetitions": 12,
+      "weightUsedKg": 77
+    },
+    {
+      "exerciseName": "cable crunch",
+      "repetitions": 10,
+      "weightUsedKg": 83
+    },
+    {
+      "exerciseName": "cable crunch",
+      "repetitions": 10,
+      "weightUsedKg": 83
+    },
+    {
+      "exerciseName": "cable crunch",
+      "repetitions": 4,
+      "weightUsedKg": 77,
+      "notes": "failure"
+    }
+  ],
+  "createdAt": "8-1-2024 00:01:40"
+},
+{
+  "durationInMinutes": 32,
+  "calories": 469,
+  "notes": "Shoulders / Biceps",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "exerciseName": "dumbbell side lateral - scapular plane",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell side lateral - scapular plane",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell side lateral - scapular plane",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell rear delt raise - incline",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell rear delt raise - incline",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell rear delt raise - incline",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "barbell rear delt raise",
+      "repetitions": 15,
+      "weightUsedKg": 27
+    },
+    {
+      "exerciseName": "barbell rear delt raise",
+      "repetitions": 15,
+      "weightUsedKg": 37
+    },
+    {
+      "exerciseName": "barbell rear delt raise",
+      "repetitions": 15,
+      "weightUsedKg": 37
+    },
+    {
+      "exerciseName": "dumbbell side lateral - fixed elbow",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell side lateral - fixed elbow",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell side lateral - fixed elbow",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell shoulder press - seated hammer",
+      "repetitions": 12,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "dumbbell shoulder press - seated hammer",
+      "repetitions": 12,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "dumbbell shoulder press - seated hammer",
+      "repetitions": 12,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "dumbbell shoulder press - seated hammer",
+      "repetitions": 4,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "dumbbell shoulder press - seated hammer",
+      "repetitions": 4,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "dumbbell shoulder press - seated hammer",
+      "repetitions": 3,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "dumbbell shoulder press - seated hammer",
+      "repetitions": 2,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "dumbbell shoulder press - seated hammer",
+      "repetitions": 2,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "dumbbell shoulder press - seated hammer",
+      "repetitions": 2,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "dumbbell curls - incline single arm",
+      "repetitions": 10,
+      "weightUsedKg": 10,
+      "notes": "both sides is a rep"
+    },
+    {
+      "exerciseName": "dumbbell curls - incline single arm",
+      "repetitions": 10,
+      "weightUsedKg": 10,
+      "notes": "both sides is a rep"
+    },
+    {
+      "exerciseName": "dumbbell curls - incline single arm",
+      "repetitions": 10,
+      "weightUsedKg": 10,
+      "notes": "both sides is a rep"
+    },
+    {
+      "exerciseName": "dumbbell curls - incline single arm",
+      "repetitions": 10,
+      "weightUsedKg": 10,
+      "notes": "both sides is a rep"
+    },
+    {
+      "exerciseName": "dumbbell curls - incline single arm",
+      "repetitions": 10,
+      "weightUsedKg": 10,
+      "notes": "both sides is a rep"
+    },
+    {
+      "exerciseName": "dumbbell curls - seated supinated",
+      "repetitions": 15,
+      "weightUsedKg": 6
+    },
+    {
+      "exerciseName": "dumbbell curls - seated supinated",
+      "repetitions": 15,
+      "weightUsedKg": 6
+    },
+    {
+      "exerciseName": "dumbbell curls - seated supinated",
+      "repetitions": 15,
+      "weightUsedKg": 6
+    },
+    {
+      "exerciseName": "dumbbell curls - seated supinated",
+      "repetitions": 6,
+      "weightUsedKg": 6
+    },
+    {
+      "exerciseName": "dumbbell curls - seated supinated",
+      "repetitions": 5,
+      "weightUsedKg": 6
+    },
+    {
+      "exerciseName": "dumbbell curls - seated supinated",
+      "repetitions": 5,
+      "weightUsedKg": 6
+    },
+    {
+      "exerciseName": "dumbbell curls - seated supinated",
+      "repetitions": 4,
+      "weightUsedKg": 6
+    },
+    {
+      "exerciseName": "dumbbell curls - seated supinated",
+      "repetitions": 3,
+      "weightUsedKg": 6
+    },
+    {
+      "exerciseName": "dumbbell curls - seated supinated",
+      "repetitions": 3,
+      "weightUsedKg": 6
+    }
+  ],
+  "createdAt": "8-2-2024 03:01:40"
+},
+{
+  "durationInMinutes": 0,
+  "calories": 0,
+  "notes": "cardio",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "timerInSeconds": 1800,
+      "exerciseName": "rope jumping",
+      "heartRateAVG": 147,
+      "kcalBurned": 433
+    }
+  ],
+  "createdAt": "8-3-2024 01:36:00"
+},
+{
+  "durationInMinutes": 0,
+  "calories": 0,
+  "notes": "cardio",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "timerInSeconds": 2460,
+      "exerciseName": "rope jumping",
+      "heartRateAVG": 145,
+      "kcalBurned": 564
+    }
+  ],
+  "createdAt": "8-4-2024 01:36:00"
+},
+{
+  "durationInMinutes": 70,
+  "calories": 400,
+  "notes": "legs",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "exerciseName" : "Dumbbell Stiff Legged Deadlift",
+      "repetitions" : 12,
+      "weightUsedKg": 15
+    },
+    {
+      "exerciseName" : "Dumbbell Stiff Legged Deadlift",
+      "repetitions" : 12,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName" : "Dumbbell Stiff Legged Deadlift",
+      "repetitions" : 12,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName" : "Dumbbell Stiff Legged Deadlift",
+      "repetitions" : 5,
+      "weightUsedKg": 15
+    },
+    {
+      "exerciseName" : "Dumbbell Stiff Legged Deadlift",
+      "repetitions" : 5,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName" : "Dumbbell Stiff Legged Deadlift",
+      "repetitions" : 5,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName" : "Dumbbell Stiff Legged Deadlift",
+      "repetitions" : 2,
+      "weightUsedKg": 15
+    },
+    {
+      "exerciseName" : "Dumbbell Stiff Legged Deadlift",
+      "repetitions" : 2,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName" : "Dumbbell Stiff Legged Deadlift",
+      "repetitions" : 2,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName" : "barbell static lunges",
+      "repetitions" : 12,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName" : "barbell static lunges",
+      "repetitions" : 12,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName" : "barbell static lunges",
+      "repetitions" : 12,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName" : "barbell static lunges",
+      "repetitions" : 12,
+      "weightUsedKg": 20
+    },
+    {
+      "exerciseName" : "walking lunges - dumbbell",
+      "repetitions" : 30,
+      "weightUsedKg": 5
+    },
+    {
+      "exerciseName" : "walking lunges - dumbbell",
+      "repetitions" : 30,
+      "weightUsedKg": 5
+    },
+    {
+      "exerciseName" : "walking lunges - dumbbell",
+      "repetitions" : 30,
+      "weightUsedKg": 5
+    },
+    {
+      "exerciseName" : "seated leg curl",
+      "repetitions" : 15,
+      "weightUsedKg": 41
+    },
+    {
+      "exerciseName" : "seated leg curl",
+      "repetitions" : 6,
+      "weightUsedKg": 36
+    },
+    {
+      "exerciseName" : "seated leg curl",
+      "repetitions" : 5,
+      "weightUsedKg": 32
+    },
+    {
+      "exerciseName" : "seated leg curl",
+      "repetitions" : 15,
+      "weightUsedKg": 41
+    },
+    {
+      "exerciseName" : "seated leg curl",
+      "repetitions" : 7,
+      "weightUsedKg": 36
+    },
+    {
+      "exerciseName" : "seated leg curl",
+      "repetitions" : 6,
+      "weightUsedKg": 32
+    },
+    {
+      "exerciseName" : "seated leg curl",
+      "repetitions" : 15,
+      "weightUsedKg": 41
+    },
+    {
+      "exerciseName" : "seated leg curl",
+      "repetitions" : 5,
+      "weightUsedKg": 36
+    },
+    {
+      "exerciseName" : "seated leg curl",
+      "repetitions" : 3,
+      "weightUsedKg": 32
+    },
+    {
+      "exerciseName" : "leg extensions",
+      "repetitions" : 15,
+      "weightUsedKg": 41
+    },
+    {
+      "exerciseName" : "leg extensions",
+      "repetitions" : 10,
+      "weightUsedKg": 35
+    },
+    {
+      "exerciseName" : "leg extensions",
+      "repetitions" : 10,
+      "weightUsedKg": 29
+    },
+    {
+      "exerciseName" : "leg extensions",
+      "repetitions" : 10,
+      "weightUsedKg": 22
+    },
+    {
+      "exerciseName" : "leg extensions",
+      "repetitions" : 15,
+      "weightUsedKg": 53
+    },
+    {
+      "exerciseName" : "leg extensions",
+      "repetitions" : 10,
+      "weightUsedKg": 47
+    },
+    {
+      "exerciseName" : "leg extensions",
+      "repetitions" : 10,
+      "weightUsedKg": 41
+    },
+    {
+      "exerciseName" : "leg extensions",
+      "repetitions" : 7,
+      "weightUsedKg": 37
+    },
+    {
+      "exerciseName" : "leg extensions",
+      "repetitions" : 5,
+      "weightUsedKg": 27
+    },
+    {
+      "exerciseName" : "leg extensions",
+      "repetitions" : 15,
+      "weightUsedKg": 65
+    },
+    {
+      "exerciseName" : "leg extensions",
+      "repetitions" : 7,
+      "weightUsedKg": 59
+    },
+    {
+      "exerciseName" : "leg extensions",
+      "repetitions" : 7,
+      "weightUsedKg": 53
+    },
+    {
+      "exerciseName" : "leg extensions",
+      "repetitions" : 7,
+      "weightUsedKg": 47
+    },
+    {
+      "exerciseName" : "cable crunch",
+      "repetitions" : 12,
+      "weightUsedKg": 77
+    },
+    {
+      "exerciseName" : "cable crunch",
+      "repetitions" : 12,
+      "weightUsedKg": 77
+    },
+    {
+      "exerciseName" : "cable crunch",
+      "repetitions" : 10,
+      "weightUsedKg": 77
+    },
+    {
+      "exerciseName" : "cable crunch",
+      "repetitions" : 6,
+      "weightUsedKg": 77
+    },
+    {
+      "exerciseName" : "standing cable rotation",
+      "repetitions" : 10,
+      "weightUsedKg": 32
+    },
+    {
+      "exerciseName" : "standing cable rotation",
+      "repetitions" : 10,
+      "weightUsedKg": 32
+    },
+    {
+      "exerciseName" : "standing cable rotation",
+      "repetitions" : 10,
+      "weightUsedKg": 32
+    }
+  ],
+  "createdAt": "8-4-2024 22:36:00"
+},
+{
+  "durationInMinutes": 0,
+  "calories": 0,
+  "notes": "cardio",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "timerInSeconds": 480,
+      "exerciseName": "rope jumping",
+      "heartRateAVG": 152,
+      "kcalBurned": 122
+    }
+  ],
+  "createdAt": "8-5-2024 19:21:00"
+},
+{
+  "durationInMinutes": 0,
+  "calories": 0,
+  "notes": "cardio",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "timerInSeconds": 1800,
+      "exerciseName": "rope jumping",
+      "heartRateAVG": 140,
+      "kcalBurned": 395
+    }
+  ],
+  "createdAt": "8-5-2024 19:41:00"
+},
+{
+  "durationInMinutes": 46,
+  "calories": 316,
+  "notes": "Chest / Triceps / Abs",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+     "exerciseName" : "dumbbell chest press - flat",
+     "repetitions": 12,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - flat",
+     "repetitions": 12,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - flat",
+     "repetitions": 4,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - flat",
+     "repetitions": 4,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - flat",
+     "repetitions": 2,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - flat",
+     "repetitions": 2,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - flat",
+     "repetitions": 4,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - flat",
+     "repetitions": 4,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - incline",
+     "repetitions": 10,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - incline",
+     "repetitions": 10,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - incline",
+     "repetitions": 10,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - incline",
+     "repetitions": 5,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - incline",
+     "repetitions": 2,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - incline",
+     "repetitions": 5,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - incline",
+     "repetitions": 2,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - incline",
+     "repetitions": 2,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell chest press - incline",
+     "repetitions": 2,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "barrel press - slight incline",
+     "repetitions": 8,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "barrel press - slight incline",
+     "repetitions": 8,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "barrel press - slight incline",
+     "repetitions": 8,
+     "weightUsedKg" : 21
+    },
+    {
+     "exerciseName" : "dumbbell skull crushers - incline",
+     "repetitions": 15,
+     "weightUsedKg" : 8
+    },
+    {
+     "exerciseName" : "dumbbell skull crushers - incline",
+     "repetitions": 15,
+     "weightUsedKg" : 10
+    },
+    {
+     "exerciseName" : "dumbbell skull crushers - incline",
+     "repetitions": 15,
+     "weightUsedKg" : 10
+    },
+    {
+     "exerciseName" : "dumbbell skull crushers - incline",
+     "repetitions": 15,
+     "weightUsedKg" : 10
+    },
+    {
+     "exerciseName" : "dumbbell skull crushers - incline",
+     "repetitions": 10,
+     "weightUsedKg" : 8
+    },
+    {
+     "exerciseName" : "dumbbell skull crushers - incline",
+     "repetitions": 5,
+     "weightUsedKg" : 10
+    },
+    {
+     "exerciseName" : "dumbbell skull crushers - incline",
+     "repetitions": 7,
+     "weightUsedKg" : 10
+    },
+    {
+     "exerciseName" : "dumbbell skull crushers - incline",
+     "repetitions": 5,
+     "weightUsedKg" : 10
+    },
+    {
+     "exerciseName" : "dumbbell skull crushers - incline",
+     "repetitions": 10,
+     "weightUsedKg" : 8
+    },
+    {
+     "exerciseName" : "dumbbell skull crushers - incline",
+     "repetitions": 6,
+     "weightUsedKg" : 10
+    },
+    {
+     "exerciseName" : "dumbbell skull crushers - incline",
+     "repetitions": 5,
+     "weightUsedKg" : 10
+    },
+    {
+     "exerciseName" : "dumbbell skull crushers - incline",
+     "repetitions": 5,
+     "weightUsedKg" : 10
+    },
+    {
+     "exerciseName" : "bench press - reverse grip",
+     "repetitions": 15,
+     "weightUsedKg" : 50
+    },
+    {
+     "exerciseName" : "bench press - reverse grip",
+     "repetitions": 15,
+     "weightUsedKg" : 50
+    },
+    {
+     "exerciseName" : "bench press - reverse grip",
+     "repetitions": 5,
+     "weightUsedKg" : 50
+    },
+    {
+     "exerciseName" : "bench press - reverse grip",
+     "repetitions": 3,
+     "weightUsedKg" : 50
+    },
+    {
+     "exerciseName" : "bench press - reverse grip",
+     "repetitions": 2,
+     "weightUsedKg" : 50
+    },
+    {
+     "exerciseName" : "bench press - reverse grip",
+     "repetitions": 2,
+     "weightUsedKg" : 50
+    },
+    {
+     "exerciseName" : "v-ups - dumbbell both hands & feet",
+     "repetitions": 15,
+     "weightUsedKg" : 4
+    },
+    {
+     "exerciseName" : "v-ups - dumbbell both hands & feet",
+     "repetitions": 6,
+     "weightUsedKg" : 4
+    },
+    {
+     "exerciseName" : "v-ups - dumbbell both hands & feet",
+     "repetitions": 4,
+     "weightUsedKg" : 4
+    },
+    {
+     "exerciseName" : "v-ups - dumbbell both hands & feet",
+     "repetitions": 2,
+     "weightUsedKg" : 4
+    },
+    {
+     "exerciseName" : "v-ups - dumbbell both hands & feet",
+     "repetitions": 10,
+     "weightUsedKg" : 4
+    }
+  ],
+  "createdAt": "8-6-2024 02:00:00"
+},
+{
+  "durationInMinutes": 0,
+  "calories": 0,
+  "notes": "cardio",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "timerInSeconds": 2040,
+      "exerciseName": "rope jumping",
+      "heartRateAVG": 149,
+      "kcalBurned": 501
+    }
+  ],
+  "createdAt": "8-7-2024 04:54:00"
+},
+{
+  "durationInMinutes": 38,
+  "calories": 225,
+  "notes": "Back / Traps / Calves",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "exerciseName": "pullovers - single arm dumbbell",
+      "repetitions": 12,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "pullovers - single arm dumbbell",
+      "repetitions": 12,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "pullovers - single arm dumbbell",
+      "repetitions": 12,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "pullovers - single arm dumbbell",
+      "repetitions": 12,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "bent over dumbbell row - high elbow",
+      "repetitions": 12,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "bent over dumbbell row - high elbow",
+      "repetitions": 12,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "bent over dumbbell row - high elbow",
+      "repetitions": 12,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "lat row - incline neutral grip",
+      "repetitions": 12,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "lat row - incline neutral grip",
+      "repetitions": 12,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "lat row - incline neutral grip",
+      "repetitions": 12,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "lat row - incline neutral grip",
+      "repetitions": 5,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "lat row - incline neutral grip",
+      "repetitions": 5,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "lat row - incline neutral grip",
+      "repetitions": 5,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "lat row - incline neutral grip",
+      "repetitions": 12,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "lat row - incline neutral grip",
+      "repetitions": 12,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "lat row - incline neutral grip",
+      "repetitions": 12,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "bent over barbell row",
+      "repetitions": 15,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "bent over barbell row",
+      "repetitions": 15,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "bent over barbell row",
+      "repetitions": 6,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "bent over barbell row",
+      "repetitions": 5,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "bent over barbell row",
+      "repetitions": 6,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "bent over barbell row",
+      "repetitions": 6,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "shrugs - barbell wide grip",
+      "repetitions": 15,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "shrugs - barbell wide grip",
+      "repetitions": 15,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "shrugs - barbell wide grip",
+      "repetitions": 5,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "shrugs - barbell wide grip",
+      "repetitions": 10,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "shrugs - barbell wide grip",
+      "repetitions": 5,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "shrugs - barbell wide grip",
+      "repetitions": 5,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "plate calf raises - toes turned out",
+      "repetitions": 15,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "plate calf raises - toes turned out",
+      "repetitions": 15,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "plate calf raises - toes turned out",
+      "repetitions": 15,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "plate calf raises - toes turned in",
+      "repetitions": 15,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "plate calf raises - toes turned in",
+      "repetitions": 15,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "plate calf raises - toes turned in",
+      "repetitions": 15,
+      "weightUsedKg": 21
+    }
+
+  ],
+  "createdAt": "8-7-2024 10:20:00"
+},
+{
+  "durationInMinutes": 0,
+  "calories": 0,
+  "notes": "cardio",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "timerInSeconds": 720,
+      "exerciseName": "rope jumping",
+      "heartRateAVG": 136,
+      "kcalBurned": 171
+    }
+  ],
+  "createdAt": "8-7-2024 20:03:00"
+},
+{
+  "durationInMinutes": 51,
+  "calories": 447,
+  "notes": "Shoulders / Biceps",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "exerciseName": "dumbbell side lateral - seated",
+      "repetitions": 15,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "dumbbell side lateral - seated",
+      "repetitions": 15,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "dumbbell side lateral - seated",
+      "repetitions": 15,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "dumbbell side lateral - seated",
+      "repetitions": 7,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "dumbbell side lateral - seated",
+      "repetitions": 5,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "dumbbell side lateral - seated",
+      "repetitions": 5,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "dumbbell side lateral - seated",
+      "repetitions": 3,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "dumbbell side lateral - seated",
+      "repetitions": 5,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "dumbbell side lateral - seated",
+      "repetitions": 3,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "dumbbell side lateral - seated",
+      "repetitions": 3,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "dumbbell side lateral - seated",
+      "repetitions": 4,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "dumbbell side lateral - seated",
+      "repetitions": 2,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "upright row - wide grip",
+      "repetitions": 15,
+      "weightUsedKg": 30
+    },
+    {
+      "exerciseName": "upright row - wide grip",
+      "repetitions": 15,
+      "weightUsedKg": 30
+    },
+    {
+      "exerciseName": "upright row - wide grip",
+      "repetitions": 15,
+      "weightUsedKg": 30
+    },
+    {
+      "exerciseName": "bent over dumbbell rear delt raise",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "bent over dumbbell rear delt raise",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "bent over dumbbell rear delt raise",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "bent over dumbbell rear delt raise",
+      "repetitions": 10,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "bent over dumbbell rear delt raise",
+      "repetitions": 5,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "bent over dumbbell rear delt raise",
+      "repetitions": 5,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "bent over dumbbell rear delt raise",
+      "repetitions": 6,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "bent over dumbbell rear delt raise",
+      "repetitions": 5,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "bent over dumbbell rear delt raise",
+      "repetitions": 7,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell shoulder press - seated hammer single hand",
+      "repetitions": 10,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "dumbbell shoulder press - seated hammer single hand",
+      "repetitions": 10,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "dumbbell shoulder press - seated hammer single hand",
+      "repetitions": 10,
+      "weightUsedKg": 21
+    },
+    {
+      "exerciseName": "rear delt raise - around the world",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "rear delt raise - around the world",
+      "repetitions": 15,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "ez bar curl - close grip",
+      "repetitions": 15,
+      "weightUsedKg": 18
+    },
+    {
+      "exerciseName": "ez bar curl - close grip",
+      "repetitions": 15,
+      "weightUsedKg": 18
+    },
+    {
+      "exerciseName": "ez bar curl - close grip",
+      "repetitions": 15,
+      "weightUsedKg": 18
+    },
+    {
+      "exerciseName": "ez bar curl - close grip",
+      "repetitions": 15,
+      "weightUsedKg": 18
+    },
+    {
+      "exerciseName": "ez bar curl - close grip",
+      "repetitions": 15,
+      "weightUsedKg": 18
+    },
+    {
+      "exerciseName": "ez bar curl - close grip",
+      "repetitions": 15,
+      "weightUsedKg": 18
+    },
+    {
+      "exerciseName": "ez bar curl - close grip",
+      "repetitions": 15,
+      "weightUsedKg": 18
+    },
+    {
+      "exerciseName": "ez bar curl - close grip",
+      "repetitions": 15,
+      "weightUsedKg": 18
+    },
+    {
+      "exerciseName": "dumbbell hammer curls",
+      "repetitions": 10,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "dumbbell hammer curls",
+      "repetitions": 10,
+      "weightUsedKg": 8
+    },
+    {
+      "exerciseName": "dumbbell hammer curls",
+      "repetitions": 10,
+      "weightUsedKg": 8
+    }
+  ],
+  "createdAt": "8-8-2024 02:38:00"
+},
+{
+  "durationInMinutes": 0,
+  "calories": 0,
+  "notes": "cardio",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "timerInSeconds": 840,
+      "exerciseName": "rope jumping",
+      "heartRateAVG": 152,
+      "kcalBurned": 219
+    }
+  ],
+  "createdAt": "8-10-2024 23:17:00"
+},
+{
+  "durationInMinutes": 0,
+  "calories": 0,
+  "notes": "cardio",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "timerInSeconds": 1380,
+      "exerciseName": "rope jumping",
+      "heartRateAVG": 157,
+      "kcalBurned": 366
+    }
+  ],
+  "createdAt": "8-10-2024 23:34:00"
+},
+{
+  "durationInMinutes": 50,
+  "calories": 489,
+  "notes": "Legs",
+  "mood": 5,
+  "exerciseRecords": [
+    {
+      "exerciseName": "sissy squat - dumbbell",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "sissy squat - dumbbell",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "sissy squat - dumbbell",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "sissy squat - dumbbell",
+      "repetitions": 15,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "sissy squat - dumbbell",
+      "repetitions": 12,
+      "weightUsedKg": 0
+    },
+    {
+      "exerciseName": "sissy squat - dumbbell",
+      "repetitions": 12,
+      "weightUsedKg": 0
+    },
+    {
+      "exerciseName": "sissy squat - dumbbell",
+      "repetitions": 12,
+      "weightUsedKg": 0
+    },
+    {
+      "exerciseName": "sissy squat - dumbbell",
+      "repetitions": 12,
+      "weightUsedKg": 0
+    },
+    {
+      "exerciseName": "dumbbell split squat - glutes",
+      "repetitions": 12,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell split squat - glutes",
+      "repetitions": 12,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "dumbbell split squat - glutes",
+      "repetitions": 12,
+      "weightUsedKg": 10
+    },
+    {
+      "exerciseName": "sumo deadlifts",
+      "repetitions": 15,
+      "weightUsedKg": 90
+    },
+    {
+      "exerciseName": "sumo deadlifts",
+      "repetitions": 15,
+      "weightUsedKg": 90
+    },
+    {
+      "exerciseName": "sumo deadlifts",
+      "repetitions": 2,
+      "weightUsedKg": 90
+    },
+    {
+      "exerciseName": "sumo deadlifts",
+      "repetitions": 1,
+      "weightUsedKg": 90
+    },
+    {
+      "exerciseName": "sumo deadlifts",
+      "repetitions": 1,
+      "weightUsedKg": 90
+    },
+    {
+      "exerciseName": "sumo deadlifts",
+      "repetitions": 1,
+      "weightUsedKg": 90
+    },
+    {
+      "exerciseName": "sumo deadlifts",
+      "repetitions": 2,
+      "weightUsedKg": 90
+    },
+    {
+      "exerciseName": "sumo deadlifts",
+      "repetitions": 1,
+      "weightUsedKg": 90
+    },
+    {
+      "exerciseName": "sumo deadlifts",
+      "repetitions": 4,
+      "weightUsedKg": 70
+    },
+    {
+      "exerciseName": "barbell front squat",
+      "repetitions": 15,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "barbell front squat",
+      "repetitions": 15,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "barbell front squat",
+      "repetitions": 15,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "barbell front squat",
+      "repetitions": 5,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "barbell front squat",
+      "repetitions": 6,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "barbell front squat",
+      "repetitions": 6,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "barbell front squat",
+      "repetitions": 6,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "barbell front squat",
+      "repetitions": 6,
+      "weightUsedKg": 50
+    },
+    {
+      "exerciseName": "barbell front squat",
+      "repetitions": 6,
+      "weightUsedKg": 50
+    }
+
+  ],
+  "createdAt": "8-11-2024 2:34:00"
+}
+
+]

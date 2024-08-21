@@ -17,13 +17,13 @@ public partial class ExerciseRecord
 
     public int? TimerInSeconds { get; set; }
 
-    public double? WeightUsedKg { get; set; }
+    public double WeightUsedKg { get; set; }
 
-    public double? RateOfPerceivedExertion { get; set; }
+    public double RateOfPerceivedExertion { get; set; }
 
     public int? RestInSeconds { get; set; }
 
-    public int? KcalBurned { get; set; }
+    public int KcalBurned { get; set; }
 
     public int? DistanceInMeters { get; set; }
 
