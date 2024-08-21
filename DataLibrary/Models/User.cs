@@ -28,4 +28,6 @@ public partial class User
     public virtual ICollection<UserPassword> UserPasswords { get; set; } = new List<UserPassword>();
 
     public virtual ICollection<UserProfileImage> UserProfileImages { get; set; } = new List<UserProfileImage>();
+
+    public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 }

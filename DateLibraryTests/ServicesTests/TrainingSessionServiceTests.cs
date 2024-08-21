@@ -99,7 +99,7 @@ public class TrainingSessionServiceTests : BaseTestClass
 
         var fastWalkingExercise = user.UserExercises.First(x => x.Exercise.Name == "fast walking");
         Assert.Equal(10000, fastWalkingExercise.AverageDistance);
-        Assert.Equal(5, fastWalkingExercise.AverageRateOfPreceivedExertion);
+        Assert.Equal(5, fastWalkingExercise.AverageRateOfPerceivedExertion);
         Assert.Equal(1, fastWalkingExercise.UseCount);
         Assert.Equal(122, fastWalkingExercise.AverageHeartRate);
         Assert.Equal(10, fastWalkingExercise.AverageSpeed);
@@ -107,11 +107,11 @@ public class TrainingSessionServiceTests : BaseTestClass
         Assert.Equal(0, fastWalkingExercise.LastUsedWeightKg);
         Assert.Equal(0, fastWalkingExercise.BestWeight);
         Assert.Equal(0, fastWalkingExercise.AverageTimerInSeconds);
-        Assert.Equal(1, fastWalkingExercise.AverageKCalBurned);
+        Assert.Equal(1, fastWalkingExercise.AverageKcalBurned);
 
         Assert.Single(user.UserExercises.Where(x => x.Exercise.Name == "dragon flag"));
         var dragonFlagExercise = user.UserExercises.First(x => x.Exercise.Name == "dragon flag");
-        Assert.Equal(6.5, dragonFlagExercise.AverageRateOfPreceivedExertion);
+        Assert.Equal(6.5, dragonFlagExercise.AverageRateOfPerceivedExertion);
     }
 
     [Fact]
@@ -583,7 +583,7 @@ public class TrainingSessionServiceTests : BaseTestClass
         Assert.Equal(trainingSession.DurationInSeconds / 60, retrievedSession.DurationInMinutes);
         Assert.Equal(trainingSession.TotalRepetitions, retrievedSession.TotalRepetitions);
         Assert.Equal(trainingSession.TotalKgMoved, retrievedSession.TotalKgMoved);
-        Assert.Equal(trainingSession.AverageRateOfPreceivedExertion, retrievedSession.AverageRateOfPreceivedExertion);
+        Assert.Equal(trainingSession.AverageRateOfPerceivedExertion, retrievedSession.AverageRateOfPreceivedExertion);
 
         // Validate the exercise records
         Assert.Equal(trainingSession.ExerciseRecords.Count, retrievedSession.ExerciseRecords.Count);

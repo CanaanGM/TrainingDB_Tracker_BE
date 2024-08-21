@@ -86,10 +86,10 @@ public class TrainingSessionService : ITrainingSessionService
                 TotalCaloriesBurned = trainingSession.Calories,
                 Mood = trainingSession.Mood,
                 Notes = trainingSession.Notes,
-                TotalRepetitions = trainingSession.TotalRepetitions,
+                TotalRepetitions = trainingSession.TotalRepetitions ?? 1,
                 Id = trainingSession.Id,
-                TotalKgMoved = trainingSession.TotalKgMoved,
-                AverageRateOfPreceivedExertion = trainingSession.AverageRateOfPreceivedExertion,
+                TotalKgMoved = trainingSession.TotalKgMoved ?? 1,
+                AverageRateOfPreceivedExertion = trainingSession.AverageRateOfPerceivedExertion ?? 1,
                 TrainingTypes = trainingSession.ExerciseRecords.SelectMany(x =>
                     x.Exercise.TrainingTypes.Select(x => new TrainingTypeReadDto() { Name = x.Name })).ToList()
             };
@@ -134,9 +134,9 @@ public class TrainingSessionService : ITrainingSessionService
             TotalCaloriesBurned = trainingSession.Calories,
             Mood = trainingSession.Mood,
             Notes = trainingSession.Notes,
-            TotalRepetitions = trainingSession.TotalRepetitions,
-            TotalKgMoved = trainingSession.TotalKgMoved,
-            AverageRateOfPreceivedExertion = trainingSession.AverageRateOfPreceivedExertion,
+            TotalRepetitions = trainingSession.TotalRepetitions ?? 1,
+            TotalKgMoved = trainingSession.TotalKgMoved ?? 1,
+            AverageRateOfPreceivedExertion = trainingSession.AverageRateOfPerceivedExertion ?? 1,
             TrainingTypes = trainingSession.ExerciseRecords
                 .SelectMany(x => x.Exercise.TrainingTypes.Select(tt => new TrainingTypeReadDto { Name = tt.Name }))
                 .ToList(),
@@ -434,17 +434,17 @@ public class TrainingSessionService : ITrainingSessionService
                 var updatedUserExerciseRecords =
                     user.ExerciseRecords.Where(x => x.Exercise.Name == oldExercise.Exercise.Name).ToList();
                 userExercise.UseCount--;
-                userExercise.AverageWeight = updatedUserExerciseRecords.Average(x => x.WeightUsedKg ?? 0);
-                userExercise.BestWeight = updatedUserExerciseRecords.Max(x => x.WeightUsedKg ?? 0);
+                userExercise.AverageWeight = updatedUserExerciseRecords.Average(x => x.WeightUsedKg );
+                userExercise.BestWeight = updatedUserExerciseRecords.Max(x => x.WeightUsedKg );
                 userExercise.LastUsedWeightKg =
-                    updatedUserExerciseRecords.OrderBy(x => x.CreatedAt).First().WeightUsedKg ?? 0;
+                    updatedUserExerciseRecords.OrderBy(x => x.CreatedAt).First().WeightUsedKg ;
                 userExercise.AverageDistance = updatedUserExerciseRecords.Average(x => x.DistanceInMeters ?? 0);
                 userExercise.AverageSpeed = updatedUserExerciseRecords.Average(x => x.Speed ?? 0);
                 userExercise.AverageHeartRate = updatedUserExerciseRecords.Average(x => x.HeartRateAvg ?? 0);
-                userExercise.AverageKCalBurned = updatedUserExerciseRecords.Average(x => x.KcalBurned ?? 0);
+                userExercise.AverageKcalBurned = updatedUserExerciseRecords.Average(x => x.KcalBurned );
                 userExercise.AverageTimerInSeconds = updatedUserExerciseRecords.Average(x => x.TimerInSeconds ?? 0);
-                userExercise.AverageRateOfPreceivedExertion =
-                    updatedUserExerciseRecords.Average(x => x.RateOfPerceivedExertion ?? 0);
+                userExercise.AverageRateOfPerceivedExertion =
+                    updatedUserExerciseRecords.Average(x => x.RateOfPerceivedExertion );
             }
 
             trainingSessionToUpdate.ExerciseRecords.Remove(oldExercise);
@@ -455,12 +455,12 @@ public class TrainingSessionService : ITrainingSessionService
     private static void CalculateTrainingSessionMetadata(TrainingSession trainingSessionToUpdate)
     {
         trainingSessionToUpdate.TotalRepetitions = trainingSessionToUpdate.ExerciseRecords.Sum(x => x.Repetitions);
-        trainingSessionToUpdate.Calories += trainingSessionToUpdate.ExerciseRecords.Sum(x => x.KcalBurned ?? 1);
+        trainingSessionToUpdate.Calories += trainingSessionToUpdate.ExerciseRecords.Sum(x => x.KcalBurned );
         trainingSessionToUpdate.DurationInSeconds +=
             trainingSessionToUpdate.ExerciseRecords.Sum(x => x.TimerInSeconds ?? 1);
-        trainingSessionToUpdate.TotalKgMoved += trainingSessionToUpdate.ExerciseRecords.Sum(x => x.WeightUsedKg ?? 0);
-        trainingSessionToUpdate.AverageRateOfPreceivedExertion +=
-            trainingSessionToUpdate.ExerciseRecords.Average(x => x.RateOfPerceivedExertion ?? 1);
+        trainingSessionToUpdate.TotalKgMoved += trainingSessionToUpdate.ExerciseRecords.Sum(x => x.WeightUsedKg );
+        trainingSessionToUpdate.AverageRateOfPerceivedExertion +=
+            trainingSessionToUpdate.ExerciseRecords.Average(x => x.RateOfPerceivedExertion );
     }
 
     private static void CalculateUserExerciseMetadata(UserExercise userExercise,
@@ -469,22 +469,23 @@ public class TrainingSessionService : ITrainingSessionService
         if (!increment)
             userExercise.UseCount--;
         userExercise.UseCount++;
-        userExercise.AverageWeight = updatedUserExerciseRecords.Average(x => x.WeightUsedKg ?? 0);
-        userExercise.BestWeight = updatedUserExerciseRecords.Max(x => x.WeightUsedKg ?? 0);
+        userExercise.AverageWeight = updatedUserExerciseRecords.Average(x => x.WeightUsedKg );
+        userExercise.BestWeight = updatedUserExerciseRecords.Max(x => x.WeightUsedKg );
         userExercise.LastUsedWeightKg =
-            updatedUserExerciseRecords.OrderBy(x => x.CreatedAt).First().WeightUsedKg ?? 0;
+            updatedUserExerciseRecords.OrderBy(x => x.CreatedAt).First().WeightUsedKg ;
         userExercise.AverageDistance = updatedUserExerciseRecords.Average(x => x.DistanceInMeters ?? 0);
         userExercise.AverageSpeed = updatedUserExerciseRecords.Average(x => x.Speed ?? 0);
         userExercise.AverageHeartRate = updatedUserExerciseRecords.Average(x => x.HeartRateAvg ?? 0);
-        userExercise.AverageKCalBurned = updatedUserExerciseRecords.Average(x => x.KcalBurned ?? 0);
+        userExercise.AverageKcalBurned = updatedUserExerciseRecords.Average(x => x.KcalBurned) ;
         userExercise.AverageTimerInSeconds = updatedUserExerciseRecords.Average(x => x.TimerInSeconds ?? 0);
-        userExercise.AverageRateOfPreceivedExertion =
-            updatedUserExerciseRecords.Average(x => x.RateOfPerceivedExertion ?? 0);
+        userExercise.AverageRateOfPerceivedExertion =
+            updatedUserExerciseRecords.Average(x => x.RateOfPerceivedExertion );
     }
 
 
     private async Task<User?> GetUser(int userId, CancellationToken cancellationToken)
     {
+        //TODO: USER NOT FOUND EXCEPTION or RESULT
         return await _context.Users
             .Include(x => x.ExerciseRecords)
             .ThenInclude(exerciseRecord => exerciseRecord.Exercise)
@@ -509,15 +510,15 @@ public class TrainingSessionService : ITrainingSessionService
                         Exercise = exerciseRecord.Exercise,
                         User = user,
                         CreatedAt = newSessionDate,
-                        LastUsedWeightKg = exerciseRecord.WeightUsedKg ?? 0,
-                        AverageWeight = exerciseRecord.WeightUsedKg ?? 0,
-                        BestWeight = exerciseRecord.WeightUsedKg ?? 0,
+                        LastUsedWeightKg = exerciseRecord.WeightUsedKg ,
+                        AverageWeight = exerciseRecord.WeightUsedKg ,
+                        BestWeight = exerciseRecord.WeightUsedKg ,
                         AverageHeartRate = exerciseRecord.HeartRateAvg ?? 0,
                         AverageTimerInSeconds = exerciseRecord.TimerInSeconds ?? 0,
                         AverageDistance = exerciseRecord.DistanceInMeters ?? 0,
-                        AverageKCalBurned = exerciseRecord.KcalBurned ?? 0,
+                        AverageKcalBurned = exerciseRecord.KcalBurned ,
                         AverageSpeed = exerciseRecord.Speed ?? 0,
-                        AverageRateOfPreceivedExertion = exerciseRecord.RateOfPerceivedExertion ?? 0,
+                        AverageRateOfPerceivedExertion= exerciseRecord.RateOfPerceivedExertion,
                         UseCount = 1
                     });
             }
@@ -551,7 +552,7 @@ public class TrainingSessionService : ITrainingSessionService
             User = user,
             TotalRepetitions = sessionDto.ExerciseRecords.Sum(x => x.Repetitions),
             TotalKgMoved = sessionDto.ExerciseRecords.Sum(x => x.WeightUsedKg),
-            AverageRateOfPreceivedExertion = sessionDto.ExerciseRecords.Average(x => x.RateOfPerceivedExertion)
+            AverageRateOfPerceivedExertion = sessionDto.ExerciseRecords.Average(x => x.RateOfPerceivedExertion)
         };
     }
 

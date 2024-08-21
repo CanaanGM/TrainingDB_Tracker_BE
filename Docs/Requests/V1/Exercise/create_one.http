@@ -6,7 +6,3 @@
 POST {{rootUrl}}/exercise/
 Content-Type: application/json
 
-
-
-
-

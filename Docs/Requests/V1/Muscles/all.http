@@ -1,0 +1,423 @@
+@rootUrl = http://localhost:5134
+
+
+GET {{rootUrl}}/muscles
+
+###
+
+
+GEt {{rootUrl}}/muscles/search/pec
+
+
+
+###
+
+Get {{rootUrl}}/muscles/core
+
+
+###
+
+POST {{rootUrl}}/muscles/bulk
+Content-Type: application/json
+
+[
+    {
+        "name": "Upper Trapezius",
+        "muscleGroup": "Back",
+        "function": "Elevates the scapula and extends the head at the neck.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Trapezius_muscle"
+    },
+    {
+        "name": "Middle Trapezius",
+        "muscleGroup": "Back",
+        "function": "Retracts the scapula.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Trapezius_muscle"
+    },
+    {
+        "name": "Lower Trapezius",
+        "muscleGroup": "Back",
+        "function": "Depresses the scapula.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Trapezius_muscle"
+    },
+    {
+        "name": "Latissimus Dorsi",
+        "muscleGroup": "Back",
+        "function": "Extends, adducts, and medially rotates the arm.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Latissimus_dorsi_muscle"
+    },
+    {
+        "name": "Rhomboid",
+        "muscleGroup": "Back",
+        "function": "Retracts and elevates the scapula.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Rhomboid_muscles"
+    },
+    {
+        "name": "Erector Spinae",
+        "muscleGroup": "Back",
+        "function": "Extends and laterally flexes the spine.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Erector_spinae_muscles"
+    },
+    {
+        "name": "Infraspinatus",
+        "muscleGroup": "Back",
+        "function": "Laterally rotates the arm and stabilizes the shoulder joint.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Infraspinatus_muscle"
+    },
+    {
+        "name": "Teres Major",
+        "muscleGroup": "Back",
+        "function": "Adducts and medially rotates the arm.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Teres_major_muscle"
+    },
+    {
+        "name": "Teres Minor",
+        "muscleGroup": "Back",
+        "function": "Laterally rotates the arm and stabilizes the shoulder joint.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Teres_minor_muscle"
+    },
+    {
+        "name": "Thoracolumbar Fascia",
+        "muscleGroup": "Back",
+        "function": "Load transfer between the trunk and limb (it is tensioned by the action of the latissimus dorsi muscle, gluteus maximus muscle, and the hamstring muscles), and lifting.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Thoracolumbar_fascia"
+    },
+    {
+        "name": "Sternocleidomastoid",
+        "muscleGroup": "Neck",
+        "function": "Flexes and laterally rotates the head.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Sternocleidomastoid_muscle"
+    },
+    {
+        "name": "Omohyoid",
+        "muscleGroup": "Neck",
+        "function": "Depresses the hyoid bone and larynx.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Omohyoid_muscle"
+    },
+    {
+        "name": "Sternohyoid",
+        "muscleGroup": "Neck",
+        "function": "Depresses the hyoid bone after it has been elevated during swallowing.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Sternohyoid_muscle"
+    },
+    {
+        "name": "longus colli",
+        "muscleGroup": "Neck",
+        "function": "forward and lateral flexion of the neck, as well as rotation of the neck.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Longus_colli_muscle"
+    },
+    {
+        "name": "longus capitis",
+        "muscleGroup": "Neck",
+        "function": "Bilateral contraction - head flexion; Unilateral contraction - head rotation.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Longus_capitis_muscle"
+    },
+    {
+        "name": "scalenes",
+        "muscleGroup": "Neck",
+        "function": "The anterior and middle scalene muscles lift the first rib and bend the neck to the same side as the acting muscle the posterior scalene lifts the second rib and tilts the neck to the same side.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Scalene_muscles"
+    },
+    {
+        "name": "Pectoralis Major upper portion",
+        "muscleGroup": "Chest",
+        "function": "Flexes, adducts, and medially rotates the arm.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Pectoralis_major_muscle"
+    },
+    {
+        "name": "Pectoralis Major lower portion",
+        "muscleGroup": "Chest",
+        "function": "Flexes, adducts, and medially rotates the arm.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Pectoralis_major_muscle"
+    },
+    {
+        "name": "Pectoralis Minor",
+        "muscleGroup": "Chest",
+        "function": "Stabilizes the scapula by drawing it inferiorly and anteriorly against the thoracic wall.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Pectoralis_minor_muscle"
+    },
+    {
+        "name": "Deltoid Anterior Head",
+        "muscleGroup": "Shoulders",
+        "function": "Flexes and medially rotates the arm.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Deltoid_muscle#Anterior_part"
+    },
+    {
+        "name": "Deltoid Posterior Head",
+        "muscleGroup": "Shoulders",
+        "function": "Extends and laterally rotates the arm.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Deltoid_muscle#Posterior_part"
+    },
+    {
+        "name": "Deltoid Middle Head",
+        "muscleGroup": "Shoulders",
+        "function": "Abducts the arm.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Deltoid_muscle#Middle_part"
+    },
+    {
+        "name": "Biceps Brachii Short head",
+        "muscleGroup": "Biceps",
+        "function": "Flexes the elbow joint and supinates the forearm.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Biceps"
+    },
+    {
+        "name": "Biceps Brachii long head",
+        "muscleGroup": "Biceps",
+        "function": "Flexes the elbow joint and supinates the forearm.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Biceps"
+    },
+    {
+        "name": "Brachialis",
+        "muscleGroup": "Biceps",
+        "function": "Mucle in the upper arm the flexes the elbow.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Brachialis_muscle"
+    },
+    {
+        "name": "triceps brachii long head",
+        "muscleGroup": "Triceps",
+        "function": "employed when sustained force generation is demanded, or when there is a need for a synergistic control of the shoulder and elbow or both.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Triceps"
+    },
+    {
+        "name": "triceps brachii lateral head",
+        "muscleGroup": "Triceps",
+        "function": "used for movements requiring occasional high-intensity force.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Triceps"
+    },
+    {
+        "name": "triceps brachii medial head",
+        "muscleGroup": "Triceps",
+        "function": "enables more precise, low-force movements.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Triceps"
+    },
+    {
+        "name": "Brachioradialis",
+        "muscleGroup": "Forearms",
+        "function": "Flexes the forearms at the elbow joint.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Brachioradialis_muscle"
+    },
+    {
+        "name": "Pronator Teres",
+        "muscleGroup": "Forearms",
+        "function": "Pronates the forearm and flexes the elbow joint.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Pronator_teres_muscle"
+    },
+    {
+        "name": "Flexor Carpi Ulnaris",
+        "muscleGroup": "Forearms",
+        "function": "Flexes and adducts the hand at the wrist.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Flexor_carpi_ulnaris_muscle"
+    },
+    {
+        "name": "Flexor Carpi Radialis",
+        "muscleGroup": "Forearms",
+        "function": "Flexes and abducts the hand at the wrist.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Flexor_carpi_radialis_muscle"
+    },
+    {
+        "name": "Flexor Digitorum Superficialis",
+        "muscleGroup": "Forearms",
+        "function": "Flexes the fingers at the proximal interphalangeal joints.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Flexor_digitorum_superficialis_muscle"
+    },
+    {
+        "name": "Flexor Digitorum Profundus",
+        "muscleGroup": "Forearms",
+        "function": "Flexes the fingers at the distal interphalangeal joints.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Flexor_digitorum_profundus_muscle"
+    },
+    {
+        "name": "Biceps Femoris",
+        "muscleGroup": "Hamstrings",
+        "function": "Flexes the knee joint and laterally rotates the leg.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Biceps_femoris_muscle"
+    },
+    {
+        "name": "Semimembranosus",
+        "muscleGroup": "Hamstrings",
+        "function": "Flexes the knee joint and medially rotates the leg.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Semimembranosus_muscle"
+    },
+    {
+        "name": "Semitendinosus",
+        "muscleGroup": "Hamstrings",
+        "function": "Flexes the knee joint and medially rotates the leg.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Semitendinosus_muscle"
+    },
+    {
+        "name": "Rectus Femoris",
+        "muscleGroup": "quadriceps",
+        "function": "Flexes the hip and extends the knee.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Rectus_femoris_muscle"
+    },
+    {
+        "name": "Vastus Lateralis",
+        "muscleGroup": "quadriceps",
+        "function": "Extends the knee and stabilizes the patella.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Vastus_lateralis_muscle"
+    },
+    {
+        "name": "Vastus Medialis",
+        "muscleGroup": "quadriceps",
+        "function": "Extends the knee and stabilizes the patella.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Vastus_medialis_muscle"
+    },
+    {
+        "name": "Vastus Intermedius",
+        "muscleGroup": "quadriceps",
+        "function": "Extends the knee.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Vastus_intermedius_muscle"
+    },
+    {
+        "name": "Gluteus Maximus",
+        "muscleGroup": "glutes",
+        "function": "Extends and laterally rotates the hip.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Gluteus_maximus_muscle"
+    },
+    {
+        "name": "Gluteus Medius",
+        "muscleGroup": "glutes",
+        "function": "Abducts and medially rotates the hip.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Gluteus_medius_muscle"
+    },
+    {
+        "name": "Gluteus Minimus",
+        "muscleGroup": "glutes",
+        "function": "Abducts and medially rotates the hip.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Gluteus_minimus_muscle"
+    },
+    {
+        "name": "Rectus Abdominis",
+        "muscleGroup": "core",
+        "function": "Flexes the trunk and compresses the abdomen.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Rectus_abdominis_muscle"
+    },
+    {
+        "name": "External Oblique",
+        "muscleGroup": "core",
+        "function": "Flexes the trunk, rotates the trunk, and compresses the abdomen.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/External_oblique_muscle"
+    },
+    {
+        "name": "Internal Oblique",
+        "muscleGroup": "core",
+        "function": "Flexes the trunk, rotates the trunk, and compresses the abdomen.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Internal_oblique_muscle"
+    },
+    {
+        "name": "psoas major",
+        "muscleGroup": "core",
+        "function": "flexion in the hip joint.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Psoas_major_muscle"
+    },
+    {
+        "name": "Transversus Abdominis",
+        "muscleGroup": "core",
+        "function": "Compresses the abdomen.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Transversus_abdominis_muscle"
+    },
+    {
+        "name": "Gastrocnemius",
+        "muscleGroup": "calves",
+        "function": "Plantar flexes the ankle and flexes the knee.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Gastrocnemius_muscle"
+    },
+    {
+        "name": "Soleus",
+        "muscleGroup": "calves",
+        "function": "Plantar flexes the ankle.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Soleus_muscle"
+    },
+    {
+        "name": "Tibialis Anterior",
+        "muscleGroup": "lower legs",
+        "function": "Dorsiflexes and inverts the foot.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Tibialis_anterior_muscle"
+    },
+    {
+        "name": "Peroneus Longus",
+        "muscleGroup": "lower legs",
+        "function": "Plantar flexes and everts the foot.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Peroneus_longus_muscle"
+    },
+    {
+        "name": "Peroneus Brevis",
+        "muscleGroup": "lower legs",
+        "function": "Plantar flexes and everts the foot.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Peroneus_brevis_muscle"
+    },
+    {
+        "name": "Adductor longus",
+        "muscleGroup": "adductor",
+        "function": "its main function is to adduct the thigh and it is innervated by the obturator nerve.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Adductor_longus_muscle"
+    },
+    {
+        "name": "Adductor brevis",
+        "muscleGroup": "adductor",
+        "function": "main function of the adductor brevis is to pull the thigh medially.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Adductor_brevis_muscle"
+    },
+    {
+        "name": "Adductor magnus",
+        "muscleGroup": "adductor",
+        "function": "The adductor magnus is a powerful adductor of the thigh, made especially active when the legs are moved from a wide spread position to one in which the legs parallel each other.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Adductor_magnus_muscle"
+    },
+    {
+        "name": "Sartorius",
+        "muscleGroup": "thigh",
+        "function": "can move the hip joint and the knee joint.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Sartorius_muscle"
+    },
+    {
+        "name": "Pectineus",
+        "muscleGroup": "thigh",
+        "function": "Hip flection and adduction.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Pectineus_muscle"
+    },
+    {
+        "name": "External obturator",
+        "muscleGroup": "thigh",
+        "function": "lateral rotator of the hip joint. As a short muscle around the hip joint, it stabilizes the hip joint as a postural muscle.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/External_obturator_muscle"
+    },
+    {
+        "name": "Gracilis",
+        "muscleGroup": "thigh",
+        "function": "The muscle adducts, medially rotates (with hip flexion), laterally rotates, and flexes the hip as above, and also aids in flexion of the knee.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Gracilis_muscle"
+    },
+    {
+        "name": "iliacus",
+        "muscleGroup": "thigh",
+        "function": "In open-chain exercises, as part of the iliopsoas, the iliacus is important for lifting (flexing) the femur forward (e.g. front scale). In closed-chain exercises, the iliopsoas bends the trunk forward and can lift the trunk from a lying posture.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Iliacus_muscle"
+    },
+    {
+        "name": "tensor fasciae latae",
+        "muscleGroup": "thigh",
+        "function": "stabilize the hip in extension (assists gluteus maximus during hip extension).",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Tensor_fasciae_latae_muscle"
+    },
+    {
+        "name": "serratus anterior",
+        "muscleGroup": "core",
+        "function": "occasionally called the big swing muscle or boxer's muscle because it is largely responsible for the protraction of the scapula — that is, the pulling of the scapula forward and around the rib cage that occurs when someone throws a punch.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Serratus_anterior_muscle"
+    },
+    {
+        "name": "Levator Scapulae",
+        "muscleGroup": "neck",
+        "function": "Elevates the scapula and tilts its glenoid cavity inferiorly by rotating the scapula; assists in neck extension and lateral neck flexion.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Levator_scapulae_muscle"
+    },
+    {
+        "name": "Supraspinatus",
+        "muscleGroup": "shoulders",
+        "function": "The supraspinatus muscle performs abduction of the arm, and pulls the head of the humerus medially towards the glenoid cavity.",
+        "wikiPageUrl": "https://en.wikipedia.org/wiki/Supraspinatus_muscle"
+    }
+]
+
+###
+

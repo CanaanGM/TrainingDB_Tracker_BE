@@ -77,80 +77,6 @@ Content-Type: application/json
     "howTos": []
   },
   {
-    "name": "Squats",
-    "description": "Squats are a fundamental lower body exercise that primarily targets the muscles of the thighs, hips, and buttocks. They are a key exercise for building lower body strength, improving mobility, and enhancing overall athletic performance.",
-    "howTo": "1. Stand with your feet shoulder-width apart and your toes slightly turned out.\n2. Keep your chest up and your core engaged as you lower your body by bending your knees and hips.\n3. Descend until your thighs are parallel to the ground or as low as your mobility allows.\n4. Push through your heels to return to the starting position, fully extending your hips and knees.",
-    "difficulty": 3,
-    "trainingTypes": [
-      "Strength",
-      "Bodybuilding",
-      "functional"
-    ],
-    "exerciseMuscles": [
-      {
-        "muscleName": "Rectus Femoris",
-        "isPrimary": true
-      },
-      {
-        "muscleName": "Vastus Lateralis",
-        "isPrimary": true
-      },
-      {
-        "muscleName": "Vastus Medialis",
-        "isPrimary": true
-      },
-      {
-        "muscleName": "Vastus Intermedius",
-        "isPrimary": true
-      },
-      {
-        "muscleName": "Gluteus Maximus",
-        "isPrimary": true
-      },
-      {
-        "muscleName": "Gluteus Medius",
-        "isPrimary": false
-      },
-      {
-        "muscleName": "Gluteus Minimus",
-        "isPrimary": false
-      },
-      {
-        "muscleName": "Biceps Femoris",
-        "isPrimary": false
-      },
-      {
-        "muscleName": "Semimembranosus",
-        "isPrimary": false
-      },
-      {
-        "muscleName": "Semitendinosus",
-        "isPrimary": false
-      },
-      {
-        "muscleName": "Erector Spinae",
-        "isPrimary": false
-      },
-      {
-        "muscleName": "Rectus Abdominis",
-        "isPrimary": false
-      },
-      {
-        "muscleName": "External Oblique",
-        "isPrimary": false
-      },
-      {
-        "muscleName": "Internal Oblique",
-        "isPrimary": false
-      },
-      {
-        "muscleName": "Transversus Abdominis",
-        "isPrimary": false
-      }
-    ],
-    "howTos": []
-  },
-  {
     "name": "High Bar Squats",
     "description": "High bar squats are a variation of the traditional squat where the barbell is placed high on the traps. This position encourages a more upright torso during the squat, placing greater emphasis on the quadriceps while still engaging the glutes and hamstrings. It is commonly used in Olympic weightlifting and bodybuilding.",
     "howTo": "1. Position the barbell high on your upper traps, just below the base of your neck.\n2. Grip the barbell with your hands slightly wider than shoulder-width apart.\n3. Stand with your feet shoulder-width apart and toes slightly turned out.\n4. Keep your chest up and your core engaged as you lower your body by bending your knees and hips.\n5. Descend until your thighs are parallel to the ground or as low as your mobility allows.\n6. Push through your heels to return to the starting position, fully extending your hips and knees.",
@@ -676,52 +602,6 @@ Content-Type: application/json
     ]
   },
   {
-    "name": "Cable Wood Choppers",
-    "description": "Cable wood choppers are a dynamic exercise that targets the core muscles, particularly the obliques. This exercise mimics the chopping motion and helps improve rotational strength and stability.",
-    "howTo": "1. Set a cable pulley to core height and attach a handle.\n2. Stand sideways to the machine with your feet shoulder-width apart.\n3. Grasp the handle with both hands, arms fully extended at core height.\n4. Rotate your torso and pull the handle horizontally across your body to the opposite side, keeping your core engaged.\n5. Allow your hips and knees to rotate naturally with the movement.\n6. Return to the starting position with control.\n7. Repeat for the desired number of repetitions, then switch sides.",
-    "difficulty": 2,
-    "trainingTypes": [
-      "Strength",
-      "functional"
-    ],
-    "exerciseMuscles": [
-      {
-        "muscleName": "External Oblique",
-        "isPrimary": true
-      },
-      {
-        "muscleName": "Internal Oblique",
-        "isPrimary": true
-      },
-      {
-        "muscleName": "Rectus Abdominis",
-        "isPrimary": false
-      },
-      {
-        "muscleName": "Transversus Abdominis",
-        "isPrimary": false
-      },
-      {
-        "muscleName": "Latissimus Dorsi",
-        "isPrimary": false
-      },
-      {
-        "muscleName": "Gluteus Maximus",
-        "isPrimary": false
-      },
-      {
-        "muscleName": "Adductor Longus",
-        "isPrimary": false
-      }
-    ],
-    "howTos": [
-      {
-        "name": "youtube",
-        "url": "https://www.youtube.com/watch?v=pAplQXk3dkU"
-      }
-    ]
-  },
-  {
     "name": "Hyper Extensions",
     "description": "Hyper extensions are an exercise that primarily targets the lower back muscles, specifically the erector spinae. This exercise also engages the glutes and hamstrings, helping to improve lower back strength and stability.",
     "howTo": "1. Adjust the hyperextension bench so that your hips rest on the pad and your feet are secured under the foot pads.\n2. Cross your arms over your chest or place your hands behind your head.\n3. Keeping your back straight, bend at the waist to lower your upper body towards the floor.\n4. Lower until your torso is just above perpendicular to the floor.\n5. Raise your upper body back to the starting position by extending your back and engaging your glutes and hamstrings.\n6. Avoid hyperextending your back at the top of the movement.\n7. Repeat for the desired number of repetitions.",
@@ -761,7 +641,7 @@ Content-Type: application/json
     ]
   },
   {
-    "name": "Wide Grip Lat Pulldown",
+    "name": "Lat Pulldown - Wide Grip",
     "description": "The wide grip lat pulldown is a compound exercise that targets the back muscles, particularly the latissimus dorsi. It helps to build a wide and strong back, improving upper body strength and posture.",
     "howTo": "1. Sit at a lat pulldown machine and adjust the knee pad to secure your legs.\n2. Grasp the bar with a wide overhand grip, wider than shoulder-width apart.\n3. Pull the bar down towards your upper chest, bringing your shoulder blades together and keeping your chest up.\n4. Avoid leaning back excessively during the pull.\n5. Slowly return the bar to the starting position with control, fully extending your arms.\n6. Repeat for the desired number of repetitions.",
     "difficulty": 2,
@@ -949,8 +829,8 @@ Content-Type: application/json
     ]
   },
   {
-    "name": "Rope Crunch",
-    "description": "The rope crunch is an isolation exercise that targets the abdominal muscles, particularly the rectus abdominis. This exercise helps to build core strength and improve abdominal definition.",
+    "name": "cable crunch",
+    "description": "The cable crunch is an isolation exercise that targets the abdominal muscles, particularly the rectus abdominis. This exercise helps to build core strength and improve abdominal definition.",
     "howTo": "1. Attach a rope handle to a high pulley on a cable machine.\n2. Kneel in front of the machine, holding the rope handles with both hands, and position the rope behind your head.\n3. Keep your hips stationary and contract your abs to pull your elbows towards your thighs.\n4. Focus on curling your spine and bringing your chest towards your knees.\n5. Hold the contraction for a moment at the bottom of the movement.\n6. Slowly return to the starting position with control, keeping tension on your abs.\n7. Repeat the movement for the desired number of repetitions.",
     "difficulty": 2,
     "trainingTypes": [
@@ -1213,7 +1093,7 @@ Content-Type: application/json
     ]
   },
   {
-    "name": "Slight Incline Dumbbell Press",
+    "name": "Dumbbell chest Press - Slight Incline",
     "description": "The slight incline dumbbell press is a variation of the dumbbell bench press that targets the upper portion of the pectoral muscles. By using a slight incline, this exercise helps to build upper chest strength and improve overall chest definition.",
     "howTo": "1. Adjust an incline bench to a slight incline, around 15-30 degrees.\n2. Sit on the bench with a dumbbell in each hand, resting them on your thighs.\n3. Lie back on the bench and position the dumbbells at shoulder level with your palms facing forward.\n4. Press the dumbbells up and together, extending your arms fully without locking your elbows.\n5. Slowly lower the dumbbells back to the starting position at shoulder level.\n6. Keep your feet flat on the floor and your back pressed against the bench throughout the movement.\n7. Repeat the movement for the desired number of repetitions.",
     "difficulty": 2,
@@ -1256,7 +1136,7 @@ Content-Type: application/json
     ]
   },
   {
-    "name": "Flat Dumbbell Press",
+    "name": "Dumbbell chest Press - flat",
     "description": "The flat dumbbell press is a fundamental exercise that targets the chest muscles, specifically the pectoralis major. It also engages the triceps and shoulders, helping to build upper body strength and muscle mass.",
     "howTo": "1. Lie flat on a bench with a dumbbell in each hand, resting them on your thighs.\n2. Use your thighs to help lift the dumbbells as you lie back, positioning them at shoulder level with your palms facing forward.\n3. Press the dumbbells up and together, fully extending your arms without locking your elbows.\n4. Slowly lower the dumbbells back to the starting position at shoulder level.\n5. Keep your feet flat on the floor and your back pressed against the bench throughout the movement.\n6. Repeat the movement for the desired number of repetitions.",
     "difficulty": 2,
@@ -1820,7 +1700,7 @@ Content-Type: application/json
 }
 ,
 {
-  "name": "Incline Dumbbell Press",
+  "name": "Dumbbell chest Press - Incline",
   "description": "The incline dumbbell press targets the upper portion of the pectoralis major, along with the anterior deltoids and triceps. This exercise helps to build strength and size in the upper chest.",
   "howTo": "Set an incline bench to a 30-45 degree angle. Sit on the bench with a dumbbell in each hand, resting them on your thighs. Kick the dumbbells up as you lie back on the bench, positioning them at shoulder height with your palms facing forward. Press the dumbbells upwards until your arms are fully extended, bringing them together at the top. Lower the dumbbells back to the starting position with control. Repeat for the desired number of repetitions.",
   "difficulty": 3,
@@ -2310,7 +2190,7 @@ Content-Type: application/json
   ]
 },
 {
-  "name": "Dumbbell Press - Seated Hammer",
+  "name": "Dumbbell shoulder Press - Seated Hammer",
   "description": "The seated hammer dumbbell press primarily targets the deltoids and triceps, with an emphasis on the middle and anterior heads of the deltoid. The hammer grip reduces strain on the shoulder joints and provides a strong, natural pressing motion.",
   "howTo": "Sit on a bench with your back supported and feet flat on the ground. Hold a dumbbell in each hand with a neutral (hammer) grip, palms facing each other, and position the dumbbells at shoulder height. Press the dumbbells upward until your arms are fully extended overhead, then lower them back to the starting position with control. Repeat for the desired number of repetitions.",
   "difficulty": 3,
@@ -2461,7 +2341,7 @@ Content-Type: application/json
   ]
 },
 {
-  "name": "Dumbbell Press - Seated Hammer Single Hand",
+  "name": "Dumbbell shoulder Press - Seated Hammer Single Hand",
   "description": "The seated hammer single-hand dumbbell press targets the deltoids, with an emphasis on the anterior and middle heads, while also engaging the triceps. This variation, performed with one arm at a time, increases the demand on core stability and balance.",
   "howTo": "Sit on a bench with your back supported and feet flat on the ground. Hold a dumbbell in one hand with a neutral (hammer) grip, palm facing inward, and position the dumbbell at shoulder height. Press the dumbbell upward until your arm is fully extended overhead, then lower it back to the starting position with control. Keep your core engaged to maintain balance throughout the movement. Repeat for the desired number of repetitions, then switch to the other arm.",
   "difficulty": 3,
@@ -3612,7 +3492,7 @@ Content-Type: application/json
         "howTos": []
     },
     {
-        "name": "Dumbbell Press - Close Grip",
+        "name": "Dumbbell chest Press - Close Grip",
         "description": "The close grip dumbbell press targets the triceps and chest, with an emphasis on the inner portion of the chest. This exercise is effective for building upper body strength and increasing muscle definition.",
         "howTo": "Lie flat on a bench with a dumbbell in each hand, palms facing each other (neutral grip) and dumbbells close together. Press the dumbbells up until your arms are fully extended. Lower the dumbbells back to the starting position with control, keeping the dumbbells close together throughout the movement. Repeat for the desired number of repetitions.",
         "difficulty": 3,
@@ -3626,7 +3506,7 @@ Content-Type: application/json
         "howTos": []
     },
     {
-        "name": "Dumbbell Press - Standing Single Arm",
+        "name": "Dumbbell shoulder Press - Standing Single Arm",
         "description": "The standing single arm dumbbell press is a unilateral exercise that targets the shoulders, helping to build strength and stability. This exercise also engages the core, improving overall balance and coordination.",
         "howTo": "Stand with your feet shoulder-width apart, holding a dumbbell in one hand at shoulder height with your palm facing inward (neutral grip). Press the dumbbell overhead until your arm is fully extended. Lower the dumbbell back to shoulder height with control. Repeat for the desired number of repetitions, then switch arms.",
         "difficulty": 3,
@@ -5992,18 +5872,6 @@ Content-Type: application/json
     ],
     "howTos": []
 },
-{
-        "name": "Calf Raises - Standing",
-        "description": "Standing calf raises are an isolation exercise that targets the calf muscles, specifically the gastrocnemius and soleus. This exercise helps to build calf strength and improve ankle stability.",
-        "howTo": "Stand with your feet hip-width apart, toes pointed forward. Push through the balls of your feet to raise your heels off the ground, lifting your body as high as possible. Hold the top position for a moment, then slowly lower your heels back down. Repeat for the desired number of repetitions.",
-        "difficulty": 2,
-        "trainingTypes": ["Strength", "Bodybuilding"],
-        "exerciseMuscles": [
-            {"muscleName": "gastrocnemius", "muscleGroup": "calves", "isPrimary": true},
-            {"muscleName": "soleus", "muscleGroup": "calves", "isPrimary": true}
-        ],
-        "howTos": []
-    },
     {
         "name": "Side Plank on Knee",
         "description": "The side plank on knee is a core stabilization exercise that targets the obliques, rectus abdominis, and glutes. This exercise helps to build core strength, stability, and balance.",
@@ -6059,25 +5927,6 @@ Content-Type: application/json
             {"muscleName": "deltoid posterior head", "muscleGroup": "shoulders", "isPrimary": true},
             {"muscleName": "infraspinatus", "muscleGroup": "back", "isPrimary": false},
             {"muscleName": "teres minor", "muscleGroup": "back", "isPrimary": false}
-        ],
-        "howTos": []
-    },
-    {
-        "name": "Broad Jumps",
-        "description": "Broad jumps are a plyometric exercise that targets the quadriceps, hamstrings, glutes, and calves while also engaging the core. This exercise helps to build explosive power, leg strength, and coordination.",
-        "howTo": "Stand with your feet shoulder-width apart. Lower into a squat position, then explosively jump forward as far as you can, swinging your arms for momentum. Land softly with your knees slightly bent and immediately go into the next jump. Repeat for the desired number of repetitions or distance.",
-        "difficulty": 4,
-        "trainingTypes": ["Power", "Cardiovascular", "Functional"],
-        "exerciseMuscles": [
-            {"muscleName": "rectus femoris", "muscleGroup": "quadriceps", "isPrimary": true},
-            {"muscleName": "vastus lateralis", "muscleGroup": "quadriceps", "isPrimary": true},
-            {"muscleName": "vastus medialis", "muscleGroup": "quadriceps", "isPrimary": true},
-            {"muscleName": "gluteus maximus", "muscleGroup": "glutes", "isPrimary": true},
-            {"muscleName": "biceps femoris", "muscleGroup": "hamstrings", "isPrimary": true},
-            {"muscleName": "semitendinosus", "muscleGroup": "hamstrings", "isPrimary": true},
-            {"muscleName": "semimembranosus", "muscleGroup": "hamstrings", "isPrimary": true},
-            {"muscleName": "gastrocnemius", "muscleGroup": "calves", "isPrimary": false},
-            {"muscleName": "rectus abdominis", "muscleGroup": "core", "isPrimary": false}
         ],
         "howTos": []
     },
@@ -6246,19 +6095,7 @@ Content-Type: application/json
         ],
         "howTos": []
     },
-    {
-        "name": "Lateral Line Hops",
-        "description": "Lateral line hops are a plyometric exercise that targets the lower body muscles, particularly the calves and ankles, while also improving coordination and agility.",
-        "howTo": "Stand with your feet together next to a line or object on the ground. Hop side to side over the line, keeping your feet together and landing softly. Continue hopping back and forth for the desired number of repetitions or time.",
-        "difficulty": 2,
-        "trainingTypes": ["Cardiovascular", "Functional"],
-        "exerciseMuscles": [
-            {"muscleName": "gastrocnemius", "muscleGroup": "calves", "isPrimary": true},
-            {"muscleName": "soleus", "muscleGroup": "calves", "isPrimary": false},
-            {"muscleName": "rectus femoris", "muscleGroup": "quadriceps", "isPrimary": false}
-        ],
-        "howTos": []
-    },
+
     {
         "name": "Side Plank - Dumbbell Reach",
         "description": "This variation of the side plank adds a dumbbell reach, targeting the obliques, shoulders, and core while also improving stability and coordination.",
@@ -6337,20 +6174,63 @@ Content-Type: application/json
         ],
         "howTos": []
     },
-    {
-        "name": "Ab Roller",
-        "description": "The ab roller is a core exercise that targets the rectus abdominis, obliques, and hip flexors, helping to build core strength, stability, and endurance.",
-        "howTo": "Kneel on the ground with the ab roller in front of you. Slowly roll the ab roller forward, extending your body into a straight line. Engage your core and roll back to the starting position. Repeat for the desired number of repetitions.",
-        "difficulty": 4,
-        "trainingTypes": ["Strength", "Functional"],
-        "exerciseMuscles": [
-            {"muscleName": "rectus abdominis", "muscleGroup": "core", "isPrimary": true},
-            {"muscleName": "transversus abdominis", "muscleGroup": "core", "isPrimary": true},
-            {"muscleName": "external oblique", "muscleGroup": "core", "isPrimary": false},
-            {"muscleName": "internal oblique", "muscleGroup": "core", "isPrimary": false},
-            {"muscleName": "psoas major", "muscleGroup": "core", "isPrimary": false}
-        ],
-        "howTos": []
-    }
+      {
+    "name": "Cable Internal Rotation",
+    "description": "Cable internal rotation is an isolation exercise that targets the triceps while also engaging the rotator cuff muscles. This exercise mimics the motion of drawing a sword, making it effective for developing shoulder stability and triceps strength.",
+    "howTo": "Set up a cable machine with a handle attachment at about hip height. Stand sideways to the machine, holding the handle with the hand opposite the machine, with your arm across your body. Start with your elbow bent at 90 degrees and your hand near your opposite shoulder. Rotate your shoulder internally, pulling the handle across your body as if drawing a sword, and extend your arm fully to engage the triceps. Slowly return to the starting position. Repeat for the desired number of repetitions, then switch sides.",
+    "difficulty": 3,
+    "trainingTypes": ["Strength", "Bodybuilding"],
+    "exerciseMuscles": [
+        {"muscleName": "triceps brachii long head", "muscleGroup": "triceps", "isPrimary": true},
+        {"muscleName": "triceps brachii lateral head", "muscleGroup": "triceps", "isPrimary": true}
+    ],
+    "howTos": []
+},
+{
+    "name": "Lying Dumbbell Internal Rotation Extension",
+    "description": "This exercise targets the triceps while also engaging the shoulder stabilizers, particularly through an internal rotation movement that mimics drawing a sword. It is performed lying on your back with a dumbbell.",
+    "howTo": "Lie on your back on a bench with a dumbbell in one hand. Hold the dumbbell above your chest with your arm extended. Start with your arm across your body, similar to a chest fly position, with your palm facing inward. Internally rotate your shoulder, bringing the dumbbell towards the side of your head as you bend your elbow, and then extend your arm straight up, fully contracting the triceps. Slowly return to the starting position, controlling the movement throughout. Repeat for the desired number of repetitions, then switch sides.",
+    "difficulty": 3,
+    "trainingTypes": ["Strength", "Bodybuilding"],
+    "exerciseMuscles": [
+        {"muscleName": "triceps brachii long head", "muscleGroup": "triceps", "isPrimary": true},
+        {"muscleName": "triceps brachii lateral head", "muscleGroup": "triceps", "isPrimary": true}
+    ],
+    "howTos": []
+},
+{
+    "name": "Dumbbell Shoulder Press - Seated Hammer Grip",
+    "description": "The seated hammer grip dumbbell shoulder press targets the shoulder muscles, particularly the anterior and middle deltoid heads, while also engaging the triceps and upper chest. The hammer grip (neutral grip) provides a more shoulder-friendly movement, reducing stress on the shoulder joint.",
+    "howTo": "Sit on a bench with a back support, holding a dumbbell in each hand with a neutral grip (palms facing each other). Start with the dumbbells at shoulder height, elbows bent, and forearms vertical. Press the dumbbells overhead until your arms are fully extended, then slowly lower them back to the starting position. Maintain control throughout the movement. Repeat for the desired number of repetitions.",
+    "difficulty": 3,
+    "trainingTypes": ["Strength", "Bodybuilding"],
+    "exerciseMuscles": [
+        {"muscleName": "deltoid anterior head", "muscleGroup": "shoulders", "isPrimary": true},
+        {"muscleName": "deltoid middle head", "muscleGroup": "shoulders", "isPrimary": true},
+        {"muscleName": "triceps brachii long head", "muscleGroup": "triceps", "isPrimary": true},
+        {"muscleName": "triceps brachii lateral head", "muscleGroup": "triceps", "isPrimary": false},
+        {"muscleName": "pectoralis major upper portion", "muscleGroup": "chest", "isPrimary": false}
+    ],
+    "howTos": []
+},
+{
+    "name": "Low Bar Squat",
+    "description": "The low bar squat is a variation of the traditional back squat where the barbell is positioned lower on the traps, just above the rear deltoids. This position shifts the emphasis to the posterior chain, particularly the glutes and hamstrings, while still engaging the quadriceps. It is commonly used in powerlifting due to the potential for lifting heavier weights.",
+    "howTo": "Start by positioning a barbell on your back, placing it lower on your traps, just above the rear deltoids. Stand with your feet shoulder-width apart, toes slightly turned out. Keeping your chest up and core braced, initiate the movement by pushing your hips back and bending your knees to lower into a squat. Aim to lower your hips below parallel to your knees while keeping your back neutral. Drive through your heels to stand back up to the starting position. Repeat for the desired number of repetitions.",
+    "difficulty": 4,
+    "trainingTypes": ["Strength", "Bodybuilding", "Powerlifting"],
+    "exerciseMuscles": [
+        {"muscleName": "gluteus maximus", "muscleGroup": "glutes", "isPrimary": true},
+        {"muscleName": "biceps femoris", "muscleGroup": "hamstrings", "isPrimary": true},
+        {"muscleName": "semitendinosus", "muscleGroup": "hamstrings", "isPrimary": true},
+        {"muscleName": "semimembranosus", "muscleGroup": "hamstrings", "isPrimary": true},
+        {"muscleName": "rectus femoris", "muscleGroup": "quadriceps", "isPrimary": false},
+        {"muscleName": "vastus lateralis", "muscleGroup": "quadriceps", "isPrimary": false},
+        {"muscleName": "vastus medialis", "muscleGroup": "quadriceps", "isPrimary": false},
+        {"muscleName": "erector spinae", "muscleGroup": "back", "isPrimary": false}
+    ],
+    "howTos": []
+}
+
 
 ]
