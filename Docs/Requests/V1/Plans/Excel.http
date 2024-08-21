@@ -1,3 +1,10 @@
+@rootUrl = http://localhost:5134
+
+
+
+POST {{rootUrl}}/plan
+Content-Type: application/json
+
   {
     "name": "Excel",
     "description": "Strength Training Program",
