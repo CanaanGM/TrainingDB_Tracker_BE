@@ -21,6 +21,8 @@ public partial class User
 
     public virtual ICollection<Measurement> Measurements { get; set; } = new List<Measurement>();
 
+    public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+
     public virtual ICollection<TrainingSession> TrainingSessions { get; set; } = new List<TrainingSession>();
 
     public virtual ICollection<UserExercise> UserExercises { get; set; } = new List<UserExercise>();

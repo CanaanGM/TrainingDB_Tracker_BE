@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using DataLibrary.Dtos;
-using DataLibrary.Helpers;
 using DataLibrary.Models;
+using SharedLibrary.Dtos;
+using SharedLibrary.Helpers;
 
 namespace DataLibrary.Core;
 
@@ -84,7 +84,8 @@ public class Profiles : Profile
 
         CreateMap<ExerciseRecord, ExerciseReadDto>()
             .ForMember(x => x.Name,
-                c => c.MapFrom(t => t.Exercise.Name));
+                c =>
+                    c.MapFrom(t => t.Exercise.Name));
 
         CreateMap<ExerciseRecordWriteDto, ExerciseRecord>();
 
@@ -120,9 +121,15 @@ public class Profiles : Profile
         CreateMap<BlockExerciseWriteDto, BlockExercise>();
 
 
+        CreateMap<User, UserAuthDto>()
+            .ForMember(dto => dto.Roles,
+                src =>
+                    src.MapFrom(x => x.UserRoles.Select(x => x.Role.Name))
+                    );
 
+        CreateMap<UserWriteDto, User>();
 
-
+        CreateMap<RefreshToken, RefreshTokenReadDto>();
 
 
 

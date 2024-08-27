@@ -1,4 +1,4 @@
-﻿namespace DataLibrary.Core;
+﻿namespace SharedLibrary.Core;
 
 // TODO: Use fluent API style
 // TODO: maybe use logging here too

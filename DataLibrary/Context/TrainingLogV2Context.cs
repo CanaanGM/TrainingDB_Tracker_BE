@@ -34,6 +34,8 @@ public partial class TrainingLogV2Context : DbContext
 
     public virtual DbSet<Muscle> Muscles { get; set; }
 
+    public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
+
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<TrainingDay> TrainingDays { get; set; }
@@ -319,6 +321,30 @@ public partial class TrainingLogV2Context : DbContext
             entity.Property(e => e.WikiPageUrl)
                 .HasColumnType("VARCHAR")
                 .HasColumnName("wiki_page_url");
+        });
+
+        modelBuilder.Entity<RefreshToken>(entity =>
+        {
+            entity.ToTable("refresh_token");
+
+            entity.HasIndex(e => e.Token, "idx_refresh_token_token");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Active)
+                .HasDefaultValue(false)
+                .HasColumnType("bit")
+                .HasColumnName("active");
+            entity.Property(e => e.Expires)
+                .HasDefaultValueSql("DATETIME('now', '+7 days')")
+                .HasColumnType("datetime")
+                .HasColumnName("expires");
+            entity.Property(e => e.Revoked)
+                .HasColumnType("datetime")
+                .HasColumnName("revoked");
+            entity.Property(e => e.Token).HasColumnName("token");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.RefreshTokens).HasForeignKey(d => d.UserId);
         });
 
         modelBuilder.Entity<Role>(entity =>

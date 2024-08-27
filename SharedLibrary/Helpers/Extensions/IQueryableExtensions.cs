@@ -1,4 +1,4 @@
-﻿namespace DataLibrary.Helpers.Extensions;
+﻿namespace SharedLibrary.Helpers.Extensions;
 public static class IQueryableExtensions
 {
     /// <summary>

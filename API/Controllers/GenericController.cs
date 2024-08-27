@@ -1,8 +1,8 @@
-using DataLibrary.Core;
-using DataLibrary.Dtos;
 using DataLibrary.Services;
 
 using Microsoft.AspNetCore.Mvc;
+using SharedLibrary.Core;
+using SharedLibrary.Dtos;
 
 namespace API.Controllers;
 [ApiController]
@@ -61,7 +61,7 @@ public class GenericController : ControllerBase
     [HttpPost("/muscles/bulk")]
     public async Task<IActionResult> CreateBulk([FromBody] HashSet<MuscleWriteDto> newMuscles, CancellationToken cancellationToken)
     {
-        DataLibrary.Core.Result<bool> res = await _muscleService.CreateBulkAsync(newMuscles, cancellationToken);
+        Result<bool> res = await _muscleService.CreateBulkAsync(newMuscles, cancellationToken);
 
         return res.IsSuccess ? Ok() : BadRequest();
     }

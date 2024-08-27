@@ -16,9 +16,36 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\scripts\parse_test_results.py = .github\scripts\parse_test_results.py
 		insertion_script.sql = insertion_script.sql
 		trainingSessionBulkRequest.json = trainingSessionBulkRequest.json
+		Docs\Plans\bulk\plan_request.json = Docs\Plans\bulk\plan_request.json
+		Docs\Plans\single\excel.json = Docs\Plans\single\excel.json
+		Docs\Plans\single\savage.json = Docs\Plans\single\savage.json
+		Docs\Plans\single\v3-advanced.json = Docs\Plans\single\v3-advanced.json
+		Docs\Plans\single\v3-beginner.json = Docs\Plans\single\v3-beginner.json
+		Docs\Plans\single\v3-intermediate.json = Docs\Plans\single\v3-intermediate.json
+		Docs\Requests\V1\Exercise\Bulk.http = Docs\Requests\V1\Exercise\Bulk.http
+		Docs\Requests\V1\Exercise\create_one.http = Docs\Requests\V1\Exercise\create_one.http
+		Docs\Requests\V1\Exercise\Exercises_Bulk.http = Docs\Requests\V1\Exercise\Exercises_Bulk.http
+		Docs\Requests\V1\Muscles\all.http = Docs\Requests\V1\Muscles\all.http
+		Docs\Requests\V1\Plans\Excel.http = Docs\Requests\V1\Plans\Excel.http
+		Docs\Requests\V1\Plans\Savage.http = Docs\Requests\V1\Plans\Savage.http
+		Docs\Requests\V1\Plans\V3-Advanced.http = Docs\Requests\V1\Plans\V3-Advanced.http
+		Docs\Requests\V1\Plans\V3-Beginner.http = Docs\Requests\V1\Plans\V3-Beginner.http
+		Docs\Requests\V1\Plans\V3-Intermediate.http = Docs\Requests\V1\Plans\V3-Intermediate.http
+		Docs\Requests\V1\Sessions\22-6-2024_to_8-11-2024.http = Docs\Requests\V1\Sessions\22-6-2024_to_8-11-2024.http
+		Docs\Requests\V1\TrainingTypes\Create_bulk.http = Docs\Requests\V1\TrainingTypes\Create_bulk.http
+		Docs\Sql\exercise.sql = Docs\Sql\exercise.sql
+		Docs\Sql\exercise_how_to.sql = Docs\Sql\exercise_how_to.sql
+		Docs\Sql\exercise_muscle.sql = Docs\Sql\exercise_muscle.sql
+		Docs\Sql\exercise_type.sql = Docs\Sql\exercise_type.sql
+		Docs\Sql\muscle.sql = Docs\Sql\muscle.sql
+		Docs\Sql\training_type.sql = Docs\Sql\training_type.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateLibraryTests", "DateLibraryTests\DateLibraryTests.csproj", "{DE8243D4-DE5B-4D72-ABA6-C1868B42F164}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTests", "ApiTests\ApiTests.csproj", "{C9584CC9-D3DA-4A1E-8759-9F16D406F1B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLibrary", "SharedLibrary\SharedLibrary.csproj", "{9D3D28CB-93FB-46A5-8129-8A8449B92D28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +65,14 @@ Global
 		{DE8243D4-DE5B-4D72-ABA6-C1868B42F164}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE8243D4-DE5B-4D72-ABA6-C1868B42F164}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE8243D4-DE5B-4D72-ABA6-C1868B42F164}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9584CC9-D3DA-4A1E-8759-9F16D406F1B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9584CC9-D3DA-4A1E-8759-9F16D406F1B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9584CC9-D3DA-4A1E-8759-9F16D406F1B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9584CC9-D3DA-4A1E-8759-9F16D406F1B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D3D28CB-93FB-46A5-8129-8A8449B92D28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D3D28CB-93FB-46A5-8129-8A8449B92D28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D3D28CB-93FB-46A5-8129-8A8449B92D28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D3D28CB-93FB-46A5-8129-8A8449B92D28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

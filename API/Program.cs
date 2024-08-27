@@ -1,4 +1,9 @@
 
+using System.Text;
+using API.Security;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
 namespace API;
 using DataLibrary;
 public class Program
@@ -16,6 +21,30 @@ public class Program
 
         builder.Services.AddDataLibrary();
 
+        
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"]));
+
+        builder.Services.AddHttpContextAccessor();
+
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = key,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+        
+        builder.Services.AddScoped<TokenService>();
+        builder.Services.AddScoped<IUserAccessor, UserAccessor>();
+        
+        
+        
         WebApplication app = builder.Build();
 
         // Configure the HTTP request pipeline.

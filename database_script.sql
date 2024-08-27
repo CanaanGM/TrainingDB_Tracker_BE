@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS user (
     height REAL,
     gender CHAR(1),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CHECK (gender IN ('F', 'M'))
+    CHECK (gender IN ('F', 'M', 'U')) -- U -> un specified . . . yet !
 );
 CREATE INDEX idx_user_username ON user(username);
 CREATE UNIQUE INDEX idx_user_email ON user(email);
@@ -331,42 +331,37 @@ create table if not exists user_roles(
     CONSTRAINT fk_user_roles_role_id FOREIGN KEY (role_id) references role(id) on delete cascade
 );
 create index idx_role_name on role(name);
-
+create table if not exists refresh_token(
+    id integer primary key autoincrement,
+    user_id integer,
+    token text not null,
+    expires datetime default (DATETIME('now', '+7 days')),
+    revoked datetime,
+    active bit default 0, -- 1 active, 0 not
+    CONSTRAINT fk_refresh_token_user_id FOREIGN KEY (user_id) references user(id)
+);
+create index idx_refresh_token_token on refresh_token(token);
 -- TODO: REMOVE LATER!
 insert into user (username, email, height, gender) VALUES
     ('Canaan', 'canaan@test.com', 173, 'M'),
     ('Dante', 'dante@test.com', 200, 'M'),
     ('Alphrad', 'alphrad@test.com', 172, 'F'),
     ('Nero', 'nero@test.com', 156, 'F');
-
 insert into user_passwords(user_id, password_hash, password_salt)
         VALUES
-            (1, 'iUXNkjg5RS/0/uEH8f6tasaKKKt8IVsZgTTtyGH3dmQ=', 'wnGHc9SponguR0Givr2Zcvy7UI3Szs0y0lYfAwdatUE='),
-            (2, 'BzMDx05wo6wjTriEEjxDsb9jZTa6QkbeFAr7B46CAwc=', 'UqfeVl+kUvwURJ2Avx5nw2+qTBMKUUdrHE5m48RGFU0='),
-            (3, 'wA+0773CBog+MlcEjrNcAmHS6pSd06ceminYzPU4wlI=', 'ROtBSjEmAd8swaKpy0e7yV6n5IJl+K5i6yF/brfjTD0='),
-            (4, 'Kw1vjlzykwUqruCdhzdMOQBuOkn4hljD3JLiOdAogWg=', 'a5MaAfB/7zpN8dd3+i10RgHGJ455lpoSIOrAXXXQbyY=');
-
+(1, 'iUXNkjg5RS/0/uEH8f6tasaKKKt8IVsZgTTtyGH3dmQ=', 'wnGHc9SponguR0Givr2Zcvy7UI3Szs0y0lYfAwdatUE='),
+(2, 'BzMDx05wo6wjTriEEjxDsb9jZTa6QkbeFAr7B46CAwc=', 'UqfeVl+kUvwURJ2Avx5nw2+qTBMKUUdrHE5m48RGFU0='),
+(3, 'wA+0773CBog+MlcEjrNcAmHS6pSd06ceminYzPU4wlI=', 'ROtBSjEmAd8swaKpy0e7yV6n5IJl+K5i6yF/brfjTD0='),
+(4, 'Kw1vjlzykwUqruCdhzdMOQBuOkn4hljD3JLiOdAogWg=', 'a5MaAfB/7zpN8dd3+i10RgHGJ455lpoSIOrAXXXQbyY=');
 insert into role(name) values
-                           ('user'),
-                           ('admin'),
-                           ('owner'),
-                           ('thieves');
+('user'),
+('admin'),
+('owner'),
+('thieves');
 insert into user_roles(user_id, role_id) VALUES
-                                             (1, 1),
-                                             (1,2),
-                                             (1,3),
-                                             (2,1),
-                                             (3,1),
-                                             (4,1);
-
-
-
-
-
-
-
-
-
-
-
-
+ (1, 1),
+ (1,2),
+ (1,3),
+ (2,1),
+ (3,1),
+ (4,1);

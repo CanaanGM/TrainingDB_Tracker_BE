@@ -1,0 +1,14 @@
+@rootUrl = http://localhost:5134/auth/
+
+
+
+POST {{rootUrl}}register
+Content-Type: application/json
+
+{
+  "name" : "Dante",
+  "email" : "dante@devilmaycry.com",
+  "password":"pizza&&strawberrysunde",
+  "gender":"M"
+}
+

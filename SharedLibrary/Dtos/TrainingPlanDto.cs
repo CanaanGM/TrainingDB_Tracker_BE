@@ -1,6 +1,6 @@
-﻿using DataLibrary.Helpers;
+﻿using SharedLibrary.Helpers;
 
-namespace DataLibrary.Dtos;
+namespace SharedLibrary.Dtos;
 
 public class TrainingPlanWriteDto
 {

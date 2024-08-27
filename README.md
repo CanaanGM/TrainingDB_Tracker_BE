@@ -110,3 +110,7 @@ select exercise_id, name, url from exercise_how_to;
 select * from exercise_muscle;
 select * from exercise_type;
 ```
+
+## PS
+
+- chat gepteh is good for generation, not for logic, give it the steps and context and it'll fly, tell it to refactor and it'll burn.

@@ -1,4 +1,4 @@
-﻿namespace DataLibrary.Dtos;
+﻿namespace SharedLibrary.Dtos;
 
 public class MeasurementsReadDto 
 {

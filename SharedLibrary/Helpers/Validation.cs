@@ -1,7 +1,7 @@
-﻿using DataLibrary.Core;
-using DataLibrary.Dtos;
+﻿using SharedLibrary.Core;
+using SharedLibrary.Dtos;
 
-namespace DataLibrary.Helpers;
+namespace SharedLibrary.Helpers;
 
 public static class Validation
 {

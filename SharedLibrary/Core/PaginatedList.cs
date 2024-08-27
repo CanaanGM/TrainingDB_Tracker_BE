@@ -1,4 +1,4 @@
-﻿namespace DataLibrary.Core;
+﻿namespace SharedLibrary.Core;
 public class PaginatedList<T>
 {
     public List<T> Items { get; set; }

@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 
 using DataLibrary.Context;
-using DataLibrary.Core;
-using DataLibrary.Dtos;
-using DataLibrary.Helpers;
 using DataLibrary.Models;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SharedLibrary.Core;
+using SharedLibrary.Dtos;
+using SharedLibrary.Helpers;
 
 namespace DataLibrary.Services;
 public interface ITrainingTypesService

@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using DataLibrary.Context;
 using DataLibrary.Core;
-using DataLibrary.Dtos;
 using DataLibrary.Models;
 using DataLibrary.Services;
 using Microsoft.Extensions.Logging;
 using Moq;
+using SharedLibrary.Core;
+using SharedLibrary.Dtos;
 using TestSupport.EfHelpers;
 
 namespace DateLibraryTests.ServicesTests;

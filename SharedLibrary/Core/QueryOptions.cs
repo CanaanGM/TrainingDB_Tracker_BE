@@ -1,4 +1,4 @@
-﻿namespace DataLibrary.Core;
+﻿namespace SharedLibrary.Core;
 public class ExerciseFilterOptions
 {
     public string? TrainingTypeName { get; set; }

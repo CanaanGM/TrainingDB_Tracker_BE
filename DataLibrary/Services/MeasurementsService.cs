@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using DataLibrary.Context;
-using DataLibrary.Core;
-using DataLibrary.Dtos;
 using DataLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SharedLibrary.Core;
+using SharedLibrary.Dtos;
 
 namespace DataLibrary.Services;
 

@@ -1,4 +1,4 @@
-﻿using DataLibrary.Dtos;
+﻿using SharedLibrary.Dtos;
 
 namespace DateLibraryTests.helpers;
 

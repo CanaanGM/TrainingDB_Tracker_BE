@@ -30,25 +30,11 @@ public static class ProductionDatabaseHelpers
     /// <param name="context"></param>
     public static void SeedDummyUsers(SqliteContext context)
     {
-        string insertUsers = @"
-       insert into user (username, email, height, gender) VALUES
-            ('Canaan', 'canaan@test.com', 173, 'M'),
-            ('Dante', 'dante@test.com', 200, 'M'),
-            ('Alphrad', 'alphrad@test.com', 172, 'F'),
-            ('Nero', 'nero@test.com', 156, 'F');      
-            ";
+        context.Database.ExecuteSqlRaw(ReadSqlFile("users_and_roles"));
+    }
 
-        // other wise i need a loop, so noh!
-        string insertUserPassword = @"
-        insert into user_passwords(user_id, password_hash, password_salt)
-        VALUES
-            (1, 'iUXNkjg5RS/0/uEH8f6tasaKKKt8IVsZgTTtyGH3dmQ=', 'wnGHc9SponguR0Givr2Zcvy7UI3Szs0y0lYfAwdatUE='),
-            (2, 'BzMDx05wo6wjTriEEjxDsb9jZTa6QkbeFAr7B46CAwc=', 'UqfeVl+kUvwURJ2Avx5nw2+qTBMKUUdrHE5m48RGFU0='),
-            (3, 'wA+0773CBog+MlcEjrNcAmHS6pSd06ceminYzPU4wlI=', 'ROtBSjEmAd8swaKpy0e7yV6n5IJl+K5i6yF/brfjTD0='),
-            (4, 'Kw1vjlzykwUqruCdhzdMOQBuOkn4hljD3JLiOdAogWg=', 'a5MaAfB/7zpN8dd3+i10RgHGJ455lpoSIOrAXXXQbyY=');";
-
-        context.Database.ExecuteSqlRaw(insertUsers);
-        context.Database.ExecuteSqlRaw(insertUserPassword);
-        context.SaveChanges();
+    public static void SeedRoles(SqliteContext context)
+    {
+        context.Database.ExecuteSqlRaw(ReadSqlFile("roles"));
     }
 }

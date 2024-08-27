@@ -1,5 +1,5 @@
-﻿using DataLibrary.Dtos;
-using DataLibrary.Helpers;
+﻿using SharedLibrary.Dtos;
+using SharedLibrary.Helpers;
 
 namespace DateLibraryTests;
 

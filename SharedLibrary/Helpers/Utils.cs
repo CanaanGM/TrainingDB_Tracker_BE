@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace DataLibrary.Helpers;
+namespace SharedLibrary.Helpers;
 public static class Utils
 {
     /// <summary>
