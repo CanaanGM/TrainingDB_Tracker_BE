@@ -61,8 +61,9 @@ public static class SecurityHelpers
 
         try
         {
-            BCrypt.Net.BCrypt.Verify(enteredPassword, storedHash);
-            return Result<bool>.Success(true, "Password verified successfully.");
+            return BCrypt.Net.BCrypt.Verify(enteredPassword, storedHash)
+                ? Result<bool>.Success(true, "Password verified successfully.")
+                : Result<bool>.Failure("Password verification failed.");
         }
         catch (Exception e)
         {
