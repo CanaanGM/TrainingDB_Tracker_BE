@@ -121,7 +121,7 @@ public class Profiles : Profile
         CreateMap<BlockExerciseWriteDto, BlockExercise>();
 
 
-        CreateMap<User, UserAuthDto>()
+        CreateMap<User, InternalUserAuthDto>()
             .ForMember(dto => dto.Roles,
                 src =>
                     src.MapFrom(x => x.UserRoles.Select(x => x.Role.Name))

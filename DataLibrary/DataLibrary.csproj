@@ -21,9 +21,7 @@
 
     <ItemGroup>
         <Folder Include="Context\" />
-        <Folder Include="ModelsV2\" />
         <Folder Include="Models\" />
-        <Folder Include="Security\" />
     </ItemGroup>
 
     <ItemGroup>

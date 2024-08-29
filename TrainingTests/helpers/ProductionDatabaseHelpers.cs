@@ -37,4 +37,9 @@ public static class ProductionDatabaseHelpers
     {
         context.Database.ExecuteSqlRaw(ReadSqlFile("roles"));
     }
+
+    public static void SeedMeasurements(SqliteContext context)
+    {
+        context.Database.ExecuteSqlRaw(ReadSqlFile("measurements"));
+    }
 }

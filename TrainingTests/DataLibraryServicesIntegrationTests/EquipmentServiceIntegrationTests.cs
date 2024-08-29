@@ -11,22 +11,22 @@ using TestSupport.EfHelpers;
 
 namespace TrainingTests.ServicesTests;
 
-public class EquipmentServiceTests : BaseTestClass
+public class EquipmentServiceIntegrationTests : BaseIntegrationTestClass
 {
 
-    private readonly Mock<ILogger<EquipmentService>> logger;
-    private readonly EquipmentService service;
+    private readonly Mock<ILogger<EquipmentServiceIntegration>> logger;
+    private readonly EquipmentServiceIntegration _serviceIntegration;
 
-    public EquipmentServiceTests()
+    public EquipmentServiceIntegrationTests()
     {
-        logger = new Mock<ILogger<EquipmentService>>();
-        service = new EquipmentService(_context, _mapper, logger.Object);
+        logger = new Mock<ILogger<EquipmentServiceIntegration>>();
+        _serviceIntegration = new EquipmentServiceIntegration(_context, _mapper, logger.Object);
     }
 
     [Fact]
     public async Task GetAll_Empty_success()
     {
-        var result = await service.GetAsync(new CancellationToken());
+        var result = await _serviceIntegration.GetAsync(new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.Empty(result.Value);
     }
@@ -55,7 +55,7 @@ public class EquipmentServiceTests : BaseTestClass
         _context.Equipment.AddRange(equipments);
         _context.SaveChanges();
 
-        var result = await service.GetAsync(new CancellationToken());
+        var result = await _serviceIntegration.GetAsync(new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.NotEmpty(result.Value);
         Assert.Equal(equipments[0].Name, result.Value[0].Name);
@@ -79,7 +79,7 @@ public class EquipmentServiceTests : BaseTestClass
         };
 
 
-        var result = await service.UpsertAsync(n, new CancellationToken());
+        var result = await _serviceIntegration.UpsertAsync(n, new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.True(result.Value >= 1);
 
@@ -160,7 +160,7 @@ public class EquipmentServiceTests : BaseTestClass
         
         var n = data.Item2;
 
-        var result = await service.UpsertAsync(n, new CancellationToken());
+        var result = await _serviceIntegration.UpsertAsync(n, new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.True(result.Value >= 1);
 
@@ -210,7 +210,7 @@ public class EquipmentServiceTests : BaseTestClass
     [MemberData(nameof(CreationBulkFaulty))]
     public async Task CreateBulk_ShouldReturnSucess(List<EquipmentWriteDto> data)
     {
-        var result = await service.CreateBulkAsync(data, new CancellationToken());
+        var result = await _serviceIntegration.CreateBulkAsync(data, new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.True(result.Value);
 
@@ -222,7 +222,7 @@ public class EquipmentServiceTests : BaseTestClass
     public async Task Delete_NoRecords_Failure()
     {
         var equipmentName = "canaan";
-        var result = await service.DeleteAsync(equipmentName, new CancellationToken());
+        var result = await _serviceIntegration.DeleteAsync(equipmentName, new CancellationToken());
         Assert.False(result.IsSuccess);
         Assert.Equal($"Equipment with the name: {equipmentName}, does not exists", result.ErrorMessage);
     }
@@ -242,7 +242,7 @@ public class EquipmentServiceTests : BaseTestClass
         
         
         var equipmentName = "canaan";
-        var result = await service.DeleteAsync(equipmentName, new CancellationToken());
+        var result = await _serviceIntegration.DeleteAsync(equipmentName, new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.True(result.Value);
         
@@ -257,7 +257,7 @@ public class EquipmentServiceTests : BaseTestClass
     public async Task Delete_ExistingRecords_FaultyName_returns_failure(string name)
     {
         
-        var result = await service.DeleteAsync(name, new CancellationToken());
+        var result = await _serviceIntegration.DeleteAsync(name, new CancellationToken());
         Assert.False(result.IsSuccess);
         Assert.NotNull(result.Exception);
         Assert.Equal("Name cannot be empty!", result.Exception.Message );

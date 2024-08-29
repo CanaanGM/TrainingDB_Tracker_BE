@@ -349,10 +349,10 @@ insert into user (username, email, height, gender) VALUES
     ('Nero', 'nero@test.com', 156, 'F');
 insert into user_passwords(user_id, password_hash, password_salt)
         VALUES
-(1, 'iUXNkjg5RS/0/uEH8f6tasaKKKt8IVsZgTTtyGH3dmQ=', 'wnGHc9SponguR0Givr2Zcvy7UI3Szs0y0lYfAwdatUE='),
-(2, 'BzMDx05wo6wjTriEEjxDsb9jZTa6QkbeFAr7B46CAwc=', 'UqfeVl+kUvwURJ2Avx5nw2+qTBMKUUdrHE5m48RGFU0='),
-(3, 'wA+0773CBog+MlcEjrNcAmHS6pSd06ceminYzPU4wlI=', 'ROtBSjEmAd8swaKpy0e7yV6n5IJl+K5i6yF/brfjTD0='),
-(4, 'Kw1vjlzykwUqruCdhzdMOQBuOkn4hljD3JLiOdAogWg=', 'a5MaAfB/7zpN8dd3+i10RgHGJ455lpoSIOrAXXXQbyY=');
+(1, '$2a$11$hCdSz2IWtWhfSMu5HU1xe.YA6zrxged3TNHoZC/CycqNpaYS7ci4W', '$2a$11$hCdSz2IWtWhfSMu5HU1xe.'),
+(2, '2a$11$v68jMQkfWr9OS4BHPe20keuztD79mByxoBc2OJFOvO0dBBXPlmQ4e', '$2a$11$v68jMQkfWr9OS4BHPe20ke'),
+(3, '$2a$11$FHNqTyAalmLYbaOpwJ683OY7krQV58AT94Vc6cICI3ihcP4A2jIwG', '$2a$11$FHNqTyAalmLYbaOpwJ683O'),
+(4, '$2a$11$YyB7Yu/pMRy/8xHEHlWJgOUfKUpJwBAq4Im.leW/gTWDzOatDvqai', '$2a$11$YyB7Yu/pMRy/8xHEHlWJgO');
 insert into role(name) values
 ('user'),
 ('admin'),

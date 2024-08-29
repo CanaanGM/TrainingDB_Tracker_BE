@@ -1,13 +1,14 @@
 ﻿
 using System.Security.Claims;
+using SharedLibrary.Core;
 
 namespace API.Security;
 
 
 public interface IUserAccessor
 {
-    int GetUserId();
-    string GetUsername();
+    Result<int> GetUserId();
+    Result<string> GetUsername();
 }
 public class UserAccessor : IUserAccessor
 {
@@ -19,18 +20,20 @@ public class UserAccessor : IUserAccessor
     }
 
 
-    public string GetUsername()
+    public Result<string> GetUsername()
     {
-        return _httpContextAccessor?.HttpContext?.User?.FindFirstValue(ClaimTypes.Name);
+        var userName = _httpContextAccessor?.HttpContext?.User?.FindFirstValue(ClaimTypes.Name);
+        return userName is null
+            ? Result<string>.Failure("user is not authenticated.")
+            : Result<string>.Success(userName);
     }
 
-    public int GetUserId()
+    public Result<int> GetUserId()
     {
-        var userIdClaim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+        var userIdClaim = _httpContextAccessor?.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var currentUserId))
-        {
-            return 0; // Or you can return a 403 Forbidden status code
-        }
-        return currentUserId;
+            return Result<int>.Failure("user is not authenticated."); // Or you can return a 403 Forbidden status code
+        
+        return Result<int>.Success(currentUserId);
     }
 }

@@ -10,16 +10,16 @@ using TrainingTests.helpers;
 
 namespace TrainingTests.ServicesTests;
 
-public class PlanServiceTests : BaseTestClass
+public class PlanServiceIntegrationTests : BaseIntegrationTestClass
 {
-    private PlanService service;
-    private Mock<ILogger<PlanService>> logger;
+    private PlanServiceIntegration _serviceIntegration;
+    private Mock<ILogger<PlanServiceIntegration>> logger;
 
 
-    public PlanServiceTests()
+    public PlanServiceIntegrationTests()
     {
-        logger = new Mock<ILogger<PlanService>>();
-        service = new PlanService(_context, _mapper, logger.Object);
+        logger = new Mock<ILogger<PlanServiceIntegration>>();
+        _serviceIntegration = new PlanServiceIntegration(_context, _mapper, logger.Object);
     }
 
 
@@ -47,7 +47,7 @@ public class PlanServiceTests : BaseTestClass
         ProductionDatabaseHelpers.SeedProductionData(_context);
 
         // Act
-        var result = await service.CreateAsync(plan, new CancellationToken());
+        var result = await _serviceIntegration.CreateAsync(plan, new CancellationToken());
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -62,7 +62,7 @@ public class PlanServiceTests : BaseTestClass
     {
         ProductionDatabaseHelpers.SeedProductionData(_context);
         var plans = await PlanHelpers.GenerateBulkPlan();
-        var result = await service.CreateBulkAsync(plans, new CancellationToken());
+        var result = await _serviceIntegration.CreateBulkAsync(plans, new CancellationToken());
         
         Assert.True(result.IsSuccess);
         Assert.Equal(plans.Count, _context.TrainingPlans.Count());
@@ -180,7 +180,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
     var excelPlan = await PlanHelpers.ReadPlanFile("excel");
 
     // Act: Create the plan
-    var creationResult = await service.CreateAsync(excelPlan, new CancellationToken());
+    var creationResult = await _serviceIntegration.CreateAsync(excelPlan, new CancellationToken());
     Assert.True(creationResult.IsSuccess);
 
     // Retrieve the created plan
@@ -197,7 +197,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
     excelPlan.TrainingWeeks = reversedWeeks;
 
     // Update the plan with reversed weeks
-    var updateResult = await service.UpdateAsync(createdPlanId, excelPlan, new CancellationToken());
+    var updateResult = await _serviceIntegration.UpdateAsync(createdPlanId, excelPlan, new CancellationToken());
     Assert.True(updateResult.IsSuccess);
 
     // Retrieve the updated plan
@@ -221,7 +221,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
         var newPlanDto = TrainingPlanDtoFactory.MissingExerciesPlan;
         // Act
-        var result = await service.CreateAsync(newPlanDto, new CancellationToken());
+        var result = await _serviceIntegration.CreateAsync(newPlanDto, new CancellationToken());
         // Assert
         Assert.False(result.IsSuccess);
         Assert.Equal("nargacuga\ntigrex", result.ErrorMessage);
@@ -238,7 +238,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         var newPlanDto =TrainingPlanDtoFactory.NoExercisePlan;
     
         // Act
-        var result = await service.CreateAsync(newPlanDto, new CancellationToken());
+        var result = await _serviceIntegration.CreateAsync(newPlanDto, new CancellationToken());
     
         // Assert
         Assert.False(result.IsSuccess);
@@ -264,7 +264,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         };
     
         // Act
-        var result = await service.CreateAsync(newPlanDto, new CancellationToken());
+        var result = await _serviceIntegration.CreateAsync(newPlanDto, new CancellationToken());
     
         // Assert
         Assert.False(result.IsSuccess);
@@ -282,12 +282,12 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
     
         var initialPlan = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
+        var initialResult = await _serviceIntegration.CreateAsync(initialPlan, new CancellationToken());
         Assert.True(initialResult.IsSuccess);
 
         var updateDto = TrainingPlanDtoFactory.CreateIncorrectUpdateDto;
         // Act
-        var updateResult = await service.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
+        var updateResult = await _serviceIntegration.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
     
         // Assert
         Assert.False(updateResult.IsSuccess);
@@ -301,13 +301,13 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
     
         var initialPlan = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
+        var initialResult = await _serviceIntegration.CreateAsync(initialPlan, new CancellationToken());
         Assert.True(initialResult.IsSuccess);
 
         var updateDto = TrainingPlanDtoFactory.CreateValidUpdateDto;
     
         // Act
-        var updateResult = await service.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
+        var updateResult = await _serviceIntegration.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
     
         // Assert
         Assert.True(updateResult.IsSuccess);
@@ -336,13 +336,13 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
     
         var initialPlan = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
+        var initialResult = await _serviceIntegration.CreateAsync(initialPlan, new CancellationToken());
         Assert.True(initialResult.IsSuccess);
 
         var partialUpdateDto = TrainingPlanDtoFactory.CreateValidUpdateDto;
     
         // Act
-        var updateResult = await service.UpdateAsync(initialResult.Value, partialUpdateDto, new CancellationToken());
+        var updateResult = await _serviceIntegration.UpdateAsync(initialResult.Value, partialUpdateDto, new CancellationToken());
     
         // Assert
         Assert.True(updateResult.IsSuccess);
@@ -371,11 +371,11 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
     
         var initialPlan = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
+        var initialResult = await _serviceIntegration.CreateAsync(initialPlan, new CancellationToken());
         Assert.True(initialResult.IsSuccess);
     
         // Act
-        var updateResult = await service.UpdateAsync(initialResult.Value, initialPlan, new CancellationToken());
+        var updateResult = await _serviceIntegration.UpdateAsync(initialResult.Value, initialPlan, new CancellationToken());
     
         // Assert
         Assert.True(updateResult.IsSuccess);
@@ -405,13 +405,13 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
     
         var initialPlan = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
+        var initialResult = await _serviceIntegration.CreateAsync(initialPlan, new CancellationToken());
         Assert.True(initialResult.IsSuccess);
 
         var updateDto = TrainingPlanDtoFactory.CreateIncorrectUpdateDto;
     
         // Act
-        var updateResult = await service.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
+        var updateResult = await _serviceIntegration.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
     
         // Assert
         Assert.False(updateResult.IsSuccess);
@@ -426,7 +426,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
     
         var initialPlan = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
+        var initialResult = await _serviceIntegration.CreateAsync(initialPlan, new CancellationToken());
         Assert.True(initialResult.IsSuccess);
     
         var updateDto = new TrainingPlanWriteDto
@@ -439,7 +439,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         };
     
         // Act
-        var updateResult = await service.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
+        var updateResult = await _serviceIntegration.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
     
         // Assert
         Assert.False(updateResult.IsSuccess);
@@ -455,7 +455,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
     
         var initialPlan = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
+        var initialResult = await _serviceIntegration.CreateAsync(initialPlan, new CancellationToken());
         Assert.True(initialResult.IsSuccess);
     
         var updateDto = new TrainingPlanWriteDto
@@ -467,7 +467,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         };
     
         // Act
-        var updateResult = await service.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
+        var updateResult = await _serviceIntegration.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
     
         // Assert
         Assert.False(updateResult.IsSuccess);
@@ -483,7 +483,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
               ProductionDatabaseHelpers.SeedProductionData(_context);
           
               var initialPlan = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-              var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
+              var initialResult = await _serviceIntegration.CreateAsync(initialPlan, new CancellationToken());
               Assert.True(initialResult.IsSuccess);
           
               var updateDto = new TrainingPlanWriteDto
@@ -507,7 +507,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
               };
           
               // Act
-              var updateResult = await service.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
+              var updateResult = await _serviceIntegration.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
           
               // Assert
               Assert.True(updateResult.IsSuccess);
@@ -531,7 +531,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
     
         var initialPlan = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
+        var initialResult = await _serviceIntegration.CreateAsync(initialPlan, new CancellationToken());
         Assert.True(initialResult.IsSuccess);
     
         var updateDto = new TrainingPlanWriteDto
@@ -545,7 +545,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         };
     
         // Act
-        var updateResult = await service.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
+        var updateResult = await _serviceIntegration.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
     
         // Assert
         Assert.True(updateResult.IsSuccess);
@@ -569,7 +569,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
     
         var initialPlan = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
+        var initialResult = await _serviceIntegration.CreateAsync(initialPlan, new CancellationToken());
         Assert.True(initialResult.IsSuccess);
     
         var updateDto = new TrainingPlanWriteDto
@@ -583,7 +583,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         };
     
         // Act
-        var updateResult = await service.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
+        var updateResult = await _serviceIntegration.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
     
         // Assert
         Assert.True(updateResult.IsSuccess);
@@ -607,7 +607,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
     
         var initialPlan = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var initialResult = await service.CreateAsync(initialPlan, new CancellationToken());
+        var initialResult = await _serviceIntegration.CreateAsync(initialPlan, new CancellationToken());
         Assert.True(initialResult.IsSuccess);
     
         var updateDto = new TrainingPlanWriteDto
@@ -619,7 +619,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         };
     
         // Act
-        var updateResult = await service.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
+        var updateResult = await _serviceIntegration.UpdateAsync(initialResult.Value, updateDto, new CancellationToken());
     
         // Assert
         Assert.True(updateResult.IsSuccess);
@@ -644,11 +644,11 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
     
         var newPlanDto = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
+        var createResult = await _serviceIntegration.CreateAsync(newPlanDto, new CancellationToken());
         Assert.True(createResult.IsSuccess);
     
         // Act
-        var deleteResult = await service.DeleteAsync(createResult.Value, new CancellationToken());
+        var deleteResult = await _serviceIntegration.DeleteAsync(createResult.Value, new CancellationToken());
     
         // Assert
         Assert.True(deleteResult.IsSuccess);
@@ -661,7 +661,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
     public async Task DeleteAsync_InvalidPlanId_ShouldReturnFailure()
     {
         // Act
-        var deleteResult = await service.DeleteAsync(999, new CancellationToken());
+        var deleteResult = await _serviceIntegration.DeleteAsync(999, new CancellationToken());
     
         // Assert
         Assert.False(deleteResult.IsSuccess);
@@ -675,11 +675,11 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
     
         var newPlanDto = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
+        var createResult = await _serviceIntegration.CreateAsync(newPlanDto, new CancellationToken());
         Assert.True(createResult.IsSuccess);
     
         // Act
-        var deleteResult = await service.DeleteAsync(createResult.Value, new CancellationToken());
+        var deleteResult = await _serviceIntegration.DeleteAsync(createResult.Value, new CancellationToken());
     
         // Assert
         Assert.True(deleteResult.IsSuccess);
@@ -720,11 +720,11 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
     
         var newPlanDto = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
+        var createResult = await _serviceIntegration.CreateAsync(newPlanDto, new CancellationToken());
         Assert.True(createResult.IsSuccess);
     
         // Act
-        var deleteResult = await service.DeleteAsync(createResult.Value, new CancellationToken());
+        var deleteResult = await _serviceIntegration.DeleteAsync(createResult.Value, new CancellationToken());
     
         // Assert
         Assert.True(deleteResult.IsSuccess);
@@ -766,10 +766,10 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         ProductionDatabaseHelpers.SeedProductionData(_context);
         // Arrange
         var newPlanDto = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
+        var createResult = await _serviceIntegration.CreateAsync(newPlanDto, new CancellationToken());
     
         // Act
-        var result = await service.GetByIdAsync(createResult.Value, new CancellationToken());
+        var result = await _serviceIntegration.GetByIdAsync(createResult.Value, new CancellationToken());
     
         // Assert
         Assert.True(result.IsSuccess);
@@ -785,7 +785,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         var nonExistentPlanId = 999;
     
         // Act
-        var result = await service.GetByIdAsync(nonExistentPlanId, new CancellationToken());
+        var result = await _serviceIntegration.GetByIdAsync(nonExistentPlanId, new CancellationToken());
     
         // Assert
         Assert.False(result.IsSuccess);
@@ -797,12 +797,12 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
     {
         // Arrange
         var newPlanDto = TrainingPlanDtoFactory.CorrectPlanWithEquipment;
-        var createResult = await service.CreateAsync(newPlanDto, new CancellationToken());
+        var createResult = await _serviceIntegration.CreateAsync(newPlanDto, new CancellationToken());
     
         _context.Dispose(); // Force an exception by disposing the _context
     
         // Act
-        var result = await service.GetByIdAsync(createResult.Value, new CancellationToken());
+        var result = await _serviceIntegration.GetByIdAsync(createResult.Value, new CancellationToken());
     
         // Assert
         Assert.False(result.IsSuccess);
@@ -837,7 +837,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         };
 
         // Act
-        var result = await service.CreateAsync(planWithInvalidOrderNumbers, new CancellationToken());
+        var result = await _serviceIntegration.CreateAsync(planWithInvalidOrderNumbers, new CancellationToken());
 
         // Assert
         Assert.False(result.IsSuccess);
@@ -856,10 +856,10 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         // Arrange
         ProductionDatabaseHelpers.SeedProductionData(_context);
         var plans = await PlanHelpers.GenerateBulkPlan();
-        await service.CreateBulkAsync(plans, new CancellationToken());
+        await _serviceIntegration.CreateBulkAsync(plans, new CancellationToken());
 
         // Act
-        var result = await service.GetPaginatedPlansAsync(2, 3, CancellationToken.None);
+        var result = await _serviceIntegration.GetPaginatedPlansAsync(2, 3, CancellationToken.None);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -872,10 +872,10 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         // Arrange
         ProductionDatabaseHelpers.SeedProductionData(_context);
         var plans = await PlanHelpers.GenerateBulkPlan();
-        await service.CreateBulkAsync(plans, new CancellationToken());
+        await _serviceIntegration.CreateBulkAsync(plans, new CancellationToken());
 
         // Act
-        var result = await service.GetPaginatedPlansAsync(1, 5, CancellationToken.None);
+        var result = await _serviceIntegration.GetPaginatedPlansAsync(1, 5, CancellationToken.None);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -888,7 +888,7 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
     public async Task GetPaginatedPlansAsync_WithEmptyDatabase_ReturnsEmptyList()
     {
         // Act
-        var result = await service.GetPaginatedPlansAsync(1, 5, CancellationToken.None);
+        var result = await _serviceIntegration.GetPaginatedPlansAsync(1, 5, CancellationToken.None);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -901,9 +901,9 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         // Arrange
         ProductionDatabaseHelpers.SeedProductionData(_context);
         var plans = await PlanHelpers.GenerateBulkPlan();
-        await service.CreateBulkAsync(plans, new CancellationToken());
+        await _serviceIntegration.CreateBulkAsync(plans, new CancellationToken());
         // Act
-        var result = await service.GetPaginatedPlansAsync(100, 5, CancellationToken.None);
+        var result = await _serviceIntegration.GetPaginatedPlansAsync(100, 5, CancellationToken.None);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -916,9 +916,9 @@ public async Task CreateAndUpdatePlan_ReverseWeeks_Success()
         // Arrange
         ProductionDatabaseHelpers.SeedProductionData(_context);
         var plans = await PlanHelpers.GenerateBulkPlan();
-        await service.CreateBulkAsync(plans, new CancellationToken());
+        await _serviceIntegration.CreateBulkAsync(plans, new CancellationToken());
         // Act
-        var result = await service.GetPaginatedPlansAsync(1, 10, CancellationToken.None);
+        var result = await _serviceIntegration.GetPaginatedPlansAsync(1, 10, CancellationToken.None);
 
         // Assert
         Assert.True(result.IsSuccess);

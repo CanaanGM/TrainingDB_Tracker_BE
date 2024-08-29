@@ -15,18 +15,18 @@ using TrainingTests.helpers;
 
 namespace TrainingTests.APIControllersIntegrationTests;
 
-public class AuthControllerIntegrationTests : BaseTestClass
+public class AuthControllerIntegrationIntegrationTests : BaseIntegrationTestClass
 {
     private readonly AuthController _controller;
     private readonly IUserService _userService;
     private readonly ITokenService _tokenService;
-    private Mock<ILogger<UserService>> _userServiceLoggerMock;
+    private Mock<ILogger<UserServiceIntegration>> _userServiceLoggerMock;
     private Mock<IConfiguration> _configurationMock;
 
-    public AuthControllerIntegrationTests()
+    public AuthControllerIntegrationIntegrationTests()
     {
-        _userServiceLoggerMock = new Mock<ILogger<UserService>>();
-        _userService = new UserService(_context, _mapper, _userServiceLoggerMock.Object);
+        _userServiceLoggerMock = new Mock<ILogger<UserServiceIntegration>>();
+        _userService = new UserServiceIntegration(_context, _mapper, _userServiceLoggerMock.Object);
         var secureKey = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
 
         _configurationMock = new Mock<IConfiguration>();
@@ -165,7 +165,7 @@ public class AuthControllerIntegrationTests : BaseTestClass
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
         Assert.NotNull(okResult);
 
-        var userDto = Assert.IsType<UserAuthDto>(okResult.Value);
+        var userDto = Assert.IsType<InternalUserAuthDto>(okResult.Value);
         Assert.Equal(logInDto.Email, userDto.Email);
 
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userDto.Email);

@@ -1,7 +1,7 @@
 ﻿using API.Security;
 using Microsoft.Extensions.Configuration;
 
-namespace TrainingTests;
+namespace TrainingTests.SecurityTests;
 
 public class TokenServiceTests
 {

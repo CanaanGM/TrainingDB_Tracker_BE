@@ -1,5 +1,6 @@
 
 using System.Text;
+using API.Filters;
 using API.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -42,7 +43,7 @@ public class Program
         
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IUserAccessor, UserAccessor>();
-        
+        builder.Services.AddScoped<AuthenticatedUserFilter>();
         
         
         WebApplication app = builder.Build();

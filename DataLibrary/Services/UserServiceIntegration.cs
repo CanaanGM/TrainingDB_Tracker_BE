@@ -12,43 +12,43 @@ namespace DataLibrary.Services;
 
 public interface IUserService
 {
-    Task<Result<UserAuthDto>> CreateUserAsync(UserWriteDto userDto, CancellationToken cancellationToken);
+    Task<Result<InternalUserAuthDto>> CreateUserAsync(UserWriteDto userDto, CancellationToken cancellationToken);
 
-    Task<Result<UserAuthDto>> GetUserWithRolesByEmailAsync(string email,
+    Task<Result<InternalUserAuthDto>> GetUserWithRolesByEmailAsync(string email,
         CancellationToken cancellationToken);
 
     Task<Result> CreateRefreshTokenForUser(string userEmail, string token,
         CancellationToken cancellationToken);
 }
 
-public class UserService : IUserService
+public class UserServiceIntegration : IUserService
 {
     private readonly SqliteContext _context;
     private readonly IMapper _mapper;
-    private readonly ILogger<UserService> _logger;
+    private readonly ILogger<UserServiceIntegration> _logger;
 
-    public UserService(SqliteContext context, IMapper mapper, ILogger<UserService> logger)
+    public UserServiceIntegration(SqliteContext context, IMapper mapper, ILogger<UserServiceIntegration> logger)
     {
         _context = context;
         _mapper = mapper;
         _logger = logger;
     }
 
-    public async Task<Result<UserAuthDto>> CreateUserAsync(UserWriteDto userDto, CancellationToken cancellationToken)
+    public async Task<Result<InternalUserAuthDto>> CreateUserAsync(UserWriteDto userDto, CancellationToken cancellationToken)
     {
         try
         {
             var userExists = await _context.Users.FirstOrDefaultAsync(x => x.Email == userDto.Email,
                 cancellationToken: cancellationToken);
             if (userExists is not null)
-                return Result<UserAuthDto>.Failure("email taken.");
+                return Result<InternalUserAuthDto>.Failure("email taken.");
 
             await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
 
             var salt = SecurityHelpers.GenerateSalt();
             var hashedPasswordResult = SecurityHelpers.HashPassword(userDto.Password, salt);
             if (!hashedPasswordResult.IsSuccess)
-                return Result<UserAuthDto>.Failure(hashedPasswordResult.ErrorMessage!);
+                return Result<InternalUserAuthDto>.Failure(hashedPasswordResult.ErrorMessage!);
             var user = new User()
             {
                 Email = userDto.Email,
@@ -88,7 +88,7 @@ public class UserService : IUserService
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
 
-            return Result<UserAuthDto>.Success(new UserAuthDto()
+            return Result<InternalUserAuthDto>.Success(new InternalUserAuthDto()
             {
                 Email = user.Email,
                 Username = user.Email,
@@ -99,17 +99,17 @@ public class UserService : IUserService
         catch (Exception ex)
         {
             _logger.LogError($"an error occu'd creating a user in {nameof(CreateUserAsync)}\nex:\t{ex}");
-            return Result<UserAuthDto>.Failure("something went wrong creating a user.", ex);
+            return Result<InternalUserAuthDto>.Failure("something went wrong creating a user.", ex);
         }
     }
 
-    public async Task<Result<UserAuthDto>> GetUserWithRolesByEmailAsync(string email,
+    public async Task<Result<InternalUserAuthDto>> GetUserWithRolesByEmailAsync(string email,
         CancellationToken cancellationToken)
     {
         try
         {
             var user = await _context.Users
-                .ProjectTo<UserAuthDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<InternalUserAuthDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(x => x.Email == email, cancellationToken: cancellationToken);
 
             var latestPassword = await _context.Users
@@ -119,12 +119,12 @@ public class UserService : IUserService
             
             user.LatestPasswordHash = latestPassword.UserPasswords.First().PasswordHash;
             
-            return user is null ? Result<UserAuthDto>.Failure("user not found") : Result<UserAuthDto>.Success(user);
+            return user is null ? Result<InternalUserAuthDto>.Failure("user not found") : Result<InternalUserAuthDto>.Success(user);
         }
         catch (Exception ex)
         {
             _logger.LogError($"an error occu'd creating a user in {nameof(GetUserWithRolesByEmailAsync)}\nex:\t{ex}");
-            return Result<UserAuthDto>.Failure("something went wrong creating a user.", ex);
+            return Result<InternalUserAuthDto>.Failure("something went wrong creating a user.", ex);
         }
     }
 

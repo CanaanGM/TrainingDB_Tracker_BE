@@ -3,7 +3,7 @@ using DataLibrary.Context;
 using DataLibrary.Core;
 using TestSupport.EfHelpers;
 
-public class BaseTestClass : IDisposable
+public class BaseIntegrationTestClass : IDisposable
 {
     protected DbContextOptionsDisposable<SqliteContext> _options;
     protected SqliteContext _context;
@@ -11,7 +11,7 @@ public class BaseTestClass : IDisposable
     protected MapperConfiguration _configuration;
     protected Mapper _mapper;
 
-    protected BaseTestClass()
+    protected BaseIntegrationTestClass()
     {
         _options = SqliteInMemory.CreateOptions<SqliteContext>();
         _context = new SqliteContext(_options);
@@ -35,7 +35,7 @@ public class BaseTestClass : IDisposable
         }
     }
 
-    ~BaseTestClass()
+    ~BaseIntegrationTestClass()
     {
         Dispose(false);
     }

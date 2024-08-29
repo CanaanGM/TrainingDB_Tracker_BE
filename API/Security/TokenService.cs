@@ -10,7 +10,7 @@ namespace API.Security;
 
 public interface ITokenService
 {
-    string CreateToken(UserAuthDto user);
+    string CreateToken(InternalUserAuthDto internalUser);
     RefreshToken GenerateRefreshToken();
 }
 
@@ -23,16 +23,16 @@ public class TokenService : ITokenService
         _config = config;
     }
 
-    public string CreateToken(UserAuthDto user)
+    public string CreateToken(InternalUserAuthDto internalUser)
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.Username),
-            // new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email!),
+            new Claim(ClaimTypes.Name, internalUser.Username),
+            new Claim(ClaimTypes.NameIdentifier, internalUser.Id.ToString()),
+            new Claim(ClaimTypes.Email, internalUser.Email!),
         };
 
-        claims.AddRange(user.Roles.Select(role => new Claim(ClaimTypes.Role, role)));
+        claims.AddRange(internalUser.Roles.Select(role => new Claim(ClaimTypes.Role, role)));
         
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"]!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
@@ -41,7 +41,7 @@ public class TokenService : ITokenService
         {
             Subject = new ClaimsIdentity(claims),
             //Expires = DateTime.UtcNow.AddMinutes(15),
-            Expires = DateTime.UtcNow.AddDays(1), // dev only
+            Expires = DateTime.UtcNow.AddDays(1), // TODO: dev only
             SigningCredentials = creds
         };
 

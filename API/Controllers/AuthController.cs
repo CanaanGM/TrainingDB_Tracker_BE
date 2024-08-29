@@ -24,7 +24,7 @@ public class AuthController : ControllerBase
     
     // register
     [HttpPost("register")]
-    public async Task<ActionResult<UserAuthDto>> Register(UserWriteDto userWriteDto, CancellationToken cancellationToken)
+    public async Task<ActionResult<InternalUserAuthDto>> Register(UserWriteDto userWriteDto, CancellationToken cancellationToken)
     {
         try
         {
@@ -56,20 +56,21 @@ public class AuthController : ControllerBase
         Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
     }
 
-    private UserAuthDto CreateUserObject(UserAuthDto userDto)
+    private InternalUserAuthDto CreateUserObject(InternalUserAuthDto internalUserDto)
     {
-        userDto.Token = _tokenService.CreateToken(
-            new UserAuthDto()
+        internalUserDto.Token = _tokenService.CreateToken(
+            new InternalUserAuthDto()
             {
-                Username = userDto.Username,
-                Email = userDto.Email,
-                Roles = userDto.Roles,
+                Username = internalUserDto.Username,
+                Email = internalUserDto.Email,
+                Roles = internalUserDto.Roles,
 
             });
-        return userDto;
+        return internalUserDto;
     }
 
-    public async Task<ActionResult<UserAuthDto>> LogIn(UserLogInDto logInDto, CancellationToken cancellationToken)
+    [HttpPost("/log-in")]
+    public async Task<ActionResult<InternalUserAuthDto>> LogIn(UserLogInDto logInDto, CancellationToken cancellationToken)
     {
         
         try

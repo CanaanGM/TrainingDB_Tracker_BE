@@ -1,20 +1,18 @@
+using API.Filters;
 using DataLibrary.Services;
-
 using Microsoft.AspNetCore.Mvc;
 using SharedLibrary.Core;
 using SharedLibrary.Dtos;
 
 namespace API.Controllers;
+
 [ApiController]
 public class GenericController : ControllerBase
 {
-
     private readonly ILogger<GenericController> _logger;
     private readonly IMuscleService _muscleService;
     private readonly ITrainingTypesService _trainingTypesService;
     private readonly IExerciseService _exerciseService;
-    private readonly ITrainingSessionService _trainingSessionService;
-    private readonly IMeasurementsService _measurementsService;
     private readonly IEquipmentService _equipmentService;
     private readonly IPlanService _planService;
 
@@ -23,18 +21,14 @@ public class GenericController : ControllerBase
         , IMuscleService muscleService
         , ITrainingTypesService trainingTypesService
         , IExerciseService exerciseService
-        , ITrainingSessionService trainingSessionService
-        , IMeasurementsService measurementsService
         , IEquipmentService equipmentService
         , IPlanService planService
-        )
+    )
     {
         _logger = logger;
         _muscleService = muscleService;
         _trainingTypesService = trainingTypesService;
         _exerciseService = exerciseService;
-        _trainingSessionService = trainingSessionService;
-        _measurementsService = measurementsService;
         _equipmentService = equipmentService;
         _planService = planService;
     }
@@ -42,16 +36,17 @@ public class GenericController : ControllerBase
     [HttpGet("/muscles")]
     public async Task<IActionResult> GetMuscles(CancellationToken cancellationToken)
     {
-
         var exercisesResult = await _muscleService.GetAllAsync(cancellationToken);
         return Ok(exercisesResult.Value);
     }
+
     [HttpGet("/muscles/search/{searchTerm}")]
-    public async Task<IActionResult> GetMuscles(string searchTerm,  CancellationToken cancellationToken)
+    public async Task<IActionResult> GetMuscles(string searchTerm, CancellationToken cancellationToken)
     {
         var exercisesResult = await _muscleService.SearchMuscleAsync(searchTerm, cancellationToken);
         return Ok(exercisesResult.Value);
     }
+
     [HttpGet("/muscles/{groupName}")]
     public async Task<IActionResult> GetMusclesByGroup(string groupName, CancellationToken cancellationToken)
     {
@@ -59,7 +54,8 @@ public class GenericController : ControllerBase
     }
 
     [HttpPost("/muscles/bulk")]
-    public async Task<IActionResult> CreateBulk([FromBody] HashSet<MuscleWriteDto> newMuscles, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateBulk([FromBody] HashSet<MuscleWriteDto> newMuscles,
+        CancellationToken cancellationToken)
     {
         Result<bool> res = await _muscleService.CreateBulkAsync(newMuscles, cancellationToken);
 
@@ -73,13 +69,15 @@ public class GenericController : ControllerBase
     }
 
     [HttpPut("/types/{typeId}")]
-    public async Task<IActionResult> GetTypes(int typeId, [FromBody] TrainingTypeWriteDto updatedType, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetTypes(int typeId, [FromBody] TrainingTypeWriteDto updatedType,
+        CancellationToken cancellationToken)
     {
         return Ok(await _trainingTypesService.Update(typeId, updatedType, cancellationToken));
     }
 
     [HttpPost("/types/bulk")]
-    public async Task<IActionResult> CreateTypesBulk([FromBody] HashSet<TrainingTypeWriteDto> newTypes, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateTypesBulk([FromBody] HashSet<TrainingTypeWriteDto> newTypes,
+        CancellationToken cancellationToken)
     {
         return Ok(await _trainingTypesService.CreateBulkAsync(newTypes, cancellationToken));
     }
@@ -91,7 +89,8 @@ public class GenericController : ControllerBase
     /// <param name="cancellationToken">Token to cancel the request.</param>
     /// <returns>A paginated list of exercises.</returns>
     [HttpGet("/exercise")]
-    public async Task<IActionResult> GetExercises([FromQuery] ExerciseQueryOptions queryOptions, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetExercises([FromQuery] ExerciseQueryOptions queryOptions,
+        CancellationToken cancellationToken)
     {
         try
         {
@@ -119,34 +118,41 @@ public class GenericController : ControllerBase
     {
         return Ok(await _exerciseService.GetByNameAsync(name, cancellationToken));
     }
+
     [HttpPost("/exercise")]
-    public async Task<IActionResult> CreateExerciseAsync([FromBody] ExerciseWriteDto newExercise, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateExerciseAsync([FromBody] ExerciseWriteDto newExercise,
+        CancellationToken cancellationToken)
     {
         return Ok(await _exerciseService.CreateAsync(newExercise, cancellationToken));
     }
-    
+
     [HttpPost("/exercise/bulk")]
-    public async Task<IActionResult> CreateExercisesBulkAsync([FromBody] List<ExerciseWriteDto> newExercises, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateExercisesBulkAsync([FromBody] List<ExerciseWriteDto> newExercises,
+        CancellationToken cancellationToken)
     {
         var result = await _exerciseService.CreateBulkAsync(newExercises, cancellationToken);
-        if(result.IsSuccess)
+        if (result.IsSuccess)
             return Ok();
         return BadRequest(result.ErrorMessage);
     }
+
     [HttpDelete("/exercise/bulk")]
-    public async Task<IActionResult> DeleteBulkAsync([FromBody] List<string> exercisesNamesToDelete, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteBulkAsync([FromBody] List<string> exercisesNamesToDelete,
+        CancellationToken cancellationToken)
     {
         var result = await _exerciseService.DeleteBulkAsync(exercisesNamesToDelete, cancellationToken);
-        if(result.IsSuccess)
+        if (result.IsSuccess)
             return Ok();
         return BadRequest(result.ErrorMessage);
     }
-    
+
     [HttpPut("/exercise/{id}")]
-    public async Task<IActionResult> UpdateExerciseAsync(int id, [FromBody] ExerciseWriteDto updatedExercise, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateExerciseAsync(int id, [FromBody] ExerciseWriteDto updatedExercise,
+        CancellationToken cancellationToken)
     {
         return Ok(await _exerciseService.UpdateAsync(id, updatedExercise, cancellationToken));
     }
+
     [HttpDelete("/exercise/{id}")]
     public async Task<IActionResult> DeleteExerciseAsync(int id, CancellationToken cancellationToken)
     {
@@ -161,97 +167,44 @@ public class GenericController : ControllerBase
         {
             return BadRequest(result.ErrorMessage);
         }
+
         return Ok(result.Value);
     }
-    
-    [HttpGet("/training")]
-    public async Task<IActionResult> GetTrainingSessionsAsync(CancellationToken cancellationToken, string? startDate, string? endDate)
-    {
-        var sessions = await _trainingSessionService.GetPaginatedTrainingSessionsAsync(
-            1, 1, 10, cancellationToken);
-        return Ok(sessions.Value);
-    }
 
-    [HttpPost("/training")]
-    public async Task<IActionResult> CreateTrainingSessionAsync([FromBody] TrainingSessionWriteDto newTrainingSessionDto, CancellationToken cancellationToken)
-    {
-        return Ok(await _trainingSessionService.CreateSessionAsync(1,newTrainingSessionDto, cancellationToken));
-    }
 
-    [HttpPost("/training/bulk")]
-    public async Task<IActionResult> CreateTrainingSessionBulkAsync([FromBody] List<TrainingSessionWriteDto> newTrainingSessionDtos, CancellationToken cancellationToken)
-    {
-        return Ok(await _trainingSessionService.CreateSessionsBulkAsync(1, newTrainingSessionDtos, cancellationToken));
-    }
-    
-    [HttpPut("/training/{sessionId}")]
-    public async Task<IActionResult> UpdateTrainingSessionAsync(int sessionId, TrainingSessionWriteDto updatedSessionDto, CancellationToken cancellationToken)
-    {
-        return Ok(await _trainingSessionService.UpdateTrainingSession(1, sessionId, updatedSessionDto, cancellationToken));
-    }
-
-    [HttpDelete("/training/{sessionId}")]
-    public async Task<IActionResult> DeleteTrainingSessionAsyn(int sessionId, CancellationToken cancellationToken)
-    {
-        return Ok(await _trainingSessionService.DeleteTrainingSessionAsync(1, sessionId, cancellationToken));
-    }
-
-    [HttpGet("/measurements")]
-    public async Task<IActionResult> GetMeasurementssync(CancellationToken cancellationToken)
-    {
-       var measurements = await _measurementsService.GetAll(cancellationToken) ;
-        return Ok(measurements.Value);
-    }
-
-    [HttpPost("/measurements")]
-    public async Task<IActionResult> CreateMeasurementssync([FromBody] MeasurementsWriteDto newMeasurementsWriteDto, CancellationToken cancellationToken)
-    {
-        return Ok(await _measurementsService.CreateAsync(newMeasurementsWriteDto, cancellationToken));
-    }
-    
-    [HttpPut("/measurements/{measurementId}")]
-    public async Task<IActionResult> UpdateMeasurementssync(int measurementId, MeasurementsWriteDto updateMeasurementsDto, CancellationToken cancellationToken)
-    {
-        return Ok(await _measurementsService.UpdateAsync(measurementId, updateMeasurementsDto, cancellationToken));
-    }
-
-    [HttpDelete("/measurements/{measurementId}")]
-    public async Task<IActionResult> DeleteMeasurementsAsyn(int measurementId, CancellationToken cancellationToken)
-    {
-        return Ok(await _measurementsService.DeleteAsync(measurementId, cancellationToken));
-    }
-    
-      [HttpGet("/equipment")]
+    [HttpGet("/equipment")]
     public async Task<IActionResult> GetEquipmentsAync(CancellationToken cancellationToken)
     {
-       var equipments = await _equipmentService.GetAsync(cancellationToken) ;
+        var equipments = await _equipmentService.GetAsync(cancellationToken);
         return Ok(equipments.Value);
     }
 
     [HttpPost("/equipment")]
-    public async Task<IActionResult> UpsertEquipmentAsync([FromBody] EquipmentWriteDto newEquipmentWriteDto, CancellationToken cancellationToken)
+    // [ServiceFilter(typeof(AuthenticatedUserFilter))]
+    public async Task<IActionResult> UpsertEquipmentAsync([FromBody] EquipmentWriteDto newEquipmentWriteDto,
+        CancellationToken cancellationToken)
     {
         return Ok(await _equipmentService.UpsertAsync(newEquipmentWriteDto, cancellationToken));
     }
-    
+
     [HttpPost("/equipment/bulk")]
-    public async Task<IActionResult> CreateEquipmentBulkAsync([FromBody] List<EquipmentWriteDto> newEquipmentWriteDtos, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateEquipmentBulkAsync([FromBody] List<EquipmentWriteDto> newEquipmentWriteDtos,
+        CancellationToken cancellationToken)
     {
         return Ok(await _equipmentService.CreateBulkAsync(newEquipmentWriteDtos, cancellationToken));
     }
-    
-    
+
+
     [HttpDelete("/equipment/{equipmentName}")]
     public async Task<IActionResult> DeleteEquipmentAsync(string equipmentName, CancellationToken cancellationToken)
     {
         return Ok(await _equipmentService.DeleteAsync(equipmentName, cancellationToken));
     }
-    
+
     [HttpPost("/plans")]
-    public async Task<IActionResult> CreateTrainingPlanBulkAsync([FromBody] TrainingPlanWriteDto newTrainingPlanWriteDto, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateTrainingPlanBulkAsync(
+        [FromBody] TrainingPlanWriteDto newTrainingPlanWriteDto, CancellationToken cancellationToken)
     {
         return Ok(await _planService.CreateAsync(newTrainingPlanWriteDto, cancellationToken));
     }
-
-
 }

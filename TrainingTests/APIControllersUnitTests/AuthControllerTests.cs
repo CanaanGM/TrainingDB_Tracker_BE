@@ -39,7 +39,7 @@ public class AuthControllerTests
             Password = "Password123!"
         };
 
-        var createdUser = new UserAuthDto
+        var createdUser = new InternalUserAuthDto
         {
             Username = "testuser",
             Email = "testuser@test.com",
@@ -47,7 +47,7 @@ public class AuthControllerTests
         };
 
         _userServiceMock.Setup(s => s.CreateUserAsync(userWriteDto, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result<UserAuthDto>.Success(createdUser));
+            .ReturnsAsync(Result<InternalUserAuthDto>.Success(createdUser));
 
         _tokenServiceMock.Setup(t => t.GenerateRefreshToken())
             .Returns(new RefreshToken { Token = "test_refresh_token", Expires = DateTime.UtcNow.AddDays(7) });
@@ -56,14 +56,14 @@ public class AuthControllerTests
                 s.CreateRefreshTokenForUser(createdUser.Email, "test_refresh_token", It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result.Success());
 
-        _tokenServiceMock.Setup(t => t.CreateToken(It.IsAny<UserAuthDto>()))
+        _tokenServiceMock.Setup(t => t.CreateToken(It.IsAny<InternalUserAuthDto>()))
             .Returns("dummy_jwt_token");
 
         var result = await _controller.Register(userWriteDto, CancellationToken.None);
 
-        var actionResult = Assert.IsType<ActionResult<UserAuthDto>>(result);
+        var actionResult = Assert.IsType<ActionResult<InternalUserAuthDto>>(result);
         var createdAtRouteResult = Assert.IsType<CreatedAtRouteResult>(actionResult.Result);
-        var resultDto = Assert.IsType<UserAuthDto>(createdAtRouteResult.Value);
+        var resultDto = Assert.IsType<InternalUserAuthDto>(createdAtRouteResult.Value);
 
         Assert.Equal(createdUser.Username, resultDto.Username);
         Assert.Equal(createdUser.Email, resultDto.Email);
@@ -74,7 +74,7 @@ public class AuthControllerTests
         _userServiceMock.Verify(
             s => s.CreateRefreshTokenForUser(createdUser.Email, "test_refresh_token", It.IsAny<CancellationToken>()),
             Times.Once);
-        _tokenServiceMock.Verify(t => t.CreateToken(It.IsAny<UserAuthDto>()), Times.Once);
+        _tokenServiceMock.Verify(t => t.CreateToken(It.IsAny<InternalUserAuthDto>()), Times.Once);
 
         Assert.True(_controller.Response.Headers.ContainsKey("Set-Cookie"));
         var setCookieHeader = _controller.Response.Headers["Set-Cookie"].ToString();
@@ -90,7 +90,7 @@ public class AuthControllerTests
             Password = "Password123!"
         };
 
-        var userAuthDto = new UserAuthDto
+        var userAuthDto = new InternalUserAuthDto
         {
             Username = "testuser",
             Email = "testuser@test.com",
@@ -99,7 +99,7 @@ public class AuthControllerTests
         };
 
         _userServiceMock.Setup(s => s.GetUserWithRolesByEmailAsync(logInDto.Email, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result<UserAuthDto>.Success(userAuthDto));
+            .ReturnsAsync(Result<InternalUserAuthDto>.Success(userAuthDto));
 
         _tokenServiceMock.Setup(t => t.GenerateRefreshToken())
             .Returns(new RefreshToken { Token = "test_refresh_token", Expires = DateTime.UtcNow.AddDays(7) });
@@ -107,14 +107,14 @@ public class AuthControllerTests
         _userServiceMock.Setup(s => s.CreateRefreshTokenForUser(userAuthDto.Email, "test_refresh_token", It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result.Success());
 
-        _tokenServiceMock.Setup(t => t.CreateToken(It.IsAny<UserAuthDto>()))
+        _tokenServiceMock.Setup(t => t.CreateToken(It.IsAny<InternalUserAuthDto>()))
             .Returns("dummy_jwt_token");  // Mocked to return a dummy token
 
         var result = await _controller.LogIn(logInDto, CancellationToken.None);
 
-        var actionResult = Assert.IsType<ActionResult<UserAuthDto>>(result);
+        var actionResult = Assert.IsType<ActionResult<InternalUserAuthDto>>(result);
         var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-        var resultDto = Assert.IsType<UserAuthDto>(okResult.Value);
+        var resultDto = Assert.IsType<InternalUserAuthDto>(okResult.Value);
 
         Assert.Equal(userAuthDto.Username, resultDto.Username);
         Assert.Equal(userAuthDto.Email, resultDto.Email);
@@ -126,7 +126,7 @@ public class AuthControllerTests
         _userServiceMock.Verify(s => s.GetUserWithRolesByEmailAsync(logInDto.Email, It.IsAny<CancellationToken>()), Times.Once);
         _tokenServiceMock.Verify(t => t.GenerateRefreshToken(), Times.Once);
         _userServiceMock.Verify(s => s.CreateRefreshTokenForUser(userAuthDto.Email, "test_refresh_token", It.IsAny<CancellationToken>()), Times.Once);
-        _tokenServiceMock.Verify(t => t.CreateToken(It.IsAny<UserAuthDto>()), Times.Once);
+        _tokenServiceMock.Verify(t => t.CreateToken(It.IsAny<InternalUserAuthDto>()), Times.Once);
 
         Assert.True(_controller.Response.Headers.ContainsKey("Set-Cookie"));
         var setCookieHeader = _controller.Response.Headers["Set-Cookie"].ToString();
@@ -144,11 +144,11 @@ public class AuthControllerTests
         };
 
         _userServiceMock.Setup(s => s.GetUserWithRolesByEmailAsync(logInDto.Email, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result<UserAuthDto>.Failure("User not found"));
+            .ReturnsAsync(Result<InternalUserAuthDto>.Failure("User not found"));
 
         var result = await _controller.LogIn(logInDto, CancellationToken.None);
 
-        var actionResult = Assert.IsType<ActionResult<UserAuthDto>>(result);
+        var actionResult = Assert.IsType<ActionResult<InternalUserAuthDto>>(result);
         Assert.IsType<UnauthorizedResult>(actionResult.Result);
 
         _userServiceMock.Verify(s => s.GetUserWithRolesByEmailAsync(logInDto.Email, It.IsAny<CancellationToken>()), Times.Once);
@@ -163,7 +163,7 @@ public class AuthControllerTests
             Password = "WrongPassword"
         };
 
-        var userAuthDto = new UserAuthDto
+        var userAuthDto = new InternalUserAuthDto
         {
             Username = "testuser",
             Email = "testuser@test.com",
@@ -171,14 +171,14 @@ public class AuthControllerTests
         };
 
         _userServiceMock.Setup(s => s.GetUserWithRolesByEmailAsync(logInDto.Email, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result<UserAuthDto>.Success(userAuthDto));
+            .ReturnsAsync(Result<InternalUserAuthDto>.Success(userAuthDto));
 
         _userServiceMock.Setup(s => s.CreateRefreshTokenForUser(userAuthDto.Email, "test_refresh_token", It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result.Failure("Password verification failed"));
 
         var result = await _controller.LogIn(logInDto, CancellationToken.None);
 
-        var actionResult = Assert.IsType<ActionResult<UserAuthDto>>(result);
+        var actionResult = Assert.IsType<ActionResult<InternalUserAuthDto>>(result);
         Assert.IsType<UnauthorizedResult>(actionResult.Result);
 
         _userServiceMock.Verify(s => s.GetUserWithRolesByEmailAsync(logInDto.Email, It.IsAny<CancellationToken>()), Times.Once);
@@ -199,7 +199,7 @@ public class AuthControllerTests
 
         var result = await _controller.LogIn(logInDto, CancellationToken.None);
 
-        var actionResult = Assert.IsType<ActionResult<UserAuthDto>>(result);
+        var actionResult = Assert.IsType<ActionResult<InternalUserAuthDto>>(result);
         var objectResult = Assert.IsType<ObjectResult>(actionResult.Result);
         Assert.Equal(StatusCodes.Status500InternalServerError, objectResult.StatusCode);
         Assert.Equal("An unexpected error occurred", objectResult.Value);

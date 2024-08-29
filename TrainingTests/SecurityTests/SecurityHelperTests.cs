@@ -1,6 +1,6 @@
 ﻿using SharedLibrary.Helpers;
 
-namespace TrainingTests;
+namespace TrainingTests.SecurityTests;
 public class SecurityHelpersTests
 {
     [Fact]

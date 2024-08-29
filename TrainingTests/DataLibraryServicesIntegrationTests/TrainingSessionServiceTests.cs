@@ -10,7 +10,7 @@ using TrainingTests.helpers;
 
 namespace TrainingTests.ServicesTests;
 
-public class TrainingSessionServiceTests : BaseTestClass
+public class TrainingSessionServiceTests : BaseIntegrationTestClass
 {
     private Mock<ILogger<TrainingSessionService>> _logger;
     private readonly TrainingSessionService _service;

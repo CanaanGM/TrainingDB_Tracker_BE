@@ -7,15 +7,15 @@ using TrainingTests.helpers;
 
 namespace TrainingTests.ServicesTests;
 
-public class UserServiceTests : BaseTestClass
+public class UserServiceIntegrationTests : BaseIntegrationTestClass
 {
-    private Mock<ILogger<UserService>> _logger;
-    private readonly UserService _service;
+    private Mock<ILogger<UserServiceIntegration>> _logger;
+    private readonly UserServiceIntegration _serviceIntegration;
     
-    public UserServiceTests()
+    public UserServiceIntegrationTests()
     {
-        _logger = new Mock<ILogger<UserService>>();
-        _service = new UserService(_context, _mapper, _logger.Object);
+        _logger = new Mock<ILogger<UserServiceIntegration>>();
+        _serviceIntegration = new UserServiceIntegration(_context, _mapper, _logger.Object);
     }
 
     
@@ -31,7 +31,7 @@ public class UserServiceTests : BaseTestClass
             Gender = "M"
         };
 
-        var result = await _service.CreateUserAsync(newUser, new CancellationToken());
+        var result = await _serviceIntegration.CreateUserAsync(newUser, new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.Equal("user created!", result.SuccessMessage);
 
@@ -45,6 +45,7 @@ public class UserServiceTests : BaseTestClass
         Assert.True(BCrypt.Net.BCrypt.Verify(newUser.Password, createdUser.UserPasswords.First().PasswordHash));
         Assert.Single(createdUser.UserRoles);
         Assert.Equal("user", createdUser.UserRoles.First().Role.Name);
+        Assert.True(createdUser.Id >= 1);
     }
 
     [Fact]
@@ -59,7 +60,7 @@ public class UserServiceTests : BaseTestClass
             Gender = "F"
         };
         
-        var result = await _service.CreateUserAsync(newUser, new CancellationToken());
+        var result = await _serviceIntegration.CreateUserAsync(newUser, new CancellationToken());
         Assert.True(result.IsSuccess);
         Assert.Equal("user created!", result.SuccessMessage);
 
@@ -74,6 +75,7 @@ public class UserServiceTests : BaseTestClass
         Assert.True(BCrypt.Net.BCrypt.Verify(newUser.Password,userPassword ));
         Assert.Single(createdUser.UserRoles);
         Assert.Equal("user", createdUser.UserRoles.First().Role.Name);
+        Assert.True(createdUser.Id >= 1);
     }
     
     [Fact]
@@ -88,7 +90,7 @@ public class UserServiceTests : BaseTestClass
             Gender = "F"
         };
         
-        var result = await _service.CreateUserAsync(newUser, new CancellationToken());
+        var result = await _serviceIntegration.CreateUserAsync(newUser, new CancellationToken());
         Assert.False(result.IsSuccess);
         Assert.Equal("email taken.", result.ErrorMessage);
 
@@ -105,7 +107,7 @@ public class UserServiceTests : BaseTestClass
             Name = "Canaan"
         };
         
-        var result = await _service.CreateUserAsync(newUser, new CancellationToken());
+        var result = await _serviceIntegration.CreateUserAsync(newUser, new CancellationToken());
         Assert.True(result.IsSuccess);
         
         var createdUser = _context.Users
@@ -120,6 +122,7 @@ public class UserServiceTests : BaseTestClass
         Assert.Single(createdUser.UserRoles);
         Assert.Equal("user", createdUser.UserRoles.First().Role.Name);
         Assert.Equal("U", createdUser.Gender);
+        Assert.True(createdUser.Id >= 1);
     }
     
     [Fact]
@@ -134,7 +137,7 @@ public class UserServiceTests : BaseTestClass
             Image = "http://image_goes_here!"
         };
         
-        var result = await _service.CreateUserAsync(newUser, new CancellationToken());
+        var result = await _serviceIntegration.CreateUserAsync(newUser, new CancellationToken());
         Assert.True(result.IsSuccess);
         
         var createdUser = _context.Users
@@ -152,19 +155,21 @@ public class UserServiceTests : BaseTestClass
         Assert.Equal("http://image_goes_here!", createdUser.UserProfileImages.First().Url);
         Assert.Equal(newUser.Email, result.Value.Email);
         Assert.Equal(createdUser.Email, result.Value.Email);
+        Assert.True(createdUser.Id >= 1);
     }
 
     [Fact]
     public async Task GetUserWithRolesByEmail_Success()
     {
         ProductionDatabaseHelpers.SeedDummyUsers(_context);
-        var result = await _service.GetUserWithRolesByEmailAsync("canaan@test.com", new CancellationToken());
+        var result = await _serviceIntegration.GetUserWithRolesByEmailAsync("canaan@test.com", new CancellationToken());
         
         Assert.True(result.IsSuccess);
 
         var userAuthDto = result.Value;
         Assert.True(userAuthDto.Roles.Count >= 1);
         Assert.Equal("Canaan", userAuthDto.Username);
+        Assert.True(userAuthDto.Id >= 1);
         Assert.NotNull(userAuthDto.LatestPasswordHash);
 
     }
@@ -173,7 +178,7 @@ public class UserServiceTests : BaseTestClass
     public async Task CreateRefreshTokenForAlphrad_ShouldDeactivateOldTokens()
     {
         ProductionDatabaseHelpers.SeedDummyUsers(_context);
-        var result = await _service.CreateRefreshTokenForUser("alphrad@test.com", "new_token_for_alphrad", CancellationToken.None);
+        var result = await _serviceIntegration.CreateRefreshTokenForUser("alphrad@test.com", "new_token_for_alphrad", CancellationToken.None);
         Assert.True(result.IsSuccess);
 
         var user = await _context.Users

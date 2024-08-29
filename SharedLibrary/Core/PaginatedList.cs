@@ -1,5 +1,5 @@
 ﻿namespace SharedLibrary.Core;
-public class PaginatedList<T>
+public class PaginatedList<T> 
 {
     public List<T> Items { get; set; }
     public PaginationMetadata Metadata { get; set; }

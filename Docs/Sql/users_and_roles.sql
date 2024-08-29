@@ -76,16 +76,16 @@ VALUES (1, 'token1_canaan', DATETIME('now', '+1 day'), 1),
 -- and salts.
 --  1.Canaan,
 -- `كنعان لازم يتدرب !`,
--- salt :`$2a$11$hCdSz2IWtWhfSMu5HU1xe.YA6zrxged3TNHoZC/CycqNpaYS7ci4W`,
--- hash :`$2a$11$hCdSz2IWtWhfSMu5HU1xe.`
+-- salt :`$2a$11$hCdSz2IWtWhfSMu5HU1xe.`
+-- hash :`$2a$11$hCdSz2IWtWhfSMu5HU1xe.YA6zrxged3TNHoZC/CycqNpaYS7ci4W`,
 --  2.Dante,
 -- `pizza is pizza!`,
--- salt :`2a$11$v68jMQkfWr9OS4BHPe20keuztD79mByxoBc2OJFOvO0dBBXPlmQ4e`,
--- hash :`$2a$11$v68jMQkfWr9OS4BHPe20ke`
+-- salt :`$2a$11$v68jMQkfWr9OS4BHPe20ke`
+-- hash :`2a$11$v68jMQkfWr9OS4BHPe20keuztD79mByxoBc2OJFOvO0dBBXPlmQ4e`,
 --  3.Alphrad,
 -- `sneaky snake`,
--- salt :`$2a$11$FHNqTyAalmLYbaOpwJ683OY7krQV58AT94Vc6cICI3ihcP4A2jIwG`,
--- hash :`$2a$11$FHNqTyAalmLYbaOpwJ683O`
+-- salt :`$2a$11$FHNqTyAalmLYbaOpwJ683O`
+-- hash :`$2a$11$FHNqTyAalmLYbaOpwJ683OY7krQV58AT94Vc6cICI3ihcP4A2jIwG`,
 --  4.Nero,
 -- `ろまである!`,
 -- salt :`$2a$11$YyB7Yu/pMRy/8xHEHlWJgO`,
