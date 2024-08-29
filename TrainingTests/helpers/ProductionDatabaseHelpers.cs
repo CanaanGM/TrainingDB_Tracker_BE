@@ -22,10 +22,10 @@ public static class ProductionDatabaseHelpers
 
     /// <summary>
     /// creates 4 new users and assigns hashed passwords and salts.
-    /// 1. Canaan, `كنعان لازم يتدرب !`,  salt:`wnGHc9SponguR0Givr2Zcvy7UI3Szs0y0lYfAwdatUE=`, hash:`iUXNkjg5RS/0/uEH8f6tasaKKKt8IVsZgTTtyGH3dmQ=`
-    /// 2. Dante, `pizza is pizza!`, salt:`UqfeVl+kUvwURJ2Avx5nw2+qTBMKUUdrHE5m48RGFU0=`, hash:`BzMDx05wo6wjTriEEjxDsb9jZTa6QkbeFAr7B46CAwc=`
-    /// 3. Alphrad, `sneaky snake`, salt:`ROtBSjEmAd8swaKpy0e7yV6n5IJl+K5i6yF/brfjTD0=`, hash:`wA+0773CBog+MlcEjrNcAmHS6pSd06ceminYzPU4wlI=`
-    /// 4. Nero, `ろまである!`, salt:`a5MaAfB/7zpN8dd3+i10RgHGJ455lpoSIOrAXXXQbyY=`, hash:`Kw1vjlzykwUqruCdhzdMOQBuOkn4hljD3JLiOdAogWg=` 
+    /// 1. Canaan, `كنعان لازم يتدرب !`,  salt:`$2a$11$hCdSz2IWtWhfSMu5HU1xe.`, hash:`$2a$11$hCdSz2IWtWhfSMu5HU1xe.YA6zrxged3TNHoZC/CycqNpaYS7ci4W`
+    /// 2. Dante, `pizza is pizza!`, salt:`$2a$11$v68jMQkfWr9OS4BHPe20ke`, hash:`2a$11$v68jMQkfWr9OS4BHPe20keuztD79mByxoBc2OJFOvO0dBBXPlmQ4e`
+    /// 3. Alphrad, `sneaky snake`, salt:`$2a$11$FHNqTyAalmLYbaOpwJ683O`, hash:`$2a$11$FHNqTyAalmLYbaOpwJ683OY7krQV58AT94Vc6cICI3ihcP4A2jIwG`
+    /// 4. Nero, `ろまである!`, salt:`$2a$11$YyB7Yu/pMRy/8xHEHlWJgO`, hash:`$2a$11$YyB7Yu/pMRy/8xHEHlWJgOUfKUpJwBAq4Im.leW/gTWDzOatDvqai` 
     /// </summary>
     /// <param name="context"></param>
     public static void SeedDummyUsers(SqliteContext context)
