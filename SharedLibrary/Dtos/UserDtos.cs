@@ -14,10 +14,10 @@ public class UserWriteDto
 
 public class UserAuthDto
 {
-    
     public string Username { get; set; } = null!;
     public string Email { get; set; } = null!;
     public List<string> Roles { get; set; }
+    public string LatestPasswordHash { get; set; }
     public string Token { get; set; }
     public List<RefreshTokenReadDto> RefreshTokens { get; set; }
 }
@@ -30,4 +30,10 @@ public class RefreshTokenReadDto
     public DateTime? Revoked { get; set; }
 
     public bool? Active { get; set; }
+}
+
+public class UserLogInDto
+{
+    [EmailAddress] public required string Email { get; set; }
+    [MinLength(8)] [MaxLength(512)] public required string Password { get; set; }
 }

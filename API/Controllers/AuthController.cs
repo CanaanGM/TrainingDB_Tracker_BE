@@ -4,6 +4,7 @@ using DataLibrary.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SharedLibrary.Dtos;
+using SharedLibrary.Helpers;
 
 namespace API.Controllers;
 
@@ -12,9 +13,9 @@ namespace API.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IUserService _userService;
-    private readonly TokenService _tokenService;
+    private readonly ITokenService _tokenService;
 
-    public AuthController(IUserService userService, TokenService tokenService)
+    public AuthController(IUserService userService, ITokenService tokenService)
     {
         _userService = userService;
         _tokenService = tokenService;
@@ -33,7 +34,7 @@ public class AuthController : ControllerBase
             
             var user = registerationResult.Value;
             await SetRefreshToken(user.Email,cancellationToken);
-            return CreateUserObject(user); 
+            return CreatedAtRoute(nameof(Register), CreateUserObject(user)); 
         }
         catch (Exception e)
         {
@@ -66,6 +67,33 @@ public class AuthController : ControllerBase
 
             });
         return userDto;
-    } 
-    // log in
+    }
+
+    public async Task<ActionResult<UserAuthDto>> LogIn(UserLogInDto logInDto, CancellationToken cancellationToken)
+    {
+        
+        try
+        {
+            var userResult =await _userService.GetUserWithRolesByEmailAsync(logInDto.Email, cancellationToken);
+            if (!userResult.IsSuccess)
+                return Unauthorized();
+
+            var user = userResult.Value;
+            var verificationResult = SecurityHelpers.VerifyPassword(logInDto.Password, user.LatestPasswordHash);
+            if (!verificationResult.IsSuccess)
+                return Unauthorized();
+            
+            await SetRefreshToken(user.Email,cancellationToken);
+            user.LatestPasswordHash = null;
+            
+            return Ok(CreateUserObject(user));
+
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred");
+        }
+    }
+    
+    
 }

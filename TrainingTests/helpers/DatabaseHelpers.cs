@@ -2,7 +2,7 @@ using DataLibrary.Context;
 using DataLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DateLibraryTests.helpers;
+namespace TrainingTests.helpers;
 
 public static class DatabaseHelpers
 {

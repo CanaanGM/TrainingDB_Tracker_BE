@@ -1,11 +1,11 @@
 ﻿using DataLibrary.Services;
-using DateLibraryTests.helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SharedLibrary.Dtos;
+using TrainingTests.helpers;
 
-namespace DateLibraryTests.ServicesTests;
+namespace TrainingTests.ServicesTests;
 
 public class UserServiceTests : BaseTestClass
 {
@@ -165,8 +165,8 @@ public class UserServiceTests : BaseTestClass
         var userAuthDto = result.Value;
         Assert.True(userAuthDto.Roles.Count >= 1);
         Assert.Equal("Canaan", userAuthDto.Username);
-        
-        
+        Assert.NotNull(userAuthDto.LatestPasswordHash);
+
     }
     
     [Fact]

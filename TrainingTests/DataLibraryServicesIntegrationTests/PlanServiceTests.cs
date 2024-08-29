@@ -1,14 +1,14 @@
 ﻿using DataLibrary.Models;
 using DataLibrary.Services;
-using DateLibraryTests.helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
 using SharedLibrary.Dtos;
 using SharedLibrary.Helpers;
+using TrainingTests.helpers;
 
-namespace DateLibraryTests.ServicesTests;
+namespace TrainingTests.ServicesTests;
 
 public class PlanServiceTests : BaseTestClass
 {

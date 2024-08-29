@@ -50,7 +50,7 @@ public static class SecurityHelpers
     /// A Result object containing a boolean value indicating whether the password verification succeeded,
     /// and a message indicating success or failure.
     /// </returns>
-    public static Result<bool> VerifyPassword(string enteredPassword, string storedHash, string salt)//not needed the salt
+    public static Result<bool> VerifyPassword(string enteredPassword, string storedHash, string salt = "not used")//not needed the salt
     {
         if (string.IsNullOrEmpty(enteredPassword))
             return Result<bool>.Failure($"Entered password cannot be null or empty.");

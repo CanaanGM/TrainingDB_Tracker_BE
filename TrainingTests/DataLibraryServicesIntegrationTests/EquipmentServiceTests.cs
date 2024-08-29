@@ -9,7 +9,7 @@ using SharedLibrary.Dtos;
 using SharedLibrary.Helpers;
 using TestSupport.EfHelpers;
 
-namespace DateLibraryTests.ServicesTests;
+namespace TrainingTests.ServicesTests;
 
 public class EquipmentServiceTests : BaseTestClass
 {

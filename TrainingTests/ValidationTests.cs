@@ -1,7 +1,7 @@
 ﻿using SharedLibrary.Dtos;
 using SharedLibrary.Helpers;
 
-namespace DateLibraryTests;
+namespace TrainingTests;
 
 public class ValidationTests
 {

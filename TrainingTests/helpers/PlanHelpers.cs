@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using SharedLibrary.Dtos;
 
-namespace DateLibraryTests.helpers;
+namespace TrainingTests.helpers;
 
 public static class PlanHelpers
 {

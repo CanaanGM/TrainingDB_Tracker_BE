@@ -40,7 +40,7 @@ public class Program
                 };
             });
         
-        builder.Services.AddScoped<TokenService>();
+        builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IUserAccessor, UserAccessor>();
         
         

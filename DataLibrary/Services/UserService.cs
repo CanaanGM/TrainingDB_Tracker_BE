@@ -112,6 +112,13 @@ public class UserService : IUserService
                 .ProjectTo<UserAuthDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(x => x.Email == email, cancellationToken: cancellationToken);
 
+            var latestPassword = await _context.Users
+                .Include(x => x.UserPasswords
+                    .Where(x => x.IsCurrent == true))
+                .FirstOrDefaultAsync(x => x.Email == user.Email, cancellationToken);
+            
+            user.LatestPasswordHash = latestPassword.UserPasswords.First().PasswordHash;
+            
             return user is null ? Result<UserAuthDto>.Failure("user not found") : Result<UserAuthDto>.Success(user);
         }
         catch (Exception ex)

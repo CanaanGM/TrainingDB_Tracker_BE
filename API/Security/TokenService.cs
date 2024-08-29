@@ -7,7 +7,14 @@ using Microsoft.IdentityModel.Tokens;
 using SharedLibrary.Dtos;
 
 namespace API.Security;
-public class TokenService
+
+public interface ITokenService
+{
+    string CreateToken(UserAuthDto user);
+    RefreshToken GenerateRefreshToken();
+}
+
+public class TokenService : ITokenService
 {
     private readonly IConfiguration _config;
     private const int RefreshTokenSize = 64;

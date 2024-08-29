@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using SharedLibrary.Helpers;
 
-namespace DateLibraryTests;
+namespace TrainingTests;
 public class UtilsTests
 {
 

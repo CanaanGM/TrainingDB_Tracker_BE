@@ -1,7 +1,7 @@
 ﻿using DataLibrary.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace DateLibraryTests.helpers;
+namespace TrainingTests.helpers;
 
 public static class ProductionDatabaseHelpers
 {

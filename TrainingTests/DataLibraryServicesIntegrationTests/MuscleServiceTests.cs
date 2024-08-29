@@ -12,7 +12,7 @@ using SharedLibrary.Core;
 using SharedLibrary.Dtos;
 using TestSupport.EfHelpers;
 
-namespace DateLibraryTests.ServicesTests;
+namespace TrainingTests.ServicesTests;
 public class MuscleServiceTests
 {
   DbContextOptionsDisposable<SqliteContext> options;

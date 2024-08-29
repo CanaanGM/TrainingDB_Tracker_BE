@@ -2,7 +2,6 @@
 using DataLibrary.Context;
 using DataLibrary.Core;
 using DataLibrary.Services;
-using DateLibraryTests.helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -10,8 +9,9 @@ using SharedLibrary.Core;
 using SharedLibrary.Dtos;
 using SharedLibrary.Helpers;
 using TestSupport.EfHelpers;
+using TrainingTests.helpers;
 
-namespace DateLibraryTests.ServicesTests;
+namespace TrainingTests.ServicesTests;
 
 public class ExerciseServiceTests
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 
-namespace DateLibraryTests.helpers;
+namespace TrainingTests.helpers;
 
 public static class DatabaseScriptsHelpers
 {
