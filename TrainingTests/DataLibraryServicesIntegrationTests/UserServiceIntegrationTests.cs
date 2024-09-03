@@ -9,13 +9,13 @@ namespace TrainingTests.ServicesTests;
 
 public class UserServiceIntegrationTests : BaseIntegrationTestClass
 {
-    private Mock<ILogger<UserServiceIntegration>> _logger;
-    private readonly UserServiceIntegration _serviceIntegration;
+    private Mock<ILogger<UserService>> _logger;
+    private readonly UserService _serviceIntegration;
     
     public UserServiceIntegrationTests()
     {
-        _logger = new Mock<ILogger<UserServiceIntegration>>();
-        _serviceIntegration = new UserServiceIntegration(_context, _mapper, _logger.Object);
+        _logger = new Mock<ILogger<UserService>>();
+        _serviceIntegration = new UserService(_context, _mapper, _logger.Object);
     }
 
     

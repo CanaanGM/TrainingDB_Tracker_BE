@@ -12,14 +12,14 @@ namespace TrainingTests.ServicesTests;
 
 public class PlanServiceIntegrationTests : BaseIntegrationTestClass
 {
-    private PlanServiceIntegration _serviceIntegration;
-    private Mock<ILogger<PlanServiceIntegration>> logger;
+    private PlanService _serviceIntegration;
+    private Mock<ILogger<PlanService>> logger;
 
 
     public PlanServiceIntegrationTests()
     {
-        logger = new Mock<ILogger<PlanServiceIntegration>>();
-        _serviceIntegration = new PlanServiceIntegration(_context, _mapper, logger.Object);
+        logger = new Mock<ILogger<PlanService>>();
+        _serviceIntegration = new PlanService(_context, _mapper, logger.Object);
     }
 
 

@@ -26,13 +26,13 @@ public interface IPlanService
     Task<Result<bool>> DeleteAsync(int planId, CancellationToken cancellationToken);
 }
 
-public class PlanServiceIntegration : IPlanService
+public class PlanService : IPlanService
 {
     private readonly SqliteContext _context;
     private readonly IMapper _mapper;
-    private readonly ILogger<PlanServiceIntegration> _logger;
+    private readonly ILogger<PlanService> _logger;
 
-    public PlanServiceIntegration(SqliteContext context, IMapper mapper, ILogger<PlanServiceIntegration> logger)
+    public PlanService(SqliteContext context, IMapper mapper, ILogger<PlanService> logger)
     {
         _context = context;
         _mapper = mapper;

@@ -20,13 +20,13 @@ public class AuthControllerIntegrationIntegrationTests : BaseIntegrationTestClas
     private readonly AuthController _controller;
     private readonly IUserService _userService;
     private readonly ITokenService _tokenService;
-    private Mock<ILogger<UserServiceIntegration>> _userServiceLoggerMock;
+    private Mock<ILogger<UserService>> _userServiceLoggerMock;
     private Mock<IConfiguration> _configurationMock;
 
     public AuthControllerIntegrationIntegrationTests()
     {
-        _userServiceLoggerMock = new Mock<ILogger<UserServiceIntegration>>();
-        _userService = new UserServiceIntegration(_context, _mapper, _userServiceLoggerMock.Object);
+        _userServiceLoggerMock = new Mock<ILogger<UserService>>();
+        _userService = new UserService(_context, _mapper, _userServiceLoggerMock.Object);
         var secureKey = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
 
         _configurationMock = new Mock<IConfiguration>();

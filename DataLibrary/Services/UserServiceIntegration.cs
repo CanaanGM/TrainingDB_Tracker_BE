@@ -21,13 +21,13 @@ public interface IUserService
         CancellationToken cancellationToken);
 }
 
-public class UserServiceIntegration : IUserService
+public class UserService : IUserService
 {
     private readonly SqliteContext _context;
     private readonly IMapper _mapper;
-    private readonly ILogger<UserServiceIntegration> _logger;
+    private readonly ILogger<UserService> _logger;
 
-    public UserServiceIntegration(SqliteContext context, IMapper mapper, ILogger<UserServiceIntegration> logger)
+    public UserService(SqliteContext context, IMapper mapper, ILogger<UserService> logger)
     {
         _context = context;
         _mapper = mapper;

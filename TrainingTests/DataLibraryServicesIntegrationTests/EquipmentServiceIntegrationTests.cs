@@ -14,13 +14,13 @@ namespace TrainingTests.ServicesTests;
 public class EquipmentServiceIntegrationTests : BaseIntegrationTestClass
 {
 
-    private readonly Mock<ILogger<EquipmentServiceIntegration>> logger;
-    private readonly EquipmentServiceIntegration _serviceIntegration;
+    private readonly Mock<ILogger<EquipmentService>> logger;
+    private readonly EquipmentService _serviceIntegration;
 
     public EquipmentServiceIntegrationTests()
     {
-        logger = new Mock<ILogger<EquipmentServiceIntegration>>();
-        _serviceIntegration = new EquipmentServiceIntegration(_context, _mapper, logger.Object);
+        logger = new Mock<ILogger<EquipmentService>>();
+        _serviceIntegration = new EquipmentService(_context, _mapper, logger.Object);
     }
 
     [Fact]
