@@ -6,21 +6,21 @@ public class UserWriteDto
 {
     public required string Name { get; set; }
     [EmailAddress] public required string Email { get; set; }
-    [MinLength(8)] [MaxLength(512)] public required string Password { get; set; }
+    [MinLength(8)][MaxLength(512)] public required string Password { get; set; }
     public double? Height { get; set; }
     public string? Gender { get; set; }
     public string? Image { get; set; }
 }
 
-public class ExternalUserAuthDto
+public class UserAuthDto
 {
     public string Username { get; set; } = null!;
     public string Email { get; set; } = null!;
     public List<string> Roles { get; set; }
     public string Token { get; set; }
-    
+
 }
-public class InternalUserAuthDto : ExternalUserAuthDto
+public class InternalUserAuthDto : UserAuthDto
 {
     public int Id { get; set; }
     public string LatestPasswordHash { get; set; }
@@ -42,5 +42,5 @@ public class RefreshTokenReadDto
 public class UserLogInDto
 {
     [EmailAddress] public required string Email { get; set; }
-    [MinLength(8)] [MaxLength(512)] public required string Password { get; set; }
+    [MinLength(8)][MaxLength(512)] public required string Password { get; set; }
 }

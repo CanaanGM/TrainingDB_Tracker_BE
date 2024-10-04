@@ -1,10 +1,14 @@
 ﻿using API.Controllers;
 using API.Security;
+
 using DataLibrary.Models;
 using DataLibrary.Services;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 using Moq;
+
 using SharedLibrary.Core;
 using SharedLibrary.Dtos;
 
@@ -61,9 +65,9 @@ public class AuthControllerTests
 
         var result = await _controller.Register(userWriteDto, CancellationToken.None);
 
-        var actionResult = Assert.IsType<ActionResult<InternalUserAuthDto>>(result);
+        var actionResult = Assert.IsType<ActionResult<UserAuthDto>>(result);
         var createdAtRouteResult = Assert.IsType<CreatedAtRouteResult>(actionResult.Result);
-        var resultDto = Assert.IsType<InternalUserAuthDto>(createdAtRouteResult.Value);
+        var resultDto = Assert.IsType<UserAuthDto>(createdAtRouteResult.Value);
 
         Assert.Equal(createdUser.Username, resultDto.Username);
         Assert.Equal(createdUser.Email, resultDto.Email);
@@ -80,7 +84,7 @@ public class AuthControllerTests
         var setCookieHeader = _controller.Response.Headers["Set-Cookie"].ToString();
         Assert.Contains("refreshToken=test_refresh_token", setCookieHeader);
     }
-    
+
     [Fact]
     public async Task LogIn_ShouldReturnUserAuthDto_WhenLoginIsSuccessful()
     {
@@ -112,15 +116,15 @@ public class AuthControllerTests
 
         var result = await _controller.LogIn(logInDto, CancellationToken.None);
 
-        var actionResult = Assert.IsType<ActionResult<InternalUserAuthDto>>(result);
+        var actionResult = Assert.IsType<ActionResult<UserAuthDto>>(result);
         var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-        var resultDto = Assert.IsType<InternalUserAuthDto>(okResult.Value);
+        var resultDto = Assert.IsType<UserAuthDto>(okResult.Value);
 
         Assert.Equal(userAuthDto.Username, resultDto.Username);
         Assert.Equal(userAuthDto.Email, resultDto.Email);
 
         // Ensure Token is set properly
-        Assert.NotNull(resultDto.Token);  
+        Assert.NotNull(resultDto.Token);
         Assert.Equal("dummy_jwt_token", resultDto.Token);
 
         _userServiceMock.Verify(s => s.GetUserWithRolesByEmailAsync(logInDto.Email, It.IsAny<CancellationToken>()), Times.Once);
@@ -148,7 +152,7 @@ public class AuthControllerTests
 
         var result = await _controller.LogIn(logInDto, CancellationToken.None);
 
-        var actionResult = Assert.IsType<ActionResult<InternalUserAuthDto>>(result);
+        var actionResult = Assert.IsType<ActionResult<UserAuthDto>>(result);
         Assert.IsType<UnauthorizedResult>(actionResult.Result);
 
         _userServiceMock.Verify(s => s.GetUserWithRolesByEmailAsync(logInDto.Email, It.IsAny<CancellationToken>()), Times.Once);
@@ -178,7 +182,7 @@ public class AuthControllerTests
 
         var result = await _controller.LogIn(logInDto, CancellationToken.None);
 
-        var actionResult = Assert.IsType<ActionResult<InternalUserAuthDto>>(result);
+        var actionResult = Assert.IsType<ActionResult<UserAuthDto>>(result);
         Assert.IsType<UnauthorizedResult>(actionResult.Result);
 
         _userServiceMock.Verify(s => s.GetUserWithRolesByEmailAsync(logInDto.Email, It.IsAny<CancellationToken>()), Times.Once);
@@ -199,7 +203,7 @@ public class AuthControllerTests
 
         var result = await _controller.LogIn(logInDto, CancellationToken.None);
 
-        var actionResult = Assert.IsType<ActionResult<InternalUserAuthDto>>(result);
+        var actionResult = Assert.IsType<ActionResult<UserAuthDto>>(result);
         var objectResult = Assert.IsType<ObjectResult>(actionResult.Result);
         Assert.Equal(StatusCodes.Status500InternalServerError, objectResult.StatusCode);
         Assert.Equal("An unexpected error occurred", objectResult.Value);

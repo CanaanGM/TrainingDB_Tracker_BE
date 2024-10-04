@@ -1,10 +1,13 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using DataLibrary.Models;
+
+using Microsoft.IdentityModel.Tokens;
+
+using SharedLibrary.Dtos;
+
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using DataLibrary.Models;
-using Microsoft.IdentityModel.Tokens;
-using SharedLibrary.Dtos;
 
 namespace API.Security;
 
@@ -33,7 +36,7 @@ public class TokenService : ITokenService
         };
 
         claims.AddRange(internalUser.Roles.Select(role => new Claim(ClaimTypes.Role, role)));
-        
+
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"]!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 

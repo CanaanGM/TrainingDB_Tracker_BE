@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+
 using DataLibrary.Context;
 using DataLibrary.Models;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+
 using SharedLibrary.Core;
 using SharedLibrary.Dtos;
 using SharedLibrary.Helpers;
@@ -38,18 +41,18 @@ public class UserService : IUserService
     {
         try
         {
-            var userExists = await _context.Users.FirstOrDefaultAsync(x => x.Email == userDto.Email,
+            User? userExists = await _context.Users.FirstOrDefaultAsync(x => x.Email == userDto.Email,
                 cancellationToken: cancellationToken);
             if (userExists is not null)
                 return Result<InternalUserAuthDto>.Failure("email taken.");
 
-            await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+            await using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
 
-            var salt = SecurityHelpers.GenerateSalt();
-            var hashedPasswordResult = SecurityHelpers.HashPassword(userDto.Password, salt);
+            string salt = SecurityHelpers.GenerateSalt();
+            Result<string> hashedPasswordResult = SecurityHelpers.HashPassword(userDto.Password, salt);
             if (!hashedPasswordResult.IsSuccess)
                 return Result<InternalUserAuthDto>.Failure(hashedPasswordResult.ErrorMessage!);
-            var user = new User()
+            User user = new User()
             {
                 Email = userDto.Email,
                 Username = userDto.Name,
@@ -68,7 +71,7 @@ public class UserService : IUserService
                     User = user,
                 },
             ];
-            var userRole =
+            Role? userRole =
                 await _context.Roles.FirstOrDefaultAsync(x => x.Name == "user", cancellationToken: cancellationToken);
 
             user.UserRoles = [new UserRole() { Role = userRole!, User = user }];
@@ -93,7 +96,6 @@ public class UserService : IUserService
                 Email = user.Email,
                 Username = user.Email,
                 Roles = user.UserRoles.Select(x => x.Role.Name).ToList(),
-                
             }, "user created!");
         }
         catch (Exception ex)
@@ -108,17 +110,17 @@ public class UserService : IUserService
     {
         try
         {
-            var user = await _context.Users
+            InternalUserAuthDto? user = await _context.Users
                 .ProjectTo<InternalUserAuthDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(x => x.Email == email, cancellationToken: cancellationToken);
 
-            var latestPassword = await _context.Users
+            User? latestPassword = await _context.Users
                 .Include(x => x.UserPasswords
                     .Where(x => x.IsCurrent == true))
                 .FirstOrDefaultAsync(x => x.Email == user.Email, cancellationToken);
-            
+
             user.LatestPasswordHash = latestPassword.UserPasswords.First().PasswordHash;
-            
+
             return user is null ? Result<InternalUserAuthDto>.Failure("user not found") : Result<InternalUserAuthDto>.Success(user);
         }
         catch (Exception ex)
@@ -134,13 +136,13 @@ public class UserService : IUserService
         try
         {
             await using var _transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-            var user = await _context.Users
+            User? user = await _context.Users
                 .Include(x => x.RefreshTokens)
                 .FirstOrDefaultAsync(x => x.Email == userEmail, cancellationToken);
 
             if (user is null) return Result.Failure("user does not exist.");
 
-            foreach (var rToken in user.RefreshTokens)
+            foreach (RefreshToken rToken in user.RefreshTokens)
             {
                 rToken.Active = false;
             }
@@ -156,7 +158,7 @@ public class UserService : IUserService
             _context.Users.Update(user);
             await _context.SaveChangesAsync(cancellationToken);
             await _transaction.CommitAsync(cancellationToken);
-            
+
             return Result.Success();
         }
         catch (Exception ex)
