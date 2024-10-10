@@ -22,13 +22,13 @@ public interface IEquipmentService
     Task<Result<bool>> DeleteAsync(string equipmentName, CancellationToken cancellationToken);
 }
 
-public class EquipmentServiceIntegration : IEquipmentService
+public class EquipmentService : IEquipmentService
 {
     private readonly SqliteContext _context;
     private readonly IMapper _mapper;
-    private readonly ILogger<EquipmentServiceIntegration> _logger;
+    private readonly ILogger<EquipmentService> _logger;
 
-    public EquipmentServiceIntegration( SqliteContext context, IMapper mapper, ILogger<EquipmentServiceIntegration> logger )
+    public EquipmentService( SqliteContext context, IMapper mapper, ILogger<EquipmentService> logger )
     {
         _context = context;
         _mapper = mapper;

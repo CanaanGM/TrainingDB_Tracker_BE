@@ -12,7 +12,7 @@ public class Profiles : Profile
         // TODO: move what's related into it's own file for clarity.
 
         CreateMap<Muscle, MuscleReadDto>()
-            .ForMember(x => x.MuscleName, src =>
+            .ForMember(x => x.Name, src =>
                 src.MapFrom(w => w.Name))
             .ReverseMap();
 

@@ -104,7 +104,7 @@ public class MuscleServiceTests
     var result = await service.GetByNameAsync("deltoid anterior head", new CancellationToken());
     Assert.True(result.IsSuccess);
     Assert.NotNull(result.Value);
-    Assert.Equal("deltoid anterior head", result.Value.MuscleName);
+    Assert.Equal("deltoid anterior head", result.Value.Name);
     Assert.Equal("shoulders", result.Value.MuscleGroup);
     Assert.Equal("flexes and medially rotates the arm.", result.Value.Function);
     Assert.Equal("https://en.wikipedia.org/wiki/Deltoid_muscle#Anterior_part", result.Value.WikiPageUrl);
@@ -149,7 +149,7 @@ public class MuscleServiceTests
     Assert.True(result.IsSuccess);
     Assert.NotNull(result.Value);
     Assert.NotEmpty(result.Value);
-    Assert.Equal("deltoid anterior head", result.Value[0].MuscleName);
+    Assert.Equal("deltoid anterior head", result.Value[0].Name);
     Assert.Equal("shoulders", result.Value[0].MuscleGroup);
     Assert.Equal("flexes and medially rotates the arm.", result.Value[0].Function);
     Assert.Equal("https://en.wikipedia.org/wiki/Deltoid_muscle#Anterior_part", result.Value[0].WikiPageUrl);

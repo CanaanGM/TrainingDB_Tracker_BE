@@ -4,7 +4,7 @@ namespace SharedLibrary.Dtos;
 
 public class TrainingPlanWriteDto
 {
-    public string _name { get; set; }
+    private string _name { get; set; }
     public required string Name { get => _name; set => _name = Utils.NormalizeString(value); }
     public required string? Description { get; set; }
     public required string? Notes { get; set; }
@@ -13,7 +13,7 @@ public class TrainingPlanWriteDto
 
 public class TrainingWeekWriteDto
 {
-    public string _name { get; set; }
+    private string _name { get; set; }
     public required string Name { get => _name; set => _name = Utils.NormalizeString(value); }
     public required int OrderNumber { get; set; }
     public required List<TrainingDaysWriteDto> TrainingDays { get; set; }
@@ -21,16 +21,16 @@ public class TrainingWeekWriteDto
 
 public class TrainingDaysWriteDto
 {
-    public string _name { get; set; }
+    private string _name { get; set; }
     public required string Name { get => _name; set => _name = Utils.NormalizeString(value); }
     public string? Notes { get; set; }
     public required int OrderNumber { get; set; }
-    public List<BlockWriteDto> Blocks { get; set; }
+    public List<BlockWriteDto>? Blocks { get; set; }
 }
 
 public class BlockWriteDto
 {
-    public string _name { get; set; }
+    private string _name { get; set; }
     public required string Name { get => _name; set => _name = Utils.NormalizeString(value); }
     public required int Sets { get; set; }
     public required int RestInSeconds { get; set; }
@@ -41,9 +41,9 @@ public class BlockWriteDto
 
 public class BlockExerciseWriteDto
 {
-    public string _name { get; set; }
+    private string _name { get; set; }
     public required string ExerciseName { get => _name; set => _name = Utils.NormalizeString(value); }
-    public required string Instructions { get; set; }
+    public string? Instructions { get; set; }
     public required int OrderNumber { get; set; }
     public int? Repetitions { get; set; }
     public int? TimerInSeconds { get; set; }
@@ -67,7 +67,7 @@ public class TrainingPlanReadDto
     public List<string> RequiredEquipment { get; set; }
     public List<TrainingWeekReadDto> TrainingWeeks { get; set; }
     public DateTime CreatedAt { get; set; }
-    
+
 }
 
 public class TrainingWeekReadDto
