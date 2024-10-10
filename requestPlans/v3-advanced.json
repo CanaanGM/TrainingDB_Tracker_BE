@@ -1,0 +1,2823 @@
+{
+  "Name": "v3-advanced",
+  "Description": "a bodybuilding plan for advanced people",
+  "Notes": "Choose a weight that is 70~75% of a weight you can do once, if you can left 20kg once, train with 15~16kg.",
+  "TrainingWeeks": [
+    {
+      "Name": "week 1",
+      "OrderNumber": 1,
+      "TrainingDays": [
+        {
+          "Name": "arms",
+          "Notes": "",
+          "OrderNumber": 1,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "dumbbell curl - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "overhead tricep extension - seated dumbbell",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "spider curls",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "skull crushers - lying",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "push ups - diamond",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "cable curls - rope",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "cable triceps pushdown",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 2,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "ez bar cable curl",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "ez bar cable tricep extension",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "shoulders + traps",
+          "Notes": "",
+          "OrderNumber": 2,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bench press",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "dumbbell shoulder press - seated alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "single arm cable fly - lateral",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "single arm cable fly - front",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "cable upright row",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "landmine press - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "bent over dumbbell rear delt raise",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "cable face pulls",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "dumbbell side lateral",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "back",
+          "Notes": "",
+          "OrderNumber": 3,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "deadlift",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 4,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "t-bar row",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 4,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "one arm t-bar row",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "dumbbell row - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "bent over dumbbell rear delt raise",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 4,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "rope cable face pull",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "lat pulldown - wide grip",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 4,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bent over barbell row",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "pull ups",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "chest + abs",
+          "Notes": "",
+          "OrderNumber": 4,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bench press",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bench press - incline",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "incline cable fly",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "decline cable fly",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "standing medium high cable fly",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "landmine press - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "pullover - dumbbell with isometric hold",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 2,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "medicine ball dumbbell chest press",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "push ups - stability",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "f",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 6,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "single leg glute bridge on bosu ball",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "crunches on bosu ball",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "high plank with leg raise on bosu ball",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "g",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 7,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "cable crunch",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "high to low cable chops",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "ab roller",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "cable crunch - standing",
+                  "Instructions": null,
+                  "OrderNumber": 4,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "legs",
+          "Notes": "",
+          "OrderNumber": 5,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "glute bridge - barbell",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "back squat",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "calf raises - standing",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "sissy squat",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "leg press",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "machine abductions",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "reverse lunges - barbell",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "barbell stiff leg deadlift",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "leg extensions",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "week 2",
+      "OrderNumber": 2,
+      "TrainingDays": [
+        {
+          "Name": "arms",
+          "Notes": "",
+          "OrderNumber": 1,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "dumbbell curl - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "overhead tricep extension - seated dumbbell",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "spider curls",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "skull crushers - lying",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "push ups - diamond",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "cable curls - rope",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "cable triceps pushdown",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 3,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "ez bar cable curl",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "ez bar cable tricep extension",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "shoulders + traps",
+          "Notes": "",
+          "OrderNumber": 2,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bench press",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "dumbbell shoulder press - seated alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "single arm cable fly - lateral",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "single arm cable fly - front",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "cable upright row",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "landmine press - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "bent over dumbbell rear delt raise",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "cable face pulls",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "dumbbell side lateral",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "back",
+          "Notes": "",
+          "OrderNumber": 3,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "deadlift",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 4,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "t-bar row",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 4,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "one arm t-bar row",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "dumbbell row - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "bent over dumbbell rear delt raise",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 4,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "rope cable face pull",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "lat pulldown - wide grip",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 4,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bent over barbell row",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "pull ups",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "chest + abs",
+          "Notes": "",
+          "OrderNumber": 4,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bench press",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bench press - incline",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "incline cable fly",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "decline cable fly",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "standing medium high cable fly",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "landmine press - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "pullover - dumbbell with isometric hold",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 3,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "medicine ball dumbbell chest press",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "push ups - stability",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "f",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 6,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "hanging knee raises",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "hanging oblique crunch",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "hanging oblique crunch",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "bicycle crunch with bands around ankles",
+                  "Instructions": null,
+                  "OrderNumber": 4,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "g",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 7,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "russian twists - dumbbell",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "flutter kicks holding dumbbell high",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "scissor kicks holding dumbbell high",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "standing cable oblique crunch bends",
+                  "Instructions": null,
+                  "OrderNumber": 4,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "legs",
+          "Notes": "",
+          "OrderNumber": 5,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "glute bridge - barbell",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "back squat",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "calf raises - standing",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "sissy squat",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "leg press",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "machine abductions",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "reverse lunges - barbell",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "barbell stiff leg deadlift",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "leg extensions",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "week 3",
+      "OrderNumber": 3,
+      "TrainingDays": [
+        {
+          "Name": "arms",
+          "Notes": "",
+          "OrderNumber": 1,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "dumbbell curl - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "overhead tricep extension - seated dumbbell",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "spider curls",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "skull crushers - lying",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "push ups - diamond",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "cable curls - rope",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 10,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "cable triceps pushdown",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 10,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 3,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "ez bar cable curl",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "ez bar cable tricep extension",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "shoulders + traps",
+          "Notes": "",
+          "OrderNumber": 2,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bench press",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "dumbbell shoulder press - seated alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "single arm cable fly - lateral",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "single arm cable fly - front",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "cable upright row",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "landmine press - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "bent over dumbbell rear delt raise",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "cable face pulls",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "dumbbell side lateral",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "back",
+          "Notes": "",
+          "OrderNumber": 3,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "deadlift",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 5,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "t-bar row",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 5,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "one arm t-bar row",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "dumbbell row - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "bent over dumbbell rear delt raise",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 5,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "rope cable face pull",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "lat pulldown - wide grip",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 5,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bent over barbell row",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "pull ups",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "chest + abs",
+          "Notes": "",
+          "OrderNumber": 4,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bench press",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bench press - incline",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "incline cable fly",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "decline cable fly",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "standing medium high cable fly",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "landmine press - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "pullover - dumbbell with isometric hold",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 3,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "medicine ball dumbbell chest press",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "push ups - stability",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "f",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 6,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "single leg glute bridge on bosu ball",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "crunches on bosu ball",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "high plank with leg raise on bosu ball",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "g",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 7,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "cable crunch",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "high to low cable chops",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "ab roller",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "cable crunch - standing",
+                  "Instructions": null,
+                  "OrderNumber": 4,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "legs",
+          "Notes": "",
+          "OrderNumber": 5,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "glute bridge - barbell",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "back squat",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "calf raises - standing",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "sissy squat",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "leg press",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "machine abductions",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "reverse lunges - barbell",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "barbell stiff leg deadlift",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "leg extensions",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "week 4",
+      "OrderNumber": 4,
+      "TrainingDays": [
+        {
+          "Name": "arms",
+          "Notes": "",
+          "OrderNumber": 1,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "dumbbell curl - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "overhead tricep extension - seated dumbbell",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "spider curls",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "skull crushers - lying",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "push ups - diamond",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "cable curls - rope",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 10,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "cable triceps pushdown",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 10,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "ez bar cable curl",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "ez bar cable tricep extension",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "shoulders + traps",
+          "Notes": "",
+          "OrderNumber": 2,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bench press",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "dumbbell shoulder press - seated alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "single arm cable fly - lateral",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "single arm cable fly - front",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "cable upright row",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "landmine press - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "bent over dumbbell rear delt raise",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "cable face pulls",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "dumbbell side lateral",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "back",
+          "Notes": "",
+          "OrderNumber": 3,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "deadlift",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 5,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "t-bar row",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 5,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "one arm t-bar row",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "dumbbell row - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "bent over dumbbell rear delt raise",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 5,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "rope cable face pull",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "lat pulldown - wide grip",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 5,
+              "RestInSeconds": 90,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bent over barbell row",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "pull ups",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "chest + abs",
+          "Notes": "",
+          "OrderNumber": 4,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bench press",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "bench press - incline",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "incline cable fly",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "decline cable fly",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "standing medium high cable fly",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "landmine press - alternating",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "pullover - dumbbell with isometric hold",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "medicine ball dumbbell chest press",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "push ups - stability",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "f",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 6,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "hanging knee raises",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "hanging oblique crunch",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "hanging oblique crunch",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "bicycle crunch with bands around ankles",
+                  "Instructions": null,
+                  "OrderNumber": 4,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "g",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 7,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "russian twists - dumbbell",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "flutter kicks holding dumbbell high",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "scissor kicks holding dumbbell high",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "standing cable oblique crunch bends",
+                  "Instructions": null,
+                  "OrderNumber": 4,
+                  "Repetitions": 1,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Name": "legs",
+          "Notes": "",
+          "OrderNumber": 5,
+          "Blocks": [
+            {
+              "Name": "a",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "glute bridge - barbell",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "b",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 2,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "back squat",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "c",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 3,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "calf raises - standing",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "sissy squat",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 15,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "leg press",
+                  "Instructions": null,
+                  "OrderNumber": 3,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "d",
+              "Sets": 5,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 4,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "machine abductions",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "reverse lunges - barbell",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 12,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            },
+            {
+              "Name": "e",
+              "Sets": 4,
+              "RestInSeconds": 60,
+              "Instructions": "",
+              "OrderNumber": 5,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "barbell stiff leg deadlift",
+                  "Instructions": null,
+                  "OrderNumber": 1,
+                  "Repetitions": 30,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                },
+                {
+                  "ExerciseName": "leg extensions",
+                  "Instructions": null,
+                  "OrderNumber": 2,
+                  "Repetitions": 0,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,9 +1,14 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+
 using DataLibrary.Context;
 using DataLibrary.Models;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+
+using Newtonsoft.Json;
+
 using SharedLibrary.Core;
 using SharedLibrary.Dtos;
 using SharedLibrary.Helpers;
@@ -43,20 +48,22 @@ public class PlanService : IPlanService
     {
         if (!Validation.ValidateTrainingPlan(newPlanDto, out var validationError))
             return Result<int>.Failure(validationError);
-        
-        if(!Validation.ValidateOrderNumbers(newPlanDto, out validationError))
+
+        if (!Validation.ValidateOrderNumbers(newPlanDto, out validationError))
             return Result<int>.Failure(validationError);
         try
-        {
-
+        { 
+            string projectRoot = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\requestPlans"));
+            Directory.CreateDirectory(projectRoot);
+            File.WriteAllText($"{projectRoot}/{newPlanDto.Name}.json", JsonConvert.SerializeObject(newPlanDto, Newtonsoft.Json.Formatting.Indented));
             var relatedExercises = await GetRelatedExercises(newPlanDto, cancellationToken);
-            
+
             var validationErrors = ValidateEntities(relatedExercises, newPlanDto);
             if (validationErrors.Any())
                 return Result<int>.Failure(string.Join("; ", validationErrors));
-            
+
             await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-            
+
             var trainingPlan = MapToTrainingPlan(newPlanDto, relatedExercises);
 
             await _context.TrainingPlans.AddAsync(trainingPlan, cancellationToken);
@@ -71,7 +78,7 @@ public class PlanService : IPlanService
             return Result<int>.Failure($"Failed to create training plan: {ex.Message}", ex);
         }
     }
-   
+
     public async Task<Result> CreateBulkAsync(List<TrainingPlanWriteDto> newPlanDtos, CancellationToken cancellationToken)
     {
         var allMissingExercises = new List<string>();
@@ -84,7 +91,7 @@ public class PlanService : IPlanService
             {
                 if (!Validation.ValidateTrainingPlan(newPlanDto, out var validationError))
                     return Result.Failure(validationError);
-                
+
                 if (!Validation.ValidateOrderNumbers(newPlanDto, out validationError))
                     return Result.Failure(validationError);
 
@@ -126,10 +133,10 @@ public class PlanService : IPlanService
             var totalPlansCount = await _context.TrainingPlans.CountAsync(cancellationToken);
 
             var plans = await _context.TrainingPlans
-                .OrderBy(p => p.Name) 
+                .OrderBy(p => p.Name)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .ProjectTo<TrainingPlanReadDto>(_mapper.ConfigurationProvider) 
+                .ProjectTo<TrainingPlanReadDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
             var paginatedList = new PaginatedList<TrainingPlanReadDto>
@@ -153,7 +160,7 @@ public class PlanService : IPlanService
         }
     }
 
-    
+
     public async Task<Result<TrainingPlanReadDto>> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
         try
@@ -173,13 +180,13 @@ public class PlanService : IPlanService
             //     .ThenInclude(exercise => exercise.Equipment)
             //     .FirstOrDefaultAsync(tp => tp.Id == id, cancellationToken);
             //
-            
+
             var trainingPlan = await _context.TrainingPlans
                 .ProjectTo<TrainingPlanReadDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(tp => tp.Id == id, cancellationToken);
 
-            
-            
+
+
             if (trainingPlan == null)
                 return Result<TrainingPlanReadDto>.Failure("Training plan not found.");
 
@@ -188,14 +195,14 @@ public class PlanService : IPlanService
                 .SelectMany(x => x.Blocks)
                 .SelectMany(r => r.BlockExercises)
                 .ToList();
-            
+
             trainingPlan.TrainingTypes = blockExercises
                 .Select(x => x.Exercise)
                 .SelectMany(x => x.TrainingTypes)
                 .Select(f => f.Name)
                 .Distinct()
                 .ToList();
-            
+
             // trainingPlan.RequiredEquipment = blockExercises
             //     .Select(x => x.Exercise)
             //     .SelectMany(r => r.Equipment)
@@ -219,14 +226,14 @@ public class PlanService : IPlanService
     {
         if (!Validation.ValidateTrainingPlan(updateDto, out var validationError))
             return Result<bool>.Failure(validationError);
-        
-        if(!Validation.ValidateOrderNumbers(updateDto, out validationError))
+
+        if (!Validation.ValidateOrderNumbers(updateDto, out validationError))
             return Result<bool>.Failure(validationError);
 
         try
         {
             await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-            
+
             var trainingPlan = await _context.TrainingPlans
                 .Include(tp => tp.TrainingWeeks)
                 .ThenInclude(tw => tw.TrainingDays)
@@ -380,7 +387,7 @@ public class PlanService : IPlanService
             .Where(x => normalizedExerciseNames.Contains(x.Name))
             .ToDictionaryAsync(x => x.Name, x => x, cancellationToken);
     }
-    
+
     private List<string> ValidateEntities(
         Dictionary<string, Exercise> relatedExercises,
         TrainingPlanWriteDto newPlanDto)
@@ -400,9 +407,9 @@ public class PlanService : IPlanService
         }
         return errors;
     }
-    
-    
-    private TrainingPlan MapToTrainingPlan(TrainingPlanWriteDto newPlanDto,Dictionary<string, Exercise> relatedExercises)
+
+
+    private TrainingPlan MapToTrainingPlan(TrainingPlanWriteDto newPlanDto, Dictionary<string, Exercise> relatedExercises)
     {
         return new TrainingPlan
         {
@@ -438,5 +445,5 @@ public class PlanService : IPlanService
             }).ToList()
         };
     }
-    
+
 }

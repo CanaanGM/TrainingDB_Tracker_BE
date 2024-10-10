@@ -2,7 +2,7 @@
 
 
 
-POST {{rootUrl}}/exercise/bulk
+POST {{rootUrl}}/plans
 Content-Type: application/json
 
   {
