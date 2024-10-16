@@ -1,7 +1,8 @@
-﻿using System.Security.Cryptography;
-using API.Controllers;
+﻿using API.Controllers;
 using API.Security;
+
 using DataLibrary.Services;
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,8 +10,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
 using Moq;
+
 using SharedLibrary.Dtos;
+
+using System.Security.Cryptography;
+
 using TrainingTests.helpers;
 
 namespace TrainingTests.APIControllersIntegrationTests;
@@ -50,11 +56,11 @@ public class AuthControllerIntegrationIntegrationTests : BaseIntegrationTestClas
             }
         };
     }
-    
+
     [Fact]
     public async Task Register_ShouldCreateUserAndSetRefreshToken_WhenRegistrationIsSuccessful()
     {
-        ProductionDatabaseHelpers.SeedRoles(_context); 
+        ProductionDatabaseHelpers.SeedRoles(_context);
 
         var newUser = new UserWriteDto
         {
@@ -79,7 +85,7 @@ public class AuthControllerIntegrationIntegrationTests : BaseIntegrationTestClas
             .FirstOrDefault(rt => rt.UserId == createdUser.Id && rt.Active.HasValue && rt.Active.Value);
         Assert.NotNull(refreshToken);
     }
-    
+
     [Fact]
     public async Task Register_ShouldFail_WhenUserAlreadyExists()
     {
@@ -165,7 +171,7 @@ public class AuthControllerIntegrationIntegrationTests : BaseIntegrationTestClas
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
         Assert.NotNull(okResult);
 
-        var userDto = Assert.IsType<InternalUserAuthDto>(okResult.Value);
+        var userDto = Assert.IsType<UserAuthDto>(okResult.Value);
         Assert.Equal(logInDto.Email, userDto.Email);
 
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userDto.Email);

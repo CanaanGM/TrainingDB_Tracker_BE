@@ -26,6 +26,8 @@ public partial class TrainingLogV2Context : DbContext
 
     public virtual DbSet<ExerciseHowTo> ExerciseHowTos { get; set; }
 
+    public virtual DbSet<ExerciseImage> ExerciseImages { get; set; }
+
     public virtual DbSet<ExerciseMuscle> ExerciseMuscles { get; set; }
 
     public virtual DbSet<ExerciseRecord> ExerciseRecords { get; set; }
@@ -187,6 +189,26 @@ public partial class TrainingLogV2Context : DbContext
             entity.HasOne(d => d.Exercise).WithMany(p => p.ExerciseHowTos)
                 .HasForeignKey(d => d.ExerciseId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<ExerciseImage>(entity =>
+        {
+            entity.ToTable("exercise_image");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("current_timestamp")
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.ExerciseId).HasColumnName("exercise_id");
+            entity.Property(e => e.IsPrimary)
+                .HasDefaultValue(true)
+                .HasColumnType("bit")
+                .HasColumnName("is_primary");
+            entity.Property(e => e.Name).HasColumnName("name");
+            entity.Property(e => e.Url).HasColumnName("url");
+
+            entity.HasOne(d => d.Exercise).WithMany(p => p.ExerciseImages).HasForeignKey(d => d.ExerciseId);
         });
 
         modelBuilder.Entity<ExerciseMuscle>(entity =>

@@ -1,6 +1,7 @@
-using API.Filters;
 using DataLibrary.Services;
+
 using Microsoft.AspNetCore.Mvc;
+
 using SharedLibrary.Core;
 using SharedLibrary.Dtos;
 
@@ -206,5 +207,11 @@ public class GenericController : ControllerBase
         [FromBody] TrainingPlanWriteDto newTrainingPlanWriteDto, CancellationToken cancellationToken)
     {
         return Ok(await _planService.CreateAsync(newTrainingPlanWriteDto, cancellationToken));
+    }
+
+    [HttpGet("/plans/{id}")]
+    public async Task<IActionResult> GetPlanByIdAsync([FromRoute] int id, CancellationToken cancellationToken)
+    {
+        return Ok(await _planService.GetByIdAsync(id, cancellationToken));
     }
 }

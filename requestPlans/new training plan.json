@@ -1,0 +1,37 @@
+{
+  "Name": "new training plan",
+  "Description": "A new training plan for testing",
+  "Notes": "Some notes",
+  "TrainingWeeks": [
+    {
+      "Name": "week 1",
+      "OrderNumber": 1,
+      "TrainingDays": [
+        {
+          "Name": "day 1",
+          "Notes": null,
+          "OrderNumber": 1,
+          "Blocks": [
+            {
+              "Name": "block 1",
+              "Sets": 3,
+              "RestInSeconds": 60,
+              "Instructions": "Some instructions",
+              "OrderNumber": 1,
+              "BlockExercises": [
+                {
+                  "ExerciseName": "dumbbell chest press - flat",
+                  "Instructions": "Some notes",
+                  "OrderNumber": 1,
+                  "Repetitions": 10,
+                  "TimerInSeconds": null,
+                  "DistanceInMeters": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

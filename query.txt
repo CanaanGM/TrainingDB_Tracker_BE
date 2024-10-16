@@ -1,0 +1,88 @@
+      SELECT "t0"."id", "t0"."name", "t0"."description", "t0"."notes", "t7"."id"
+                                                                               ", "t7"."name", "t7"."order_number", "t7"."id0", "t7"."name0", "t7"."notes", "t7"
+                                                                               "."c", "t7"."id00", "t7"."name00", "t7"."c0", "t7"."c00", "t7"."instructions", "t
+                                                                               t7"."c1", "t7"."id000", "t7"."c2", "t7"."id0000", "t7"."name000", "t7"."descripti
+                                                                               ion", "t7"."how_to", "t7"."difficulty", "t7"."Id1", "t7"."Name0000", "t7"."exerci
+                                                                               ise_id", "t7"."training_type_id", "t7"."IsPrimary", "t7"."Id2", "t7"."Name1", "t7
+                                                                               7"."Function", "t7"."MuscleGroup", "t7"."WikiPageUrl", "t7"."muscle_id", "t7"."ex
+                                                                               xercise_id0", "t7"."id3", "t7"."name2", "t7"."url", "t7"."c000", "t7"."repetition
+                                                                               ns", "t7"."timer_in_seconds", "t7"."distance_in_meters", "t0"."c"
+      FROM (
+          SELECT "t"."id", "t"."name", "t"."description", "t"."notes", COALESCE(
+                                                                               ("t"."created_at", '0001-01-01 00:00:00') AS "c"
+          FROM "training_plan" AS "t"
+          WHERE "t"."id" = @__id_0
+          LIMIT 1
+      ) AS "t0"
+      LEFT JOIN (
+          SELECT "t1"."id", "t1"."name", "t1"."order_number", "t5"."id" AS "id0"
+                                                                               ", "t5"."name" AS "name0", "t5"."notes", "t5"."c", "t5"."id0" AS "id00", "t5"."na
+                                                                               ame0" AS "name00", "t5"."c0", "t5"."c00", "t5"."instructions", "t5"."c1", "t5"."i
+                                                                               id00" AS "id000", "t5"."c2", "t5"."id000" AS "id0000", "t5"."name00" AS "name000"
+                                                                               ", "t5"."description", "t5"."how_to", "t5"."difficulty", "t5"."Id1", "t5"."Name00
+                                                                               00" AS "Name0000", "t5"."exercise_id", "t5"."training_type_id", "t5"."IsPrimary",
+                                                                               , "t5"."Id2", "t5"."Name1", "t5"."Function", "t5"."MuscleGroup", "t5"."WikiPageUr
+                                                                               rl", "t5"."muscle_id", "t5"."exercise_id0", "t5"."id3", "t5"."name2", "t5"."url",
+                                                                               , "t5"."c000", "t5"."repetitions", "t5"."timer_in_seconds", "t5"."distance_in_met
+                                                                               ters", "t1"."training_plan_id"
+          FROM "training_week" AS "t1"
+          LEFT JOIN (
+              SELECT "t2"."id", "t2"."name", "t2"."notes", COALESCE("t2"."order_
+                                                                               _number", 0) AS "c", "t3"."id" AS "id0", "t3"."name" AS "name0", "t3"."c" AS "c0"
+                                                                               ", "t3"."c0" AS "c00", "t3"."instructions", "t3"."c1", "t3"."id0" AS "id00", "t3"
+                                                                               "."c2", "t3"."id00" AS "id000", "t3"."name0" AS "name00", "t3"."description", "t3
+                                                                               3"."how_to", "t3"."difficulty", "t3"."Id1", "t3"."Name00" AS "Name000", "t3"."exe
+                                                                               ercise_id", "t3"."training_type_id", "t3"."IsPrimary", "t3"."Id2", "t3"."Name1",
+                                                                                "t3"."Function", "t3"."MuscleGroup", "t3"."WikiPageUrl", "t3"."muscle_id", "t3".
+                                                                               ."exercise_id0", "t3"."id3", "t3"."name2", "t3"."url", "t3"."c00" AS "c000", "t3"
+                                                                               "."repetitions", "t3"."timer_in_seconds", "t3"."distance_in_meters", "t2"."traini
+                                                                               ing_week_id"
+              FROM "training_day" AS "t2"
+              LEFT JOIN (
+                  SELECT "b"."id", "b"."name", COALESCE("b"."sets", 0) AS "c", C
+                                                                               COALESCE("b"."rest_in_seconds", 0) AS "c0", "b"."instructions", COALESCE("b"."ord
+                                                                               der_number", 0) AS "c1", "t4"."id" AS "id0", "t4"."c" AS "c2", "t4"."id0" AS "id0
+                                                                               00", "t4"."name" AS "name0", "t4"."description", "t4"."how_to", "t4"."difficulty"
+                                                                               ", "t4"."Id1", "t4"."Name0" AS "Name00", "t4"."exercise_id", "t4"."training_type_
+                                                                               _id", "t4"."IsPrimary", "t4"."Id2", "t4"."Name1", "t4"."Function", "t4"."MuscleGr
+                                                                               roup", "t4"."WikiPageUrl", "t4"."muscle_id", "t4"."exercise_id0", "t4"."id3", "t4
+                                                                               4"."name2", "t4"."url", "t4"."c0" AS "c00", "t4"."repetitions", "t4"."timer_in_se
+                                                                               econds", "t4"."distance_in_meters", "b"."training_day_id"
+                  FROM "block" AS "b"
+                  LEFT JOIN (
+                      SELECT "b0"."id", "e"."id" IS NULL AS "c", "e"."id" AS "id
+                                                                               d0", "e"."name", "e"."description", "e"."how_to", "e"."difficulty", "t6"."Id" AS
+                                                                                "Id1", "t6"."Name" AS "Name0", "t6"."exercise_id", "t6"."training_type_id", "t8"
+                                                                               "."IsPrimary", "t8"."Id" AS "Id2", "t8"."Name" AS "Name1", "t8"."Function", "t8".
+                                                                               ."MuscleGroup", "t8"."WikiPageUrl", "t8"."muscle_id", "t8"."exercise_id" AS "exer
+                                                                               rcise_id0", "e2"."id" AS "id3", "e2"."name" AS "name2", "e2"."url", COALESCE("b0"
+                                                                               "."order_number", 0) AS "c0", "b0"."repetitions", "b0"."timer_in_seconds", "b0"."
+                                                                               "distance_in_meters", "b0"."block_id"
+                      FROM "block_exercises" AS "b0"
+                      LEFT JOIN "exercise" AS "e" ON "b0"."exercise_id" = "e"."i
+                                                                               id"
+                      LEFT JOIN (
+                          SELECT "t9"."id" AS "Id", "t9"."name" AS "Name", "e0".
+                                                                               ."exercise_id", "e0"."training_type_id"
+                          FROM "exercise_type" AS "e0"
+                          INNER JOIN "training_type" AS "t9" ON "e0"."training_t
+                                                                               type_id" = "t9"."id"
+                      ) AS "t6" ON "e"."id" = "t6"."exercise_id"
+                      LEFT JOIN (
+                          SELECT "e1"."is_primary" AS "IsPrimary", "m"."id" AS "
+                                                                               "Id", "m"."name" AS "Name", "m"."function" AS "Function", "m"."muscle_group" AS "
+                                                                               "MuscleGroup", "m"."wiki_page_url" AS "WikiPageUrl", "e1"."muscle_                          SELECT "t9"."i                          SELECT "t9"."id" AS "Id", "t9"."name" AS "Name", "e0"."exercise_id", "e0"."training_type_id"
+                          FROM "exercise_type" AS "e0"
+                          INNER JOIN "training_type" AS "t9" ON "e0"."training_type_id" = "t9"."id"
+                      ) AS "t6" ON "e"."id" = "t6"."exercise_id"
+                      LEFT JOIN (
+                          SELECT "e1"."is_primary" AS "IsPrimary", "m"."id" AS "Id", "m"."name" AS "Name", "m"."function" AS "Function", "m"."muscle_group" AS "MuscleGroup", "m"."wiki_page_url" AS "WikiPageUrl", "e1"."muscle_id", "e1"."exercise_id"
+                          FROM "exercise_muscle" AS "e1"
+                          INNER JOIN "muscle" AS "m" ON "e1"."muscle_id" = "m"."id"
+                      ) AS "t8" ON "e"."id" = "t8"."exercise_id"
+                      LEFT JOIN "exercise_how_to" AS "e2" ON "e"."id" = "e2"."exercise_id"
+                  ) AS "t4" ON "b"."id" = "t4"."block_id"
+              ) AS "t3" ON "t2"."id" = "t3"."training_day_id"
+          ) AS "t5" ON "t1"."id" = "t5"."training_week_id"
+      ) AS "t7" ON "t0"."id" = "t7"."training_plan_id"
+      ORDER BY "t0"."id", "t7"."id", "t7"."id0", "t7"."id00", "t7"."id000", "t7"."id0000", "t7"."exercise_id", "t7"."training_type_id", "t7"."Id1", "t7"."muscle_id", "t7"."exercise_id0", "t7"."Id2"
