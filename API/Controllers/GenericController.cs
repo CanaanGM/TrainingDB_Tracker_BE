@@ -172,6 +172,13 @@ public class GenericController : ControllerBase
         return Ok(result.Value);
     }
 
+    [HttpGet("/exercise/csv")]
+    public async Task<IActionResult> ExportExerciseCSVFile(CancellationToken cancellationToken)
+    {
+        var result = await _exerciseService.ExportCsvAsync(cancellationToken);
+        return File(result, "application/octet-stream", "exercise.csv");
+    }
+
 
     [HttpGet("/equipment")]
     public async Task<IActionResult> GetEquipmentsAync(CancellationToken cancellationToken)
