@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 
 using CsvHelper;
+using CsvHelper.Configuration;
 
 using DataLibrary.Context;
 using DataLibrary.Models;
@@ -538,17 +539,34 @@ public class ExerciseService : IExerciseService
     {
         var memoryStream = new MemoryStream();
         var streamWriter = new StreamWriter(memoryStream);
-        // construct the headers
+        var csvConfiguration = new CsvConfiguration(
+            CultureInfo.InvariantCulture
+            );
         var csvWriter = new CsvWriter(streamWriter,
-            CultureInfo.InvariantCulture, // default separator in DOTNET `,`.
+            configuration: csvConfiguration,
             leaveOpen: true // so the file stays open as we write to it.
             );
-        //TODO: make a custom class for the exported data
-        csvWriter.WriteHeader<Exercise>(); // will write the properties as the headers
+
+        // construct the headers
+        csvWriter.WriteField(nameof(Exercise.Name));
+        csvWriter.WriteField(nameof(Exercise.Difficulty));
+        csvWriter.WriteField(nameof(Exercise.Description));
+        csvWriter.WriteField(nameof(Exercise.HowTo));
         csvWriter.NextRecord();
         // fill in the data
         var exerciseData = await _context.Exercises.ToListAsync(cancellationToken);
-        await csvWriter.WriteRecordsAsync(exerciseData, cancellationToken);
+        foreach (var exercise in exerciseData)
+        {
+            // check for nulls if there are any (has value)
+            // customize other fields, like the date format
+            csvWriter.WriteField(exercise.Name);
+            csvWriter.WriteField(exercise.Difficulty);
+            csvWriter.WriteField(exercise.Description);
+            csvWriter.WriteField(exercise.HowTo);
+            // save the content
+            await csvWriter.NextRecordAsync();
+            await csvWriter.FlushAsync();
+        }
         //reset the position of the cursor in the file
         memoryStream.Position = 0;
         return memoryStream;

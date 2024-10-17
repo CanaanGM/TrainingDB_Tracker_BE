@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace API.Filters;
+namespace API.Common.Filters;
 
 public class AuthenticatedUserFilter : IActionFilter
 {
@@ -20,7 +20,7 @@ public class AuthenticatedUserFilter : IActionFilter
         if (!userResult.IsSuccess)
         {
             _logger.LogWarning("User is not authenticated.");
-            context.Result = new UnauthorizedResult(); 
+            context.Result = new UnauthorizedResult();
         }
         else
         {

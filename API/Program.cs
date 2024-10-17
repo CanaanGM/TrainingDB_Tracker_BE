@@ -1,12 +1,21 @@
-
-using System.Text;
-using API.Filters;
 using API.Security;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
+using System.Text;
+
 namespace API;
+
+using API.Common.Errors;
+using API.Common.Filters;
+using API.Common.Middleware;
+using API.Common.Providers;
+
 using DataLibrary;
+
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+
 public class Program
 {
     public static void Main(string[] args)
@@ -22,7 +31,7 @@ public class Program
 
         builder.Services.AddDataLibrary();
 
-        
+
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"]));
 
         builder.Services.AddHttpContextAccessor();
@@ -40,12 +49,15 @@ public class Program
                     ClockSkew = TimeSpan.Zero
                 };
             });
-        
+
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IUserAccessor, UserAccessor>();
         builder.Services.AddScoped<AuthenticatedUserFilter>();
-        
-        
+
+
+        builder.Services.AddSingleton<ProblemDetailsFactory, TrainingProblemDetailsFactory>();
+        builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
         WebApplication app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -54,6 +66,9 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.UseMiddleware<ExceptionMiddleware>();
+        app.UseMiddleware<RequestLoggerMiddleWare>();
 
         app.UseHttpsRedirection();
 
