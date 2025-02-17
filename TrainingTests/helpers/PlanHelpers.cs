@@ -5,6 +5,7 @@ namespace TrainingTests.helpers;
 
 public static class PlanHelpers
 {
+    public const string PlansLocation = "C:\\Users\\Me\\development\\TrainingDB_Tracker_BE";
     public static List<TrainingDaysWriteDto> GenerateTrainingDays(int numberOfDays)
     {
         var days = new List<TrainingDaysWriteDto>();
@@ -67,7 +68,7 @@ public static class PlanHelpers
     {
         try
         {
-            var jsonFile = await File.ReadAllTextAsync($@"E:\development\c#\TrainingDB_Integration\Docs\Plans\single\{planFile}.json");
+            var jsonFile = await File.ReadAllTextAsync($@"{PlansLocation}\Docs\Plans\single\{planFile}.json");
             var plan = JsonConvert.DeserializeObject<TrainingPlanWriteDto>(jsonFile);
             return plan;
         }
@@ -89,7 +90,7 @@ public static class PlanHelpers
 
         try
         {
-            var planFiles = Directory.GetFiles(@"E:\development\c#\TrainingDB_Integration\Docs\Plans\single", "*.json");
+            var planFiles = Directory.GetFiles($@"{PlansLocation}\Docs\Plans\single", "*.json");
 
             foreach (var planFile in planFiles)
             {
@@ -112,7 +113,7 @@ public static class PlanHelpers
     {
         try
         {
-            var jsonFile = await File.ReadAllTextAsync($@"E:\development\c#\TrainingDB_Integration\Docs\Plans\bulk\plan_request.json");
+            var jsonFile = await File.ReadAllTextAsync($@"{PlansLocation}\Docs\Plans\bulk\plan_request.json");
             var plan = JsonConvert.DeserializeObject<List<TrainingPlanWriteDto>>(jsonFile);
             return plan;
 

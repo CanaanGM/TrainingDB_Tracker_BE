@@ -11,7 +11,7 @@ public class SqliteContext : DbContext
     }
 
     public SqliteContext(DbContextOptions<SqliteContext> options,
-        string? connectionString = "Data Source = E:\\development\\c#\\TrainingDB_Integration\\training_log_v2.db")
+        string? connectionString = "Data Source = C:\\Users\\Me\\development\\TrainingDB_Integration\\training_log_v2.db")
         : base(options)
     {
         DatabaseConnectionString = connectionString;

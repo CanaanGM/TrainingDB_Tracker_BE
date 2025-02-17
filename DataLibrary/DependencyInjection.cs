@@ -9,7 +9,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddDataLibrary(
         this IServiceCollection services,
-        string connectionString = "Data Source = E:\\development\\c#\\TrainingDB_Integration\\training_log_v2.db"
+        string connectionString = "Data Source = C:\\Users\\Me\\development\\TrainingDB_Tracker_BE\\training_log_v2.db"
         )
     {
         services.AddDbContext<SqliteContext>(opt => opt.UseSqlite(
