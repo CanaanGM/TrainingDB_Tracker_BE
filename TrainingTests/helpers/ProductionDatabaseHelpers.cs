@@ -7,7 +7,12 @@ public static class ProductionDatabaseHelpers
 {
 	private static string ReadSqlFile(string fileName)
 	{
-		return File.ReadAllText($"{PathHelpers.GetSolutionRoot()}\\Docs\\Sql\\{fileName}.sql");
+		var filePath = Path.Combine(
+			PathHelpers.GetSolutionRoot() ?? throw new DirectoryNotFoundException("Solution root not found."),
+			"Docs", "Sql", $"{fileName}.sql"
+		);
+
+		return File.ReadAllText(filePath);
 	}
 	public static void SeedProductionData(SqliteContext context)
 	{

@@ -5,7 +5,6 @@ namespace TrainingTests.helpers;
 
 public static class PlanHelpers
 {
-	public const string PlansLocation = "C:\\Users\\Me\\development\\TrainingDB_Tracker_BE";
 	public static List<TrainingDaysWriteDto> GenerateTrainingDays(int numberOfDays)
 	{
 		var days = new List<TrainingDaysWriteDto>();
@@ -68,8 +67,15 @@ public static class PlanHelpers
 	{
 		try
 		{
+			var planPath = Path.Combine(
+				PathHelpers.GetSolutionRoot() ?? throw new DirectoryNotFoundException("Solution root not found."),
+				"Docs", "Plans", "single", $"{planFile}.json"
+			);
 
-			var jsonFile = await File.ReadAllTextAsync($@"{PathHelpers.GetSolutionRoot()}\Docs\Plans\single\{planFile}.json");
+			if (!File.Exists(planPath))
+				throw new FileNotFoundException($"File not found: {planPath}");
+
+			var jsonFile = await File.ReadAllTextAsync(planPath);
 			var plan = JsonConvert.DeserializeObject<TrainingPlanWriteDto>(jsonFile);
 			return plan;
 		}
@@ -91,9 +97,20 @@ public static class PlanHelpers
 
 		try
 		{
-			var planFiles = Directory.GetFiles($@"{PathHelpers.GetSolutionRoot()}\Docs\Plans\single", "*.json");
+			var planDirectory = Path.Combine(
+					PathHelpers.GetSolutionRoot() ?? throw new DirectoryNotFoundException("Solution root not found."),
+					"Docs", "Plans", "single"
+				);
 
-			foreach (var planFile in planFiles)
+			if (!Directory.Exists(planDirectory))
+				throw new DirectoryNotFoundException($"Directory not found: {planDirectory}");
+
+			var jsonFiles = Directory.GetFiles(planDirectory, "*.json");
+
+			if (jsonFiles.Length == 0)
+				throw new FileNotFoundException($"No JSON files found in: {planDirectory}");
+
+			foreach (var planFile in jsonFiles)
 			{
 				var plan = await ReadPlanFile(Path.GetFileNameWithoutExtension(planFile));
 				if (plan != null)
@@ -114,7 +131,14 @@ public static class PlanHelpers
 	{
 		try
 		{
-			var jsonFile = await File.ReadAllTextAsync($@"{PathHelpers.GetSolutionRoot()}\Docs\Plans\bulk\plan_request.json");
+			var planPath = Path.Combine(
+				PathHelpers.GetSolutionRoot() ?? throw new DirectoryNotFoundException("Solution root not found."),
+				"Docs", "Plans", "bulk", "plan_request.json"
+			);
+			if (!File.Exists(planPath))
+				throw new FileNotFoundException($"File not found: {planPath}");
+
+			var jsonFile = await File.ReadAllTextAsync(planPath);
 			var plan = JsonConvert.DeserializeObject<List<TrainingPlanWriteDto>>(jsonFile);
 			return plan;
 
