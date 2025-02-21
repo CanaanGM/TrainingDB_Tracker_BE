@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
 using System.Text;
+using DataLibrary.Models;
 
 namespace API;
 
@@ -35,7 +36,8 @@ public class Program
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"]));
 
         builder.Services.AddHttpContextAccessor();
-
+        builder.Services.AddSingleton<IUserAccessor, UserAccessor>();
+        
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {

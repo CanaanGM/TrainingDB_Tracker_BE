@@ -1,12 +1,12 @@
 ﻿namespace SharedLibrary.Dtos;
 public class TrainingTypeReadDto
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = null!;
+	//public int Id { get; set; }
+	public string Name { get; set; } = null!;
 }
 
 
 public class TrainingTypeWriteDto
 {
-    public required string Name { get; set; }
+	public required string Name { get; set; }
 }

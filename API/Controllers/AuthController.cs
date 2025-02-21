@@ -69,6 +69,7 @@ public class AuthController : ControllerBase
                 Username = internalUserDto.Username,
                 Email = internalUserDto.Email,
                 Roles = internalUserDto.Roles,
+                Id = internalUserDto.Id,
             }),
             Roles = internalUserDto.Roles,
             Username = internalUserDto.Username
