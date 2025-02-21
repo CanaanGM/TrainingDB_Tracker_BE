@@ -2,7 +2,7 @@
 
 ## Obviously a work in progrss
 
-![Build Status]()
+![Build Status](https://github.com/CanaanGM/TrainingDB_Tracker_BE/actions/workflows/dotnet.yml/badge.svg)
 
 
 
