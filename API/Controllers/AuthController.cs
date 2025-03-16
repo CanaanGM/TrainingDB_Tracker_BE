@@ -87,7 +87,7 @@ public class AuthController : ControllerBase
                 return Unauthorized();
 
             var user = userResult.Value;
-            var verificationResult = SecurityHelpers.VerifyPassword(logInDto.Password, user.LatestPasswordHash);
+            var verificationResult = SecurityHelpers.VerifyPassword(logInDto.Password, user!.LatestPasswordHash);
             if (!verificationResult.IsSuccess)
                 return Unauthorized();
 
@@ -97,7 +97,7 @@ public class AuthController : ControllerBase
             return Ok(CreateUserObject(user));
 
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred");
         }

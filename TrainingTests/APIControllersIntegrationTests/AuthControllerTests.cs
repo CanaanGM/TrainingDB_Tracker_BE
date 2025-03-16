@@ -16,7 +16,8 @@ using Moq;
 using SharedLibrary.Dtos;
 
 using System.Security.Cryptography;
-
+using API.Common.Providers;
+using Microsoft.Extensions.Options;
 using TrainingTests.helpers;
 
 namespace TrainingTests.APIControllersIntegrationTests;
@@ -33,12 +34,20 @@ public class AuthControllerIntegrationIntegrationTests : BaseIntegrationTestClas
     {
         _userServiceLoggerMock = new Mock<ILogger<UserService>>();
         _userService = new UserService(_context, _mapper, _userServiceLoggerMock.Object);
-        var secureKey = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+        var jwtSettings = new JwtSettings
+        {
+	        Secret = "what is a man? a miserable little pile of secrets, but enough talk, HAVE AT YOU!",
+	        Issuer = "http://localhost",
+	        Audience = "http://localhost",
+	        ExpiryMinutes = 1350
+        };
+        var mockOptions = new Mock<IOptions<JwtSettings>>();
+        mockOptions.Setup(m => m.Value).Returns(jwtSettings);
+		
+        var iDateTimeProviderMock = new  Mock<IDateTimeProvider>();
+        iDateTimeProviderMock.Setup(x => x.UtcNow).Returns(DateTime.UtcNow);
 
-        _configurationMock = new Mock<IConfiguration>();
-        _configurationMock.Setup(c => c["TokenKey"]).Returns(secureKey);
-
-        _tokenService = new TokenService(_configurationMock.Object);
+        _tokenService = new TokenService(mockOptions.Object, iDateTimeProviderMock.Object);
 
         var services = new ServiceCollection();
         services.AddSingleton<IUserService>(_userService);

@@ -33,25 +33,29 @@ public class Program
         builder.Services.AddDataLibrary();
 
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"]));
 
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddSingleton<IUserAccessor, UserAccessor>();
+        builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(JwtSettings.JwtSettingsSection));
         
+        var keyFromConfig = builder.Configuration["JwtSettings:Secret"]
+                            ?? throw new KeyNotFoundException("define a token key in app settings please!"); 
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = key,
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
+                    ValidateIssuerSigningKey = true, 
+                    IssuerSigningKey = new SymmetricSecurityKey(
+	                   Encoding.UTF8.GetBytes(keyFromConfig)), 
+                    ValidateIssuer = true, // the domain of which the token was issued
+                    ValidateAudience = true, // the target domains for the token
+                    ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                    ValidAlgorithms = new[] { SecurityAlgorithms.HmacSha512 },
+                    ValidateLifetime = true
                 };
             });
-
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IUserAccessor, UserAccessor>();
         builder.Services.AddScoped<AuthenticatedUserFilter>();
