@@ -37,6 +37,50 @@ public class MeasurementsServiceTests : BaseIntegrationTestClass
     }
 
     [Fact]
+    public async Task GetALlMeasurement_Empty_Returns_empty()
+    {
+	    var result = await service.GetByIdAsync(1,1,CancellationToken.None);
+	    Assert.True(result.IsSuccess);
+	    Assert.Null(result.Value);
+    }
+    
+    [Fact]
+    public async Task GetALlMeasurement_Not_Empty_Returns_One()
+    {
+	    ProductionDatabaseHelpers.SeedMeasurements(_context);
+	    var result = await service.GetByIdAsync(1,1,CancellationToken.None);
+	    Assert.True(result.IsSuccess);
+	    Assert.
+		    NotNull(result.Value);
+	    var measurement = result.Value;
+	    Assert.Equal(90.5, measurement.Hip );
+	    Assert.Equal(100 , measurement.Chest);
+	    Assert.Equal(85.2 , measurement.WaistUnderBelly);
+	    Assert.Equal(88.1 , measurement.WaistOnBelly);
+	    Assert.Equal(56.3 , measurement.LeftThigh);
+	    Assert.Equal(56.4 , measurement.RightThigh);
+	    Assert.Equal(38.5 , measurement.LeftCalf);
+	    Assert.Equal(38.6 , measurement.RightCalf);
+	    Assert.Equal(34.1 , measurement.LeftUpperArm);
+	    Assert.Equal(28.3 , measurement.LeftForearm);
+	    Assert.Equal(34.2 , measurement.RightUpperArm);
+	    Assert.Equal(28.4 , measurement.RightForearm);
+	    Assert.Equal(37.0 , measurement.Neck);
+	    Assert.Equal(4.5 , measurement.Minerals);
+	    Assert.Equal(7.2 , measurement.Protein);
+	    Assert.Equal(40.0 , measurement.TotalBodyWater);
+	    Assert.Equal( 15.0 , measurement.BodyFatMass);
+	    Assert.Equal(70.0 , measurement.BodyWeight);
+	    Assert.Equal( 21.4 , measurement.BodyFatPercentage);
+	    Assert.Equal(32.0 , measurement.SkeletalMuscleMass);
+	    Assert.Equal( 85.0 , measurement.InBodyScore);
+	    Assert.Equal( 24.3 , measurement.BodyMassIndex);
+	    Assert.Equal(1600 , measurement.BasalMetabolicRate);
+	    Assert.Equal(9 , measurement.VisceralFatLevel);
+
+    }
+    
+    [Fact]
     public async Task GetAllNotEmpty_returns_OrderedList()
     {
         ProductionDatabaseHelpers.SeedMeasurements(_context);
@@ -45,7 +89,7 @@ public class MeasurementsServiceTests : BaseIntegrationTestClass
         Assert.True(result.IsSuccess);
         Assert.NotNull(result.Value);
         Assert.NotEmpty(result.Value);
-        Assert.Equal(1, result.Value.Count);
+        Assert.Single( result.Value);
         Assert.Equal(100.0, result.Value[0].Chest); // it should be ordered
     }
 
@@ -56,7 +100,6 @@ public class MeasurementsServiceTests : BaseIntegrationTestClass
 
         var result = await service.CreateAsync(1, measurementsWriteDto, new CancellationToken());
         Assert.True(result.IsSuccess);
-        Assert.NotNull(result.Value);
         Assert.True(result.Value >= 1);
 
         // it's the only one there

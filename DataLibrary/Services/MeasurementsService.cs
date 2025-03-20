@@ -17,6 +17,7 @@ public interface IMeasurementsService
         CancellationToken cancellationToken);
 
     Task<Result<bool>> DeleteAsync(int userId,int measurementId, CancellationToken cancellationToken);
+    Task<Result<MeasurementsReadDto>> GetByIdAsync(int userId, int id, CancellationToken cancellationToken);
 }
 
 public class MeasurementsService : IMeasurementsService
@@ -48,6 +49,14 @@ public class MeasurementsService : IMeasurementsService
             _logger.LogError($"[ERROR]: Couldn't get measuremnts at this time, {ex}");
             return Result<List<MeasurementsReadDto>>.Failure($"Couldn't get measurements {ex.Message}", ex);
         }
+    }
+
+    public async Task<Result<MeasurementsReadDto>> GetByIdAsync(int userId, int id, CancellationToken cancellationToken)
+    {
+	    var measurement = await _context.Measurements
+		    .AsNoTracking()
+		    .FirstOrDefaultAsync(x => x.Id == id && x.UserId == userId, cancellationToken);
+		    return Result<MeasurementsReadDto>.Success(_mapper.Map<MeasurementsReadDto>(measurement));
     }
 
     public async Task<Result<int>> CreateAsync(int userId,MeasurementsWriteDto newMeasurementDto, CancellationToken cancellationToken)
@@ -146,7 +155,3 @@ public class MeasurementsService : IMeasurementsService
         }
     }
 }
-
-
-
-

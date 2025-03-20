@@ -1,4 +1,5 @@
 ﻿using API.Controllers;
+using API.Security;
 using DataLibrary.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
+using SharedLibrary.Core;
 using SharedLibrary.Dtos;
 using TrainingTests.helpers;
 
@@ -16,14 +18,20 @@ public class MeasurementsControllerIntegrationTests : ControllerBaseIntegrationT
     private readonly MeasurementsController _controller;
     private readonly IMeasurementsService _service;
     private readonly Mock<ILogger<MeasurementsService>> _loggerMock;
-    
+    private Mock<IUserAccessor> _accessorMock;
+
     public MeasurementsControllerIntegrationTests()
     {
         _loggerMock = new Mock<ILogger<MeasurementsService>>();
+        _accessorMock = new Mock<IUserAccessor>();
+        _accessorMock.Setup(x => x.GetUserId())
+	        .Returns(Result<int>.Success(1));
+        
         _service = new MeasurementsService(_context, _mapper, _loggerMock.Object);
 
+        
         services.AddSingleton<IMeasurementsService>();
-        _controller = new MeasurementsController(_service)
+        _controller = new MeasurementsController(_service, _accessorMock.Object)
         {
             ControllerContext = new ControllerContext
             {
@@ -38,7 +46,7 @@ public class MeasurementsControllerIntegrationTests : ControllerBaseIntegrationT
         ProductionDatabaseHelpers.SeedDummyUsers(_context);
         ProductionDatabaseHelpers.SeedMeasurements(_context);
 
-        var result = await _controller.GetMeasurementsAsync(1, new CancellationToken());
+        var result = await _controller.GetMeasurementsAsync(new CancellationToken());
 
         var OkResult = Assert.IsType<OkObjectResult>(result);
         var measurements = Assert.IsAssignableFrom<List<MeasurementsReadDto>>(OkResult.Value);
@@ -49,7 +57,7 @@ public class MeasurementsControllerIntegrationTests : ControllerBaseIntegrationT
     {
         ProductionDatabaseHelpers.SeedDummyUsers(_context);
 
-        var result = await _controller.GetMeasurementsAsync(1, new CancellationToken());
+        var result = await _controller.GetMeasurementsAsync( new CancellationToken());
 
         var OkResult = Assert.IsType<OkObjectResult>(result);
         var measurements = Assert.IsAssignableFrom<List<MeasurementsReadDto>>(OkResult.Value);
@@ -64,7 +72,7 @@ public class MeasurementsControllerIntegrationTests : ControllerBaseIntegrationT
 
         var newMeasurements = MeasurementsDtoFactory.CreateOneWithBMIAndWeight();
 
-        var result = await _controller.UpdateMeasurementsAsync(1, 1, newMeasurements, new CancellationToken());
+        var result = await _controller.UpdateMeasurementsAsync( 1, newMeasurements, new CancellationToken());
 
         var okResult = Assert.IsType<NoContentResult>(result);
 
@@ -77,7 +85,7 @@ public class MeasurementsControllerIntegrationTests : ControllerBaseIntegrationT
         ProductionDatabaseHelpers.SeedDummyUsers(_context);
         var newMeasurement = MeasurementsDtoFactory.CreateOneWithBMIAndWeight();
 
-        var result = await _controller.CreateMeasurementsAsync(1, newMeasurement, new CancellationToken());
+        var result = await _controller.CreateMeasurementsAsync( newMeasurement, new CancellationToken());
 
         var createdAtResult = Assert.IsType<CreatedAtRouteResult>(result);
         Assert.NotNull(createdAtResult);
@@ -96,7 +104,7 @@ public class MeasurementsControllerIntegrationTests : ControllerBaseIntegrationT
         ProductionDatabaseHelpers.SeedMeasurements(_context);
         var updateMeasurement = MeasurementsDtoFactory.CreateOneWithBMIAndWeight();
 
-        var result = await _controller.UpdateMeasurementsAsync(1, 1, updateMeasurement, new CancellationToken());
+        var result = await _controller.UpdateMeasurementsAsync( 1, updateMeasurement, new CancellationToken());
 
         Assert.IsType<NoContentResult>(result);
 
@@ -114,7 +122,7 @@ public class MeasurementsControllerIntegrationTests : ControllerBaseIntegrationT
         ProductionDatabaseHelpers.SeedDummyUsers(_context);
         ProductionDatabaseHelpers.SeedMeasurements(_context);
 
-        var result = await _controller.DeleteMeasurementsAsync(1, 1, new CancellationToken());
+        var result = await _controller.DeleteMeasurementsAsync( 1, new CancellationToken());
 
         Assert.IsType<NoContentResult>(result);
 

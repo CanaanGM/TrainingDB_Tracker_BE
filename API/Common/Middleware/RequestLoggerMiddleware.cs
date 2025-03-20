@@ -25,7 +25,7 @@ public class RequestLoggerMiddleWare
             ExtractLogs(context);
             await _next(context);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             throw;
         }

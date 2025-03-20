@@ -3,30 +3,30 @@
 public class MeasurementsReadDto 
 {
     public int MeasurementsId { get; set; }
-    public int Hip { get; set; }
-    public int Chest { get; set; }
-    public int WaistOnBelly { get; set; }
-    public int WaistUnderBelly { get; set; }
-    public int LeftThigh { get; set; }
-    public int RightThigh { get; set; }
-    public int LeftCalf { get; set; }
-    public int RightCalf { get; set; }
-    public int LeftUpperArm { get; set; }
-    public int RightUpperArm { get; set; }
-    public int LeftForearm { get; set; }
-    public int RightForearm { get; set; }
-    public int Neck { get; set; }
+    public double Hip { get; set; }
+    public double Chest { get; set; }
+    public double WaistOnBelly { get; set; }
+    public double WaistUnderBelly { get; set; }
+    public double LeftThigh { get; set; }
+    public double RightThigh { get; set; }
+    public double LeftCalf { get; set; }
+    public double RightCalf { get; set; }
+    public double LeftUpperArm { get; set; }
+    public double RightUpperArm { get; set; }
+    public double LeftForearm { get; set; }
+    public double RightForearm { get; set; }
+    public double Neck { get; set; }
     // for in body test ⬇️
-    public int BasalMetabolicRate { get; set; }
+    public double BasalMetabolicRate { get; set; }
     public double TotalBodyWater { get; set; }
     public double BodyFatMass { get; set; }
     public double Protein { get; set; }
     public double Minerals { get; set; }
     public double BodyWeight { get; set; } // must be the sum of Minerals + Protein + BodyFatMass + TotalBodyWater
     public double SkeletalMuscleMass { get; set; }
-    public double BodyFatPercent { get; set; }
+    public double BodyFatPercentage { get; set; }
     public double InBodyScore { get; set; }
-    public int VisceralFatLevel { get; set; } // from 1 ~ 9
+    public double VisceralFatLevel { get; set; } // from 1 ~ 9
     public double BodyMassIndex { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
@@ -34,19 +34,19 @@ public class MeasurementsReadDto
 
 public class MeasurementsWriteDto 
 {
-    public required int Hip { get; set; }
-    public required int Chest { get; set; }
-    public required int WaistOnBelly { get; set; }
-    public required int WaistUnderBelly { get; set; }
-    public required int LeftThigh { get; set; }
-    public required int RightThigh { get; set; }
-    public required int LeftCalf { get; set; }
-    public required int RightCalf { get; set; }
-    public required int LeftUpperArm { get; set; }
-    public required int RightUpperArm { get; set; }
-    public required int LeftForearm { get; set; }
-    public required int RightForearm { get; set; }
-    public required int Neck { get; set; }
+    public required double Hip { get; set; }
+    public required double Chest { get; set; }
+    public required double WaistOnBelly { get; set; }
+    public required double WaistUnderBelly { get; set; }
+    public required double LeftThigh { get; set; }
+    public required double RightThigh { get; set; }
+    public required double LeftCalf { get; set; }
+    public required double RightCalf { get; set; }
+    public required double LeftUpperArm { get; set; }
+    public required double RightUpperArm { get; set; }
+    public required double LeftForearm { get; set; }
+    public required double RightForearm { get; set; }
+    public required double Neck { get; set; }
     // for in body test ⬇️
     public double BodyWeight { get; set; }
     public double? TotalBodyWater { get; set; }
@@ -57,6 +57,6 @@ public class MeasurementsWriteDto
     public double? BodyFatPercent { get; set; }
     public double? InBodyScore { get; set; }
     public double? BodyMassIndex { get; set; }
-    public int? VisceralFatLevel { get; set; } // from 1 ~ 9
-    public int? BasalMetabolicRate { get; set; }
+    public double? VisceralFatLevel { get; set; } // from 1 ~ 9
+    public double? BasalMetabolicRate { get; set; }
 }
