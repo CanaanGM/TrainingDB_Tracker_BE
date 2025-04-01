@@ -4,6 +4,9 @@ namespace SharedLibrary.Dtos;
 
 public class UserWriteDto
 {
+    /// <summary>
+    /// the user name, required but NOT unique . . . or is it ?!
+    /// </summary>
     public required string Name { get; set; }
     [EmailAddress] public required string Email { get; set; }
     [MinLength(8)][MaxLength(512)] public required string Password { get; set; }

@@ -3,9 +3,10 @@
 using DataLibrary.Services;
 
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.RateLimiting;
 using SharedLibrary.Dtos;
 using SharedLibrary.Helpers;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace API.Controllers;
 
@@ -25,7 +26,9 @@ public class AuthController : ControllerBase
 
     // register
     [HttpPost("/register")]
-    public async Task<ActionResult<UserAuthDto>> Register(UserWriteDto userWriteDto, CancellationToken cancellationToken)
+    [SwaggerOperation(Summary = "Normal version", Description = "ROG IN !")]
+    public async Task<ActionResult<UserAuthDto>> Register(
+        UserWriteDto userWriteDto, CancellationToken cancellationToken)
     {
         try
         {
@@ -77,6 +80,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("/log-in")]
+    [EnableRateLimiting("strict-login")]
     public async Task<ActionResult<UserAuthDto>> LogIn(UserLogInDto logInDto, CancellationToken cancellationToken)
     {
 
