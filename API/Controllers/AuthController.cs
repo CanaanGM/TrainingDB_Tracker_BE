@@ -1,7 +1,9 @@
-﻿using API.Security;
+﻿using API.Common.Validators;
+using API.Security;
 
 using DataLibrary.Services;
-
+using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using SharedLibrary.Dtos;
@@ -17,7 +19,9 @@ public class AuthController : ControllerBase
     private readonly IUserService _userService;
     private readonly ITokenService _tokenService;
 
-    public AuthController(IUserService userService, ITokenService tokenService)
+    public AuthController(
+        IUserService userService
+        , ITokenService tokenService)
     {
         _userService = userService;
         _tokenService = tokenService;
@@ -81,9 +85,10 @@ public class AuthController : ControllerBase
 
     [HttpPost("/log-in")]
     [EnableRateLimiting("strict-login")]
-    public async Task<ActionResult<UserAuthDto>> LogIn(UserLogInDto logInDto, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserAuthDto>> LogIn(
+        [FromBody]  UserLogInDto logInDto
+        , CancellationToken cancellationToken)
     {
-
         try
         {
             var userResult = await _userService.GetUserWithRolesByEmailAsync(logInDto.Email, cancellationToken);

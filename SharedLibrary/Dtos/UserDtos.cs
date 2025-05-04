@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using FluentValidation;
 
 namespace SharedLibrary.Dtos;
 
@@ -44,6 +45,7 @@ public class RefreshTokenReadDto
 
 public class UserLogInDto
 {
-    [EmailAddress] public required string Email { get; set; }
-    [MinLength(8)][MaxLength(512)] public required string Password { get; set; }
+    public required string Email { get; set; }
+    public required string Password { get; set; }
 }
+

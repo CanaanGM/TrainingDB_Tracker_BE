@@ -1,3 +1,4 @@
+using System.Globalization;
 using API.Security;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -5,7 +6,10 @@ using Microsoft.IdentityModel.Tokens;
 
 using System.Text;
 using System.Threading.RateLimiting;
+using API.Common.Validators;
 using DataLibrary.Models;
+using FluentValidation;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.RateLimiting;
 using SharedLibrary.Dtos;
 
@@ -15,7 +19,7 @@ using API.Common.Errors;
 using API.Common.Filters;
 using API.Common.Middleware;
 using API.Common.Providers;
-
+using API.Resources;
 using DataLibrary;
 
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -34,12 +38,20 @@ public class Program
         builder.Services.AddSwaggerGen(options =>
         {
             options.EnableAnnotations();
+            options.OperationFilter<AcceptLanguageHeaderOperationFilter>();
         } );
 
         builder.Services.AddDataLibrary();
 
-
-
+        //localization
+        var supportedCultures = new CultureInfo[] {new ("en-US"), new("ja"), new ("ar") };
+        builder.Services.Configure<RequestLocalizationOptions>(options =>
+        {
+            options.SupportedCultures = supportedCultures;
+            options.SupportedUICultures = supportedCultures;
+            options.DefaultRequestCulture = new RequestCulture(supportedCultures.First());  
+        });
+        
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddSingleton<IUserAccessor, UserAccessor>();
         builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(JwtSettings.JwtSettingsSection));
@@ -109,8 +121,20 @@ public class Program
         builder.Services.AddSingleton<ProblemDetailsFactory, TrainingProblemDetailsFactory>();
         builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
+        builder.WebHost.ConfigureKestrel(options =>
+        {
+            options.ListenAnyIP(5134);
+        });
+        
         WebApplication app = builder.Build();
-
+        
+        app.MapGet("/culture", () => Thread.CurrentThread.CurrentCulture.DisplayName);
+        app.MapGet("/helloworld", () => Messages.HelloWorld);
+        app.MapGet("/hello", (string name) =>
+        {
+            var message = string.Format(Messages.GreetingMessage, name);
+            return message;
+        });
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
@@ -125,7 +149,7 @@ public class Program
 
         app.UseAuthorization();
         app.UseRateLimiter();
-
+        app.UseRequestLocalization();
         app.MapControllers();
 
         app.Run();
