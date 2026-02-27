@@ -1,4 +1,4 @@
-﻿using API.Common.Validators;
+using API.Common.Validators;
 using API.Security;
 
 using DataLibrary.Services;
@@ -42,7 +42,7 @@ public class AuthController : ControllerBase
 
             var user = registerationResult.Value;
             await SetRefreshToken(user.Email, cancellationToken);
-            return CreatedAtRoute(nameof(Register), CreateUserObject(user));
+            return Ok(CreateUserObject(user));
         }
         catch (Exception)
         {

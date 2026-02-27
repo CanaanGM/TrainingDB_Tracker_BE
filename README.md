@@ -18,12 +18,147 @@
 
 ---
 
-## Architecure
+## Architecture
 
-## To throw or to not throw ?
+This solution is a .NET 8 Web API organized in three main projects:
 
-maybe imma use the result pattern ? will have to test performance, cause i kinda like throwing, what kinda training
-session wont have throwing in it ?!
+- API (ASP.NET Core Web API)
+  - Controllers for features like authentication, exercises, equipment, muscles, measurements, plans, and sessions
+  - Middleware for request logging and global exception handling
+  - JWT authentication and rate limiting (strict policy for login)
+  - Localization (Accept-Language), Swagger with operation filter for language header
+- DataLibrary (EF Core + domain services)
+  - `SqliteContext` DbContext (SQLite) with entity configuration and relationships
+  - Services encapsulating data access and domain logic (Muscles, Exercises, Equipment, Measurements, Plans, Training Sessions, Users)
+  - AutoMapper profile (`DataLibrary/Core/Profiles.cs`) for DTO ↔ entity mapping
+- SharedLibrary (DTOs + Helpers)
+  - DTOs for read/write shapes
+  - Utility helpers (validation, security helpers, pagination primitives)
+
+High-level flow:
+- Controllers validate/bind input and call domain services
+- Services use EF Core via `SqliteContext` to read/write SQLite DB
+- Responses return DTOs or `Result<T>`-based outcomes mapped to HTTP results
+
+### Request Pipeline (API/Program.cs)
+- Swagger UI enabled in Development
+- Custom middleware:
+  - `ExceptionMiddleware` returns ProblemDetails on unhandled exceptions
+  - `RequestLoggerMiddleWare` logs request metadata (agent, IP, headers)
+- HTTPS redirection, Authorization, Rate Limiter, Request Localization
+- Minimal endpoints for smoke checks: `GET /culture`, `GET /helloworld`, `GET /hello?name=…`
+
+### Authentication & Security
+- JWT Bearer auth configured via `JwtSettings` in `API/appsettings.json`
+- Access tokens are signed (HMAC-SHA512); refresh tokens issued and stored in DB; refresh token written as `HttpOnly` cookie
+- `AuthenticatedUserFilter` enforces that the user is authenticated and resolves `userId` from JWT for protected controllers
+- Rate limiting: Sliding window policy `strict-login` (5 attempts / 15 minutes) bound to IP, applied to `POST /log-in`
+
+### Localization
+- Supported cultures: `en-US`, `ja`, `ar`
+- `Accept-Language` header is documented in Swagger via `AcceptLanguageHeaderOperationFilter`
+
+### Database
+- SQLite default connection string is set in `DataLibrary/DependencyInjection.cs`
+  - Default path: `Data Source = C:\\Users\\Me\\development\\TrainingDB_Tracker_BE\\training_log_v2.db`
+  - To change, update the default in `AddDataLibrary` or pass a connection string overload
+- Entities configured in `DataLibrary/Context/SqliteContext.cs` with relationships (e.g., many-to-many exercise⇄equipment, exercise⇄trainingType)
+
+### AutoMapper
+- Mappings live in `DataLibrary/Core/Profiles.cs` for all entities/DTOs (Exercises, Muscles, Equipment, Plans, Sessions, Users, etc.)
+
+---
+
+## API Routes
+
+All routes below are absolute (controller method attributes start with `/`), base URL defaults to `http://localhost:5134`.
+
+### AuthController (`API/Controllers/AuthController.cs`)
+- POST `/register`
+  - Body: `UserWriteDto`
+  - Creates user, sets refresh token cookie, returns `UserAuthDto`
+- POST `/log-in` (Rate limited: `strict-login`)
+  - Body: `UserLogInDto`
+  - Verifies credentials, sets refresh token cookie, returns `UserAuthDto`
+
+### GenericController (`API/Controllers/GenericController.cs`)
+- Muscles
+  - GET `/muscles` → `List<MuscleReadDto>`
+  - GET `/muscles/search/{searchTerm}` → `List<MuscleReadDto>`
+  - GET `/muscles/{groupName}` → `List<MuscleReadDto>` (by muscle group)
+  - POST `/muscles/bulk` → Body: `HashSet<MuscleWriteDto>`
+- Training Types
+  - GET `/types` → `List<TrainingTypeReadDto>`
+  - PUT `/types/{typeId}` → Body: `TrainingTypeWriteDto` (update name)
+  - POST `/types/bulk` → Body: `HashSet<TrainingTypeWriteDto>`
+- Exercises
+  - GET `/exercise` → Query: `ExerciseQueryOptions` (filter/sort/page)
+    - Returns `PaginatedList<ExerciseReadDto>`
+  - GET `/exercise/{name}` → `ExerciseReadDto`
+  - GET `/exercise/search/{exercise}` → `List<ExerciseSearchResultDto>`
+  - GET `/exercise/csv` → File download `exercise.csv`
+  - POST `/exercise` → Body: `ExerciseWriteDto` (create)
+  - POST `/exercise/bulk` → Body: `List<ExerciseWriteDto>` (bulk create)
+  - PUT `/exercise/{id}` → Body: `ExerciseWriteDto` (update)
+  - DELETE `/exercise/{id}` (delete by id)
+  - DELETE `/exercise/bulk` → Body: `List<string>` names (bulk delete)
+- Equipment
+  - GET `/equipment` → `List<EquipmentReadDto>`
+  - POST `/equipment` → Body: `EquipmentWriteDto` (upsert by name)
+  - POST `/equipment/bulk` → Body: `List<EquipmentWriteDto>`
+  - DELETE `/equipment/{equipmentName}`
+- Plans
+  - POST `/plans` → Body: `TrainingPlanWriteDto` (create)
+  - GET `/plans/{id}` → `TrainingPlanReadDto`
+
+### MeasurementsController (`API/Controllers/MeasurementsController.cs`)
+- Base route: `/measurements` (Requires auth via `AuthenticatedUserFilter`)
+- GET `/measurements` → Authenticated user’s measurements (List)
+- GET `/measurements/{id}` → Single measurement
+- POST `/measurements` → Body: `MeasurementsWriteDto` (201 Created with new id)
+- PUT `/measurements/{measurementId}` → Body: `MeasurementsWriteDto` (204 No Content)
+- DELETE `/measurements/{measurementId}` (204 No Content)
+
+### TrainingSessionController (`API/Controllers/TrainingSessionController.cs`)
+- Base route: `/training` (Requires auth via `AuthenticatedUserFilter`)
+- GET `/training?startDate=&endDate=` → Paginated sessions for current user (page 1, size 10 by default)
+- POST `/training/{userId}` → Body: `TrainingSessionWriteDto` (create one)
+- POST `/training/bulk` → Body: `List<TrainingSessionWriteDto>` (bulk create)
+- PUT `/training/{sessionId}` → Body: `TrainingSessionWriteDto` (update)
+- DELETE `/training/{sessionId}` (delete)
+
+Note: Some training endpoints require a `userId` parameter (currently provided via route or action parameter). The authenticated user id is also available through `IUserAccessor`; future refactors may align these to rely solely on JWT.
+
+### Minimal Endpoints (Program.cs)
+- GET `/culture` → Current culture display name
+- GET `/helloworld` → Localized message from resources
+- GET `/hello?name=...` → Localized greeting
+
+---
+
+## Running & Configuration
+
+- Run API: `dotnet watch -p ./API`
+- Swagger UI (Development): `http://localhost:5134/swagger`
+- JWT settings: `API/appsettings.json` (`Issuer`, `Audience`, `Secret`, `ExpiryInMinutes`)
+- Database: default SQLite path is hardcoded in `DataLibrary/DependencyInjection.AddDataLibrary`
+  - Update the connection string there or refactor `Program.cs` to pass one from config
+
+## Data Access & Migrations
+
+- EF Core models are scaffolded and mapped in `DataLibrary/Context` and `DataLibrary/Models`
+- Example commands (from original notes):
+
+```bash
+dotnet ef database update -p .\DataLibrary\ -s .\DataLibrary\ --no-build -c SqliteContext --connection "Data Source = E:\development\c#\TrainingDB_Integration\training_log_v2.db"
+dotnet watch -p ./API
+```
+
+---
+
+## To throw or to not throw?
+
+The code favors a simple `Result<T>` pattern to carry success/failure and messages from services back to controllers. Exceptions are handled by `ExceptionMiddleware` and returned as ProblemDetails.
 
 ## TODO:
 

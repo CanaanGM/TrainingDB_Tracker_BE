@@ -35,11 +35,14 @@ public class TrainingSessionController : ControllerBase
 		return Ok(sessions.Value);
 	}
 
-	[HttpPost("{userId}")]
-	public async Task<IActionResult> CreateTrainingSessionAsync(int userId, [FromBody] TrainingSessionWriteDto newTrainingSessionDto, CancellationToken cancellationToken)
+	[HttpPost("")]
+	public async Task<IActionResult> CreateTrainingSessionAsync( [FromBody] TrainingSessionWriteDto newTrainingSessionDto, CancellationToken cancellationToken)
 	{
-		var res = await _trainingSessionService.CreateSessionAsync(userId, newTrainingSessionDto, cancellationToken);
-		return res.IsSuccess ? Created() : BadRequest();
+		var userId = _userAccessor.GetUserId();
+		if (!userId.IsSuccess)
+			return Unauthorized();
+		var res = await _trainingSessionService.CreateSessionAsync(userId.Value, newTrainingSessionDto, cancellationToken);
+		return res.IsSuccess ? Created() : BadRequest(res.ErrorMessage);
 	}
 
 	[HttpPost("/bulk")]

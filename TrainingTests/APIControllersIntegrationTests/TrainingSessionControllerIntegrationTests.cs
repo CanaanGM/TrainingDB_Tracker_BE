@@ -93,7 +93,7 @@ public class TrainingSessionControllerIntegrationTests : ControllerBaseIntegrati
 		ProductionDatabaseHelpers.SeedDummyUsers(_context);
 		var newSession = TrainingSessionDtoFactory.CreateCorrectSessionDtoMixedCardio();
 
-		var result = await _controller.CreateTrainingSessionAsync(1, newSession, new CancellationToken());
+		var result = await _controller.CreateTrainingSessionAsync( newSession, new CancellationToken());
 
 		var createdResult = Assert.IsType<CreatedResult>(result);
 		Assert.NotNull(createdResult);
