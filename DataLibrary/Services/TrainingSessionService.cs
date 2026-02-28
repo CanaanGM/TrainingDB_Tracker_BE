@@ -17,6 +17,8 @@ public interface ITrainingSessionService
     Task<Result<PaginatedList<TrainingSessionReadDto>>> GetPaginatedTrainingSessionsAsync(
         int userId, int pageNumber, int pageSize, CancellationToken cancellationToken);
 
+    Task<Result<List<TrainingSessionReadDto>>> GetTrainingSessionsPast24HoursAsync(int userId, CancellationToken cancellationToken);
+
     Task<Result> CreateSessionAsync(int userId, TrainingSessionWriteDto sessionDto,
         CancellationToken cancellationToken);
 
@@ -183,6 +185,61 @@ public class TrainingSessionService : ITrainingSessionService
     }
 }
 
+public async Task<Result<List<TrainingSessionReadDto>>> GetTrainingSessionsPast24HoursAsync(int userId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var since = DateTime.UtcNow.AddHours(-24);
+
+            var sessions = await _context.TrainingSessions
+                .Include(ts => ts.ExerciseRecords)
+                    .ThenInclude(er => er.Exercise)
+                        .ThenInclude(e => e.TrainingTypes)
+                .Where(ts => ts.UserId == userId && ts.CreatedAt != null && ts.CreatedAt >= since)
+                .OrderByDescending(ts => ts.CreatedAt)
+                .ToListAsync(cancellationToken);
+
+            var dtos = sessions.Select(trainingSession => new TrainingSessionReadDto()
+            {
+                CreatedAt = trainingSession.CreatedAt,
+                ExerciseRecords = trainingSession.ExerciseRecords.Select(exerciseRecord => new ExerciseRecordReadDto()
+                {
+                    ExerciseName = exerciseRecord.Exercise.Name,
+                    Repetitions = exerciseRecord.Repetitions,
+                    RateOfPerceivedExertion = exerciseRecord.RateOfPerceivedExertion,
+                    Mood = exerciseRecord.Mood,
+                    CreatedAt = exerciseRecord.CreatedAt,
+                    WeightUsedKg = exerciseRecord.WeightUsedKg,
+                    Incline = exerciseRecord.Incline,
+                    Speed = exerciseRecord.Speed,
+                    TimerInSeconds = exerciseRecord.TimerInSeconds,
+                    DistanceInMeters = exerciseRecord.DistanceInMeters,
+                    RestInSeconds = exerciseRecord.RestInSeconds,
+                    HeartRateAvg = exerciseRecord.HeartRateAvg,
+                    Notes = exerciseRecord.Notes,
+                    KcalBurned = exerciseRecord.KcalBurned,
+                    Id = exerciseRecord.Id
+                }).ToList(),
+                DurationInMinutes = (int) Utils.DurationMinutesFromSeconds(trainingSession.DurationInSeconds),
+                TotalCaloriesBurned = trainingSession.Calories,
+                Mood = trainingSession.Mood,
+                Notes = trainingSession.Notes,
+                TotalRepetitions = trainingSession.TotalRepetitions ?? 1,
+                Id = trainingSession.Id,
+                TotalKgMoved = trainingSession.TotalKgMoved ?? 1,
+                AverageRateOfPreceivedExertion = trainingSession.AverageRateOfPerceivedExertion ?? 1,
+                TrainingTypes = trainingSession.ExerciseRecords.SelectMany(x =>
+                    x.Exercise.TrainingTypes.Select(x => new TrainingTypeReadDto() { Name = x.Name })).ToList()
+            }).ToList();
+
+            return Result<List<TrainingSessionReadDto>>.Success(dtos);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error occurred in {nameof(GetTrainingSessionsPast24HoursAsync)}: {ex}");
+            return Result<List<TrainingSessionReadDto>>.Failure("Could not retrieve recent sessions", ex);
+        }
+    }
 
     public async Task<Result> CreateSessionAsync(int userId, TrainingSessionWriteDto sessionDto,
         CancellationToken cancellationToken)
