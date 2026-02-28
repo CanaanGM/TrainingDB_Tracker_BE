@@ -51,7 +51,7 @@ public class AuthControllerTests
         };
 
         _userServiceMock.Setup(s => s.CreateUserAsync(userWriteDto, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result<InternalUserAuthDto>.Success(createdUser));
+            .ReturnsAsync(Result<UserAuthDto>.Success(createdUser));
 
         _tokenServiceMock.Setup(t => t.GenerateRefreshToken())
             .Returns(new RefreshToken { Token = "test_refresh_token", Expires = DateTime.UtcNow.AddDays(7) });
