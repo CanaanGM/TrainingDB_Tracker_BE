@@ -23,6 +23,7 @@ using API.Resources;
 using DataLibrary;
 
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using TrainingDB.McpServer.Core.Tools;
 
 public class Program
 {
@@ -56,6 +57,31 @@ public class Program
         builder.Services.AddSingleton<IUserAccessor, UserAccessor>();
         builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(JwtSettings.JwtSettingsSection));
         
+
+        // Mcp Stuff
+
+       builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("McpLocalCors", policy =>
+            {
+                policy.SetIsOriginAllowed(origin => {
+                    try { var u = new Uri(origin); return u.IsLoopback; } catch { return false; }
+                })
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            });
+        });
+
+        builder.Services
+            .AddMcpServer()
+            .WithHttpTransport()
+            .WithToolsFromAssembly(typeof(TrainingTools).Assembly)
+            .WithPromptsFromAssembly(typeof(TrainingTools).Assembly)
+            .WithResourcesFromAssembly(typeof(TrainingTools).Assembly);
+
+
+        // mcp stuff end
+
         var keyFromConfig = builder.Configuration["JwtSettings:Secret"]
                             ?? throw new KeyNotFoundException("define a token key in app settings please!"); 
         
@@ -146,11 +172,15 @@ public class Program
         app.UseMiddleware<RequestLoggerMiddleWare>();
 
         app.UseHttpsRedirection();
-
+        app.UseWhen(ctx => !ctx.Request.Path.StartsWithSegments("/mcp"), branch => { branch.UseHttpsRedirection(); });
+        app.UseCors();
         app.UseAuthorization();
         app.UseRateLimiter();
         app.UseRequestLocalization();
         app.MapControllers();
+
+        var mcpEndpoint = app.MapMcp("/mcp");
+        mcpEndpoint.RequireCors("McpLocalCors");
 
         app.Run();
     }

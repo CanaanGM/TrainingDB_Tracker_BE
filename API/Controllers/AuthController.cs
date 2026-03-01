@@ -1,6 +1,5 @@
 using API.Common.Validators;
 using API.Security;
-
 using DataLibrary.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
@@ -20,13 +19,12 @@ public class AuthController : ControllerBase
     private readonly ITokenService _tokenService;
 
     public AuthController(
-        IUserService userService
-        , ITokenService tokenService)
+        IUserService userService,
+        ITokenService tokenService)
     {
         _userService = userService;
         _tokenService = tokenService;
     }
-
 
     // register
     [HttpPost("/register")]
@@ -42,13 +40,22 @@ public class AuthController : ControllerBase
 
             var user = registerationResult.Value;
             await SetRefreshToken(user.Email, cancellationToken);
-            return Ok(CreateUserObject(user));
+
+            var internalUser = new InternalUserAuthDto
+            {
+                Username = user.Username,
+                Email = user.Email,
+                Roles = user.Roles ?? new List<string>()
+            };
+            var response = CreateUserObject(internalUser);
+            return CreatedAtRoute(nameof(Register), new { Email = user.Email }, response);
         }
         catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred");
         }
     }
+
     private async Task SetRefreshToken(string userEmail, CancellationToken cancellationToken)
     {
         var refreshToken = _tokenService.GenerateRefreshToken();
@@ -66,18 +73,17 @@ public class AuthController : ControllerBase
 
     private UserAuthDto CreateUserObject(InternalUserAuthDto internalUserDto)
     {
-
         return new UserAuthDto
         {
             Email = internalUserDto.Email,
             Token = _tokenService.CreateToken(
-            new InternalUserAuthDto()
-            {
-                Username = internalUserDto.Username,
-                Email = internalUserDto.Email,
-                Roles = internalUserDto.Roles,
-                Id = internalUserDto.Id,
-            }),
+                new InternalUserAuthDto
+                {
+                    Username = internalUserDto.Username,
+                    Email = internalUserDto.Email,
+                    Roles = internalUserDto.Roles,
+                    Id = internalUserDto.Id,
+                }),
             Roles = internalUserDto.Roles,
             Username = internalUserDto.Username
         };
@@ -86,8 +92,8 @@ public class AuthController : ControllerBase
     [HttpPost("/log-in")]
     [EnableRateLimiting("strict-login")]
     public async Task<ActionResult<UserAuthDto>> LogIn(
-        [FromBody]  UserLogInDto logInDto
-        , CancellationToken cancellationToken)
+        [FromBody] UserLogInDto logInDto,
+        CancellationToken cancellationToken)
     {
         try
         {
@@ -104,13 +110,10 @@ public class AuthController : ControllerBase
             user.LatestPasswordHash = null;
 
             return Ok(CreateUserObject(user));
-
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred");
         }
     }
-
-
 }
