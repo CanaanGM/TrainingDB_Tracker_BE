@@ -17,7 +17,7 @@ public class TokenServiceTests
 			Secret = "what is a man? a miserable little pile of secrets, but enough talk, HAVE AT YOU!",
 			Issuer = "http://localhost",
 			Audience = "http://localhost",
-			ExpiryMinutes = 1350
+			ExpiryInMinutes = 1350
 		};
 		var mockOptions = new Mock<IOptions<JwtSettings>>();
 		mockOptions.Setup(m => m.Value).Returns(jwtSettings);
