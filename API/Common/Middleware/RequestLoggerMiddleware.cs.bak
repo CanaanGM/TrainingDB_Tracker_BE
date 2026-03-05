@@ -35,10 +35,11 @@ public class RequestLoggerMiddleWare
     {
         var userAgent = context.Request.Headers["User-Agent"];
         var host = context.Request.Headers.Host;
+        var auth = context.Request.Headers["Authorization"];
         var contentType = context.Request.Headers.ContentType;
         var acceptLanguageHeader = context.Request.Headers["Accept-Language"];
         var remoteIpAddress = context.Connection.RemoteIpAddress;
 
-        _logger.LogInformation($"A request was made by the agent: {userAgent}.\nAt:\n\t{_dateTimeProvider.UtcNow} UTC.\n\t{_dateTimeProvider.LocalNow} Local.\nhost: '{host}\ncontent type: {contentType}\n'.");
+        _logger.LogInformation($"A request was made by the agent: {userAgent}.\nAt:\n\t{_dateTimeProvider.UtcNow} UTC.\n\t{_dateTimeProvider.LocalNow} Local.\nwith the auth header\n{auth}\nfrom: IP:{remoteIpAddress}.\nhost: '{host}\ncontent type: {contentType}\n'.");
     }
 }

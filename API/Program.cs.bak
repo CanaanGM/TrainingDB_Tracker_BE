@@ -9,7 +9,6 @@ using System.Threading.RateLimiting;
 using API.Common.Validators;
 using DataLibrary.Models;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.RateLimiting;
 using SharedLibrary.Dtos;
@@ -35,8 +34,6 @@ public class Program
         // Add services to the container.
 
         builder.Services.AddControllers();
-        builder.Services.AddFluentValidationAutoValidation();
-        builder.Services.AddValidatorsFromAssemblyContaining<LogInDtoValidator>();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(options =>
@@ -57,6 +54,7 @@ public class Program
         });
         
         builder.Services.AddHttpContextAccessor();
+        builder.Services.AddSingleton<IUserAccessor, UserAccessor>();
         builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(JwtSettings.JwtSettingsSection));
         
 
@@ -100,13 +98,12 @@ public class Program
                     ValidAudience = builder.Configuration["JwtSettings:Audience"],
                     ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
                     ValidAlgorithms = new[] { SecurityAlgorithms.HmacSha512 },
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.FromMinutes(1)};
+                    ValidateLifetime = true
+                };
             });
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IUserAccessor, UserAccessor>();
         builder.Services.AddScoped<AuthenticatedUserFilter>();
-        // Rate limiting
         builder.Services.AddRateLimiter(rateLimiterOptions =>
         {
             rateLimiterOptions.AddSlidingWindowLimiter("login", options =>
@@ -139,7 +136,7 @@ public class Program
             rateLimiterOptions.OnRejected = async (context, rejectionReason) =>
             {
                 context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
-                await context.HttpContext.Response.WriteAsync("Too many requests. Please slow down.", rejectionReason);
+                await context.HttpContext.Response.WriteAsync("Calm thy tits! too many requests!", rejectionReason);
                 
                 var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
                 logger.LogWarning(
@@ -147,8 +144,6 @@ public class Program
             };
         });
 
-        // rate limiting end
-        
         builder.Services.AddSingleton<ProblemDetailsFactory, TrainingProblemDetailsFactory>();
         builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
@@ -179,7 +174,6 @@ public class Program
         app.UseHttpsRedirection();
         app.UseWhen(ctx => !ctx.Request.Path.StartsWithSegments("/mcp"), branch => { branch.UseHttpsRedirection(); });
         app.UseCors();
-        app.UseAuthentication();
         app.UseAuthorization();
         app.UseRateLimiter();
         app.UseRequestLocalization();
@@ -191,10 +185,3 @@ public class Program
         app.Run();
     }
 }
-
-
-
-
-
-
-

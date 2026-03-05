@@ -27,7 +27,6 @@ public class AuthController : ControllerBase
     }
 
     // register
-    [AllowAnonymous]
     [HttpPost("/register")]
     [SwaggerOperation(Summary = "Normal version", Description = "ROG IN !")]
     public async Task<ActionResult<UserAuthDto>> Register(
@@ -64,13 +63,10 @@ public class AuthController : ControllerBase
         await _userService.CreateRefreshTokenForUser(userEmail, refreshToken.Token, cancellationToken);
 
         var cookieOptions = new CookieOptions
-{
-    HttpOnly = true,
-    Secure = true,
-    SameSite = SameSiteMode.Strict,
-    Path = "/refresh",
-    Expires = refreshToken.Expires.HasValue ? new DateTimeOffset(refreshToken.Expires.Value) : DateTimeOffset.UtcNow.AddDays(7),
-};
+        {
+            HttpOnly = true,
+            Expires = DateTimeOffset.UtcNow.AddDays(7),
+        };
 
         Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
     }
@@ -93,9 +89,8 @@ public class AuthController : ControllerBase
         };
     }
 
-    [AllowAnonymous]
     [HttpPost("/log-in")]
-    //[EnableRateLimiting("strict-login")]
+    [EnableRateLimiting("strict-login")]
     public async Task<ActionResult<UserAuthDto>> LogIn(
         [FromBody] UserLogInDto logInDto,
         CancellationToken cancellationToken)
@@ -121,59 +116,5 @@ public class AuthController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred");
         }
     }
-
-    [AllowAnonymous]
-    [HttpPost("/refresh")]
-    //[EnableRateLimiting("strict-login")]
-    public async Task<ActionResult<UserAuthDto>> Refresh(CancellationToken cancellationToken)
-    {
-        try
-        {
-            if (!Request.Cookies.TryGetValue("refreshToken", out var currentToken) || string.IsNullOrWhiteSpace(currentToken))
-                return Unauthorized();
-
-            var newRefresh = _tokenService.GenerateRefreshToken();
-            var rotation = await _userService.RotateRefreshTokenAsync(currentToken, newRefresh, cancellationToken);
-            if (!rotation.IsSuccess)
-                return Unauthorized();
-
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
-                Path = "/refresh",
-                Expires = newRefresh.Expires.HasValue ? new DateTimeOffset(newRefresh.Expires.Value) : DateTimeOffset.UtcNow.AddDays(7),
-            };
-            Response.Cookies.Append("refreshToken", newRefresh.Token, cookieOptions);
-
-            var response = CreateUserObject(rotation.Value);
-            return Ok(response);
-        }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred");
-        }
-    }
-
-    [AllowAnonymous]
-    [HttpPost("/logout")]
-    public async Task<IActionResult> Logout(CancellationToken cancellationToken)
-    {
-        if (Request.Cookies.TryGetValue("refreshToken", out var token) && !string.IsNullOrWhiteSpace(token))
-        {
-            await _userService.RevokeRefreshTokenAsync(token, cancellationToken);
-        }
-        var deleteOptions = new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.Strict,
-            Path = "/refresh",
-            Expires = DateTimeOffset.UtcNow.AddDays(-1),
-        };
-        Response.Cookies.Delete("refreshToken", deleteOptions);
-        return NoContent();
-    }}
-
+}
 

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 
 using DataLibrary.Context;
@@ -22,8 +22,6 @@ public interface IUserService
 
     Task<Result> CreateRefreshTokenForUser(string userEmail, string token,
         CancellationToken cancellationToken);
-    Task<Result<InternalUserAuthDto>> RotateRefreshTokenAsync(string currentToken, RefreshToken newRefreshToken, CancellationToken cancellationToken);
-    Task<Result> RevokeRefreshTokenAsync(string token, CancellationToken cancellationToken);
 }
 
 public class UserService : IUserService
@@ -31,13 +29,6 @@ public class UserService : IUserService
     private readonly SqliteContext _context;
     private readonly IMapper _mapper;
     private readonly ILogger<UserService> _logger;
-
-    private static string HashToken(string token)
-    {
-        using var sha = System.Security.Cryptography.SHA256.Create();
-        var hash = sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(token));
-        return System.Convert.ToBase64String(hash).Replace('+','-').Replace('/','_').Replace("=", "");
-    }
 
     public UserService(SqliteContext context, IMapper mapper, ILogger<UserService> logger)
     {
@@ -151,7 +142,6 @@ public class UserService : IUserService
 
             if (user is null) return Result.Failure("user does not exist.");
 
-            // this can be an SP to update all at once
             foreach (RefreshToken rToken in user.RefreshTokens)
             {
                 rToken.Active = false;
@@ -161,8 +151,8 @@ public class UserService : IUserService
             {
                 Active = true,
                 User = user,
-                Token = HashToken(token),
-                Expires = DateTime.UtcNow.AddDays(7) // TODO: in the config
+                Token = token,
+                Expires = DateTime.Now.AddHours(7) // TODO: in the config
             });
 
             _context.Users.Update(user);
@@ -178,58 +168,7 @@ public class UserService : IUserService
         }
     }
 
-
-    public async Task<Result<InternalUserAuthDto>> RotateRefreshTokenAsync(string currentToken, RefreshToken newRefreshToken, CancellationToken cancellationToken)
-    {
-        try
-        {
-            await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-
-            var existingToken = await _context.RefreshTokens
-                .AsNoTracking()
-                .FirstOrDefaultAsync(t => t.Token == HashToken(currentToken), cancellationToken);
-
-            if (existingToken is null || existingToken.Active != true || (existingToken.Expires.HasValue && existingToken.Expires <= DateTime.Now))
-                return Result<InternalUserAuthDto>.Failure("invalid or expired refresh token");
-
-            var user = await _context.Users
-                .Include(u => u.RefreshTokens)
-                .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
-                .FirstOrDefaultAsync(u => u.Id == existingToken.UserId, cancellationToken);
-
-            if (user is null)
-                return Result<InternalUserAuthDto>.Failure("user not found");
-
-            foreach (var token in user.RefreshTokens)
-            {
-                token.Active = false;
-                if (token.Token == existingToken.Token)
-                    token.Revoked = DateTime.Now;
-            }
-
-            var storedNew = new RefreshToken
-            {
-                Active = true,
-                User = user,
-                Token = HashToken(newRefreshToken.Token),
-                Expires = newRefreshToken.Expires
-            };
-
-            user.RefreshTokens.Add(storedNew);
-
-            _context.Users.Update(user);
-            await _context.SaveChangesAsync(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
-
-            var mapped = _mapper.Map<InternalUserAuthDto>(user);
-            return Result<InternalUserAuthDto>.Success(mapped);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"an error occu'd refreshing token in {nameof(RotateRefreshTokenAsync)}\nex:\t{ex}");
-            return Result<InternalUserAuthDto>.Failure("something went wrong refreshing the token.", ex);
-        }
-    }    // user plans 
+    // user plans 
     // get active plan
     // set active plan
     // (set/adjust) active plan start/end date
@@ -246,30 +185,4 @@ public class UserService : IUserService
     // cool down calculation
     // frequency 
     // user exercises 
-
-    public async Task<Result> RevokeRefreshTokenAsync(string token, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var tokenHash = HashToken(token);
-            var existingToken = await _context.RefreshTokens.FirstOrDefaultAsync(t => t.Token == tokenHash, cancellationToken);
-            if (existingToken is null)
-                return Result.Failure("refresh token not found");
-            if (existingToken.Active == false)
-                return Result.Success();
-
-            existingToken.Active = false;
-            existingToken.Revoked = DateTime.UtcNow;
-            await _context.SaveChangesAsync(cancellationToken);
-            return Result.Success();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"an error occu'd revoking token in {nameof(RevokeRefreshTokenAsync)}\nex:\t{ex}");
-            return Result.Failure("something went wrong revoking the token.", ex);
-        }
-    }}
-
-
-
-
+}
