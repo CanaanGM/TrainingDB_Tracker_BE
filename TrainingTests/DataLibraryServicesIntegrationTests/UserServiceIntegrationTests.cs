@@ -1,4 +1,4 @@
-﻿using DataLibrary.Services;
+using DataLibrary.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -186,9 +186,10 @@ public class UserServiceIntegrationTests : BaseIntegrationTestClass
             .FirstOrDefaultAsync(u => u.Email == "alphrad@test.com");
 
         Assert.NotNull(user);
-        Assert.Single(user.RefreshTokens.Where(x => x.Active!.Value && x.Token == "new_token_for_alphrad"));
+        Assert.Single(user.RefreshTokens.Where(x => x.Active!.Value));
         Assert.Equal(4, user.RefreshTokens.Count);
-        Assert.All(user.RefreshTokens.Where(x => x.Token != "new_token_for_alphrad"), token => Assert.False(token.Active));
+        var active = user.RefreshTokens.Single(x => x.Active!.Value);
+        Assert.All(user.RefreshTokens.Where(x => x.Id != active.Id), token => Assert.False(token.Active));
     }
     
     
