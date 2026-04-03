@@ -147,7 +147,7 @@ public class AuthController : ControllerBase
             };
             Response.Cookies.Append("refreshToken", newRefresh.Token, cookieOptions);
 
-            var response = CreateUserObject(rotation.Value);
+            var response = CreateUserObject(rotation!.Value!);
             return Ok(response);
         }
         catch (Exception)
