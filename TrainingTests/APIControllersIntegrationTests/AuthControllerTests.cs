@@ -81,9 +81,9 @@ public class AuthControllerIntegrationIntegrationTests : BaseIntegrationTestClas
 
         var result = await _controller.Register(newUser, CancellationToken.None);
 
-        var createdAtResult = Assert.IsType<CreatedAtRouteResult>(result.Result);
-        Assert.NotNull(createdAtResult);
-        Assert.Equal(nameof(_controller.Register), createdAtResult.RouteName);
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        Assert.NotNull(okResult);
+        Assert.IsType<UserAuthDto>(okResult.Value);
 
         var createdUserEmail = newUser.Email;
 

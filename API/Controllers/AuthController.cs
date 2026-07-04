@@ -49,7 +49,10 @@ public class AuthController : ControllerBase
                 Roles = user.Roles ?? new List<string>()
             };
             var response = CreateUserObject(internalUser);
-            return CreatedAtRoute(nameof(Register), new { Email = user.Email }, response);
+            // NOTE: return 200 rather than CreatedAtRoute — there is no named "Register" route
+            // nor a GET-by-id endpoint, so CreatedAtRoute throws "No route matches the supplied
+            // values." during result execution and turns a successful registration into a 500.
+            return Ok(response);
         }
         catch (Exception)
         {
@@ -68,7 +71,7 @@ public class AuthController : ControllerBase
     HttpOnly = true,
     Secure = true,
     SameSite = SameSiteMode.Strict,
-    Path = "/refresh",
+    Path = "/",
     Expires = refreshToken.Expires.HasValue ? new DateTimeOffset(refreshToken.Expires.Value) : DateTimeOffset.UtcNow.AddDays(7),
 };
 
@@ -95,7 +98,7 @@ public class AuthController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("/log-in")]
-    //[EnableRateLimiting("strict-login")]
+    [EnableRateLimiting("strict-login")]
     public async Task<ActionResult<UserAuthDto>> LogIn(
         [FromBody] UserLogInDto logInDto,
         CancellationToken cancellationToken)
@@ -124,7 +127,9 @@ public class AuthController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("/refresh")]
-    //[EnableRateLimiting("strict-login")]
+    // Not rate-limited with "strict-login": refresh tokens are 64-byte random values (not
+    // guessable like a password), and this policy (5/15min per IP) would lock out legitimate
+    // automatic refreshes. Add a dedicated, looser policy here if throttling is wanted.
     public async Task<ActionResult<UserAuthDto>> Refresh(CancellationToken cancellationToken)
     {
         try
@@ -142,7 +147,7 @@ public class AuthController : ControllerBase
                 HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.Strict,
-                Path = "/refresh",
+                Path = "/",
                 Expires = newRefresh.Expires.HasValue ? new DateTimeOffset(newRefresh.Expires.Value) : DateTimeOffset.UtcNow.AddDays(7),
             };
             Response.Cookies.Append("refreshToken", newRefresh.Token, cookieOptions);
@@ -169,7 +174,7 @@ public class AuthController : ControllerBase
             HttpOnly = true,
             Secure = true,
             SameSite = SameSiteMode.Strict,
-            Path = "/refresh",
+            Path = "/",
             Expires = DateTimeOffset.UtcNow.AddDays(-1),
         };
         Response.Cookies.Delete("refreshToken", deleteOptions);

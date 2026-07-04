@@ -486,3 +486,6 @@ $RECYCLE.BIN/
 
 
 tmp*.out
+# Editor/agent backup files
+*.bak
+*.prev
