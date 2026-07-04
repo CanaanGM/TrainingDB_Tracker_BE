@@ -66,7 +66,7 @@ public class AuthService : IAuthService
                 new UserPassword()
                 {
                     IsCurrent = true,
-                    CreatedAt = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
                     PasswordHash = hashedPasswordResult.Value!,
                     PasswordSalt = salt,
                     User = user,
@@ -94,7 +94,7 @@ public class AuthService : IAuthService
             return Result<UserAuthDto>.Success(new UserAuthDto()
             {
                 Email = user.Email,
-                Username = user.Email,
+                Username = user.Username,
                 Roles = user.UserRoles.Select(x => x.Role.Name).ToList(),
             }, "user created!");
         }
@@ -177,7 +177,7 @@ public class AuthService : IAuthService
                 .AsNoTracking()
                 .FirstOrDefaultAsync(t => t.Token == HashToken(currentToken), cancellationToken);
 
-            if (existingToken is null || existingToken.Active != true || (existingToken.Expires.HasValue && existingToken.Expires <= DateTime.Now))
+            if (existingToken is null || existingToken.Active != true || (existingToken.Expires.HasValue && existingToken.Expires <= DateTime.UtcNow))
                 return Result<InternalUserAuthDto>.Failure("invalid or expired refresh token");
 
             var user = await _context.Users
@@ -192,7 +192,7 @@ public class AuthService : IAuthService
             {
                 token.Active = false;
                 if (token.Token == existingToken.Token)
-                    token.Revoked = DateTime.Now;
+                    token.Revoked = DateTime.UtcNow;
             }
 
             var storedNew = new RefreshToken

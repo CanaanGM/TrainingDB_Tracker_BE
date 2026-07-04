@@ -66,8 +66,8 @@ public class AuthControllerTests
         var result = await _controller.Register(userWriteDto, CancellationToken.None);
 
         var actionResult = Assert.IsType<ActionResult<UserAuthDto>>(result);
-        var createdAtRouteResult = Assert.IsType<CreatedAtRouteResult>(actionResult.Result);
-        var resultDto = Assert.IsType<UserAuthDto>(createdAtRouteResult.Value);
+        var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
+        var resultDto = Assert.IsType<UserAuthDto>(okResult.Value);
 
         Assert.Equal(createdUser.Username, resultDto.Username);
         Assert.Equal(createdUser.Email, resultDto.Email);
