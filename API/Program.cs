@@ -53,7 +53,6 @@ public class Program
         });
         
         builder.Services.AddHttpContextAccessor();
-        builder.Services.AddSingleton<IUserAccessor, UserAccessor>();
         builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(JwtSettings.JwtSettingsSection));
         
         var keyFromConfig = builder.Configuration["JwtSettings:Secret"]
@@ -80,15 +79,6 @@ public class Program
         builder.Services.AddScoped<AuthenticatedUserFilter>();
         builder.Services.AddRateLimiter(rateLimiterOptions =>
         {
-            rateLimiterOptions.AddSlidingWindowLimiter("login", options =>
-            {
-                options.PermitLimit = 5; // 5 login attempts
-                options.Window = TimeSpan.FromMinutes(15); // per 15 minutes
-                options.SegmentsPerWindow = 3; // divides window into 3 segments (5 min each)
-                options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-                options.QueueLimit = 0; // no queuing for login attempts
-            });
-
             rateLimiterOptions.AddPolicy("strict-login", context =>
             {
                 context.Request.EnableBuffering();
@@ -147,6 +137,7 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
         app.UseAuthorization();
         app.UseRateLimiter();
         app.UseRequestLocalization();

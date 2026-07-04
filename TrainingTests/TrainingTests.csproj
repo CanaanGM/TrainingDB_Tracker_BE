@@ -12,6 +12,11 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="EfCore.TestSupport" Version="8.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.8" />
+    <!-- EfCore.TestSupport drags in Microsoft.Data.SqlClient 5.0.0, whose SqlGuidCaster type
+         fails to load on newer runtimes (alignment bug). AddDataLibrary's AutoMapper scan of all
+         loaded assemblies hits it and throws. Pin a patched version for the test host only. -->
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="xunit" Version="2.8.1" />
